@@ -1,0 +1,21 @@
+left_front_wheel:
+  steering_link_name: front_left_wheel_link
+  steering_controller_name: left_steering_ctrlr
+  axle_controller_name: left_front_wheel_ctrlr
+  diameter: 0.59 # tire diameter
+
+right_front_wheel:
+  steering_link_name: front_right_wheel_link
+  steering_controller_name: right_steering_ctrlr
+  axle_controller_name: right_front_wheel_ctrlr
+  diameter: 0.59 # tire diameter
+
+left_rear_wheel:
+  link_name: rear_left_wheel_link
+  axle_controller_name: left_rear_wheel_ctrlr
+  diameter: 0.59 # tire diameter
+
+right_rear_wheel:
+  link_name: rear_right_wheel_link
+  axle_controller_name: right_rear_wheel_ctrlr
+  diameter: 0.59 # tire diameter

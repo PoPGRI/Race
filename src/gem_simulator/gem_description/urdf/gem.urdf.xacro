@@ -1,0 +1,1419 @@
+<?xml version="1.0"?>
+
+<robot name="gem" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find gem_description)/urdf/gem.gazebo" />
+
+  <xacro:include filename="$(find gem_description)/urdf/materials.xacro" />
+
+  <xacro:include filename="$(find gem_description)/urdf/macros.xacro" />
+
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+
+  <link name="base_footprint"> 
+  </link>
+
+  <link name="base_link">
+
+    <inertial>
+      <origin xyz="0.0410109641324594 0.000349767124208047 0.219524161679779" rpy="0 0 0" />
+      <mass value="686.066668067387" />
+      <inertia
+        ixx="205.702789313137"
+        ixy="-0.20742120719075"
+        ixz="-9.13771633467953"
+        iyy="482.020173559149"
+        iyz="0.0517191981605489"
+        izz="482.316418870047" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/base_link.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="base_link" type="fixed">
+    <origin xyz="0 0 0.44" rpy="0 0 0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+
+  <!-- ******************************************* Fixed links below ******************************************* -->
+
+  <link name="chair_link">
+
+    <inertial>
+      <origin xyz="-0.25168177279603 0.000276944933646828 0.46906166648726" rpy="0 0 0" />
+      <mass value="66.2564411399325" />
+      <inertia
+        ixx="14.0051678459864"
+        ixy="-0.00120200191290221"
+        ixz="1.77455776912037"
+        iyy="7.60803819714354"
+        iyz="0.000593044825837774"
+        izz="9.70729216894754" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/chair_link.STL" />
+      </geometry>
+      <material name="grey" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/chair_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="chair_joint" type="fixed">
+    <origin xyz="0.001 0 -0.02" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="chair_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="door_link">
+
+    <inertial>
+      <origin xyz="0.00621903196002507 5.84652914581429E-07 0.358550118826029" rpy="0 0 0" />
+      <mass value="62.4925124039456" />
+      <inertia
+        ixx="27.8360789144871"
+        ixy="1.83479416068222E-05"
+        ixz="0.311750082296841"
+        iyy="7.554911896405"
+        iyz="-2.52231014544191E-05"
+        izz="26.8975099460351" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/door_link.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/door_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="door_joint" type="fixed">
+    <origin xyz="0.001 0 -0.015" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="door_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="top_rack_link">
+
+    <inertial>
+      <origin xyz="0.169 0.0522767054778464 -0.657500000000002" rpy="0 0 0" />
+      <mass value="8.88367739999998" />
+      <inertia
+        ixx="1.60728217120871"
+        ixy="6.00084366111482E-18"
+        ixz="-9.81342263314531E-17"
+        iyy="1.72456661616785"
+        iyz="-5.92489168501132E-16"
+        izz="0.152983311828453" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/top_rack_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/top_rack_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="top_rack_joint" type="fixed">
+    <origin xyz="-0.10172 0.6575 1.3921" rpy="1.5708 0 3.1416" />
+    <parent link="base_link" />
+    <child link="top_rack_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="front_rack_link">
+
+    <inertial>
+      <origin xyz="6.075819031226E-08 0.307874350591294 0.0128881009983504" rpy="0 0 0" />
+      <mass value="2.56587584103832" />
+      <inertia
+        ixx="0.0399935403341327"
+        ixy="3.94985201351379E-09"
+        ixz="4.81783258455845E-09"
+        iyy="0.17153401949232"
+        iyz="-0.00251237710479529"
+        izz="0.207040614168028" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_rack_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_rack_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_rack_joint" type="fixed">
+    <origin xyz="1.352 0 -0.30594" rpy="1.5708 0 1.5708" />
+    <parent link="base_link" />
+    <child link="front_rack_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="rear_rack_link">
+
+    <inertial>
+      <origin xyz="6.1506188045457E-08 0.310150326128451 0.0147333533268064" rpy="0 0 0" />
+      <mass value="2.53467167075235" />
+      <inertia
+        ixx="0.0382035938045769"
+        ixy="4.30467478765709E-09"
+        ixz="5.10550487033654E-09"
+        iyy="0.170120841320212"
+        iyz="-0.00163705466710053"
+        izz="0.205257577869692" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_rack_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_rack_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_rack_joint" type="fixed">
+    <origin xyz="-1.302 0 -0.27168" rpy="1.5708 0 -1.5708" />
+    <parent link="base_link" />
+    <child link="rear_rack_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="front_right_head_light_link">
+
+    <inertial>
+      <origin xyz="0.0181463762919891 5.55111512312578E-17 3.5527136788005E-15" rpy="0 0 0" />
+      <mass value="0.269468017191218" />
+      <inertia
+        ixx="0.000596868390925667"
+        ixy="-4.5493541174505E-37"
+        ixz="-8.43232887809658E-21"
+        iyy="0.000330811799186419"
+        iyz="2.38964055770904E-36"
+        izz="0.00033081179918642" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_head_light_link.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_head_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_right_head_light_joint" type="fixed">
+    <origin xyz="0.755 -0.5 0.58706" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_right_head_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="front_left_head_light_link">
+
+    <inertial>
+      <origin xyz="0.0181463762919891 -1.11022302462516E-16 3.99680288865056E-15" rpy="0 0 0" />
+      <mass value="0.269468017191218" />
+      <inertia
+        ixx="0.000596868390925667"
+        ixy="-4.5493541174505E-37"
+        ixz="-8.43232887809658E-21"
+        iyy="0.000330811799186419"
+        iyz="2.38964055770904E-36"
+        izz="0.00033081179918642" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_head_light_link.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_head_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_left_head_light_joint" type="fixed">
+    <origin xyz="0.755 0.5 0.58706" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_left_head_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="front_right_turn_light_link">
+
+    <inertial>
+      <origin xyz="0.0135004225053658 0 3.99680288865056E-15" rpy="0 0 0" />
+      <mass value="0.065815901054829" />
+      <inertia
+        ixx="4.78304226243906E-05"
+        ixy="-4.43957359734856E-38"
+        ixz="6.07038039167315E-22"
+        iyy="2.82661732953809E-05"
+        iyz="1.76248991828734E-37"
+        izz="2.82661732953809E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_turn_light_link.STL" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_turn_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_right_turn_light_joint" type="fixed">
+    <origin xyz="0.765 -0.345 0.58706" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_right_turn_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="front_left_turn_light_link">
+
+    <inertial>
+      <origin xyz="0.0135004225053658 0 3.99680288865056E-15" rpy="0 0 0" />
+      <mass value="0.065815901054829" />
+      <inertia
+        ixx="4.78304226243906E-05"
+        ixy="-4.43957359734856E-38"
+        ixz="6.07038039167315E-22"
+        iyy="2.82661732953809E-05"
+        iyz="1.76248991828734E-37"
+        izz="2.82661732953809E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_turn_light_link.STL" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_turn_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_left_turn_light_joint" type="fixed">
+    <origin xyz="0.765 0.345 0.58706" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_left_turn_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="rear_right_light_link">
+
+    <inertial>
+      <origin xyz="-0.00499999999999989 -2.77555756156289E-17 -9.76996261670138E-15" rpy="0 0 0" />
+      <mass value="0.0318086256175967" />
+      <inertia
+        ixx="3.22062334378166E-05"
+        ixy="-1.38305597517403E-38"
+        ixz="6.87334333960818E-36"
+        iyy="1.6368188599055E-05"
+        iyz="-1.39682298768093E-51"
+        izz="1.6368188599055E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_light_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_right_light_joint" type="fixed">
+    <origin xyz="-1.195 -0.32 0.025063" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rear_right_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="rear_left_light_link">
+
+    <inertial>
+      <origin xyz="-0.00499999999999989 0 -1.02140518265514E-14" rpy="0 0 0" />
+      <mass value="0.0318086256175967" />
+      <inertia
+        ixx="3.22062334378166E-05"
+        ixy="-1.38305597517403E-38"
+        ixz="6.87334333960818E-36"
+        iyy="1.6368188599055E-05"
+        iyz="-1.39682298768093E-51"
+        izz="1.6368188599055E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_light_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_left_light_joint" type="fixed">
+    <origin xyz="-1.195 0.32 0.025063" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rear_left_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="rear_left_stop_light_link">
+
+    <inertial>
+      <origin xyz="0.00972430253262702 9.82547376793264E-15 -9.32587340685131E-15" rpy="0 0 0" />
+      <mass value="0.109202778987047" />
+      <inertia
+        ixx="0.000190538645890679"
+        ixy="6.45440196434648E-19"
+        ixz="-3.41278961232262E-21"
+        iyy="9.87843441608066E-05"
+        iyz="-9.37294393995117E-36"
+        izz="9.87843441608066E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_stop_light_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_stop_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_left_stop_light_joint" type="fixed">
+    <origin xyz="-1.195 0.38 0.24506" rpy="0 0 3.1416" />
+    <parent link="base_link" />
+    <child link="rear_left_stop_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="rear_right_stop_light_link">
+
+    <inertial>
+      <origin xyz="0.00972430253262724 9.82547376793264E-15 -1.02140518265514E-14" rpy="0 0 0" />
+      <mass value="0.109202778987047" />
+      <inertia
+        ixx="0.000190538645890679"
+        ixy="6.45440196434648E-19"
+        ixz="-3.41278961232262E-21"
+        iyy="9.87843441608066E-05"
+        iyz="-9.37294393995117E-36"
+        izz="9.87843441608066E-05" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_stop_light_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_stop_light_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_right_stop_light_joint" type="fixed">
+    <origin xyz="-1.195 -0.38 0.24506" rpy="0 0 3.1416" />
+    <parent link="base_link" />
+    <child link="rear_right_stop_light_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+
+  <link name="right_blue_outer_link">
+
+    <inertial>
+      <origin xyz="-5.55111512312578E-17 0.005 0" rpy="0 0 0" />
+      <mass value="0.104700000000001" />
+      <inertia
+        ixx="0.00181327500000001"
+        ixy="-5.27013311869779E-23"
+        ixz="-2.77932685817817E-19"
+        iyy="0.00257909140000001"
+        iyz="-1.43496084528411E-21"
+        izz="0.000767561400000003" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_blue_outer_link.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_blue_outer_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="right_blue_outer_joint" type="fixed">
+    <origin xyz="0.002 -0.6745 0.23435" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_blue_outer_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="right_I_link">
+
+    <inertial>
+      <origin xyz="-5.55111512312578E-17 0.005 4.44089209850063E-16" rpy="0 0 0" />
+      <mass value="0.266" />
+      <inertia
+        ixx="0.00324508333333333"
+        ixy="2.86326238812301E-21"
+        ixz="-9.03626747764308E-20"
+        iyy="0.00398107733333333"
+        iyz="-3.62249939950654E-37"
+        izz="0.000740427333333333" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_I_link.STL" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_I_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="right_I_joint" type="fixed">
+    <origin xyz="0.002 -0.6745 0.23435" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_I_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="left_blue_outer_link">
+
+    <inertial>
+      <origin xyz="-5.55111512312578E-17 0.00500000000000012 0" rpy="0 0 0" />
+      <mass value="0.1047" />
+      <inertia
+        ixx="0.00181327500000001"
+        ixy="9.72940865559704E-23"
+        ixz="-1.45583787809333E-19"
+        iyy="0.00257909140000001"
+        iyz="-1.84855115156062E-21"
+        izz="0.000767561400000003" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_blue_outer_link.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_blue_outer_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="left_blue_outer_joint" type="fixed">
+    <origin xyz="0.002 0.6645 0.23435" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_blue_outer_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="left_I_link">
+
+    <inertial>
+      <origin xyz="-2.77555756156289E-17 0.005 0" rpy="0 0 0" />
+      <mass value="0.266" />
+      <inertia
+        ixx="0.00324508333333333"
+        ixy="2.77201399922805E-21"
+        ixz="6.69378600355003E-20"
+        iyy="0.00398107733333333"
+        iyz="-3.19843170187135E-23"
+        izz="0.000740427333333332" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_I_link.STL" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_I_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="left_I_joint" type="fixed">
+    <origin xyz="0.002 0.6645 0.23435" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_I_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <link name="right_antenna_link">
+
+    <inertial>
+      <origin xyz="-5.55111512312578E-17 2.44249065417534E-15 0.0121155822482986" rpy="0 0 0" />
+      <mass value="0.136416164800573" />
+      <inertia
+        ixx="7.37368964618847E-05"
+        ixy="-3.06109536749749E-37"
+        ixz="-5.86182991414975E-22"
+        iyy="7.37368964618847E-05"
+        iyz="-1.11563872602674E-37"
+        izz="0.000133877796554154" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_antenna_link.STL" />
+      </geometry>
+      <material name="grey" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/right_antenna_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="right_antenna_joint" type="fixed">
+    <origin xyz="-0.23472 -0.6125 1.5071" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_antenna_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <link name="left_antenna_link">
+
+    <inertial>
+      <origin xyz="-5.55111512312578E-17 2.44249065417534E-15 0.012115582248299" rpy="0 0 0" />
+      <mass value="0.136416164800573" />
+      <inertia
+        ixx="7.37368964618847E-05"
+        ixy="-3.06109536749744E-37"
+        ixz="-5.57203300808161E-22"
+        iyy="7.37368964618847E-05"
+        iyz="-1.11563872602673E-37"
+        izz="0.000133877796554154" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_antenna_link.STL" />
+      </geometry>
+      <material name="grey" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/left_antenna_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="left_antenna_joint" type="fixed">
+    <origin xyz="-0.23472 0.6125 1.5071" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_antenna_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <link name="rear_left_emergency_button_link">
+
+    <inertial>
+      <origin xyz="-1.11022302462516E-16 0.0126540837643514 2.66453525910038E-15" rpy="0 0 0" />
+      <mass value="0.0162466711659546" />
+      <inertia
+        ixx="2.6298686963986E-06"
+        ixy="1.03389842837371E-38"
+        ixz="-9.08487993518231E-39"
+        iyy="3.62977311979424E-06"
+        iyz="-3.77300506598995E-23"
+        izz="2.6298686963986E-06" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_emergency_button_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_emergency_button_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_left_emergency_button_joint" type="fixed">
+    <origin xyz="-0.72012 0.6645 0.83815" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rear_left_emergency_button_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+
+  <link name="rear_right_emergency_button_link">
+
+    <inertial>
+      <origin xyz="1.11022302462516E-16 0.0126540837643516 0" rpy="0 0 0" />
+      <mass value="0.0162466711659548" />
+      <inertia
+        ixx="2.62986869639873E-06"
+        ixy="4.04185685485635E-21"
+        ixz="-3.17637355220363E-22"
+        iyy="3.6297731197944E-06"
+        iyz="-6.32020341731348E-21"
+        izz="2.62986869639873E-06" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_emergency_button_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_emergency_button_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="rear_right_emergency_button_joint" type="fixed">
+    <origin xyz="-0.72012 -0.6645 0.83815" rpy="0 0.57871 3.1416" />
+    <parent link="base_link" />
+    <child link="rear_right_emergency_button_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+
+  <link name="front_left_emergency_button_link">
+
+    <inertial>
+      <origin xyz="1.11022302462516E-16 0.0126540837643514 3.10862446895044E-15" rpy="0 0 0" />
+      <mass value="0.0162466711659546" />
+      <inertia
+        ixx="2.6298686963986E-06"
+        ixy="1.03389842837371E-38"
+        ixz="-9.08487993518231E-39"
+        iyy="3.62977311979424E-06"
+        iyz="-3.77300506598995E-23"
+        izz="2.6298686963986E-06" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_emergency_button_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_emergency_button_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_left_emergency_button_joint" type="fixed">
+    <origin xyz="1.1497 0.6645 0.20492" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_left_emergency_button_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+
+  <link name="front_right_emergency_button_link">
+
+    <inertial>
+      <origin xyz="0 0.0126540837643517 -2.22044604925031E-16" rpy="0 0 0" />
+      <mass value="0.0162466711659548" />
+      <inertia
+        ixx="2.62986869639873E-06"
+        ixy="4.04185685485635E-21"
+        ixz="-3.17637355220363E-22"
+        iyy="3.6297731197944E-06"
+        iyz="-6.32020341731347E-21"
+        izz="2.62986869639873E-06" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_emergency_button_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_emergency_button_link.STL" />
+      </geometry>
+    </collision>
+
+  </link>
+
+
+  <joint name="front_right_emergency_button_joint" type="fixed">
+    <origin xyz="1.1497 -0.6645 0.20492" rpy="0 0.57871 3.1416" />
+    <parent link="base_link" />
+    <child link="front_right_emergency_button_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+
+  <link name="front_camera_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.07" />
+      <inertia ixx="0.000175820811714078" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.00022282574207345" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_camera_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="front_camera_joint" type="fixed">
+    <origin xyz="0.16 -0.11 1.1063" rpy="1.5708 0 -3.1416" />
+    <parent link="base_link" />
+    <child link="front_camera_link" />
+    <axis xyz="0 0 0"/>
+  </joint>
+
+
+  <link name="rear_light_bar_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.0841360233382311" />
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.00103132903875222" iyz="0.0" izz="0.00103577957177912" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_light_bar_link.STL" />
+      </geometry>
+      <material name="red" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_light_bar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="rear_light_bar_joint" type="fixed">
+    <origin xyz="-0.64921 0 0.76944" rpy="-1.9138 0 1.5708" />
+    <parent link="base_link" />
+    <child link="rear_light_bar_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  <!-- ******************************************* Fixed links above ******************************************* -->
+
+
+
+
+
+
+  <!-- ***************************************** Wheel settings below ****************************************** -->
+
+ 
+  <link name="left_steering_hinge_link">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.004" ixy="0.0" ixz="0.0" iyy="0.004" iyz="0.0" izz="0.004"/>
+    </inertial>
+  </link>
+
+  <joint name="left_steering_hinge_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="left_steering_hinge_link"/>
+    <origin xyz="0.88 0.6 -0.151" rpy="0 0 0"/>    
+    <axis xyz="0 0 1" />
+    <limit lower="-0.61" upper="0.61" effort="100" velocity="0.5"/>
+  </joint>
+
+  <link name="front_left_wheel_link">
+    <inertial>
+      <mass value="11"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.58631238" ixy="0.0" ixz="0.0" iyy="0.33552910" iyz="0.0" izz="0.33552910"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_left_wheel_link.STL"/>
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision name="front_left_wheel_collision">
+      <geometry>
+        <sphere radius="0.295"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="left_steering_hinge_link"/>
+    <child link="front_left_wheel_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" velocity="100.0"/>
+  </joint>
+
+
+  <link name="right_steering_hinge_link">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.004" ixy="0.0" ixz="0.0" iyy="0.004" iyz="0.0" izz="0.004"/>
+    </inertial>
+  </link>
+
+  <joint name="right_steering_hinge_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="right_steering_hinge_link"/>
+    <origin xyz="0.88 -0.6 -0.151" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit lower="-0.61" upper="0.61" effort="100" velocity="0.5"/>
+  </joint>
+
+  <link name="front_right_wheel_link">
+    <inertial>
+      <mass value="11"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.58631238" ixy="0.0" ixz="0.0" iyy="0.33552910" iyz="0.0" izz="0.33552910"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://gem_description/meshes/front_right_wheel_link.STL"/>
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision name="front_right_wheel_collision">
+      <geometry>
+        <sphere radius="0.295"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="front_right_wheel_joint" type="continuous">
+    <parent link="right_steering_hinge_link"/>
+    <child link="front_right_wheel_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>  
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" velocity="100.0"/>
+  </joint>
+
+  
+  <link name="rear_left_wheel_link">
+    <inertial>
+      <mass value="11"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.58631238" ixy="0.0" ixz="0.0" iyy="0.33552910" iyz="0.0" izz="0.33552910"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_left_wheel_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision name="rear_left_wheel_collision">
+      <geometry>
+        <sphere radius="0.295"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <origin xyz="-0.87 0.6 -0.151" rpy="0 0 0" /> 
+    <parent link="base_link" />
+    <child link="rear_left_wheel_link" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" velocity="100.0"/>
+  </joint>
+
+ 
+  <link name="rear_right_wheel_link">
+    <inertial>
+      <mass value="11"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.58631238" ixy="0.0" ixz="0.0" iyy="0.33552910" iyz="0.0" izz="0.33552910"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gem_description/meshes/rear_right_wheel_link.STL" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision name="rear_right_wheel_collision">
+      <geometry>
+        <sphere radius="0.295"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <origin xyz="-0.87 -0.6 -0.151" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rear_right_wheel_link" />
+    <axis xyz="0 1 0" />
+    <limit effort="1000.0" velocity="100.0"/>
+  </joint>
+
+  <!-- ******************************************** Transmissions ********************************************* -->
+
+
+  <xacro:wheel_transmission name="rear_left_wheel" />
+  <xacro:wheel_transmission name="rear_right_wheel" />
+
+  <xacro:wheel_transmission name="front_left_wheel" />
+  <xacro:wheel_transmission name="front_right_wheel" />
+
+  <xacro:steering_hinge_transmission name="left_steering_hinge" />
+  <xacro:steering_hinge_transmission name="right_steering_hinge" />
+
+
+  <!-- *********************************************** Sensors ************************************************ -->
+
+  <xacro:VLP-16 parent="top_rack_link" name="/gem/velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
+    <origin xyz="0.02 0.115 -0.6575" rpy="1.5708 0 3.1416" /> <!-- 1.5708 3.1416 -->
+  </xacro:VLP-16>
+
+  <link name="front_single_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="gem_front_camera_joint" type="fixed">
+    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
+    <parent link="front_camera_link"/>
+    <child link="front_single_camera_link"/>
+  </joint>
+
+  <!--
+  <link name="stereo_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+
+  <joint name="gem_stereo_camera_joint" type="fixed">
+    <origin xyz="-0.045 0 0" rpy="-1.5708 3.1416 0"/>
+    <parent link="front_camera_link"/>
+    <child link="stereo_camera_link"/>
+  </joint>
+  -->
+
+  <!-- IMU -->
+  <link name="IMU_link">
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <joint name="IMU_joint" type="fixed">
+    <origin xyz="-0.246 0 0.05" rpy="0 0 -1.5708"/>
+    <parent link="base_link"/>
+    <child link="IMU_link"/>
+  </joint>
+
+  <!-- GPS -->
+  <link name="GPS_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+
+  <joint name="GPS_joint" type="fixed">
+    <origin xyz="-0.246 0 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="GPS_link"/>
+  </joint>
+
+
+  <!-- Front Sonar -->
+  <link name="front_sonar_link">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="0.000000017" ixy="0" ixz="0" iyy="0.000000017" iyz="0" izz="0.000000017" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.2 0.1" />
+      </geometry>
+    <material name="orange"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.2 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="front_sonar_joint" type="fixed">
+    <origin xyz="0 0.38 0.065" rpy="0 -1.5708 -1.5708"/>
+    <parent link="front_rack_link"/>
+    <child link="front_sonar_link"/>
+  </joint>
+
+  <!-- Rear Sonar -->
+  <link name="rear_sonar_link">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="0.000000017" ixy="0" ixz="0" iyy="0.000000017" iyz="0" izz="0.000000017" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.2 0.1" />
+      </geometry>
+    <material name="orange"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.2 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rear_sonar_joint" type="fixed">
+    <origin xyz="0 0.38 0.065" rpy="0 -1.5708 -1.5708"/>
+    <parent link="rear_rack_link"/>
+    <child link="rear_sonar_link"/>
+  </joint>
+
+</robot>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

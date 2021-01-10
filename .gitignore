@@ -1,0 +1,16 @@
+.DS_Store
+
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.log
+**/*.out
+**/*.gz
+**/*.pyc
+
+**/.ipynb_checkpoints/*
+**/build/
+**/devel/
+**/.vscode/*
+
+.catkin_workspace

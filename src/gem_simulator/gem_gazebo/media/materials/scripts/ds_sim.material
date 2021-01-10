@@ -1,0 +1,76 @@
+material DSSim/Road
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.1 0.1 0.1 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.01 0.01 0.01 1.0 2.0
+
+      texture_unit
+      {
+        texture road.png
+        filtering none
+      }
+    }
+  }
+}
+
+material DSSim/Intersection
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.1 0.1 0.1 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.01 0.01 0.01 1.0 2.0
+
+      texture_unit
+      {
+        texture intersection.png
+        filtering none
+      }
+    }
+  }
+}
+
+material DSSim/GrassBackground
+{
+  technique
+  {
+    pass
+    {
+      ambient 1.0 1.0 1.0 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.2 0.2 0.2 1.0 12.5
+
+      texture_unit
+      {
+        texture grass.png
+        scale 0.0001 0.0001
+        filtering trilinear
+      }
+    }
+  }
+}
+
+material DSSim/DSCube
+{
+  technique
+  {
+    pass
+    {
+      ambient 1.0 1.0 1.0 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.2 0.2 0.2 1.0 12.5
+
+      texture_unit
+      {
+        texture ds_cube.png
+        filtering trilinear
+      }
+    }
+  }
+}

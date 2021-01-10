@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>gem_gazebo</name>
+  <version>1.0.0</version>
+  <description> The gem_gazebo is used with Gazebo to simulate gem vehicle with Ackermann steering</description>
+  <author email="hangcui1201@gmail.com">Hang Cui</author>
+  <maintainer email="hangcui1201@gmail.com"> Hang Cui </maintainer>
+  <url type="repository">https://github.com/hangcui1201/gem_simulator.git</url>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>cv_bridge</depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>ackermann_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gem_description</depend>
+  <depend>controller_manager</depend>
+  <depend>controller_manager_msgs</depend>
+  <depend>effort_controllers</depend>
+  <depend>joint_state_controller</depend>
+  <depend>tf</depend>
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/models/" gazebo_media_path="${prefix}" />
+  </export>
+</package>
