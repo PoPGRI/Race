@@ -6,6 +6,7 @@ main_nav: true
 ---
 
 # Team
+- Arnab Datta
 - Minghao Jiang
 - Zexiang Liu
 - Kristina Miller
