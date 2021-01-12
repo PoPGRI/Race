@@ -5,7 +5,7 @@ permalink: /description/
 main_nav: false
 ---
 
-_Post-Perception General Racing Intelligence (PoPGRI)_ is a framework for developing intelligent racing agents that can work with different vehicles and environments. We are developing PoPGRI with the aim of running a competition at [CPS-IOT Week 2021][https://cps-iot-week2021.isis.vanderbilt.edu/].
+_Post-Perception General Racing Intelligence (PoPGRI)_ is a framework for developing intelligent racing agents that can work with different vehicles and environments. We are developing PoPGRI with the aim of running a competition at [CPS-IOT Week 2021](https://cps-iot-week2021.isis.vanderbilt.edu/). 
 
 The goal of this competition is to record and help advance the state-of-the-art in (model-based and model-free) controller synthesis as applied to tactical decision making for racing environments. Comparing performance of different synthesis approaches is notoriously difficult. There are many computing platforms, approaches, no standard interfaces and problem specifications, and repeatability in research is complicated. We hope that this competition will jumpstart a solution to this problem.
 
