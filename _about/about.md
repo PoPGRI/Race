@@ -5,10 +5,12 @@ permalink: /people/
 main_nav: true
 ---
 
-Sayan Mitra
+# Team
+- Minghao Jiang
+- Zexiang Liu
+- Kristina Miller
+- Dawei Sun
 
-Minghao Jiang
-
-Kristina Miller
-
-Dawei Sun
+# Advisors
+- Sayan Mitra
+- Necmiye Ozay
