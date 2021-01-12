@@ -1,0 +1,16 @@
+---
+layout: page
+title: About
+permalink: /about/
+main_nav: true
+---
+<div class="wrapper">
+  {% for entry in site.about %}
+  <div>
+      {% if entry.title != blank %}
+      <h1>{{entry.title}}</h1>
+      {% endif %}
+      <p>{{entry.content}}</p>
+  </div>
+  {% endfor %}
+</div>
