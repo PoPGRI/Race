@@ -10,8 +10,6 @@ main_nav: true
 - Minghao Jiang
 - Zexiang Liu
 - Kristina Miller
-- Dawei Sun
-
-# Advisors
 - Sayan Mitra
 - Necmiye Ozay
+- Dawei Sun
