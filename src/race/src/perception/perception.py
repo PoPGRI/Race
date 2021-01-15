@@ -68,7 +68,7 @@ class LidarProcessing:
         self.cvBridge = CvBridge()
 
         # empty initial image
-        self.birdsEyeViewPub = rospy.Publisher("/mp5/BirdsEye", Image, queue_size=1)
+        self.birdsEyeViewPub = rospy.Publisher("/race/BirdsEye", Image, queue_size=1)
         self.pointCloudSub = rospy.Subscriber("/velodyne_points", PointCloud2, self.__pointCloudHandler, queue_size=10)
         x_img = np.floor(-0 / self.resolution).astype(np.int32)
         self.vehicle_x = x_img - int(np.floor(self.side_range[0] / self.resolution))

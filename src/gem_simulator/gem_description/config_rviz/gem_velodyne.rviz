@@ -355,7 +355,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /mp5/BirdsEye
+      Image Topic: /race/BirdsEye
       Max Value: 1
       Median window: 5
       Min Value: 0
