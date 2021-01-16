@@ -14,15 +14,19 @@ System Requirements:
 
 To Install all dependencies, pleace refer to this [document](http://publish.illinois.edu/safe-autonomy/files/2020/08/Ubuntu-Machine-Setup.pdf)
 
+**Update on dependencies**
+<pre><code>sudo apt-get install ros-kinetic-effort-controllers
+sudo apt-get install ros-kinetic-joint-state-controller
+</code></pre>
+
 After cloning the repository, pleace execute following command in root directory to compile and build the project
- <pre><code>catkin_make</code></pre>
+<pre><code>catkin_make</code></pre>
  
- To launch Gazebo simulation, pleace execute following command in root directory:
- <pre><code>
- source devel/setup.bash
- roslaunch race race.launch
- </code></pre>
+To launch Gazebo simulation, pleace execute following command in root directory:
+<pre><code>source devel/setup.bash
+roslaunch race race.launch
+</code></pre>
   
-  For more information about ROS and Gazebo, please refer to their office website
-  * [ROS](http://wiki.ros.org/Documentation)
-  * [Gazebo](http://gazebosim.org/)
+ For more information about ROS and Gazebo, please refer to their office website
+ * [ROS](http://wiki.ros.org/Documentation)
+ * [Gazebo](http://gazebosim.org/)
