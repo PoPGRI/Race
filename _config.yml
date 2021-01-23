@@ -39,6 +39,7 @@ pagination:
 collections:
   - home
   - about
+  - documentation
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:

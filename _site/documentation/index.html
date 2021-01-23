@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Documentation</title>
+  <meta name="description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+">
+  
+  <meta name="author" content="Sayan Mitra">
+  <meta name="copyright" content="&copy; Sayan Mitra 2021">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+" />
+  <meta property="og:url" content="http://localhost:4000/documentation/">
+  <meta property="og:site_name" content="PoPGRI" />
+  <meta property="og:title" content="Documentation" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Documentation">
+  <meta name="twitter:description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+">
+  <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
+  <meta name="twitter:url" content="http://localhost:4000/documentation/">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/documentation/">
+	<link rel="alternate" type="application/rss+xml" title="PoPGRI" href="http://localhost:4000/feed.xml" />
+	
+	<!-- Tooltips -->
+	<script type="text/javascript">
+		window.tooltips = []
+	</script>
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="PoPGRI">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+				
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Documentation</a>
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+        <a href="https://github.com/PoPGRI/Race">GitHub</a>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div>
+
+<div class="site-header-container has-cover" style="background-image: url(/assets/image.png);">
+  <div class="scrim has-cover">
+    <header class="site-header">
+      <h1 class="title">PoPGRI</h1>
+      <p class="subtitle">A competition for intelligent racing</p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+  <i>This competition is currently under construction. The information on this page is subject to change.</i>
+</div>
+
+<div class="wrapper">
+  
+  <div>
+      
+      <h1>Overview</h1>
+      
+      <p><p>PoPGRI uses the <a href="https://carla.org/">CARLA simulator</a> alongside <a href="https://www.ros.org/">ROS Noetic</a> to run synthesis algorithms. The CARLA simulator is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
+
+<p>The software and system recommendations are listed below.</p>
+
+<h4 id="software-recommendations">Software Recommendations</h4>
+<ul>
+  <li>Ubuntu 20.04</li>
+  <li>Carla 0.9.11</li>
+  <li>ROS Noetic</li>
+  <li>Python 3</li>
+</ul>
+
+<h4 id="system-recommendations">System Recommendations</h4>
+<ul>
+  <li>Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD ryzen 7 / AMD ryzen 9</li>
+  <li>+16 GB RAM memory</li>
+  <li>NVIDIA RTX 2070 / NVIDIA RTX 2080 / NVIDIA RTX 3070, NVIDIA RTX 3080</li>
+  <li>4GB GPU</li>
+  <li>Open GL 3.3 or above​ and ​DirectX 10</li>
+</ul>
+
+<h2 id="competition-details">Competition Details</h2>
+<p>All submissions must be submitted as a zip file. This zip file should contain:</p>
+<ul>
+  <li>Decision and control module (see Interfaces).</li>
+  <li>Documentation including necessary libraries</li>
+  <li>A short description of the algorithm
+The competition will provide an early release of the framework to allow the competitors to run tests. This early release will contain a baseline algorithm, test vehicle, and test environment. This test vehicle and test environment are not the same as the ones provided on the day of the competition.
+On the day of the competition, a final release will be provided. This final release will contain the competition vehicle and the competition environment. The competitors will have 2 hrs after the final release for submissions. These submissions will then be run by the competition hosts for scoring.</li>
+</ul>
+
+<h4 id="scoring">Scoring</h4>
+<p>The synthesis algorithms will be scored based on many factors. These factors include:</p>
+<ul>
+  <li>Safety: How well can the vehicle avoid obstacles?</li>
+  <li>Time to completion: How quickly does the vehicle complete the track?</li>
+  <li>Computation time: How long does it take to synthesize inputs?</li>
+</ul>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Interfaces</h1>
+      
+      <p><p>PoPGRI reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
+The coordinate system used by ROS is ENU. The perception module is written using Python.
+A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
+
+<p><img src="/assets/interface.png" alt="PoPGRI Interfaces" /></p>
+
+<h3 id="perception">Perception</h3>
+<p>The perception used in PoPGRI is split into two components. The first components of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on.</p>
+
+<h4 id="obstacles">Obstacles</h4>
+<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, location, and velocity. The perception can be retrieved by subscribing to the rostopic “local_percep”.</p>
+<ul>
+  <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “building”, etc.)</li>
+  <li>ID: An identifier for each obstacle (ie. “pedestrian 1”, etc.). This remains the same across all time steps.</li>
+  <li>Location: The location of the center of each obstacle given in [x, y, z] global coordinates</li>
+  <li>Velocity: The velocity of the obstacle at the current time step given as [v_x, v_y, v_z].</li>
+</ul>
+
+<p>The bounding box for each type is given below:</p>
+<ul>
+  <li>Pedestrian:</li>
+  <li>Car:</li>
+  <li>Building:</li>
+  <li>etc.</li>
+</ul>
+
+<h4 id="lanes">Lanes</h4>
+<p>The current lane that the vehicle is in is described by a collection of points and the current goal that the vehicle is trying to reach. This information is published to the rostopic “lane_view”</p>
+
+<h3 id="decision-and-control">Decision and Control</h3>
+<p>The decision and control module is built by the competitors. All pre-computations required for the synthesis algorithms must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system. For more information, please refer to the diagram.
+The decision and control module should output the rostopic “vehicle_input”.</p>
+
+<h3 id="vehicle-system">Vehicle System</h3>
+<p>The vehicle system provided by CARLA. The vehicle system is subscribed to the rostopic “vehicle_input”.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Important Dates</h1>
+      
+      <p><p><em>Dates are tentative and subject to change</em></p>
+
+<ul>
+  <li>Feb. 27: Beta release</li>
+  <li>Feb.27 - March 17: Bug fixing</li>
+  <li>March 18: Early release</li>
+  <li>May 11: Competition release
+    <ul>
+      <li>13:00 PT Final release, submissions open</li>
+      <li>15:00 PT Submissions close</li>
+    </ul>
+  </li>
+  <li>May 18-21: Results announced</li>
+</ul>
+</p>
+  </div>
+  
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">PoPGRI</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        <a href="/">Home</a>
+				
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Documentation</a>
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:mitras@illinois.edu">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">mitras@illinois.edu</span>
+          </a>
+        </li>
+
+        
+          
+        
+          
+        
+          
+          <li>
+            <a href="https://github.com/PoPGRI" title="Fork me on GitHub">
+              <i class="fa fa-github"></i>
+              <span class="username">PoPGRI</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <!-- <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p> -->
+      <p class="text">Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
+<script src="//unpkg.com/popper.js@1"></script>
+<script src="//unpkg.com/tippy.js@5"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
+	// Enable tooltips via Tippy.js
+	if (Array.isArray(window.tooltips)) {
+		window.tooltips.forEach(function(tooltip) {
+			var selector = tooltip[0];
+			var config = tooltip[1];
+			tippy(selector, config);
+		})
+	}
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
