@@ -185,10 +185,11 @@
 <ul>
   <li>Decision and control module (see Interfaces).</li>
   <li>Documentation including necessary libraries</li>
-  <li>A short description of the algorithm
-The competition will provide an early release of the framework to allow the competitors to run tests. This early release will contain a baseline algorithm, test vehicle, and test environment. This test vehicle and test environment are not the same as the ones provided on the day of the competition.
-On the day of the competition, a final release will be provided. This final release will contain the competition vehicle and the competition environment. The competitors will have 2 hrs after the final release for submissions. These submissions will then be run by the competition hosts for scoring.</li>
+  <li>A short description of the algorithm</li>
 </ul>
+
+<p>The competition will provide an early release of the framework to allow the competitors to run tests. This early release will contain a baseline algorithm, test vehicle, and test environment. This test vehicle and test environment are not the same as the ones provided on the day of the competition.
+On the day of the competition, a final release will be provided. This final release will contain the competition vehicle and the competition environment. The competitors will have 2 hrs after the final release for submissions. These submissions will then be run by the competition hosts for scoring.</p>
 
 <h4 id="scoring">Scoring</h4>
 <p>The synthesis algorithms will be scored based on many factors. These factors include:</p>
@@ -208,7 +209,7 @@ On the day of the competition, a final release will be provided. This final rele
 The coordinate system used by ROS is ENU. The perception module is written using Python.
 A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
 
-<p><img src="/assets/interface.png" alt="PoPGRI Interfaces" /></p>
+<p><img src="/assets/interface.png" /></p>
 
 <h3 id="perception">Perception</h3>
 <p>The perception used in PoPGRI is split into two components. The first components of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on.</p>

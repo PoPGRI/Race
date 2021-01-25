@@ -8,7 +8,7 @@ PoPGRI reduces an autonomous system into 3 submodules: (i) perception, (ii) deci
 The coordinate system used by ROS is ENU. The perception module is written using Python.
 A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.
 
-![PoPGRI Interfaces]({% link /assets/interface.png %})
+ <img src="/assets/interface.png">
 
 ### Perception
 The perception used in PoPGRI is split into two components. The first components of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a "lane"-view of the track it is on.
