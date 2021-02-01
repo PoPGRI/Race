@@ -1,61 +1,70 @@
 import rospy
 import numpy as np
-import cv2
-from cv_bridge import CvBridge, CvBridgeError
+# import cv2
+# from cv_bridge import CvBridge, CvBridgeError
 
-from sensor_msgs.msg import Image
-from sensor_msgs.msg import PointCloud2
-from sensor_msgs import point_cloud2
-from gazebo_msgs.srv import GetModelState, GetModelStateResponse
+# from sensor_msgs.msg import Image
+# from sensor_msgs.msg import PointCloud2
+# from sensor_msgs import point_cloud2
+# from gazebo_msgs.srv import GetModelState, GetModelStateResponse
+# from sensor_msgs.msg import NavSatFix
+from derived_object_msgs.msg import ObjectArray
 import copy
 
 class VehiclePerception:
     def __init__(self, model_name='gem', resolution=0.1, side_range=(-20., 20.), 
             fwd_range=(-20., 20.), height_range=(-1.6, 0.5)):
-        self.lidar = LidarProcessing(resolution=resolution, side_range=side_range, fwd_range=fwd_range, height_range=height_range)
+        # self.lidar = LidarProcessing(resolution=resolution, side_range=side_range, fwd_range=fwd_range, height_range=height_range)
         
-        self.bridge = CvBridge()
-        self.cameraSub = rospy.Subscriber("/" + model_name + "/front_single_camera/front_single_camera/image_raw", Image, self.imageCallback)
-        self.raw_image = None
+        # self.bridge = CvBridge()
+        # self.cameraSub = rospy.Subscriber("/" + model_name + "/front_single_camera/front_single_camera/image_raw", Image, self.imageCallback)
+        # self.raw_image = None
+        self.gnssSub = rospy.Subscriber("/carla/objects", ObjectArray, self.gpsReading)
         self.model_name = model_name
+        self.position = None
+        self.velocity = None 
+        self.quat = None
 
-    def imageCallback(self, data):
-        try:
-            # Convert a ROS image message into an OpenCV image
-            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-        except CvBridgeError as e:
-            print(e)
+    # def imageCallback(self, data):
+    #     try:
+    #         # Convert a ROS image message into an OpenCV image
+    #         cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+    #     except CvBridgeError as e:
+    #         print(e)
         
-        self.raw_img = cv_image.copy()
+    #     self.raw_img = cv_image.copy()
     
-    def cameraReading(self):
-        # Get a image from the camera on the vehicle
-        # Input: None
-        # Output: An open cv image
-        return self.raw_image
+    # def cameraReading(self):
+    #     # Get a image from the camera on the vehicle
+    #     # Input: None
+    #     # Output: An open cv image
+    #     return self.raw_image
 
-    def lidarReading(self):
-        # Get processed reading from the Lidar on the vehicle
-        # Input: None
-        # Output: Distance between the vehicle and object in the front
-        res = self.lidar.processLidar()
-        return res
+    # def lidarReading(self):
+    #     # Get processed reading from the Lidar on the vehicle
+    #     # Input: None
+    #     # Output: Distance between the vehicle and object in the front
+    #     res = self.lidar.processLidar()
+    #     return res
 
-    def gpsReading(self):
+    def gpsReading(self, data):
         # Get the current state of the vehicle
         # Input: None
         # Output: ModelState, the state of the vehicle, contain the
         #   position, orientation, linear velocity, angular velocity
         #   of the vehicle
-        rospy.wait_for_service('/gazebo/get_model_state')
-        try:
-            serviceResponse = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
-            modelState = serviceResponse(model_name=self.model_name)
-        except rospy.ServiceException as exc:
-            rospy.loginfo("Service did not process request: "+str(exc))
-            modelState = GetModelStateResponse()
-            modelState.success = False
-        return modelState
+        # rospy.wait_for_service('/gazebo/get_model_state')
+        # try:
+        #     serviceResponse = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
+        #     modelState = serviceResponse(model_name=self.model_name)
+        # except rospy.ServiceException as exc:
+        #     rospy.loginfo("Service did not process request: "+str(exc))
+        #     modelState = GetModelStateResponse()
+        #     modelState.success = False
+        # return modelState
+        self.position = (data.objects[0].pose.position.x, data.objects[0].pose.position.y)
+        self.quat = (data.objects[0].pose.orientation.x, data.objects[0].pose.orientation.y, data.objects[0].pose.orientation.z, data.objects[0].pose.orientation.w)
+        self.velocity = (data.objects[0].twist.linear.x, data.objects[0].twist.linear.y)
 
 class LidarProcessing:
     def __init__(self, resolution=0.1, side_range=(-20., 20.), fwd_range=(-20., 20.),
