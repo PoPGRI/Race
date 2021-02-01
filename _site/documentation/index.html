@@ -209,37 +209,30 @@ On the day of the competition, a final release will be provided. This final rele
 The coordinate system used by ROS is ENU. The perception module is written using Python.
 A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
 
-<p><img src="/assets/interface.png" /></p>
+<p><img src="/Race/assets/interface.png" /></p>
 
 <h3 id="perception">Perception</h3>
 <p>The perception used in PoPGRI is split into two components. The first components of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on.</p>
 
 <h4 id="obstacles">Obstacles</h4>
-<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, location, and velocity. The perception can be retrieved by subscribing to the rostopic “local_percep”.</p>
+<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and location. The perception can be retrieved by subscribing to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
 <ul>
   <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “building”, etc.)</li>
   <li>ID: An identifier for each obstacle (ie. “pedestrian 1”, etc.). This remains the same across all time steps.</li>
   <li>Location: The location of the center of each obstacle given in [x, y, z] global coordinates</li>
-  <li>Velocity: The velocity of the obstacle at the current time step given as [v_x, v_y, v_z].</li>
 </ul>
 
-<p>The bounding box for each type is given below:</p>
-<ul>
-  <li>Pedestrian:</li>
-  <li>Car:</li>
-  <li>Building:</li>
-  <li>etc.</li>
-</ul>
+<p><em>The bounding box information will be updated soon.</em></p>
 
 <h4 id="lanes">Lanes</h4>
-<p>The current lane that the vehicle is in is described by a collection of points and the current goal that the vehicle is trying to reach. This information is published to the rostopic “lane_view”</p>
+<p>The current lane that the vehicle is in is described by a list of points between the current location of the vehicle and the end of the lane. This information is published to the rostopic <code class="highlighter-rouge">lane-waypoints</code>.</p>
 
 <h3 id="decision-and-control">Decision and Control</h3>
 <p>The decision and control module is built by the competitors. All pre-computations required for the synthesis algorithms must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system. For more information, please refer to the diagram.
-The decision and control module should output the rostopic “vehicle_input”.</p>
+The decision and control module should output the rostopic <code class="highlighter-rouge">vehicle_input</code>.</p>
 
 <h3 id="vehicle-system">Vehicle System</h3>
-<p>The vehicle system provided by CARLA. The vehicle system is subscribed to the rostopic “vehicle_input”.</p>
+<p>The vehicle system provided by CARLA. The vehicle system is subscribed to the rostopic <code class="highlighter-rouge">vehicle_input</code>.</p>
 </p>
   </div>
   
