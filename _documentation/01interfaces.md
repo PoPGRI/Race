@@ -27,7 +27,7 @@ The current lane that the vehicle is in is described by a list of points between
 
 ### Decision and Control
 The decision and control module is built by the competitors. All pre-computations required for the synthesis algorithms must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system. For more information, please refer to the diagram.
-The decision and control module should output the rostopic `vehicle_input`.
+The decision and control module should use the [`ackermann_msgs` package](http://wiki.ros.org/ackermann_msgs).
 
 ### Vehicle System
-The vehicle system provided by CARLA. The vehicle system is subscribed to the rostopic `vehicle_input`.
+The vehicle system provided by CARLA. The vehicle system uses the `ackermann_msgs` package.
