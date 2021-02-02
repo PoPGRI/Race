@@ -9,6 +9,11 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>carla_waypoint_types</exec_depend>
   <exec_depend>rospy</exec_depend>
+  <maintainer email="pricejiang@todo.todo">pricejiang</maintainer>
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
   <export>
   </export>
 </package>
