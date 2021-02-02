@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>popgri_raceinfo_publisher</name>
+  <version>0.0.0</version>
+  <description>The popgri_raceinfo_publisher package</description>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <build_depend>rospy</build_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>carla_waypoint_types</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <maintainer email="pricejiang@todo.todo">pricejiang</maintainer>
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+  <export>
+  </export>
+</package>

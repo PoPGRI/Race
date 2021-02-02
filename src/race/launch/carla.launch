@@ -48,4 +48,8 @@
     <arg name='role_name' value='$(arg role_name)'/>
   </include>
 
+  <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
 </launch>
