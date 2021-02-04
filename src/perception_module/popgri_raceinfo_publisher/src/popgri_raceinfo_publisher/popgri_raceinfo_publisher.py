@@ -50,7 +50,6 @@ class PerceptionModule():
     def get_radius(self):
         return self.sensing_radius
     
-    # TODO: lane detection
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
     def get_lane_way_point(self, distance=1.0):
@@ -64,6 +63,25 @@ class PerceptionModule():
         cur_waypoint = carla_map.get_waypvoint(vehicle_location)
         # return list of waypoints from cur_waypoint to the end of the lane
         return cur_waypoint.next_until_lane_end(distance)
+
+    # TODO: return bounding box of environment objects within range
+    # get city objects in terms of info on their bounding box
+    def get_bb_within_range(self, obj_type):
+        # TODO: need to check validity of object type
+        all_env_obj = self.world.get_environment_objects(obj_type)
+        vehicle = self.vehicle
+        self_loc = vehicle.get_location()
+        radius = self.sensing_radius
+        filtered_obstacles = []
+        for obj in all_env_obj:
+            box = obj.bounding_box
+            # TODO: local VS global ?
+            vertices = box.get_local_vertices()
+            for v in vertices:
+                if v.distance(self_loc) <= radius:
+                    filtered_obstacles.append(box)
+                    break
+        return filtered_obstacles
 
 # publish obstacles and lane waypoints information
 def publisher(percep_mod):
