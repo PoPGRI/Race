@@ -1,1 +1,1 @@
-BBInfo[] walls_boundingBox
+BBInfo[] bounding_box
