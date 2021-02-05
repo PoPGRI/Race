@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+from typing import Counter
 import carla
 import rospy
 import sys
 from popgri_msgs.msg import BBInfo
 from popgri_msgs.msg import BBList
+from popgri_msgs.msg import BBSingleInfo
 class PerceptionModule_BB():
     def __init__(self, carla_world, radius=10):
         self.sensing_radius = radius # default ?????
@@ -19,10 +21,18 @@ class PerceptionModule_BB():
 
     def set_radius(self, new_radius):
         self.sensing_radius = new_radius
-    
     def get_radius(self):
         return self.sensing_radius
-
+    #determine if the given bounding box is within sensing radius of the vehicle
+    def bb_within_range(self, bb, self_location):
+        radius = self.sensing_radius
+        bb_loc = bb.location
+        # project the center of the box to ground
+        labelled_point = self.world.ground_projection(bb_loc, abs(bb.extent.z)/2)
+        projected_loc = labelled_point.location
+        if projected_loc.distance(self_location) <= radius:
+            return True
+        return False
     # TODO: return bounding box of environment objects within range
     # get city objects in terms of info on their bounding box
     # return type:carla.BoundingBox
@@ -31,16 +41,12 @@ class PerceptionModule_BB():
         all_env_obj = self.world.get_environment_objects(obj_type)
         vehicle = self.vehicle
         self_loc = vehicle.get_location()
-        radius = self.sensing_radius
         filtered_obstacles = []
         for obj in all_env_obj:
             box = obj.bounding_box
             # TODO: check local VS global 
-            vertices = box.get_local_vertices()
-            for v in vertices:
-                if v.distance(self_loc) <= radius:
-                    filtered_obstacles.append(box)
-                    break
+            if self.bb_within_range(box, self_loc):
+                filtered_obstacles.append(box)
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
@@ -54,18 +60,14 @@ def publisher(percep_mod, label_list):
             bbs_msgs = BBList()
             for bb in bbs:
                 info = BBInfo()
-                info.extent.x = bb.extent.x
-                info.extent.y = bb.extent.y
-                info.extent.z = bb.extent.z
-
-                info.location.x = bb.location.x
-                info.location.y = bb.location.y
-                info.location.z = bb.location.z
-
-                info.rotation.x = bb.rotation.pitch
-                info.rotation.y = bb.rotation.yaw
-                info.rotation.z = bb.rotation.roll
-
+                #get local coordinates(global coordinates need parameter carla.Transform)
+                local_vertices = bb.get_local_vertices()
+                for loc in local_vertices:
+                    vertex = BBSingleInfo()
+                    vertex.vertex_location.x = loc.x
+                    vertex.vertex_location.y = loc.y
+                    vertex.vertex_location.z = loc.z
+                    info.append(vertex)
                 info.type = label
                 bbs_msgs.append(info)
             pub.publish(bbs_msgs)

@@ -25,6 +25,7 @@ class PerceptionModule():
             rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
+        vehicle_loc = vehicle.location
         all_actors = self.world.get_actors()
         radius = self.sensing_radius
         filtered_obstacles = []
@@ -32,7 +33,7 @@ class PerceptionModule():
             # get actor's location
             cur_loc = actor.get_location()
             # determine whether actor is within the radius
-            if vehicle.distance(cur_loc) <= radius:
+            if vehicle_loc.distance(cur_loc) <= radius:
                 # we need to throw out actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
@@ -75,6 +76,8 @@ def publisher(percep_mod):
         lp = percep_mod.get_lane_way_point()
         obsmsg = []
         lpmsg = []
+        if obs is None or lp is None:
+            continue
         for ob in obs:
             temp = ObstacleInfo()
             # fill the fields for current obstacle
@@ -84,18 +87,18 @@ def publisher(percep_mod):
             temp.location.x = loc.x
             temp.location.y = loc.y
             temp.location.z = loc.z
-            v = ob.get_velocity()
-            temp.velocity.x = v.x
-            temp.velocity.y = v.y
-            temp.velocity.z = v.z
             obsmsg.append(temp)
         for p in lp:
             temp = LaneInfo()
             trans = p.transform
             loc = trans.location
             rot  = trans.rotation
-            temp.location = loc
-            temp.rotation = rot
+            temp.location.x = loc.x
+            temp.location.y = loc.y
+            temp.location.z = loc.z
+            temp.rotation.x = rot.pitch
+            temp.rotation.y = rot.yaw
+            temp.rotation.z = rot.roll
             lpmsg.append(temp)
         obs_pub.publish(obsmsg)
         lane_pub.publish(lpmsg)
@@ -105,11 +108,11 @@ def publisher(percep_mod):
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
     rospy.init_node('popgri_raceinfo_publisher', anonymous=True)
-    host = rospy.get_param("/carla/host", "127.0.0.1")
-    port = rospy.get_param("/carla/host", 2000)
-    timeout = rospy.get_param("/carla/timeout", 10)
-    client = carla.Client(host=host, port=port)
-    client.set_timeout(timeout)
+    # host = rospy.get_param("/carla/host", "127.0.0.1")
+    # port = rospy.get_param("/carla/host", 2000)
+    # timeout = rospy.get_param("/carla/timeout", 10)
+    client = carla.Client('localhost', 2000)
+    # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule(world)
     publisher(pm)

@@ -1,1 +1,1 @@
-BBInfo[] bounding_box
+BBInfo[] bounding_box_vertices
