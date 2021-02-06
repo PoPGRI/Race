@@ -2,7 +2,8 @@
 from typing import Counter
 import carla
 import rospy
-import sys
+# import sys
+import numpy as np
 from popgri_msgs.msg import BBInfo
 from popgri_msgs.msg import BBList
 from popgri_msgs.msg import BBSingleInfo
@@ -23,15 +24,66 @@ class PerceptionModule_BB():
         self.sensing_radius = new_radius
     def get_radius(self):
         return self.sensing_radius
+    # transform from local coordinate to world coordinate
+    # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
+    def obj_to_world(cords, obj):
+        """
+        Transforms coordinates of an object bounding box to world.
+        """
+
+        bb_transform = carla.Transform(obj.bounding_box.location)
+        bb_vehicle_matrix = PerceptionModule_BB.get_matrix(bb_transform)
+        vehicle_world_matrix = PerceptionModule_BB.get_matrix(obj.transform)
+        bb_world_matrix = np.dot(vehicle_world_matrix, bb_vehicle_matrix)
+        world_cords = np.dot(bb_world_matrix, np.transpose(cords))
+        return world_cords
+    # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
+    @staticmethod
+    def get_matrix(transform):
+        """
+        Creates matrix from carla transform.
+        """
+
+        rotation = transform.rotation
+        location = transform.location
+        c_y = np.cos(np.radians(rotation.yaw))
+        s_y = np.sin(np.radians(rotation.yaw))
+        c_r = np.cos(np.radians(rotation.roll))
+        s_r = np.sin(np.radians(rotation.roll))
+        c_p = np.cos(np.radians(rotation.pitch))
+        s_p = np.sin(np.radians(rotation.pitch))
+        matrix = np.matrix(np.identity(4))
+        matrix[0, 3] = location.x
+        matrix[1, 3] = location.y
+        matrix[2, 3] = location.z
+        matrix[0, 0] = c_p * c_y
+        matrix[0, 1] = c_y * s_p * s_r - s_y * c_r
+        matrix[0, 2] = -c_y * s_p * c_r - s_y * s_r
+        matrix[1, 0] = s_y * c_p
+        matrix[1, 1] = s_y * s_p * s_r + c_y * c_r
+        matrix[1, 2] = -s_y * s_p * c_r + c_y * s_r
+        matrix[2, 0] = s_p
+        matrix[2, 1] = -c_p * s_r
+        matrix[2, 2] = c_p * c_r
+        return matrix
     #determine if the given bounding box is within sensing radius of the vehicle
     def bb_within_range(self, bb, self_location):
         radius = self.sensing_radius
         bb_loc = bb.location
-        # project the center of the box to ground
-        labelled_point = self.world.ground_projection(bb_loc, abs(bb.extent.z)/2)
-        projected_loc = labelled_point.location
-        if projected_loc.distance(self_location) <= radius:
-            return True
+        # get the world coordinate of the box center
+        world_cord_box = self.obj_to_world(bb_loc, bb)
+        vehicle_loc = self.vehicle.get_location()
+        # cast ray returns all points intersecting the ray between initial location and final location
+        # for descirption of the method, see: https://carla.readthedocs.io/en/latest/python_api/#carlaworld
+        labelled_points_in_way = self.world.cast_ray(vehicle_loc, world_cord_box)
+        # remove points outside of range
+        for point in labelled_points_in_way:
+            if point.location.distance(self_location) > radius:
+                labelled_points_in_way.remove(point)
+        for point in labelled_points_in_way:
+            # if bounding box contains any point in the way, then 
+            if bb.contains(point.location, bb.transform):
+                return True
         return False
     # TODO: return bounding box of environment objects within range
     # get city objects in terms of info on their bounding box
@@ -44,7 +96,6 @@ class PerceptionModule_BB():
         filtered_obstacles = []
         for obj in all_env_obj:
             box = obj.bounding_box
-            # TODO: check local VS global 
             if self.bb_within_range(box, self_loc):
                 filtered_obstacles.append(box)
         return filtered_obstacles
