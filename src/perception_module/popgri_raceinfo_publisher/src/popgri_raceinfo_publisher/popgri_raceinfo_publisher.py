@@ -28,6 +28,7 @@ class PerceptionModule():
             rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
+        vehicle_loc = vehicle.location
         all_actors = self.world.get_actors()
         radius = self.sensing_radius
         filtered_obstacles = []
@@ -35,7 +36,7 @@ class PerceptionModule():
             # get actor's location
             cur_loc = actor.get_location()
             # determine whether actor is within the radius
-            if vehicle.get_location().distance(cur_loc) <= radius:
+            if vehicle_loc.distance(cur_loc) <= radius:
                 # we need to throw out actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
@@ -53,7 +54,6 @@ class PerceptionModule():
     def get_radius(self):
         return self.sensing_radius
     
-    # TODO: lane detection
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
     def get_lane_way_point(self, distance=1.0):
@@ -91,10 +91,6 @@ def publisher(percep_mod):
             temp.location.x = loc.x
             temp.location.y = loc.y
             temp.location.z = loc.z
-            v = ob.get_velocity()
-            temp.velocity.x = v.x
-            temp.velocity.y = v.y
-            temp.velocity.z = v.z
             obsmsg.append(temp)
         for p in lp:
             temp = LaneInfo()
