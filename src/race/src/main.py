@@ -38,10 +38,10 @@ def run_model(model_name):
         # perceptionResult = perceptionModule.lidarReading()
 
         refState = decisionModule.get_ref_state(currState)
-        print("target: ", refState)
-
-        if decisionModule.pos_idx > len(decisionModule.waypoint_list):
+        if not refState:
+            controlModule.stop()
             exit(0)
+        print("target: ", refState)
 
         controlModule.execute(currState, refState)
 

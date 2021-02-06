@@ -34,7 +34,9 @@ class VehicleDecision():
         if ((distToTargetX < 2 and distToTargetY < 2)):
             self.prev_pos_idx = self.pos_idx
             self.pos_idx += 10
-            self.pos_idx = int(self.pos_idx % len(self.waypoint_list))
+            if self.pos_idx > len(self.waypoint_list):
+                return None
+            # self.pos_idx = int(self.pos_idx % len(self.waypoint_list))
             print("reached",self.waypoint_list[self.pos_idx-1][0],self.waypoint_list[self.pos_idx-1][1],
                 "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
         
