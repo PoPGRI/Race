@@ -12,6 +12,7 @@ class PerceptionModule_BB():
         self.sensing_radius = radius # default ?????
         self.world = carla_world
         self.vehicle = None
+        self.find_ego_vehicle()
     # find ego vehicle
     # reference: 
     def find_ego_vehicle(self):
@@ -26,14 +27,14 @@ class PerceptionModule_BB():
         return self.sensing_radius
     # transform from local coordinate to world coordinate
     # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
-    def obj_to_world(cords, obj):
+    def obj_to_world(self, cords, obj):
         """
         Transforms coordinates of an object bounding box to world.
         """
 
-        bb_transform = carla.Transform(obj.bounding_box.location)
+        bb_transform = carla.Transform(obj.location)
         bb_vehicle_matrix = PerceptionModule_BB.get_matrix(bb_transform)
-        vehicle_world_matrix = PerceptionModule_BB.get_matrix(obj.transform)
+        vehicle_world_matrix = PerceptionModule_BB.get_matrix(obj.get_transform())
         bb_world_matrix = np.dot(vehicle_world_matrix, bb_vehicle_matrix)
         world_cords = np.dot(bb_world_matrix, np.transpose(cords))
         return world_cords
@@ -67,22 +68,24 @@ class PerceptionModule_BB():
         matrix[2, 2] = c_p * c_r
         return matrix
     #determine if the given bounding box is within sensing radius of the vehicle
-    def bb_within_range(self, bb, self_location):
+    def bb_within_range(self, bb, bb_transform, self_location):
         radius = self.sensing_radius
         bb_loc = bb.location
+        # vehicle_loc = self.vehicle.get_location()
+        
         # get the world coordinate of the box center
-        world_cord_box = self.obj_to_world(bb_loc, bb)
-        vehicle_loc = self.vehicle.get_location()
+        # world_cord_box = self.obj_to_world(bb_loc, bb)
+        
         # cast ray returns all points intersecting the ray between initial location and final location
         # for descirption of the method, see: https://carla.readthedocs.io/en/latest/python_api/#carlaworld
-        labelled_points_in_way = self.world.cast_ray(vehicle_loc, world_cord_box)
+        labelled_points_in_way = self.world.cast_ray(self_location, bb_loc)
         # remove points outside of range
         for point in labelled_points_in_way:
             if point.location.distance(self_location) > radius:
                 labelled_points_in_way.remove(point)
         for point in labelled_points_in_way:
             # if bounding box contains any point in the way, then 
-            if bb.contains(point.location, bb.transform):
+            if bb.contains(point.location, bb_transform):
                 return True
         return False
     # TODO: return bounding box of environment objects within range
@@ -90,25 +93,32 @@ class PerceptionModule_BB():
     # return type:carla.BoundingBox
     def get_bb_within_range(self, obj_type):
         # TODO: need to check validity of object type
+        if self.vehicle == None:
+            self.find_ego_vehicle()
+            # rospy.loginfo("No ego vehicle.")
+            return
         all_env_obj = self.world.get_environment_objects(obj_type)
         vehicle = self.vehicle
         self_loc = vehicle.get_location()
         filtered_obstacles = []
         for obj in all_env_obj:
             box = obj.bounding_box
-            if self.bb_within_range(box, self_loc):
+            transform = obj.transform
+            if self.bb_within_range(box, transform, self_loc):
                 filtered_obstacles.append(box)
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, label_list):
     # main function
-    pub = rospy.Publisher('environment_obj_bb', BBList)
+    pub = rospy.Publisher('environment_obj_bb', BBList, queue_size=1)
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         for label in label_list:
             bbs = percep_mod.get_bb_within_range(label)
             bbs_msgs = BBList()
+            if not bbs:
+                continue
             for bb in bbs:
                 info = BBInfo()
                 #get local coordinates(global coordinates need parameter carla.Transform)
@@ -128,11 +138,11 @@ def publisher(percep_mod, label_list):
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
     rospy.init_node('envobj_bb_publihser', anonymous=True)
-    host = rospy.get_param("/carla/host", "127.0.0.1")
-    port = rospy.get_param("/carla/host", 2000)
-    timeout = rospy.get_param("/carla/timeout", 10)
-    client = carla.Client(host=host, port=port)
-    client.set_timeout(timeout)
+    # host = rospy.get_param("/carla/host", "127.0.0.1")
+    # port = rospy.get_param("/carla/host", 2000)
+    # timeout = rospy.get_param("/carla/timeout", 10)
+    client = carla.Client('localhost', 2000)
+    # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule_BB(world)
     default_list = [carla.CityObjectLabel.Vehicles, carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Fences, carla.CityObjectLabel.Pedestrians, carla.CityObjectLabel.Sidewalks, carla.CityObjectLabel.Walls, carla.CityObjectLabel.Vegetation, carla.CityObjectLabel.GuardRail]

@@ -25,10 +25,10 @@ class PerceptionModule():
         # get every actor on stage
         if self.vehicle == None:
             self.find_ego_vehicle()
-            rospy.loginfo("No ego vehicle.")
+            # rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
-        vehicle_loc = vehicle.location
+        vehicle_loc = vehicle.get_location()
         all_actors = self.world.get_actors()
         radius = self.sensing_radius
         filtered_obstacles = []
@@ -59,7 +59,7 @@ class PerceptionModule():
     def get_lane_way_point(self, distance=1.0):
         if self.vehicle == None:
             self.find_ego_vehicle()
-            rospy.loginfo("No ego vehicle.")
+            # rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
         carla_map = self.world.get_map()

@@ -52,4 +52,8 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <include file="$(find envobj_bb_publihser)/launch/envobj_bb_publihser.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
 </launch>

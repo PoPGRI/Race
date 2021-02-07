@@ -3,7 +3,7 @@ project(envobj_bb_publihser)
 
 find_package(catkin REQUIRED COMPONENTS rospy roslaunch)
 
-catkin_python_setup()
+# catkin_python_setup()
 
 if(CATKIN_ENABLE_TESTING)
   roslaunch_add_file_check(launch)

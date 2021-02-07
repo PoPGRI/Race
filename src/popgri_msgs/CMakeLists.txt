@@ -53,6 +53,9 @@ add_message_files(
    LaneList.msg
    ObstacleInfo.msg
    ObstacleList.msg
+   BBInfo.msg
+   BBList.msg 
+   BBSingleInfo.msg
 )
 
 ## Generate services in the 'srv' folder
