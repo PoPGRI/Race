@@ -32,10 +32,10 @@ class PerceptionModule_BB():
         Transforms coordinates of an object bounding box to world.
         """
 
-        bb_transform = carla.Transform(obj.location)
-        bb_vehicle_matrix = PerceptionModule_BB.get_matrix(bb_transform)
-        vehicle_world_matrix = PerceptionModule_BB.get_matrix(obj.get_transform())
-        bb_world_matrix = np.dot(vehicle_world_matrix, bb_vehicle_matrix)
+        bb_transform = carla.Transform(obj.bounding_box.location)
+        bb_obj_matrix = PerceptionModule_BB.get_matrix(bb_transform)
+        obj_world_matrix = PerceptionModule_BB.get_matrix(obj.transform)
+        bb_world_matrix = np.dot(obj_world_matrix, bb_obj_matrix)
         world_cords = np.dot(bb_world_matrix, np.transpose(cords))
         return world_cords
     # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
@@ -68,9 +68,10 @@ class PerceptionModule_BB():
         matrix[2, 2] = c_p * c_r
         return matrix
     #determine if the given bounding box is within sensing radius of the vehicle
-    def bb_within_range(self, bb, bb_transform, self_location):
+    def bb_within_range(self, obj, bb, self_location):
         radius = self.sensing_radius
-        bb_loc = bb.location
+        bb_loc_local = bb.location
+        bb_loc_global = self.obj_to_world(bb_loc_local, obj)
         # vehicle_loc = self.vehicle.get_location()
         
         # get the world coordinate of the box center
@@ -78,14 +79,14 @@ class PerceptionModule_BB():
         
         # cast ray returns all points intersecting the ray between initial location and final location
         # for descirption of the method, see: https://carla.readthedocs.io/en/latest/python_api/#carlaworld
-        labelled_points_in_way = self.world.cast_ray(self_location, bb_loc)
+        labelled_points_in_way = self.world.cast_ray(self_location, bb_loc_global)
         # remove points outside of range
         for point in labelled_points_in_way:
             if point.location.distance(self_location) > radius:
                 labelled_points_in_way.remove(point)
         for point in labelled_points_in_way:
             # if bounding box contains any point in the way, then 
-            if bb.contains(point.location, bb_transform):
+            if bb.contains(point.location, obj.transform):
                 return True
         return False
     # TODO: return bounding box of environment objects within range
@@ -103,8 +104,7 @@ class PerceptionModule_BB():
         filtered_obstacles = []
         for obj in all_env_obj:
             box = obj.bounding_box
-            transform = obj.transform
-            if self.bb_within_range(box, transform, self_loc):
+            if self.bb_within_range(obj, box, self_loc):
                 filtered_obstacles.append(box)
         return filtered_obstacles
 
