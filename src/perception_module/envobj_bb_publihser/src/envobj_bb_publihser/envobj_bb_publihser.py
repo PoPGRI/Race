@@ -37,7 +37,8 @@ class PerceptionModule_BB():
         obj_world_matrix = PerceptionModule_BB.get_matrix(obj.transform)
         bb_world_matrix = np.dot(obj_world_matrix, bb_obj_matrix)
         world_cords = np.dot(bb_world_matrix, np.transpose(cords))
-        return world_cords
+        world_loc = carla.Location(world_cords[0], world_cords[1], world_cords[2])
+        return world_loc
     # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
     @staticmethod
     def get_matrix(transform):
