@@ -26,49 +26,14 @@ class PerceptionModule_BB():
     def get_radius(self):
         return self.sensing_radius
     # transform from local coordinate to world coordinate
-    # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
     def obj_to_world(self, cords, obj):
-        """
-        Transforms coordinates of an object bounding box to world.
-        """
-
-        bb_transform = carla.Transform(obj.bounding_box.location)
-        bb_obj_matrix = PerceptionModule_BB.get_matrix(bb_transform)
-        obj_world_matrix = PerceptionModule_BB.get_matrix(obj.transform)
-        bb_world_matrix = np.dot(obj_world_matrix, bb_obj_matrix)
-        world_cords = np.dot(bb_world_matrix, np.transpose(cords))
-        world_loc = carla.Location(world_cords[0], world_cords[1], world_cords[2])
-        return world_loc
-    # from: https://github.com/carla-simulator/carla/blob/master/PythonAPI/examples/client_bounding_boxes.py
-    @staticmethod
-    def get_matrix(transform):
-        """
-        Creates matrix from carla transform.
-        """
-
-        rotation = transform.rotation
-        location = transform.location
-        c_y = np.cos(np.radians(rotation.yaw))
-        s_y = np.sin(np.radians(rotation.yaw))
-        c_r = np.cos(np.radians(rotation.roll))
-        s_r = np.sin(np.radians(rotation.roll))
-        c_p = np.cos(np.radians(rotation.pitch))
-        s_p = np.sin(np.radians(rotation.pitch))
-        matrix = np.matrix(np.identity(4))
-        matrix[0, 3] = location.x
-        matrix[1, 3] = location.y
-        matrix[2, 3] = location.z
-        matrix[0, 0] = c_p * c_y
-        matrix[0, 1] = c_y * s_p * s_r - s_y * c_r
-        matrix[0, 2] = -c_y * s_p * c_r - s_y * s_r
-        matrix[1, 0] = s_y * c_p
-        matrix[1, 1] = s_y * s_p * s_r + c_y * c_r
-        matrix[1, 2] = -s_y * s_p * c_r + c_y * s_r
-        matrix[2, 0] = s_p
-        matrix[2, 1] = -c_p * s_r
-        matrix[2, 2] = c_p * c_r
-        return matrix
-    #determine if the given bounding box is within sensing radius of the vehicle
+        trans = obj.transform
+        trans.transform(cords)
+        return cords
+    #determine if the given bounding box is within sensing radius of the vehicleh 
+    # input:obj: the object we want to detect
+    #       bb: the objtec's bounding box
+    #       self_locsation: the location of the ego_vehicle
     def bb_within_range(self, obj, bb, self_location):
         radius = self.sensing_radius
         bb_loc_local = bb.location
