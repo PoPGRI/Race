@@ -37,7 +37,7 @@ class PerceptionModule_BB():
     def bb_within_range(self, obj, bb, self_location):
         radius = self.sensing_radius
         bb_loc_local = bb.location
-        bb_loc_global = self.obj_to_world(bb_loc_local, obj)
+        bb_loc_global = obj.transform.location
         # vehicle_loc = self.vehicle.get_location()
         
         # get the world coordinate of the box center
@@ -48,11 +48,16 @@ class PerceptionModule_BB():
         labelled_points_in_way = self.world.cast_ray(self_location, bb_loc_global)
         # remove points outside of range
         for point in labelled_points_in_way:
-            if point.location.distance(self_location) > radius:
+            if self_location.distance(point.location) > radius:
                 labelled_points_in_way.remove(point)
+        # TODO:rotation needs to be confirmed
+        obj_global_rot = obj.transform.rotation
+        bb_loc_rot = bb.rotation
+        rot = carla.Rotation(obj_global_rot.pitch-bb_loc_rot.pitch, obj_global_rot.yaw-bb_loc_rot.yaw, obj_global_rot.roll-bb_loc_rot.roll)
+        trans = carla.Transform(bb_loc_global-bb_loc_local, rot)
         for point in labelled_points_in_way:
             # if bounding box contains any point in the way, then 
-            if bb.contains(point.location, obj.transform):
+            if bb.contains(point.location, trans):
                 return True
         return False
     # TODO: return bounding box of environment objects within range
@@ -94,9 +99,9 @@ def publisher(percep_mod, label_list):
                     vertex.vertex_location.x = loc.x
                     vertex.vertex_location.y = loc.y
                     vertex.vertex_location.z = loc.z
-                    info.append(vertex)
-                info.type = label
-                bbs_msgs.append(info)
+                    info.vertices_locations.append(vertex)
+                #info.type = label
+                bbs_msgs.bounding_box_vertices.append(info)
             pub.publish(bbs_msgs)
         rate.sleep()
 
