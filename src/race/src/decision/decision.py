@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+from util.util import quaternion_to_euler
 
 class VehicleDecision():
     def __init__(self, fn):
@@ -8,7 +9,7 @@ class VehicleDecision():
         self.prev_pos_idx = int(0)
         self.counter = 0
         
-    def get_ref_state(self, currState):
+    def get_ref_state(self, currState, obstacleList):
         """
             Get the reference state for the vehicle according to the current state and result from perception module
             Inputs: 
@@ -19,6 +20,13 @@ class VehicleDecision():
 
         curr_x = currState[0][0]
         curr_y = currState[0][1]
+
+        # obFlag = False
+        # for obs in obstacleList:
+        #     psi = np.tan((obs.location.y - curr_y)/(obs.location.x - curr_x))
+        #     yaw = quaternion_to_euler(currState[1])[2]
+        #     if abs(psi-yaw) < 0.463:
+        #         obFlag = True
 
         target_x = self.waypoint_list[self.pos_idx][0]
         target_y = self.waypoint_list[self.pos_idx][1]
@@ -40,7 +48,9 @@ class VehicleDecision():
             print("reached",self.waypoint_list[self.pos_idx-1][0],self.waypoint_list[self.pos_idx-1][1],
                 "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
         
-
-        ref_v = 17
+        if not obstacleList:
+            ref_v = 10
+        else:
+            ref_v = -1
 
         return [target_x, target_y, target_orientation, ref_v]

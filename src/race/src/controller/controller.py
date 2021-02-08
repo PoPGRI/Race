@@ -13,14 +13,12 @@ class VehicleController():
         self.model_name = model_name
 
     def stop(self):
-        print("make brake")
         newAckermannCmd = AckermannDrive()
         newAckermannCmd.acceleration = -20
         newAckermannCmd.speed = 0
         newAckermannCmd.steering_angle = 0
         self.controlPub.publish(newAckermannCmd)
         for _ in range(10):
-            print("brake")
             vehicleControlCmd = CarlaEgoVehicleControl()
             vehicleControlCmd.throttle = 0.0
             vehicleControlCmd.steer = 0.0
@@ -62,12 +60,12 @@ class VehicleController():
         # Checking if the vehicle need to stop
         if target_v > 0:
             v = xError*k_s + vError*k_ds
+            #Send computed control input to vehicle
+            newAckermannCmd = AckermannDrive()
+            newAckermannCmd.speed = v
+            newAckermannCmd.steering_angle = delta
+            self.controlPub.publish(newAckermannCmd)
         else:
-            v = xError*k_s - 0.05*k_ds            
+            self.stop()           
 
-        #Send computed control input to vehicle
-        newAckermannCmd = AckermannDrive()
-        newAckermannCmd.speed = v
-        newAckermannCmd.steering_angle = delta
-        self.controlPub.publish(newAckermannCmd)
-
+        

@@ -13,13 +13,13 @@ import pickle
 
 
 
-def run_model(model_name):
-    rospy.init_node("gem1_dynamics")
+def run_model():
+    rospy.init_node("baseline")
     rate = rospy.Rate(100)  # 100 Hz    
 
-    perceptionModule = VehiclePerception(model_name)
+    perceptionModule = VehiclePerception()
     decisionModule = VehicleDecision('./waypoints')
-    controlModule = VehicleController(model_name)
+    controlModule = VehicleController()
 
     def shut_down():
         controlModule.stop()
@@ -30,6 +30,8 @@ def run_model(model_name):
         # print(res)
         rate.sleep()  # Wait a while before trying to get a new state
 
+        obstacleList = perceptionModule.obstacleList
+
         # Get the current position and orientation of the vehicle
         currState =  (perceptionModule.position, perceptionModule.quat, perceptionModule.velocity)
         if not currState:
@@ -37,7 +39,7 @@ def run_model(model_name):
         print("Currently at: ", currState)
         # perceptionResult = perceptionModule.lidarReading()
 
-        refState = decisionModule.get_ref_state(currState)
+        refState = decisionModule.get_ref_state(currState, obstacleList)
         if not refState:
             controlModule.stop()
             exit(0)
@@ -47,7 +49,7 @@ def run_model(model_name):
 
 if __name__ == "__main__":
     try:
-        run_model('gem')
+        run_model()
     except rospy.exceptions.ROSInterruptException:
         print("stop")
     

@@ -10,16 +10,9 @@ def set_position(y, x):
     world = client.get_world()
     actors = world.get_actors()
     for actor in actors:
-        if 'vehicle' in actor.type_id:
-            # l = Location(x,y)
-            # print(l.x, l.y)
-            # actor.set_location(l)
-            # print(x, y)
+        if 'vehicle' in actor.type_id and actor.attributes.get('role_name') == 'ego_vehicle':
             transform = Transform(Location(x,-y), Rotation(yaw=180))
             actor.set_transform(transform)
-
-
-
 
 
 if __name__ == "__main__":

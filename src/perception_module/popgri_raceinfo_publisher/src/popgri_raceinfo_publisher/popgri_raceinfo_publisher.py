@@ -89,7 +89,7 @@ def publisher(percep_mod):
             temp.obstacle_id = ob.id
             loc = ob.get_location()
             temp.location.x = loc.x
-            temp.location.y = loc.y
+            temp.location.y = -loc.y
             temp.location.z = loc.z
             obsmsg.append(temp)
         for p in lp:
