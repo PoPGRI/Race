@@ -32,7 +32,16 @@ class PerceptionModule_BB():
         trans = carla.Transform(carla.Location(0,0,0), carla.Rotation(0,0,0))
         # obtain a vector pointing from self_loc to box center in world space
         vec_from_self_to_box = box_loc - self_loc
-        normalized_vec = vec_from_self_to_box/self.distance_between_points(box_loc, self_loc)
+        # project the z coordinate to the bottom of the box
+        if box_loc.z - box.extent.z > self_loc.z:
+            vec_from_self_to_box.z = box_loc.z - box.extent.z - self_loc.z
+        # project z coordinate to the top of the box
+        elif box_loc.z + box.extent.z < self_loc.z:
+            vec_from_self_to_box.z = self_loc.z - (box_loc.z + box.extent.z)
+        # project z coordinate to the same level as the vehicle
+        else :
+            vec_from_self_to_box.z = 0
+        normalized_vec = vec_from_self_to_box/self.distance_between_points(vec_from_self_to_box, vec_from_self_to_box)
         # calculate the location which is 'radius' away from the vehicle along the vec
         tip_of_vec = normalized_vec*radius
         loc_of_vec = tip_of_vec + self_loc
@@ -69,7 +78,7 @@ class PerceptionModule_BB():
 def publisher(percep_mod, label_list):
     # main function
     pub = rospy.Publisher('environment_obj_bb', BBList, queue_size=1)
-    rate = rospy.Rate(1)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         for label in label_list:
             # get all vertices of all bounding boxes which are within the radius with label 'label'
