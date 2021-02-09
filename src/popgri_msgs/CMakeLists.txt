@@ -53,6 +53,7 @@ add_message_files(
    LaneList.msg
    ObstacleInfo.msg
    ObstacleList.msg
+   LocationInfo.msg
    BBInfo.msg
    BBList.msg 
    BBSingleInfo.msg

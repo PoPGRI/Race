@@ -33,7 +33,7 @@ def run_model():
         obstacleList = perceptionModule.obstacleList
 
         # Get the current position and orientation of the vehicle
-        currState =  (perceptionModule.position, perceptionModule.quat, perceptionModule.velocity)
+        currState =  (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
         if not currState:
             continue
         print("Currently at: ", currState)

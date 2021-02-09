@@ -40,7 +40,7 @@ class PerceptionModule():
                 # we need to throw out actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
-                if 'vehicle' in actor.type_id and actor.type_id != vehicle.type_id:
+                if 'vehicle' in actor.type_id and actor.id != vehicle.id:
                     filtered_obstacles.append(actor)
                 elif 'walker' in actor.type_id:
                     filtered_obstacles.append(actor)
@@ -89,7 +89,7 @@ def publisher(percep_mod):
             temp.obstacle_id = ob.id
             loc = ob.get_location()
             temp.location.x = loc.x
-            temp.location.y = -loc.y
+            temp.location.y = loc.y
             temp.location.z = loc.z
             obsmsg.append(temp)
         for p in lp:

@@ -21,12 +21,18 @@ class VehicleDecision():
         curr_x = currState[0][0]
         curr_y = currState[0][1]
 
-        # obFlag = False
-        # for obs in obstacleList:
-        #     psi = np.tan((obs.location.y - curr_y)/(obs.location.x - curr_x))
-        #     yaw = quaternion_to_euler(currState[1])[2]
-        #     if abs(psi-yaw) < 0.463:
-        #         obFlag = True
+        obFlag = False
+        if obstacleList:
+            for obs in obstacleList:
+                dy = obs.location.y - curr_y
+                dx = obs.location.x - curr_x
+                yaw = currState[1][2] * np.pi / 180
+                rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy 
+                ry = np.cos(-yaw) * dy + np.sin(-yaw) * dx
+
+                psi = np.arctan(ry/rx)
+                if rx > 0 and abs(psi) < 0.463:
+                    obFlag = True
 
         target_x = self.waypoint_list[self.pos_idx][0]
         target_y = self.waypoint_list[self.pos_idx][1]
@@ -42,15 +48,17 @@ class VehicleDecision():
         if ((distToTargetX < 2 and distToTargetY < 2)):
             self.prev_pos_idx = self.pos_idx
             self.pos_idx += 10
-            if self.pos_idx > len(self.waypoint_list):
+            if self.pos_idx >= len(self.waypoint_list):
                 return None
-            # self.pos_idx = int(self.pos_idx % len(self.waypoint_list))
-            print("reached",self.waypoint_list[self.pos_idx-1][0],self.waypoint_list[self.pos_idx-1][1],
+            print("pos_idx: ", self.pos_idx)
+            print("len: ", len(self.waypoint_list))
+            print("reached",self.waypoint_list[self.prev_pos_idx][0],self.waypoint_list[self.prev_pos_idx][1],
                 "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
         
-        if not obstacleList:
+        # if not obstacleList:)
+        if not obFlag:
             ref_v = 10
         else:
             ref_v = -1
-
+        
         return [target_x, target_y, target_orientation, ref_v]

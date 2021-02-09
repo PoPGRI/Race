@@ -35,7 +35,7 @@ class VehicleController():
                 targetPose: The desired state of the vehicle
         """
 
-        currentEuler = quaternion_to_euler(currentPose[1][0], currentPose[1][1], currentPose[1][2], currentPose[1][3])
+        currentEuler = currentPose[1]
         curr_x = currentPose[0][0]
         curr_y = currentPose[0][1]
 
@@ -51,19 +51,23 @@ class VehicleController():
         k_theta = 1
 
         #compute errors
+        # print(target_y - curr_y)
+        dx = target_x - curr_x
+        dy = target_y - curr_y
         xError = (target_x - curr_x) * np.cos(currentEuler[2]) + (target_y - curr_y) * np.sin(currentEuler[2])
         yError = -(target_x - curr_x) * np.sin(currentEuler[2]) + (target_y - curr_y) * np.cos(currentEuler[2])
         curr_v = np.sqrt(currentPose[2][0]**2 + currentPose[2][1]**2)
         vError = target_v - curr_v
         
         delta = k_n*yError 
+        print(delta)
         # Checking if the vehicle need to stop
         if target_v > 0:
             v = xError*k_s + vError*k_ds
             #Send computed control input to vehicle
             newAckermannCmd = AckermannDrive()
             newAckermannCmd.speed = v
-            newAckermannCmd.steering_angle = delta
+            newAckermannCmd.steering_angle = -delta
             self.controlPub.publish(newAckermannCmd)
         else:
             self.stop()           
