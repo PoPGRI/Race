@@ -67,7 +67,6 @@ if __name__ == "__main__":
     # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
     # role_name = rospy.get_param('role_name', 'ego_vehicle')
-    print("lp: ", sys.argv)
     client = carla.Client('localhost', 2000)
     # client.set_timeout(timeout)
     world = client.get_world()

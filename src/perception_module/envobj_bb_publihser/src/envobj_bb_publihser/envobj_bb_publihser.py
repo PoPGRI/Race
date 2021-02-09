@@ -59,19 +59,19 @@ class PerceptionModule_BB():
             self.find_ego_vehicle()
             # rospy.loginfo("No ego vehicle.")
             return
-        all_env_bbs = self.world.get_level_bbs(obj_type)
+        all_env_bbs = self.world.get_environment_objects(obj_type)
         vehicle = self.vehicle
         self_loc = vehicle.get_location()
         radius = self.sensing_radius
         filtered_obstacles = []
         for env_bb in all_env_bbs:
             # center of the bounding box in world space
-            center_of_box = env_bb.location
+            center_of_box = env_bb.bounding_box.location
             dist = np.sqrt((center_of_box.x - self_loc.x)**2 + (center_of_box.y-self_loc.y)**2 + (center_of_box.z-self_loc.z)**2)
             if dist <= radius:
-                filtered_obstacles.append(env_bb.get_local_vertices())
-            elif self.boundingbox_within_range(env_bb, self_loc):
-                filtered_obstacles.append(env_bb.get_local_vertices())
+                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id))
+            elif self.boundingbox_within_range(env_bb.bounding_box, self_loc):
+                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id))
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
@@ -88,13 +88,15 @@ def publisher(percep_mod, label_list):
                 continue
             for vertices_of_one_box in vertices_of_cur_label:
                 info = BBInfo()
-                for loc in vertices_of_one_box:
+                for loc in vertices_of_one_box[0]:
                     vertex = BBSingleInfo()
                     vertex.vertex_location.x = loc.x
                     vertex.vertex_location.y = loc.y
                     vertex.vertex_location.z = loc.z
                     info.vertices_locations.append(vertex)
                 info.type = str(label)
+                info.name = str(vertices_of_one_box[1])
+                info.id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
                 bbs_msgs.bounding_box_vertices.append(info)
             pub.publish(bbs_msgs)
         rate.sleep()
