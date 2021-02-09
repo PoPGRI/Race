@@ -18,12 +18,12 @@ class VehicleController():
         newAckermannCmd.speed = 0
         newAckermannCmd.steering_angle = 0
         self.controlPub.publish(newAckermannCmd)
-        for _ in range(10):
-            vehicleControlCmd = CarlaEgoVehicleControl()
-            vehicleControlCmd.throttle = 0.0
-            vehicleControlCmd.steer = 0.0
-            vehicleControlCmd.brake = 1.0
-            self.stopPub.publish(vehicleControlCmd)
+        # for _ in range(10):
+        vehicleControlCmd = CarlaEgoVehicleControl()
+        vehicleControlCmd.throttle = 0.0
+        vehicleControlCmd.steer = 0.0
+        vehicleControlCmd.brake = 1.0
+        self.stopPub.publish(vehicleControlCmd)
 
 
     def execute(self, currentPose, targetPose):
@@ -50,8 +50,7 @@ class VehicleController():
         k_n = 0.1
         k_theta = 1
 
-        #compute errors
-        # print(target_y - curr_y)
+        # compute errors
         dx = target_x - curr_x
         dy = target_y - curr_y
         xError = (target_x - curr_x) * np.cos(currentEuler[2]) + (target_y - curr_y) * np.sin(currentEuler[2])

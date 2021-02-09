@@ -21,6 +21,7 @@ class VehicleDecision():
         curr_x = currState[0][0]
         curr_y = currState[0][1]
 
+        # Check whether any obstacles are in the front of the vehicle
         obFlag = False
         if obstacleList:
             for obs in obstacleList:
@@ -50,12 +51,9 @@ class VehicleDecision():
             self.pos_idx += 10
             if self.pos_idx >= len(self.waypoint_list):
                 return None
-            print("pos_idx: ", self.pos_idx)
-            print("len: ", len(self.waypoint_list))
             print("reached",self.waypoint_list[self.prev_pos_idx][0],self.waypoint_list[self.prev_pos_idx][1],
                 "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
         
-        # if not obstacleList:)
         if not obFlag:
             ref_v = 10
         else:

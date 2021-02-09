@@ -26,10 +26,7 @@ def run_model():
     rospy.on_shutdown(shut_down)
 
     while not rospy.is_shutdown():
-        # res = sensors.lidarReading()
-        # print(res)
         rate.sleep()  # Wait a while before trying to get a new state
-
         obstacleList = perceptionModule.obstacleList
 
         # Get the current position and orientation of the vehicle
@@ -37,14 +34,15 @@ def run_model():
         if not currState:
             continue
         print("Currently at: ", currState)
-        # perceptionResult = perceptionModule.lidarReading()
-
+        
+        # Get the target state from decision module
         refState = decisionModule.get_ref_state(currState, obstacleList)
         if not refState:
             controlModule.stop()
             exit(0)
         print("target: ", refState)
 
+        # Execute 
         controlModule.execute(currState, refState)
 
 if __name__ == "__main__":
