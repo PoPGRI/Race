@@ -25,58 +25,53 @@ class PerceptionModule_BB():
         self.sensing_radius = new_radius
     def get_radius(self):
         return self.sensing_radius
-    # transform from local coordinate to world coordinate
-    def obj_to_world(self, cords, obj):
-        trans = obj.transform
-        trans.transform(cords)
-        return cords
-    #determine if the given bounding box is within sensing radius of the vehicleh 
-    # input:obj: the object we want to detect
-    #       bb: the objtec's bounding box
-    #       self_locsation: the location of the ego_vehicle
-    def bb_within_range(self, obj, bb, self_location):
+    # determine if the bounding box contains the given point
+    def boundingbox_within_range(self, box, self_loc):
         radius = self.sensing_radius
-        bb_loc_local = bb.location
-        bb_loc_global = obj.transform.location
-        # vehicle_loc = self.vehicle.get_location()
-        
-        # get the world coordinate of the box center
-        # world_cord_box = self.obj_to_world(bb_loc, bb)
-        
-        # cast ray returns all points intersecting the ray between initial location and final location
-        # for descirption of the method, see: https://carla.readthedocs.io/en/latest/python_api/#carlaworld
-        labelled_points_in_way = self.world.cast_ray(self_location, bb_loc_global)
-        # remove points outside of range
-        for point in labelled_points_in_way:
-            if self_location.distance(point.location) > radius:
-                labelled_points_in_way.remove(point)
-        # TODO:rotation needs to be confirmed
-        obj_global_rot = obj.transform.rotation
-        bb_loc_rot = bb.rotation
-        rot = carla.Rotation(obj_global_rot.pitch-bb_loc_rot.pitch, obj_global_rot.yaw-bb_loc_rot.yaw, obj_global_rot.roll-bb_loc_rot.roll)
-        trans = carla.Transform(bb_loc_global-bb_loc_local, rot)
-        for point in labelled_points_in_way:
-            # if bounding box contains any point in the way, then 
-            if bb.contains(point.location, trans):
-                return True
+        box_loc = box.location
+        trans = carla.Transform(carla.Location(0,0,0), carla.Rotation(0,0,0))
+        # obtain a vector pointing from self_loc to box center in world space
+        vec_from_self_to_box = box_loc - self_loc
+        # project the z coordinate to the bottom of the box
+        if box_loc.z - box.extent.z > self_loc.z:
+            vec_from_self_to_box.z = box_loc.z - box.extent.z - self_loc.z
+        # project z coordinate to the top of the box
+        elif box_loc.z + box.extent.z < self_loc.z:
+            vec_from_self_to_box.z = self_loc.z - (box_loc.z + box.extent.z)
+        # project z coordinate to the same level as the vehicle
+        else :
+            vec_from_self_to_box.z = 0
+        normalized_vec = vec_from_self_to_box/self.distance_between_points(vec_from_self_to_box, vec_from_self_to_box)
+        # calculate the location which is 'radius' away from the vehicle along the vec
+        tip_of_vec = normalized_vec*radius
+        loc_of_vec = tip_of_vec + self_loc
+        if box.contains(loc_of_vec, trans):
+            return True
         return False
+    def distance_between_points(self, p1, p2):
+        return np.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
     # TODO: return bounding box of environment objects within range
     # get city objects in terms of info on their bounding box
-    # return type:carla.BoundingBox
-    def get_bb_within_range(self, obj_type):
+    # return:vertices location in world space
+    def get_bb_global_ver_within_range(self, obj_type):
         # TODO: need to check validity of object type
         if self.vehicle == None:
             self.find_ego_vehicle()
             # rospy.loginfo("No ego vehicle.")
             return
-        all_env_obj = self.world.get_environment_objects(obj_type)
+        all_env_bbs = self.world.get_level_bbs(obj_type)
         vehicle = self.vehicle
         self_loc = vehicle.get_location()
+        radius = self.sensing_radius
         filtered_obstacles = []
-        for obj in all_env_obj:
-            box = obj.bounding_box
-            if self.bb_within_range(obj, box, self_loc):
-                filtered_obstacles.append(box)
+        for env_bb in all_env_bbs:
+            # center of the bounding box in world space
+            center_of_box = env_bb.location
+            dist = np.sqrt((center_of_box.x - self_loc.x)**2 + (center_of_box.y-self_loc.y)**2 + (center_of_box.z-self_loc.z)**2)
+            if dist <= radius:
+                filtered_obstacles.append(env_bb.get_local_vertices())
+            elif self.boundingbox_within_range(env_bb, self_loc):
+                filtered_obstacles.append(env_bb.get_local_vertices())
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
@@ -86,15 +81,14 @@ def publisher(percep_mod, label_list):
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         for label in label_list:
-            bbs = percep_mod.get_bb_within_range(label)
+            # get all vertices of all bounding boxes which are within the radius with label 'label'
+            vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
             bbs_msgs = BBList()
-            if not bbs:
+            if not vertices_of_cur_label:
                 continue
-            for bb in bbs:
+            for vertices_of_one_box in vertices_of_cur_label:
                 info = BBInfo()
-                #get local coordinates(global coordinates need parameter carla.Transform)
-                local_vertices = bb.get_local_vertices()
-                for loc in local_vertices:
+                for loc in vertices_of_one_box:
                     vertex = BBSingleInfo()
                     vertex.vertex_location.x = loc.x
                     vertex.vertex_location.y = loc.y
