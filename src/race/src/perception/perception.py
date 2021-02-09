@@ -4,12 +4,10 @@ from popgri_msgs.msg import ObstacleList, ObstacleInfo
 from derived_object_msgs.msg import ObjectArray
 from popgri_msgs.msg import LocationInfo
 import copy
-from util.util import quaternion_to_euler
 
 class VehiclePerception:
     def __init__(self, test=False):
         self.locationSub = rospy.Subscriber("/location", LocationInfo, self.locationCallback)
-        # self.locationSub = rospy.Subscriber("/carla/objects", ObjectArray, self.locationCallback)
         self.obstacleSub = rospy.Subscriber("/obstacles", ObstacleList, self.obstacleCallback)
         self.position = None
         self.velocity = None 
@@ -23,10 +21,6 @@ class VehiclePerception:
         self.position = (data.location.x, data.location.y)
         self.rotation = (np.radians(data.rotation.x), np.radians(data.rotation.y), np.radians(data.rotation.z))
         self.velocity = (data.velocity.x, data.velocity.y)
-
-        # self.position = (data.objects[0].pose.position.x, data.objects[0].pose.position.y)
-        # self.rotation = quaternion_to_euler(data.objects[0].pose.orientation.x, data.objects[0].pose.orientation.y, data.objects[0].pose.orientation.z, data.objects[0].pose.orientation.w)
-        # self.velocity = (data.objects[0].twist.linear.x, data.objects[0].twist.linear.y)
 
     def obstacleCallback(self, data):
         self.obstacleList = data.obstacles

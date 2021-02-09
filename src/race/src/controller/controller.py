@@ -60,7 +60,6 @@ class VehicleController():
         vError = target_v - curr_v
         
         delta = k_n*yError 
-        print(delta)
         # Checking if the vehicle need to stop
         if target_v > 0:
             v = xError*k_s + vError*k_ds

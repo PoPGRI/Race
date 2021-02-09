@@ -26,7 +26,7 @@ class VehicleDecision():
             for obs in obstacleList:
                 dy = obs.location.y - curr_y
                 dx = obs.location.x - curr_x
-                yaw = currState[1][2] * np.pi / 180
+                yaw = currState[1][2]
                 rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy 
                 ry = np.cos(-yaw) * dy + np.sin(-yaw) * dx
 
