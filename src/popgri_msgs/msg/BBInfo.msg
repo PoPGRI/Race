@@ -1,5 +1,5 @@
 # according to carla's BoundingBox instance variables
 string type
 string name
-int id
+uint32 id
 BBSingleInfo[] vertices_locations
