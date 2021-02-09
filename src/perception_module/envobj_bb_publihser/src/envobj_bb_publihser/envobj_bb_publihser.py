@@ -94,7 +94,7 @@ def publisher(percep_mod, label_list):
                     vertex.vertex_location.y = loc.y
                     vertex.vertex_location.z = loc.z
                     info.vertices_locations.append(vertex)
-                #info.type = label
+                info.type = str(label)
                 bbs_msgs.bounding_box_vertices.append(info)
             pub.publish(bbs_msgs)
         rate.sleep()
