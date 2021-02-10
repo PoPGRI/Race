@@ -6,11 +6,16 @@ import subprocess
 # from subprocess import DEVNULL, STDOUT, check_call
 import os, signal
 
+import rospy
+
 parser = argparse.ArgumentParser(description="")
 parser.add_argument('-N', type=int, default='3')
 parser.add_argument('--log', type=str, default='/tmp/')
 
 args = parser.parse_args()
+
+rospy.init_node('RaceMain')
+rate = rospy.Rate(10)
 
 vehicles = []
 for i in range(args.N):
@@ -39,13 +44,12 @@ for i in range(args.N):
     # The os.setsid() is passed in the argument preexec_fn so
     # it's run after the fork() and before  exec() to run the shell.
     v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+    vehicles.append(v)
 
-# rospy.init_node('RaceMain')
-# rate = rospy.Rate(100)  # 100 Hz    
+def shut_down():
+    for v in vehicles:
+        os.killpg(os.getpgid(v['proc_handler'].pid), signal.SIGTERM)  # Send the signal to all the process groups
+rospy.on_shutdown(shut_down)
 
-# # subscribe to positions
-# while not rospy.is_shutdown():
-#     rate.sleep()
-
-# for i in range(args.N):
-#     os.killpg(os.getpgid(v['proc_handler'].pid), signal.SIGTERM)  # Send the signal to all the process groups
+while not rospy.is_shutdown():
+    rate.sleep()
