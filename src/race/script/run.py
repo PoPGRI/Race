@@ -40,7 +40,7 @@ for i in range(args.N):
     with open(v['json_file'], 'w') as f:
         f.write(obj)
 
-    cmd = ('roslaunch spawn_vehicle.launch config_file:=%s role_name:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['launch_log']])
+    cmd = ('roslaunch race spawn_vehicle.launch config_file:=%s role_name:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['launch_log']])
     # The os.setsid() is passed in the argument preexec_fn so
     # it's run after the fork() and before  exec() to run the shell.
     v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)

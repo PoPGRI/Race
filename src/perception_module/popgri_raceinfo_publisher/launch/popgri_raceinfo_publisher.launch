@@ -9,7 +9,7 @@
   <param name="/carla/port" value="$(arg port)" />
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="popgri_raceinfo_publisher" type="popgri_raceinfo_publisher.py" name="popgri_raceinfo_publisher" output="screen">
+  <node pkg="popgri_raceinfo_publisher" type="popgri_raceinfo_publisher.py" name="popgri_raceinfo_publisher_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
   </node>
 

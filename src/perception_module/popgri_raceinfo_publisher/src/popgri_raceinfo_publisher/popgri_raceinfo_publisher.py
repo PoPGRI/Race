@@ -7,16 +7,19 @@ from popgri_msgs.msg import LaneList
 from popgri_msgs.msg import ObstacleInfo
 from popgri_msgs.msg import ObstacleList
 class PerceptionModule():
-    def __init__(self, carla_world, radius=10):
+    def __init__(self, carla_world, role_name, radius=10):
         self.sensing_radius = radius # default ?????
         self.world = carla_world
         self.vehicle = None
+        self.role_name = role_name
+        
         self.find_ego_vehicle()
+        
     # find ego vehicle
     # reference: 
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
-            if actor.attributes.get('role_name') == 'ego_vehicle':
+            if actor.attributes.get('role_name') == self.role_name:
             # if 'vehicle' in actor.type_id:
                 self.vehicle = actor
                 break
@@ -39,7 +42,7 @@ class PerceptionModule():
                 # we need to throw out actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
-                if 'vehicle' in actor.type_id and actor.type_id != vehicle.type_id:
+                if 'vehicle' in actor.type_id and actor.attributes.get('role_name') != self.role_name:
                     filtered_obstacles.append(actor)
                 elif 'walker' in actor.type_id:
                     filtered_obstacles.append(actor)
@@ -70,9 +73,9 @@ class PerceptionModule():
         return cur_waypoint.next_until_lane_end(distance)
 
 # publish obstacles and lane waypoints information
-def publisher(percep_mod):
+def publisher(percep_mod, role_name):
     # main function
-    obs_pub = rospy.Publisher('obstacles', ObstacleList, queue_size=1)
+    obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
     lane_pub = rospy.Publisher('lane_waypoints', LaneList, queue_size=1)
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
@@ -119,8 +122,9 @@ if __name__ == "__main__":
     # host = rospy.get_param("/carla/host", "127.0.0.1")
     # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
+    role_name = rospy.get_param("~role_name", "ego_vehicle")
     client = carla.Client('localhost', 2000)
     # client.set_timeout(timeout)
     world = client.get_world()
-    pm = PerceptionModule(world)
-    publisher(pm)
+    pm = PerceptionModule(world, role_name)
+    publisher(pm, role_name)

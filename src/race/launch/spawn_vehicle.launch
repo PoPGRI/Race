@@ -14,11 +14,20 @@
     <arg name="spawn_sensors_only" value="false"/>
   </include>
 
+  <!-- the control bridge -->
+  <!-- carla manual control -->
   <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
     <arg name='role_name' value='$(arg role_name)'/>
   </include>
+  <!-- carla ackermann control -->
+  <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
 
-  <!-- the control bridge -->
   <!-- the perception module -->
+  <!-- popgri race info -->
+  <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
 
 </launch>
