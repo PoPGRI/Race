@@ -6,15 +6,15 @@ import sys
 from popgri_msgs.msg import LocationInfo
 
 class LocationModule:
-    def __init__(self, carla_world, identifier='ego_vehicle'):
+    def __init__(self, carla_world, role_name='ego_vehicle'):
         self.world = carla_world
-        self.identifier = identifier
+        self.role_name = role_name
         self.vehicle = None
         self.find_ego_vehicle()
 
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
-            if actor.attributes.get('role_name') == self.identifier:
+            if actor.attributes.get('role_name') == self.role_name:
                 self.vehicle = actor
                 break
 
@@ -33,9 +33,9 @@ class LocationModule:
     def getVelocity(self):
         return self.vehicle.get_velocity()
 
-def publisher(location_module):
+def publisher(location_module, role_name):
     # main function
-    pub = rospy.Publisher('/location', LocationInfo, queue_size=1)
+    pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=1)
     rate = rospy.Rate(20)
     while not location_module.vehicle:
         location_module.find_ego_vehicle()
@@ -68,7 +68,8 @@ if __name__ == "__main__":
     # timeout = rospy.get_param("/carla/timeout", 10)
     # role_name = rospy.get_param('role_name', 'ego_vehicle')
     client = carla.Client('localhost', 2000)
+    role_name = rospy.get_param("~role_name", "ego_vehicle")
     # client.set_timeout(timeout)
     world = client.get_world()
-    lm = LocationModule(world)
-    publisher(lm)
+    lm = LocationModule(world, role_name)
+    publisher(lm, role_name)

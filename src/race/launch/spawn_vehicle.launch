@@ -30,4 +30,12 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <include file="$(find location_publisher)/launch/location_publisher.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
+  <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
 </launch>
