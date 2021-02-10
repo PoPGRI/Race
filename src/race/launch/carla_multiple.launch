@@ -13,6 +13,8 @@
   <arg name='synchronous_mode_wait_for_vehicle_control_command' default=''/>
   <arg name='fixed_delta_seconds' default=''/>
 
+  <arg name='N' default='3' />
+  <arg name='log' default='/tmp/' />
 
   <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch">
     <arg name='host' value='$(arg host)'/>
@@ -23,5 +25,10 @@
     <arg name='synchronous_mode_wait_for_vehicle_control_command' value='$(arg synchronous_mode_wait_for_vehicle_control_command)'/>
     <arg name='fixed_delta_seconds' value='$(arg fixed_delta_seconds)'/>
   </include>
+
+  <node pkg="race" type="run.py" name="race_run" output="screen">
+    <param name="N" value="$(arg N)" />
+    <param name="log" value="$(arg log)" />
+  </node>
 
 </launch>
