@@ -46,8 +46,8 @@ class Scoring:
 
     def getClosedWaypoint(self):
         currState = self.getModelState()
-	if not currState.success:
-	    return
+        if not currState.success:
+            return
         x = currState.pose.position.x
         y = currState.pose.position.y 
         closedIdx = 0

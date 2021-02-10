@@ -8,25 +8,19 @@ The participants will be required to submit a piece of code (the synthesizer) fo
 
 ## Usage
 System Requirements:
-* Ubuntu 16.04
-* ROS Kinetic
-* Gazebo 9
+* Ubuntu 20.04
+* ROS Noetic
+* Carla 0.9.11
 
-To Install all dependencies, pleace refer to this [document](http://publish.illinois.edu/safe-autonomy/files/2020/08/Ubuntu-Machine-Setup.pdf)
-
-**Update on dependencies**
-<pre><code>sudo apt-get install ros-kinetic-effort-controllers
-sudo apt-get install ros-kinetic-joint-state-controller
+To launch the simulation, first start Carla: 
+<pre><code>./[path-to-carla]/CarlaUE4.sh
 </code></pre>
 
-After cloning the repository, pleace execute following command in root directory to compile and build the project
+Then, navigate to the Race workspace and compile project using:
 <pre><code>catkin_make</code></pre>
- 
-To launch Gazebo simulation, pleace execute following command in root directory:
-<pre><code>source devel/setup.bash
-roslaunch race race.launch
+
+Then execute following command:
+<pre><code>source [path-to-carla-ros-bridge]/devel/setup.bash
+source devel/setup.bash --extend
+roslaunch race carla.launch
 </code></pre>
-  
- For more information about ROS and Gazebo, please refer to their office website
- * [ROS](http://wiki.ros.org/Documentation)
- * [Gazebo](http://gazebosim.org/)

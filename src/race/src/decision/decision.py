@@ -1,13 +1,15 @@
 import pickle
+import numpy as np
+from util.util import quaternion_to_euler
 
 class VehicleDecision():
     def __init__(self, fn):
         self.waypoint_list = pickle.load(open(fn,'rb')) # a list of waypoints
-        self.pos_idx = int(1)
-        self.vehicle_state = 'middle'
+        self.pos_idx = int(20)
+        self.prev_pos_idx = int(0)
         self.counter = 0
         
-    def get_ref_state(self, currState, perceptionInput):
+    def get_ref_state(self, currState, obstacleList):
         """
             Get the reference state for the vehicle according to the current state and result from perception module
             Inputs: 
@@ -16,33 +18,45 @@ class VehicleDecision():
             Outputs: reference state position and velocity of the vehicle 
         """
 
-        curr_x = currState.pose.position.x
-        curr_y = currState.pose.position.y
-        front_dist = perceptionInput
+        curr_x = currState[0][0]
+        curr_y = currState[0][1]
 
-        # If the distance between vehicle and obstacle in front is less than 15, stop the vehicle
-        if front_dist < 15:
-            target_x = curr_x
-            target_y = curr_y
-            ref_v = -1
+        # Check whether any obstacles are in the front of the vehicle
+        obFlag = False
+        if obstacleList:
+            for obs in obstacleList:
+                dy = obs.location.y - curr_y
+                dx = obs.location.x - curr_x
+                yaw = currState[1][2]
+                rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy 
+                ry = np.cos(-yaw) * dy + np.sin(-yaw) * dx
+
+                psi = np.arctan(ry/rx)
+                if rx > 0 and abs(psi) < 0.463:
+                    obFlag = True
+
+        target_x = self.waypoint_list[self.pos_idx][0]
+        target_y = self.waypoint_list[self.pos_idx][1]
+
+        prev_target_x = self.waypoint_list[self.prev_pos_idx][0]
+        prev_target_y = self.waypoint_list[self.prev_pos_idx][1]
+
+        target_orientation = np.arctan2(target_y-prev_target_y, target_x-prev_target_x)
+        
+        distToTargetX = abs(target_x - curr_x)
+        distToTargetY = abs(target_y - curr_y)
+
+        if ((distToTargetX < 2 and distToTargetY < 2)):
+            self.prev_pos_idx = self.pos_idx
+            self.pos_idx += 10
+            if self.pos_idx >= len(self.waypoint_list):
+                return None
+            print("reached",self.waypoint_list[self.prev_pos_idx][0],self.waypoint_list[self.prev_pos_idx][1],
+                "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
+        
+        if not obFlag:
+            ref_v = 10
         else:
-            target_x = self.waypoint_list[self.pos_idx][0]
-            target_y = self.waypoint_list[self.pos_idx][1]
-
-            curr_x = currState.pose.position.x
-            curr_y = currState.pose.position.y
-            
-            distToTargetX = abs(target_x - curr_x)
-            distToTargetY = abs(target_y - curr_y)
-
-            if ((distToTargetX < 0.5 and distToTargetY < 0.5)) or self.counter > 100:
-                self.counter = 0
-                self.pos_idx += 1
-                self.pos_idx = int(self.pos_idx % len(self.waypoint_list))
-                print("reached",self.waypoint_list[self.pos_idx-1][0],self.waypoint_list[self.pos_idx-1][1],
-                    "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
-            else:
-                self.counter += 1
-            ref_v = 5
-
-        return [target_x, target_y, ref_v]
+            ref_v = -1
+        
+        return [target_x, target_y, target_orientation, ref_v]
