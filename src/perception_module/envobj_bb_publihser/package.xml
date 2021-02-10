@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>popgri_raceinfo_publisher</name>
+  <name>envobj_bb_publihser</name>
   <version>0.0.0</version>
-  <description>The popgri_raceinfo_publisher package</description>
+  <description>The envobj_bb_publihser package</description>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roslaunch</build_depend>
   <build_depend>rospy</build_depend>

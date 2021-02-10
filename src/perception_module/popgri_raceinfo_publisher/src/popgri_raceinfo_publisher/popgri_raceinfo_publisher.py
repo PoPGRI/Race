@@ -28,9 +28,10 @@ class PerceptionModule():
         # get every actor on stage
         if self.vehicle == None:
             self.find_ego_vehicle()
-            rospy.loginfo("No ego vehicle.")
+            # rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
+        vehicle_loc = vehicle.get_location()
         all_actors = self.world.get_actors()
         radius = self.sensing_radius
         filtered_obstacles = []
@@ -38,11 +39,12 @@ class PerceptionModule():
             # get actor's location
             cur_loc = actor.get_location()
             # determine whether actor is within the radius
-            if vehicle.get_location().distance(cur_loc) <= radius:
+            if vehicle_loc.distance(cur_loc) <= radius:
                 # we need to throw out actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
-                if 'vehicle' in actor.type_id and actor.attributes.get('role_name') != self.role_name:
+
+                if 'vehicle' in actor.type_id and actor.id != vehicle.id:
                     filtered_obstacles.append(actor)
                 elif 'walker' in actor.type_id:
                     filtered_obstacles.append(actor)
@@ -56,13 +58,12 @@ class PerceptionModule():
     def get_radius(self):
         return self.sensing_radius
     
-    # TODO: lane detection
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
     def get_lane_way_point(self, distance=1.0):
         if self.vehicle == None:
             self.find_ego_vehicle()
-            rospy.loginfo("No ego vehicle.")
+            # rospy.loginfo("No ego vehicle.")
             return
         vehicle = self.vehicle
         carla_map = self.world.get_map()
@@ -94,10 +95,6 @@ def publisher(percep_mod, role_name):
             temp.location.x = loc.x
             temp.location.y = loc.y
             temp.location.z = loc.z
-            v = ob.get_velocity()
-            temp.velocity.x = v.x
-            temp.velocity.y = v.y
-            temp.velocity.z = v.z
             obsmsg.append(temp)
         for p in lp:
             temp = LaneInfo()

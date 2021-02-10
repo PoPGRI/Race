@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+from util.util import quaternion_to_euler
 
 class VehicleDecision():
     def __init__(self, fn):
@@ -8,7 +9,7 @@ class VehicleDecision():
         self.prev_pos_idx = int(0)
         self.counter = 0
         
-    def get_ref_state(self, currState):
+    def get_ref_state(self, currState, obstacleList):
         """
             Get the reference state for the vehicle according to the current state and result from perception module
             Inputs: 
@@ -19,6 +20,20 @@ class VehicleDecision():
 
         curr_x = currState[0][0]
         curr_y = currState[0][1]
+
+        # Check whether any obstacles are in the front of the vehicle
+        obFlag = False
+        if obstacleList:
+            for obs in obstacleList:
+                dy = obs.location.y - curr_y
+                dx = obs.location.x - curr_x
+                yaw = currState[1][2]
+                rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy 
+                ry = np.cos(-yaw) * dy + np.sin(-yaw) * dx
+
+                psi = np.arctan(ry/rx)
+                if rx > 0 and abs(psi) < 0.463:
+                    obFlag = True
 
         target_x = self.waypoint_list[self.pos_idx][0]
         target_y = self.waypoint_list[self.pos_idx][1]
@@ -34,11 +49,14 @@ class VehicleDecision():
         if ((distToTargetX < 2 and distToTargetY < 2)):
             self.prev_pos_idx = self.pos_idx
             self.pos_idx += 10
-            self.pos_idx = int(self.pos_idx % len(self.waypoint_list))
-            print("reached",self.waypoint_list[self.pos_idx-1][0],self.waypoint_list[self.pos_idx-1][1],
+            if self.pos_idx >= len(self.waypoint_list):
+                return None
+            print("reached",self.waypoint_list[self.prev_pos_idx][0],self.waypoint_list[self.prev_pos_idx][1],
                 "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
         
-
-        ref_v = 17
-
+        if not obFlag:
+            ref_v = 10
+        else:
+            ref_v = -1
+        
         return [target_x, target_y, target_orientation, ref_v]
