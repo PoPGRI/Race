@@ -11,6 +11,8 @@ System Requirements:
 * Ubuntu 20.04
 * ROS Noetic
 * Carla 0.9.11
+* Python3
+* Carla-ROS-Bridge
 
 To launch the simulation, first start Carla: 
 <pre><code>./[path-to-carla]/CarlaUE4.sh
@@ -19,8 +21,14 @@ To launch the simulation, first start Carla:
 Then, navigate to the Race workspace and compile project using:
 <pre><code>catkin_make</code></pre>
 
-Then execute following command:
+Then execute following command to spawn one car:
 <pre><code>source [path-to-carla-ros-bridge]/devel/setup.bash
 source devel/setup.bash --extend
-roslaunch race carla.launch
+roslaunch race carla_single.launch
+</code></pre>
+
+To spawn multiple cars, use this command:
+<pre><code>source [path-to-carla-ros-bridge]/devel/setup.bash
+source devel/setup.bash --extend
+roslaunch race carla_multiple.launch
 </code></pre>

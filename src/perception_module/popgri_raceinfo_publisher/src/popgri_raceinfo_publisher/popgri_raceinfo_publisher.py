@@ -77,7 +77,7 @@ class PerceptionModule():
 def publisher(percep_mod, role_name):
     # main function
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
-    lane_pub = rospy.Publisher('lane_waypoints', LaneList, queue_size=1)
+    lane_pub = rospy.Publisher('/carla/%s/lane_waypoints'%role_name, LaneList, queue_size=1)
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         obs = percep_mod.get_all_obstacles_within_range()

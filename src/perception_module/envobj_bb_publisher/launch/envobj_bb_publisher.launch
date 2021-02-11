@@ -9,7 +9,7 @@
   <param name="/carla/port" value="$(arg port)" />
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="envobj_bb_publihser" type="envobj_bb_publihser.py" name="envobj_bb_publihser" output="screen">
+  <node pkg="envobj_bb_publisher" type="envobj_bb_publisher.py" name="envobj_bb_publisher_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
   </node>
 
