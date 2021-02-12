@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Documentation</title>
-  <meta name="description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+  <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   
   <meta name="author" content="Sayan Mitra">
@@ -42,10 +42,10 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+  <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 " />
   <meta property="og:url" content="http://localhost:4000/documentation/">
-  <meta property="og:site_name" content="PoPGRI" />
+  <meta property="og:site_name" content="GRAIC" />
   <meta property="og:title" content="Documentation" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
@@ -58,7 +58,7 @@
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Documentation">
-  <meta name="twitter:description" content="Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+  <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
   <meta name="twitter:url" content="http://localhost:4000/documentation/">
@@ -69,7 +69,7 @@
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:4000/documentation/">
-	<link rel="alternate" type="application/rss+xml" title="PoPGRI" href="http://localhost:4000/feed.xml" />
+	<link rel="alternate" type="application/rss+xml" title="GRAIC" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
 	<script type="text/javascript">
@@ -84,7 +84,7 @@
   <div class="navigation-wrapper">
     <a href="/" class="logo">
       
-      <img src="/assets/logo.png" alt="PoPGRI">
+      <img src="/assets/logo.png" alt="GRAIC">
       
     </a>
     <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
@@ -101,6 +101,10 @@
 
 	
 	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+	<li class="nav-link"><a href="/overview/">Overview</a>
 	
 
 	
@@ -143,7 +147,7 @@
 <div class="site-header-container has-cover" style="background-image: url(/assets/image.png);">
   <div class="scrim has-cover">
     <header class="site-header">
-      <h1 class="title">PoPGRI</h1>
+      <h1 class="title">GRAIC</h1>
       <p class="subtitle">A competition for intelligent racing</p>
     </header>
   </div>
@@ -157,7 +161,7 @@
   
   <div>
       
-      <h1>Overview</h1>
+      <h1>Recommendations</h1>
       
       <p><p>PoPGRI uses the <a href="https://carla.org/">CARLA simulator</a> alongside <a href="https://www.ros.org/">ROS Noetic</a> to run synthesis algorithms. The CARLA simulator is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
 
@@ -179,25 +183,6 @@
   <li>4GB GPU</li>
   <li>Open GL 3.3 or above​ and ​DirectX 10</li>
 </ul>
-
-<h2 id="competition-details">Competition Details</h2>
-<p>All submissions must be submitted as a zip file. This zip file should contain:</p>
-<ul>
-  <li>Decision and control module (see Interfaces).</li>
-  <li>Documentation including necessary libraries</li>
-  <li>A short description of the algorithm</li>
-</ul>
-
-<p>The competition will provide an early release of the framework to allow the competitors to run tests. This early release will contain a baseline algorithm, test vehicle, and test environment. This test vehicle and test environment are not the same as the ones provided on the day of the competition.
-On the day of the competition, a final release will be provided. This final release will contain the competition vehicle and the competition environment. The competitors will have 2 hrs after the final release for submissions. These submissions will then be run by the competition hosts for scoring.</p>
-
-<h4 id="scoring">Scoring</h4>
-<p>The synthesis algorithms will be scored based on many factors. These factors include:</p>
-<ul>
-  <li>Safety: How well can the vehicle avoid obstacles?</li>
-  <li>Time to completion: How quickly does the vehicle complete the track?</li>
-  <li>Computation time: How long does it take to synthesize inputs?</li>
-</ul>
 </p>
   </div>
   
@@ -212,7 +197,7 @@ A diagram of the competition interfaces is shown below. The decision and control
 <p><img src="/Race/assets/interface.png" /></p>
 
 <h3 id="perception">Perception</h3>
-<p>The perception used in PoPGRI is split into two components. The first components of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on.</p>
+<p>The perception used in PoPGRI is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.</p>
 
 <h4 id="obstacles">Obstacles</h4>
 <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and location. The perception can be retrieved by subscribing to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
@@ -227,33 +212,15 @@ A diagram of the competition interfaces is shown below. The decision and control
 <h4 id="lanes">Lanes</h4>
 <p>The current lane that the vehicle is in is described by a list of points between the current location of the vehicle and the end of the lane. This information is published to the rostopic <code class="highlighter-rouge">lane-waypoints</code>.</p>
 
+<h4 id="environment-objects">Environment objects</h4>
+<p>The perception module also returns all the environment objects within the sensing radius of the vehicle. The bounding boxes of the environment objects are published to the rostopic <code class="highlighter-rouge">environment_obj_bb</code>.</p>
+
 <h3 id="decision-and-control">Decision and Control</h3>
 <p>The decision and control module is built by the competitors. All pre-computations required for the synthesis algorithms must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system. For more information, please refer to the diagram.
 The decision and control module should use the <a href="http://wiki.ros.org/ackermann_msgs"><code class="highlighter-rouge">ackermann_msgs</code> package</a>.</p>
 
-<h3 id="vehicle-system">Vehicle System</h3>
-<p>The vehicle system provided by CARLA. The vehicle system uses the <code class="highlighter-rouge">ackermann_msgs</code> package.</p>
-</p>
-  </div>
-  
-  <div>
-      
-      <h1>Important Dates</h1>
-      
-      <p><p><em>Dates are tentative and subject to change</em></p>
-
-<ul>
-  <li>Feb. 27: Beta release</li>
-  <li>Feb.27 - March 17: Bug fixing</li>
-  <li>March 18: Early release</li>
-  <li>May 11: Competition release
-    <ul>
-      <li>13:00 PT Final release, submissions open</li>
-      <li>15:00 PT Submissions close</li>
-    </ul>
-  </li>
-  <li>May 18-21: Results announced</li>
-</ul>
+<h3 id="vehicle-model">Vehicle Model</h3>
+<p>The vehicle model will be provided by the competition hosts. There are 2 tracks that competitors can compete in. The first is the model-free track. In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The second track is the model track. In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla.</p>
 </p>
   </div>
   
@@ -266,7 +233,7 @@ The decision and control module should use the <a href="http://wiki.ros.org/acke
 
   <div class="wrapper">
 
-    <h3 class="footer-heading">PoPGRI</h3>
+    <h3 class="footer-heading">GRAIC</h3>
 
     <div class="site-navigation">
 
@@ -282,6 +249,10 @@ The decision and control module should use the <a href="http://wiki.ros.org/acke
 
 	
 	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+	<li class="nav-link"><a href="/overview/">Overview</a>
 	
 
 	
@@ -371,7 +342,7 @@ The decision and control module should use the <a href="http://wiki.ros.org/acke
 
     <div class="site-signature">
       <!-- <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p> -->
-      <p class="text">Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+      <p class="text">Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 </p>
     </div>
 

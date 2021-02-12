@@ -9,12 +9,12 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: PoPGRI
+title: GRAIC
 subtitle: "A competition for intelligent racing"
 email: mitras@illinois.edu
 name: Sayan Mitra
 description: >
-  Post Perception Generalized Racing Intelligence (PoPGRI), is a synthesis competition for intelligent racing.
+  Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 # Base URL of site (i.e. /blog). It should always start with a slash,
 # and never end with a slash. Set it to a blank value if hosting at the
 # root of your server.
@@ -40,6 +40,7 @@ collections:
   - home
   - about
   - documentation
+  - overview
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:

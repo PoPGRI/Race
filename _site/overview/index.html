@@ -6,8 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Dummy Post</title>
-  <meta name="description" content="This is just a dummy post. Lorem ipsum and all the rest.">
+  <title>Overview</title>
+  <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
+">
   
   <meta name="author" content="Sayan Mitra">
   <meta name="copyright" content="&copy; Sayan Mitra 2021">
@@ -41,10 +42,11 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="This is just a dummy post. Lorem ipsum and all the rest." />
-  <meta property="og:url" content="http://localhost:4000/dummy/2015/04/18/dummy.html">
+  <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
+" />
+  <meta property="og:url" content="http://localhost:4000/overview/">
   <meta property="og:site_name" content="GRAIC" />
-  <meta property="og:title" content="Dummy Post" />
+  <meta property="og:title" content="Overview" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -55,17 +57,18 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Dummy Post">
-  <meta name="twitter:description" content="This is just a dummy post. Lorem ipsum and all the rest.">
+  <meta name="twitter:title" content="Overview">
+  <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
+">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/dummy/2015/04/18/dummy.html">
+  <meta name="twitter:url" content="http://localhost:4000/overview/">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/dummy/2015/04/18/dummy.html">
+  <link rel="canonical" href="http://localhost:4000/overview/">
 	<link rel="alternate" type="application/rss+xml" title="GRAIC" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -139,237 +142,78 @@
 
 
     <div class="page-content">
-        <div class="post">
+        <div>
 
-<div class="post-header-container " >
-  <div class="scrim ">
-    <header class="post-header">
-      <h1 class="title">Dummy Post</h1>
-      <p class="info">by <strong>Ben Centra</strong></p>
+<div class="site-header-container has-cover" style="background-image: url(/assets/image.png);">
+  <div class="scrim has-cover">
+    <header class="site-header">
+      <h1 class="title">GRAIC</h1>
+      <p class="subtitle">A competition for intelligent racing</p>
     </header>
   </div>
 </div>
 
 <div class="wrapper">
+  <i>This competition is currently under construction. The information on this page is subject to change.</i>
+</div>
 
- <span class="page-divider">
-  <span class="one"></span>
-  <span class="two"></span>
-</span>
- 
-
-<section class="post-meta">
-  <div class="post-date">April 18, 2015</div>
-  <div class="post-categories">
-  in 
-    
-    <a href="/category/Dummy">Dummy</a>
-    
+<div class="wrapper">
   
+  <div>
+      
+      <h1>Overview</h1>
+      
+      <p><p>The competition will provide an early release of the framework to allow the competitors to run tests. This early release will contain a baseline algorithm, test vehicle, and test environment. This test vehicle and test environment are not the same as the ones provided on the day of the competition.
+On the day of the competition, a final release will be provided. This final release will contain the competition vehicle and the competition environment. The competitors will have 2 hrs after the final release for submissions. These submissions will then be run by the competition hosts for scoring.</p>
+
+<h4 id="scoring">Scoring</h4>
+<p>The synthesis algorithms will be scored based on many factors. These factors include:</p>
+<ul>
+  <li>Safety: How well can the vehicle avoid obstacles?</li>
+  <li>Time to completion: How quickly does the vehicle complete the track?</li>
+  <li>Computation time: How long does it take to synthesize inputs?</li>
+</ul>
+</p>
   </div>
-</section>
+  
+  <div>
+      
+      <h1>Tracks</h1>
+      
+      <p><p><em>Track information is subject to change</em></p>
 
-<article class="post-content">
-  <p>This is just a dummy post. Lorem ipsum and all the rest.</p>
+<p>There are two available tracks to compete in.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h3 id="model-free-track">Model-Free Track</h3>
 
-</article>
+<p>In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The synthesis algorithms used in this track must be able to compute inputs for the system even though the full dynamics of the system are unknown.</p>
 
+<h3 id="model-track">Model Track</h3>
+<p>In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla. The synthesis algorithms in this track can take advantage of the fact that the full dynamics of the system are known.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Important Dates</h1>
+      
+      <p><p><em>Dates are tentative and subject to change</em></p>
 
-
-
-
-<section class="rss">
-  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
-</section>
-
-<section class="share">
-  <span>Share: </span>
+<ul>
+  <li>Feb. 27: Beta release</li>
+  <li>Feb.27 - March 17: Bug fixing</li>
+  <li>March 18: Early release</li>
+  <li>May 11: Competition release
+    <ul>
+      <li>13:00 PT Final release, submissions open</li>
+      <li>15:00 PT Submissions close</li>
+    </ul>
+  </li>
+  <li>May 18-21: Results announced</li>
+</ul>
+</p>
+  </div>
   
-    
-    
-      <a href="//twitter.com/share?text=Dummy+Post&url=http%3A%2F%2Flocalhost%3A4000%2Fdummy%2F2015%2F04%2F18%2Fdummy.html&via="
-        onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
-        <i class="fa fa-twitter-square fa-lg"></i>
-      </a>
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-      <a href="//www.facebook.com/sharer.php?t=Dummy+Post&u=http%3A%2F%2Flocalhost%3A4000%2Fdummy%2F2015%2F04%2F18%2Fdummy.html"
-        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
-        <i class="fa fa-facebook-square fa-lg"></i>
-      </a>
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-      <a href="//www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdummy%2F2015%2F04%2F18%2Fdummy.html"
-        onclick="window.open(this.href, 'linkedin-share', 'width=550,height=255');return false;">
-        <i class="fa fa-linkedin-square fa-lg"></i>
-      </a>
-    
-    
-    
-    
-  
-    
-    
-    
-    
-      <a href="//plus.google.com/share?title=Dummy+Post&url=http%3A%2F%2Flocalhost%3A4000%2Fdummy%2F2015%2F04%2F18%2Fdummy.html"
-        onclick="window.open(this.href, 'google-plus-share', 'width=550,height=255');return false;">
-        <i class="fa fa-google-plus-square fa-lg"></i>
-      </a>
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-      <a href="//www.pinterest.com/pin/create/button/?description=Dummy+Post&url=http%3A%2F%2Flocalhost%3A4000%2Fdummy%2F2015%2F04%2F18%2Fdummy.html&media=http://localhost:4000/assets/image.png"
-        onclick="window.open(this.href, 'pinterest-share', 'width=550,height=255');return false;">
-        <i class="fa fa-pinterest-square fa-lg"></i>
-      </a>
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('http://localhost:4000/dummy/2015/04/18/dummy.html') + '&title=Dummy Post'; return false">
-        <i class="fa fa-reddit-square fa-lg"></i>
-      </a>
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-</section>
-
-
-
-
 </div>
 </div>
 
