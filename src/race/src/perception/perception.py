@@ -7,8 +7,8 @@ import copy
 
 class VehiclePerception:
     def __init__(self, test=False):
-        self.locationSub = rospy.Subscriber("/location", LocationInfo, self.locationCallback)
-        self.obstacleSub = rospy.Subscriber("/obstacles", ObstacleList, self.obstacleCallback)
+        self.locationSub = rospy.Subscriber("/carla/ego_vehicle/location", LocationInfo, self.locationCallback)
+        self.obstacleSub = rospy.Subscriber("/carla/ego_vehicle/obstacles", ObstacleList, self.obstacleCallback)
         self.position = None
         self.velocity = None 
         self.rotation = None

@@ -7,7 +7,7 @@ from popgri_msgs.msg import LaneList
 from popgri_msgs.msg import ObstacleInfo
 from popgri_msgs.msg import ObstacleList
 class PerceptionModule():
-    def __init__(self, carla_world, role_name, radius=10):
+    def __init__(self, carla_world, role_name, radius=20):
         self.sensing_radius = radius # default ?????
         self.world = carla_world
         self.vehicle = None
