@@ -6,9 +6,9 @@ from popgri_msgs.msg import LocationInfo
 import copy
 
 class VehiclePerception:
-    def __init__(self, test=False):
-        self.locationSub = rospy.Subscriber("/carla/ego_vehicle/location", LocationInfo, self.locationCallback)
-        self.obstacleSub = rospy.Subscriber("/carla/ego_vehicle/obstacles", ObstacleList, self.obstacleCallback)
+    def __init__(self, role_name='ego_vehicle', test=False):
+        self.locationSub = rospy.Subscriber("/carla/%s/location"%role_name, LocationInfo, self.locationCallback)
+        self.obstacleSub = rospy.Subscriber("/carla/%s/obstacles"%role_name, ObstacleList, self.obstacleCallback)
         self.position = None
         self.velocity = None 
         self.rotation = None

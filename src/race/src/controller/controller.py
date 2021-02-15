@@ -6,11 +6,11 @@ from util.util import euler_to_quaternion, quaternion_to_euler
 
 class VehicleController():
 
-    def __init__(self, model_name='gem'):
+    def __init__(self, role_name='ego_vehicle'):
         # Publisher to publish the control input to the vehicle model
-        self.controlPub = rospy.Publisher("/carla/ego_vehicle/ackermann_cmd", AckermannDrive, queue_size = 1)
-        self.stopPub = rospy.Publisher("/carla/ego_vehicle/vehicle_control_cmd", CarlaEgoVehicleControl, queue_size=10)
-        self.model_name = model_name
+        self.controlPub = rospy.Publisher("/carla/%s/ackermann_cmd"%role_name, AckermannDrive, queue_size = 1)
+        self.stopPub = rospy.Publisher("/carla/%s/vehicle_control_cmd"%role_name, CarlaEgoVehicleControl, queue_size=10)
+        # self.model_name = model_name
 
     def stop(self):
         newAckermannCmd = AckermannDrive()

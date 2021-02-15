@@ -12,5 +12,5 @@
 **/build/
 **/devel/
 **/.vscode/*
-
+**/score_*
 .catkin_workspace

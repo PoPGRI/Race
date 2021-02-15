@@ -38,4 +38,10 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <!-- the evaluation module -->
+  <include file="$(find evaluation_module)/launch/evaluation_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
+
 </launch>

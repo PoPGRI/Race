@@ -7,19 +7,18 @@ from controller.controller import VehicleController
 from perception.perception import VehiclePerception
 from decision.decision import VehicleDecision
 import time
-from util.waypoint_list import wayPoints
 from util.util import euler_to_quaternion, quaternion_to_euler
 import pickle
 
 
 
-def run_model():
-    rospy.init_node("baseline")
+def run_model(role_name):
+    
     rate = rospy.Rate(100)  # 100 Hz    
 
-    perceptionModule = VehiclePerception()
+    perceptionModule = VehiclePerception(role_name=role_name)
     decisionModule = VehicleDecision('./waypoints')
-    controlModule = VehicleController()
+    controlModule = VehicleController(role_name=role_name)
 
     def shut_down():
         controlModule.stop()
@@ -46,8 +45,11 @@ def run_model():
         controlModule.execute(currState, refState)
 
 if __name__ == "__main__":
+    rospy.init_node("baseline")
+    # role_name = rospy.get_param("~role_name", "ego_vehicle")
+    role_name = 'hero0'
     try:
-        run_model()
+        run_model(role_name)
     except rospy.exceptions.ROSInterruptException:
         print("stop")
     

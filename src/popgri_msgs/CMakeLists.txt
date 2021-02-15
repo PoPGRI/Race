@@ -57,6 +57,7 @@ add_message_files(
    BBInfo.msg
    BBList.msg 
    BBSingleInfo.msg
+   EvaluationInfo.msg
 )
 
 ## Generate services in the 'srv' folder
