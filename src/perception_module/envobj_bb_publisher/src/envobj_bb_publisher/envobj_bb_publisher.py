@@ -34,14 +34,14 @@ class PerceptionModule_BB():
         # obtain a vector pointing from self_loc to box center in world space
         vec_from_self_to_box = box_loc - self_loc
         # project the z coordinate to the bottom of the box
-        if box_loc.z - box.extent.z > self_loc.z:
-            vec_from_self_to_box.z = box_loc.z - box.extent.z - self_loc.z
-        # project z coordinate to the top of the box
-        elif box_loc.z + box.extent.z < self_loc.z:
-            vec_from_self_to_box.z = self_loc.z - (box_loc.z + box.extent.z)
+        # if box_loc.z - box.extent.z > self_loc.z:
+        #     vec_from_self_to_box.z = box_loc.z - box.extent.z - self_loc.z
+        # # project z coordinate to the top of the box
+        # elif box_loc.z + box.extent.z < self_loc.z:
+        #     vec_from_self_to_box.z = self_loc.z - (box_loc.z + box.extent.z)
         # project z coordinate to the same level as the vehicle
-        else :
-            vec_from_self_to_box.z = 0
+        # else :
+        vec_from_self_to_box.z = 0
         normalized_vec = vec_from_self_to_box/self.distance_between_points(vec_from_self_to_box, vec_from_self_to_box)
         # calculate the location which is 'radius' away from the vehicle along the vec
         tip_of_vec = normalized_vec*radius
@@ -70,9 +70,9 @@ class PerceptionModule_BB():
             center_of_box = env_bb.bounding_box.location
             dist = np.sqrt((center_of_box.x - self_loc.x)**2 + (center_of_box.y-self_loc.y)**2 + (center_of_box.z-self_loc.z)**2)
             if dist <= radius:
-                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id))
+                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id, env_bb))
             elif self.boundingbox_within_range(env_bb.bounding_box, self_loc):
-                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id))
+                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id, env_bb))
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
@@ -99,6 +99,8 @@ def publisher(percep_mod, label_list, role_name):
                 info.name = str(vertices_of_one_box[1])
                 info.id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
                 bbs_msgs.bounding_box_vertices.append(info)
+                bb = vertices_of_one_box[3].bounding_box
+                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=2)
             pub.publish(bbs_msgs)
         rate.sleep()
 
@@ -114,5 +116,6 @@ if __name__ == "__main__":
     # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule_BB(world, role_name=role_name)
+    # default_list = [carla.CityObjectLabel.Vehicles, carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Vegetation]
     default_list = [carla.CityObjectLabel.Vehicles, carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Fences, carla.CityObjectLabel.Pedestrians, carla.CityObjectLabel.Sidewalks, carla.CityObjectLabel.Walls, carla.CityObjectLabel.Vegetation, carla.CityObjectLabel.GuardRail]
     publisher(pm, default_list, role_name)

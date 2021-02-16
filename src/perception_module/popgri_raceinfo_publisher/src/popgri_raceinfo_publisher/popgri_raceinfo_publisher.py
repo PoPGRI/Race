@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import numpy as np
 import carla
 import rospy
 import sys
@@ -108,6 +109,19 @@ def publisher(percep_mod, role_name):
             temp.rotation.y = rot.yaw
             temp.rotation.z = rot.roll
             lpmsg.append(temp)
+            # TODO:figure out how rotation affects orientation of lane marker
+            center_of_left_lane = p.get_left_lane()
+            # center_of_right_lane = p.get_right_lane()
+            width = p.lane_width
+            if np.abs(center_of_left_lane.transform.location.x - loc.x) < np.abs(center_of_left_lane.transform.location.y - loc.y):
+                side_one = carla.Location(loc.x, loc.y+width/2, loc.z)
+                side_two = carla.Location(loc.x, loc.y-width/2, loc.z)
+            else:
+                side_one = carla.Location(loc.x+width/2, loc.y, loc.z)
+                side_two = carla.Location(loc.x-width/2, loc.y, loc.z)
+            percep_mod.world.debug.draw_point(trans.location,life_time=2)
+            percep_mod.world.debug.draw_point(side_one, life_time=2)
+            percep_mod.world.debug.draw_point(side_two, life_time=2)
         obs_pub.publish(obsmsg)
         lane_pub.publish(lpmsg)
         rate.sleep()
