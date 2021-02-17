@@ -45,16 +45,6 @@ class EvaluationNode:
             return
         x = location.location.x
         y = location.location.y 
-        # closedIdx = 0
-        # closed = [0, 0, 10000]
-
-        # for idx, waypoint in enumerate(self.waypoint_list):
-        #     wx = waypoint[0]
-        #     wy = waypoint[1]
-        #     dist = np.sqrt((x-wx)*(x-wx) + (y-wy)*(y-wy))
-        #     if dist < closed[2]:
-        #         closed = [wx, wy, dist]
-        #         closedIdx = idx
         
         distanceToX = abs(x - waypoint.x)
         distanceToY = abs(y - waypoint.y)
@@ -66,18 +56,15 @@ class EvaluationNode:
         if v > 0.5:
             self.speedList.append(v)
         
-        if distanceToX < 8 and distanceToY < 8: # and [self.waypoint.x, self.waypoint.y] not in self.reachedPoints:
-            # self.reachedPoints.append([self.waypoint.x, self.waypoint.y])
+        if distanceToX < 8 and distanceToY < 8: 
             reached = Int16()
             reached.data = 1
             self.pubReach.publish(reached)
-            # print("Reached ", self.waypoint.x, self.waypoint.y)
             vBar = np.average(self.speedList)
             if np.isnan(vBar):
                 return
             self.speedList = []
             self.score += vBar
-            # print("Current Score: ", self.score)
 
         # return self.score, self.hitObjects
 

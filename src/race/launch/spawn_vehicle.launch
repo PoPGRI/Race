@@ -24,6 +24,14 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <include file="$(find ackermann_node)/launch/ackermann_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
+  <include file="$(find control_node)/launch/control_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
   <!-- the perception module -->
   <!-- popgri race info -->
   <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">

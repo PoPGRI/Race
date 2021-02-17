@@ -8,8 +8,8 @@ class VehicleController():
 
     def __init__(self, role_name='ego_vehicle'):
         # Publisher to publish the control input to the vehicle model
-        self.controlPub = rospy.Publisher("/carla/%s/ackermann_cmd"%role_name, AckermannDrive, queue_size = 1)
-        self.stopPub = rospy.Publisher("/carla/%s/vehicle_control_cmd"%role_name, CarlaEgoVehicleControl, queue_size=10)
+        self.controlPub = rospy.Publisher("/carla/%s/ackermann_control"%role_name, AckermannDrive, queue_size = 1)
+        self.stopPub = rospy.Publisher("/carla/%s/vehicle_control"%role_name, CarlaEgoVehicleControl, queue_size=10)
         # self.model_name = model_name
 
     def stop(self):
@@ -65,7 +65,7 @@ class VehicleController():
             #Send computed control input to vehicle
             newAckermannCmd = AckermannDrive()
             newAckermannCmd.speed = v
-            newAckermannCmd.steering_angle = -delta
+            newAckermannCmd.steering_angle = delta
             self.controlPub.publish(newAckermannCmd)
         else:
             self.stop()           
