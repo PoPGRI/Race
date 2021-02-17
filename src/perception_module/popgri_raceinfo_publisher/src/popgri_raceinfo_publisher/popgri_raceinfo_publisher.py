@@ -61,7 +61,7 @@ class PerceptionModule():
     
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
-    def get_lane_way_point(self, distance=1.0):
+    def get_lane_way_point(self, distance=0.5):
         if self.vehicle == None:
             self.find_ego_vehicle()
             # rospy.loginfo("No ego vehicle.")
@@ -71,9 +71,14 @@ class PerceptionModule():
         vehicle_location = vehicle.get_location()
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
-        # return list of waypoints from cur_waypoint to the end of the lane
-        return cur_waypoint.next_until_lane_end(distance)
-
+        # return list of waypoints from cur_waypoint to 10 meters ahead
+        wp_to_end = cur_waypoint.next_until_lane_end(distance)
+        if len(wp_to_end) > 20:
+            wp_to_end = wp_to_end[0:20]
+        return wp_to_end
+# calculate distance between p1 and p2
+def distance_between_points(p1, p2):
+        return np.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name):
     # main function
@@ -96,6 +101,13 @@ def publisher(percep_mod, role_name):
             temp.location.x = loc.x
             temp.location.y = loc.y
             temp.location.z = loc.z
+            # draw bounding box for vehicles and walkers
+            if 'vehicle' in ob.type_id or 'walker' in ob.type_id:
+                loc = ob.get_location()
+                bb = ob.bounding_box
+                bb.location = loc
+                bb.rotation = ob.get_transform().rotation
+                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=2)
             obsmsg.append(temp)
         for p in lp:
             temp = LaneInfo()
@@ -110,20 +122,24 @@ def publisher(percep_mod, role_name):
             temp.rotation.z = rot.roll
             lpmsg.append(temp)
             # TODO:figure out how rotation affects orientation of lane marker
-            center_of_left_lane = p.get_left_lane()
-            # center_of_right_lane = p.get_right_lane()
-            if not center_of_left_lane:
-                continue
+            # get centers of adjacent lanes
             width = p.lane_width
-            if np.abs(center_of_left_lane.transform.location.x - loc.x) < np.abs(center_of_left_lane.transform.location.y - loc.y):
-                side_one = carla.Location(loc.x, loc.y+width/2, loc.z)
-                side_two = carla.Location(loc.x, loc.y-width/2, loc.z)
-            else:
-                side_one = carla.Location(loc.x+width/2, loc.y, loc.z)
-                side_two = carla.Location(loc.x-width/2, loc.y, loc.z)
+            if not p.get_left_lane() is None:
+                center_of_left_lane = p.get_left_lane().transform.location
+                vec_left = center_of_left_lane - loc
+                point_left = vec_left*(width/2)/distance_between_points(loc, center_of_left_lane)
+                percep_mod.world.debug.draw_point(point_left+loc, life_time=2)
+            if not p.get_right_lane() is None:
+                center_of_right_lane = p.get_right_lane().transform.location
+                vec_right = center_of_right_lane - loc
+                point_right = vec_right*(width/2)/distance_between_points(loc, center_of_right_lane)
+                percep_mod.world.debug.draw_point(point_right+loc, life_time=2)
+            # vec_left = center_of_left_lane - loc
+            # point_left = vec_left*(width/2)/distance_between_points(loc, center_of_left_lane)
+            # draw lane markders and the center of the lane
             percep_mod.world.debug.draw_point(trans.location,life_time=2)
-            percep_mod.world.debug.draw_point(side_one, life_time=2)
-            percep_mod.world.debug.draw_point(side_two, life_time=2)
+            # percep_mod.world.debug.draw_point(point_right+loc, life_time=2)
+            # percep_mod.world.debug.draw_point(point_left+loc, life_time=2)
         obs_pub.publish(obsmsg)
         lane_pub.publish(lpmsg)
         rate.sleep()
