@@ -9,7 +9,7 @@
   <param name="/carla/port" value="$(arg port)" />
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="evaluation_module" type="evaluation_node.py" name="evaluation_node_$(arg role_name)" output="screen">
+  <node pkg="waypoint_node" type="waypoint_node.py" name="waypoint_node_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
   </node>
 

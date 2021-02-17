@@ -2,6 +2,8 @@ import rospy
 import numpy as np
 from carla_msgs.msg import CarlaCollisionEvent
 from popgri_msgs.msg import LocationInfo, EvaluationInfo
+from geometry_msgs.msg import Vector3
+from std_msgs.msg import Int16
 import time
 import pickle
 import os
@@ -11,7 +13,9 @@ class EvaluationNode:
     def __init__(self, role_name='ego_vehicle'):
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
-        self.waypoint_list = pickle.load(open('waypoints','rb'))
+        self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, Vector3, self.waypointCallback)
+        self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, Int16, queue_size=1)
+        # self.waypoint_list = pickle.load(open('waypoints','rb'))
         self.reachedPoints = []
         self.speedList = []
         self.hitObjects = set()
@@ -19,6 +23,7 @@ class EvaluationNode:
         self.score = 0.0
         self.location = None
         self.role_name = role_name
+        self.waypoint = None
 
     def locationCallback(self, data):
         self.location = data
@@ -30,25 +35,29 @@ class EvaluationNode:
         self.hitObjects.add(str(data.other_actor_id))
         self.score -= 100.0
 
+    def waypointCallback(self, data):
+        self.waypoint = data
+
     def calculateScore(self):
         location = self.location
-        if not location:
+        waypoint = self.waypoint
+        if not location or not waypoint:
             return
         x = location.location.x
         y = location.location.y 
-        closedIdx = 0
-        closed = [0, 0, 10000]
+        # closedIdx = 0
+        # closed = [0, 0, 10000]
 
-        for idx, waypoint in enumerate(self.waypoint_list):
-            wx = waypoint[0]
-            wy = waypoint[1]
-            dist = np.sqrt((x-wx)*(x-wx) + (y-wy)*(y-wy))
-            if dist < closed[2]:
-                closed = [wx, wy, dist]
-                closedIdx = idx
+        # for idx, waypoint in enumerate(self.waypoint_list):
+        #     wx = waypoint[0]
+        #     wy = waypoint[1]
+        #     dist = np.sqrt((x-wx)*(x-wx) + (y-wy)*(y-wy))
+        #     if dist < closed[2]:
+        #         closed = [wx, wy, dist]
+        #         closedIdx = idx
         
-        distanceToX = abs(x - closed[0])
-        distanceToY = abs(y - closed[1])
+        distanceToX = abs(x - waypoint.x)
+        distanceToY = abs(y - waypoint.y)
 
 
         vx = location.velocity.x
@@ -57,9 +66,12 @@ class EvaluationNode:
         if v > 0.5:
             self.speedList.append(v)
         
-        if distanceToX < 4 and distanceToY < 4 and [closed[0], closed[1]] not in self.reachedPoints:
-            self.reachedPoints.append([closed[0], closed[1]])
-            # print("Reached ", closed[0], closed[1])
+        if distanceToX < 8 and distanceToY < 8: # and [self.waypoint.x, self.waypoint.y] not in self.reachedPoints:
+            # self.reachedPoints.append([self.waypoint.x, self.waypoint.y])
+            reached = Int16()
+            reached.data = 1
+            self.pubReach.publish(reached)
+            # print("Reached ", self.waypoint.x, self.waypoint.y)
             vBar = np.average(self.speedList)
             if np.isnan(vBar):
                 return
@@ -88,7 +100,7 @@ def run(en, role_name):
         info = EvaluationInfo()
         info.score = en.score 
         info.numObjectsHit = len(en.hitObjects)
-        pubEN.publish()
+        pubEN.publish(info)
         rate.sleep()
 
 if __name__ == "__main__":

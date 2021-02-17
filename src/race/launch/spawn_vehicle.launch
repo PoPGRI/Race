@@ -39,7 +39,11 @@
   </include>
 
   <!-- the evaluation module -->
-  <include file="$(find evaluation_module)/launch/evaluation_node.launch">
+  <include file="$(find evaluation_node)/launch/evaluation_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
+  <include file="$(find waypoint_node)/launch/waypoint_node.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 

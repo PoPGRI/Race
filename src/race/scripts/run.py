@@ -29,9 +29,9 @@ def Spawn(N, log):
             obj = f.read()
         obj = obj.replace('[[role_name]]', role_name)
 
-        init_pose = [0.8,-240+i*10,0,0,0,90]
-        v['init_pose'] = init_pose
-        obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
+        # init_pose = [26,204+i*10,0,0,0,180]
+        # v['init_pose'] = init_pose
+        # obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
 
         json_file = '/tmp/objects_%s.json'%role_name
         v['json_file'] = json_file

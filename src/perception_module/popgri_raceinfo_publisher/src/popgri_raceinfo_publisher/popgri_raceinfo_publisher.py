@@ -112,6 +112,8 @@ def publisher(percep_mod, role_name):
             # TODO:figure out how rotation affects orientation of lane marker
             center_of_left_lane = p.get_left_lane()
             # center_of_right_lane = p.get_right_lane()
+            if not center_of_left_lane:
+                continue
             width = p.lane_width
             if np.abs(center_of_left_lane.transform.location.x - loc.x) < np.abs(center_of_left_lane.transform.location.y - loc.y):
                 side_one = carla.Location(loc.x, loc.y+width/2, loc.z)
