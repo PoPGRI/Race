@@ -8,16 +8,17 @@ from popgri_msgs.msg import BBInfo
 from popgri_msgs.msg import BBList
 from popgri_msgs.msg import BBSingleInfo
 class PerceptionModule_BB():
-    def __init__(self, carla_world, radius=15):
+    def __init__(self, carla_world, role_name='ego_vehicle', radius=15):
         self.sensing_radius = radius 
         self.world = carla_world
         self.vehicle = None
+        self.role_name = role_name
         self.find_ego_vehicle()
     # find ego vehicle
     # reference: 
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
-            if actor.attributes.get('role_name') == 'ego_vehicle':
+            if actor.attributes.get('role_name') == self.role_name:
                 self.vehicle = actor
                 break
 
@@ -91,9 +92,9 @@ class PerceptionModule_BB():
         return filtered_obstacles
 
 # publish obstacles and lane waypoints information
-def publisher(percep_mod, label_list):
+def publisher(percep_mod, label_list, role_name):
     # main function
-    pub = rospy.Publisher('environment_obj_bb', BBList, queue_size=1)
+    pub = rospy.Publisher('/carla/%s/environment_obj_bb'%role_name, BBList, queue_size=1)
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         for label in label_list:
@@ -122,13 +123,15 @@ def publisher(percep_mod, label_list):
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
-    rospy.init_node('envobj_bb_publihser', anonymous=True)
+    rospy.init_node('envobj_bb_publisher', anonymous=True)
     # host = rospy.get_param("/carla/host", "127.0.0.1")
     # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
     client = carla.Client('localhost', 2000)
     # client.set_timeout(timeout)
+    role_name = rospy.get_param("~role_name", "ego_vehicle")
+    # client.set_timeout(timeout)
     world = client.get_world()
-    pm = PerceptionModule_BB(world)
+    pm = PerceptionModule_BB(world, role_name=role_name)
     default_list = [carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Fences, carla.CityObjectLabel.Sidewalks, carla.CityObjectLabel.Walls, carla.CityObjectLabel.Vegetation]
-    publisher(pm, default_list)
+    publisher(pm, default_list, role_name)
