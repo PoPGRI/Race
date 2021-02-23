@@ -3,6 +3,7 @@
     [
         {
             "type": "vehicle.tesla.model3",
+            "spawn_point": {[[spawn_point]]},
             "id": "[[role_name]]",
             "sensors": 
             [
