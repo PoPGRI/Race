@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>lorem</title>
+  <title>Installation</title>
   <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   
@@ -44,9 +44,9 @@
   <!-- Facebook OGP cards -->
   <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 " />
-  <meta property="og:url" content="http://localhost:4000/tag/lorem/">
+  <meta property="og:url" content="http://localhost:4000/installation/">
   <meta property="og:site_name" content="GRAIC" />
-  <meta property="og:title" content="lorem" />
+  <meta property="og:title" content="Installation" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -57,18 +57,18 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="lorem">
+  <meta name="twitter:title" content="Installation">
   <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/tag/lorem/">
+  <meta name="twitter:url" content="http://localhost:4000/installation/">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/tag/lorem/">
+  <link rel="canonical" href="http://localhost:4000/installation/">
 	<link rel="alternate" type="application/rss+xml" title="GRAIC" href="http://localhost:4000/feed.xml" />
 	
 	<!-- Tooltips -->
@@ -146,34 +146,117 @@
 
 
     <div class="page-content">
-        <div class="wrapper">
-<div class="page">
+        <div>
 
-  <header class="post-header">
-    <h1 class="post-title">Posts in "Lorem"</h1>
-  </header>
+<div class="site-header-container has-cover" style="background-image: url(/assets/headerimage.png);">
+  <div class="scrim has-cover">
+    <header class="site-header">
+      <h1 class="title">GRAIC</h1>
+      <p class="subtitle">A competition for intelligent racing</p>
+    </header>
+  </div>
+</div>
 
-  <span class="page-divider">
-  <span class="one"></span>
-  <span class="two"></span>
-</span>
+<div class="wrapper">
+  <i>This competition is currently under construction. The information on this page is subject to change.</i>
+</div>
 
-
-  <article class="post-content">
-    <ul class="posts-list">
+<div class="wrapper">
+  
+  <div>
       
-      <li><strong><a class="post-link" href="/dummy/2015/04/19/dummy6.html">Dummy Post 6</a></strong><span class="post-date"> - April 19, 2015</span></li>
+      <h1>Recommendations</h1>
       
-      <li><strong><a class="post-link" href="/dummy/2015/04/18/dummy6.html">Dummy Post 6</a></strong><span class="post-date"> - April 18, 2015</span></li>
-      
-      <li><strong><a class="post-link" href="/dummy/2015/04/18/dummy5.html">Dummy Post 5</a></strong><span class="post-date"> - April 18, 2015</span></li>
-      
-    </ul>
-  </article>
+      <p><p>PoPGRI uses the <a href="https://carla.org/">CARLA simulator</a> alongside <a href="https://www.ros.org/">ROS Noetic</a> to run synthesis algorithms. The CARLA simulator is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use the <a href="https://hub.docker.com/r/carlasim/carla">CARLA Docker</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
 
+<p>The software and system recommendations are listed below.</p>
+
+<h4 id="software-recommendations">Software Recommendations</h4>
+<ul>
+  <li>Ubuntu 20.04</li>
+  <li>Carla 0.9.11</li>
+  <li>ROS Noetic</li>
+  <li>Python 3.7</li>
+</ul>
+
+<h4 id="system-recommendations">System Recommendations</h4>
+<ul>
+  <li>Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD ryzen 7 / AMD ryzen 9</li>
+  <li>+16 GB RAM memory</li>
+  <li>NVIDIA RTX 2070 / NVIDIA RTX 2080 / NVIDIA RTX 3070, NVIDIA RTX 3080</li>
+  <li>4GB GPU</li>
+  <li>Open GL 3.3 or above​ and ​DirectX 10</li>
+</ul>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Installation</h1>
+      
+      <p><p>These instructions are adapted from the <a href="https://carla.readthedocs.io/en/latest/build_docker/">Carla Documentation</a> and <a href="https://antc2lt.medium.com/carla-on-ubuntu-20-04-with-docker-5c2ccdfe2f71">this article</a>.</p>
+
+<h3 id="installing-the-carla-docker">Installing the Carla Docker</h3>
+
+<p>First, ensure that you are using the NVIDIA driver. This can be done by going to “Additional Drivers” in “Software and Updates”.</p>
+
+<ol>
+  <li>Install Docker CE. Instructions can be found here: <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
+  <li>Install NVIDIA-Docker2. Instructions can be found here:<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker</a></li>
+  <li>Pull the Carla image: <code class="highlighter-rouge">docker pull carlasim/carla:version</code></li>
+</ol>
+
+<p>You can now run the Docker container.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run \
+ -p 2000-2002:2000-2002 \
+ --runtime=nvidia \
+ --gpus all \
+ -e DISPLAY=$DISPLAY \
+ -v /tmp/.X11-unix:/tmp/.X11-unix \
+ -it \
+ carlasim/carla \
+ bash
+</code></pre></div></div>
+
+<h3 id="using-the-pythonapi">Using the PythonAPI</h3>
+
+<p>You can export the PythonAPI folder using the following command.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker cp &lt;container id&gt;:&lt;src path&gt; &lt;dst path&gt;
+</code></pre></div></div>
+
+<p>Here, the container id can be found when you enter Carla bash (ie. <code class="highlighter-rouge">docker cp &lt;container id&gt;:&lt;src path&gt; &lt;dst path&gt;</code>) or by running the command <code class="highlighter-rouge">docker ps -a</code> (if you have already closed the docker).</p>
+
+<p>The source path is <code class="highlighter-rouge">/home/carla/PythonAPI</code>.</p>
+
+<p>You will have to use Python 3.7. To run a python script in Carla, you can start the Carla container in one terminal, then run the python script. To run the Carla container, use the following commands.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run \
+ -p 2000-2002:2000-2002 \
+ --cpuset-cpus="0-5" \
+ --runtime=nvidia \
+ --gpus 'all,"capabilities=graphics,utility,display,video,compute"' \
+ -e DISPLAY=$DISPLAY \
+ -v /tmp/.X11-unix:/tmp/.X11-unix \
+ -it \
+ carlasim/carla \
+ ./CarlaUE4.sh -opengl $1
+</code></pre></div></div>
+
+<h3 id="installing-ros">Installing ROS</h3>
+
+<p>The installation instructions for ROS can be found here: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a>.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Running GRAIC</h1>
+      
+      <p><p>The maps and vehicles used in GRAIC can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a>.</p>
+</p>
+  </div>
+  
 </div>
 </div>
-<br>
 
     </div>
 

@@ -1,0 +1,32 @@
+---
+layout: default
+title: Installation
+permalink: /installation/
+main_nav: true
+---
+<div>
+
+<div class="site-header-container {% if site.cover %}has-cover{% endif %}" {% if site.cover %}style="background-image: url({{ site.cover | prepend: site.baseurl }});"{% endif %}>
+  <div class="scrim {% if site.cover %}has-cover{% endif %}">
+    <header class="site-header">
+      <h1 class="title">{{ site.title }}</h1>
+      {% if site.subtitle %}<p class="subtitle">{{ site.subtitle }}</p>{% endif %}
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+  <i>This competition is currently under construction. The information on this page is subject to change.</i>
+</div>
+
+<div class="wrapper">
+  {% for entry in site.installation %}
+  <div>
+      {% if entry.title != blank %}
+      <h1>{{entry.title}}</h1>
+      {% endif %}
+      <p>{{entry.content}}</p>
+  </div>
+  {% endfor %}
+</div>
+</div>
