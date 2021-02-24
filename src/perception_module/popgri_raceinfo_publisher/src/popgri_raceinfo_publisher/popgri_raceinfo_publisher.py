@@ -79,6 +79,21 @@ class PerceptionModule():
 # calculate distance between p1 and p2
 def distance_between_points(p1, p2):
         return np.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
+# helper function for calculating lane markers
+# approximate the locations of lane markers by the assumptions: 
+# 1. the lane markers have the same z coordinates as the current location 
+# 2. the vector pointing from cur_loc to any one of the lane marker is perpendicular to the vector pointing from cur_loc to the next way point ahead
+def get_markers(cur_loc, v, w):
+    x = v.x
+    y = v.y
+    z = v.z
+    m1 = np.sqrt((w*w*y*y)/4/(x*x+y*y))
+    n1 = (-x/y)*m1
+    m2 = -m1
+    n2 = (-x/y)*m2
+    marker1 = cur_loc + carla.Location(m1, n1, 0)
+    marker2 = cur_loc + carla.Location(m2, n2, 0)
+    return (marker1, marker2)
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name):
     # main function
@@ -109,7 +124,8 @@ def publisher(percep_mod, role_name):
                 bb.rotation = ob.get_transform().rotation
                 percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=2)
             obsmsg.append(temp)
-        for p in lp:
+        for i in range(len(lp)):
+            p = lp[i]
             temp = LaneInfo()
             trans = p.transform
             loc = trans.location
@@ -121,25 +137,16 @@ def publisher(percep_mod, role_name):
             temp.rotation.y = rot.yaw
             temp.rotation.z = rot.roll
             lpmsg.append(temp)
-            # TODO:figure out how rotation affects orientation of lane marker
-            # get centers of adjacent lanes
+            # draw left and right lane markers
             width = p.lane_width
-            if not p.get_left_lane() is None:
-                center_of_left_lane = p.get_left_lane().transform.location
-                vec_left = center_of_left_lane - loc
-                point_left = vec_left*(width/2)/distance_between_points(loc, center_of_left_lane)
-                percep_mod.world.debug.draw_point(point_left+loc, life_time=2)
-            if not p.get_right_lane() is None:
-                center_of_right_lane = p.get_right_lane().transform.location
-                vec_right = center_of_right_lane - loc
-                point_right = vec_right*(width/2)/distance_between_points(loc, center_of_right_lane)
-                percep_mod.world.debug.draw_point(point_right+loc, life_time=2)
-            # vec_left = center_of_left_lane - loc
-            # point_left = vec_left*(width/2)/distance_between_points(loc, center_of_left_lane)
-            # draw lane markders and the center of the lane
+            next_p = None
+            if i != len(lp) - 1:
+                next_p = lp[i+1]
+                vec = next_p.transform.location - loc
+                mark1, mark2 = get_markers(loc, vec, width)
+                percep_mod.world.debug.draw_point(mark1,life_time=2)
+                percep_mod.world.debug.draw_point(mark2,life_time=2)
             percep_mod.world.debug.draw_point(trans.location,life_time=2)
-            # percep_mod.world.debug.draw_point(point_right+loc, life_time=2)
-            # percep_mod.world.debug.draw_point(point_left+loc, life_time=2)
         obs_pub.publish(obsmsg)
         lane_pub.publish(lpmsg)
         rate.sleep()
