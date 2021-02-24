@@ -95,7 +95,7 @@ class PerceptionModule_BB():
 def publisher(percep_mod, label_list, role_name):
     # main function
     pub = rospy.Publisher('/carla/%s/environment_obj_bb'%role_name, BBList, queue_size=1)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(20)
     while not rospy.is_shutdown():
         for label in label_list:
             # get all vertices of all bounding boxes which are within the radius with label 'label'
