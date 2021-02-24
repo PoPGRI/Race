@@ -10,9 +10,6 @@
   <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   
-  <meta name="author" content="Sayan Mitra">
-  <meta name="copyright" content="&copy; Sayan Mitra 2021">
-  
 
   <!-- External libraries -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -75,6 +72,8 @@
 	<script type="text/javascript">
 		window.tooltips = []
 	</script>
+
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 
@@ -100,15 +99,11 @@
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Installation</a>
-	
-
-	
-	<li class="nav-link"><a href="/overview/">Overview</a>
-	
-
-	
 	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+	<li class="nav-link"><a href="/installation/">Installation</a>
 	
 
 	
@@ -184,6 +179,20 @@
   </li>
 </ul>
 
+<h2 id="tracks">Tracks</h2>
+<p><em>Track information is subject to change</em></p>
+
+<p>There are two available tracks to compete in.</p>
+
+<ul>
+  <li>
+    <p>Model-Free Track - In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The synthesis algorithms used in this track must be able to compute inputs for the system even though the full dynamics of the system are unknown.</p>
+  </li>
+  <li>
+    <p>Model Track - In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla. The synthesis algorithms in this track can take advantage of the fact that the full dynamics of the system are known.</p>
+  </li>
+</ul>
+
 <h2 id="plan-for-both-in-person-and-remote-possibilities">Plan for both in-person and remote possibilities</h2>
 
 <p>This year the competition will be entirely simulation-based. We will create a timeline for the following significant milestones leading upto CPSWeek.</p>
@@ -197,6 +206,22 @@
 </ul>
 
 <p>Technical details about submissions, repositories, docker, VM, etc. will be announced in due course. We plan to learn from and collaborate with organizers of previous competitions for <a href="https://cps-vo.org/group/CPSchallenge">F1/10</a>, ARCH (https://cps-vo.org/group/ARCH/FriendlyCompetition), <a href="https://sites.google.com/view/vnn20/vnncomp">Neural Network verification</a>,  and <a href="http://docs.fmrchallenge.org/en/v0.0.4/">formal synthesis</a>.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Important Dates</h1>
+      
+      <p><p><em>Dates are tentative and subject to change</em></p>
+
+<ul>
+  <li>Feb. 27: Platform beta release</li>
+  <li>March-May: Platform updates based on feedback from participants</li>
+  <li>April 30: Registration deadline for participants, Final platform update</li>
+  <li>May 11: Submission deadline for controllers</li>
+  <li>May 18-21: Results announced</li>
+</ul>
 </p>
   </div>
   
@@ -224,15 +249,11 @@
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Installation</a>
-	
-
-	
-	<li class="nav-link"><a href="/overview/">Overview</a>
-	
-
-	
 	<li class="nav-link"><a href="/about/">About</a>
+	
+
+	
+	<li class="nav-link"><a href="/installation/">Installation</a>
 	
 
 	
@@ -270,9 +291,9 @@
       <p><strong>Contact</strong></p>
       <ul class="social-media-list">
         <li>
-          <a href="mailto:mitras@illinois.edu">
+          <a href="mailto:graic2021@gmail.com">
             <i class="fa fa-envelope-o"></i>
-            <span class="username">mitras@illinois.edu</span>
+            <span class="username">graic2021@gmail.com</span>
           </a>
         </li>
 

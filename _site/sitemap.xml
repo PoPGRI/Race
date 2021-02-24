@@ -40,13 +40,10 @@
 <loc>http://localhost:4000/documentation/</loc>
 </url>
 <url>
-<loc>http://localhost:4000/installation/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/overview/</loc>
-</url>
-<url>
 <loc>http://localhost:4000/about/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/installation/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/posts/</loc>

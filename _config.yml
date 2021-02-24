@@ -11,8 +11,8 @@ exclude:
 # Site settings
 title: GRAIC
 subtitle: "A competition for intelligent racing"
-email: mitras@illinois.edu
-name: Sayan Mitra
+email: graic2021@gmail.com
+name:
 description: >
   Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 # Base URL of site (i.e. /blog). It should always start with a slash,
@@ -40,7 +40,6 @@ collections:
   - home
   - about
   - documentation
-  - overview
   - installation
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
