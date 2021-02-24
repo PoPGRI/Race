@@ -6,7 +6,7 @@
   <arg name='timeout' default='10'/>
 
   <!-- Map to load on startup (either a predefined CARLA town (e.g. 'Town01'), or a OpenDRIVE map file) -->
-  <arg name="town" default='Town01'/>
+  <arg name="town" default='track1_loop'/>
 
   <!-- Synchronous mode-->
   <arg name='synchronous_mode' default=''/>
@@ -30,5 +30,7 @@
     <param name="N" value="$(arg N)" />
     <param name="log" value="$(arg log)" />
   </node>
+
+  <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen" />
 
 </launch>

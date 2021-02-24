@@ -116,7 +116,7 @@ def publisher(percep_mod, label_list, role_name):
                 info.id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
                 bbs_msgs.bounding_box_vertices.append(info)
                 bb = vertices_of_one_box[3].bounding_box
-                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=2)
+                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=0)
             pub.publish(bbs_msgs)
         rate.sleep()
 
@@ -134,4 +134,7 @@ if __name__ == "__main__":
     world = client.get_world()
     pm = PerceptionModule_BB(world, role_name=role_name)
     default_list = [carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Fences, carla.CityObjectLabel.Sidewalks, carla.CityObjectLabel.Walls, carla.CityObjectLabel.Vegetation]
-    publisher(pm, default_list, role_name)
+    try:
+        publisher(pm, default_list, role_name)
+    except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down environment object publisher")

@@ -31,8 +31,8 @@ class EvaluationNode:
     def collisionCallback(self, data):
         if str(data.other_actor_id) in self.hitObjects:
             return
-        # print("Collision Detected with ", data.objects_hit[0])
-        self.hitObjects.add(str(data.other_actor_id))
+        # print("Collision Detected with ", data.other_actor_id)
+        self.hitObjects.add(str(data.other_actor_id)+"_at_time_"+str(data.header.stamp))
         self.score -= 100.0
 
     def waypointCallback(self, data):
@@ -56,6 +56,7 @@ class EvaluationNode:
         if v > 0.5:
             self.speedList.append(v)
         
+        # NOTE reached function; range
         if distanceToX < 8 and distanceToY < 8: 
             reached = Int16()
             reached.data = 1
@@ -71,10 +72,11 @@ class EvaluationNode:
     def onShutdown(self):
         fname = 'score_{}_{}'.format(self.role_name, time.asctime())
         # fname = 'score_h'
+        # print("hit: ", self.hitObjects)
         f = open(fname, 'wb')
-        f.write(str(self.score).encode('ascii'))
-        f.write('\n')
-        f.write(str(self.hitObjects).encode('ascii'))
+        f.write(str(self.score/2500*100).encode('ascii') + "\n".encode('ascii'))
+        f.write("obstacle hits: \n".encode('ascii'))
+        f.write('\n'.join(self.hitObjects).encode('ascii'))
         f.close()
 
 
@@ -97,5 +99,8 @@ if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
     en = EvaluationNode(role_name=role_name)
-    run(en, role_name)
+    try:
+        run(en, role_name)
+    except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down the evaluation node")
 

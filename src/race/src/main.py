@@ -17,7 +17,7 @@ def run_model(role_name):
     rate = rospy.Rate(100)  # 100 Hz    
 
     perceptionModule = VehiclePerception(role_name=role_name)
-    decisionModule = VehicleDecision('./waypoints')
+    decisionModule = VehicleDecision('./track1', role_name)
     controlModule = VehicleController(role_name=role_name)
 
     def shut_down():
@@ -30,16 +30,16 @@ def run_model(role_name):
 
         # Get the current position and orientation of the vehicle
         currState =  (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
-        if not currState:
+        if not currState or not currState[0]:
             continue
-        print("Currently at: ", currState)
+        # print("Currently at: ", currState)
         
         # Get the target state from decision module
         refState = decisionModule.get_ref_state(currState, obstacleList)
         if not refState:
             controlModule.stop()
             exit(0)
-        print("target: ", refState)
+        # print("target: ", refState)
 
         # Execute 
         controlModule.execute(currState, refState)

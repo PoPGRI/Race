@@ -4,25 +4,36 @@ from geometry_msgs.msg import Vector3
 from std_msgs.msg import Int16
 import time
 import pickle
+import carla
 import os
 
 class WaypointNode:
 
-    def __init__(self, role_name='ego_vehicle'):
+    def __init__(self, world, role_name='ego_vehicle'):
         self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, Int16, self.reachCallback)
-        self.waypoint_list = pickle.load(open('waypoints','rb'))
+        self.waypoint_list = pickle.load(open('track1','rb'))
         self.role_name = role_name
+        self.world = world
+        self.map = world.get_map()
 
     def getWaypoint(self):
         if len(self.waypoint_list) != 0:
+            location = carla.Location(self.waypoint_list[0][0], self.waypoint_list[0][1], 1)
+            rotation = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.rotation
+            box = carla.BoundingBox(location, carla.Vector3D(1,1,1))
+            if len(self.waypoint_list) == 1:
+                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(255, 255, 0, 255), life_time=0)
+            else:
+                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(255, 0, 0, 255), life_time=2)
             return self.waypoint_list[0]
         else:
             return None
-
+    
+    # TODO change this for new map
     def reachCallback(self, data):
-        for _ in range(50):
-            if len(self.waypoint_list) != 0:
-                self.waypoint_list.pop(0)
+        if len(self.waypoint_list) > 0:
+            self.waypoint_list.pop(0)
+
 
 def run(wn, role_name):
     rate = rospy.Rate(100)  # 100 Hz    
@@ -43,6 +54,11 @@ if __name__ == "__main__":
     rospy.loginfo("Start publishing waypoints for %s!"%role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
-    wn = WaypointNode(role_name=role_name)
-    run(wn, role_name)
+    client = carla.Client('localhost', 2000)
+    world = client.get_world()
+    wn = WaypointNode(world, role_name=role_name)
+    try:
+        run(wn, role_name)
+    except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down waypoint node")
 

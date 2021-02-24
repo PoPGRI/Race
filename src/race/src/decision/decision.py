@@ -1,19 +1,32 @@
 import pickle
 import numpy as np
+import rospy
+from popgri_msgs.msg import LaneList
+from popgri_msgs.msg import LaneInfo
 from util.util import quaternion_to_euler
 
 class VehicleDecision():
-    def __init__(self, fn):
-        self.waypoint_list = pickle.load(open(fn,'rb')) # a list of waypoints
-        self.pos_idx = int(50)
-        self.prev_pos_idx = int(0)
+    def __init__(self, fn, role_name):
+        # self.waypoint_list = pickle.load(open(fn,'rb')) # a list of waypoints
+        self.subWaypoint = rospy.Subscriber("/carla/%s/lane_waypoints"%role_name, LaneList, self.waypointCallback)
+        # self.pos_idx = int(1)
+        # self.prev_pos_idx = int(0)
 
         self.vehicle_state = 'middle'
         self.counter = 0
-        self.target_x = self.waypoint_list[self.pos_idx][0]
-        self.target_y = self.waypoint_list[self.pos_idx][1]
+        # self.target_x = self.waypoint_list[self.pos_idx][0]
+        # self.target_y = self.waypoint_list[self.pos_idx][1]
+        self.waypoint = None
+        self.target_x = None 
+        self.target_y = None
         self.change_lane = False
         self.change_lane_wp_idx = 0
+
+    def waypointCallback(self, data):
+        self.waypoint = data.lane_waypoints[-1]
+        if not self.target_x or not self.target_y:
+            self.target_x = self.waypoint.location.x 
+            self.target_y = self.waypoint.location.y
 
         
     def get_ref_state(self, currState, obstacleList):
@@ -52,6 +65,7 @@ class VehicleDecision():
                 
 
         prev_vehicle_state = self.vehicle_state          
+        print("prev state: ", prev_vehicle_state)
         if self.vehicle_state == "left":
             if front_dist > 15 and not obs_front_right and not self.change_lane:
                 self.vehicle_state = "middle"
@@ -78,40 +92,51 @@ class VehicleDecision():
                 self.vehicle_state = "left"
             elif not obs_front_right:
                 self.vehicle_state = "right"
+        print("current state: ", self.vehicle_state)
         
         if prev_vehicle_state != self.vehicle_state:
             self.change_lane = True
-            self.change_lane_wp_idx = self.pos_idx
+            # self.change_lane_wp_idx = self.pos_idx
+
+        if self.change_lane:
+            if self.vehicle_state == "left" and not obs_front_right:
+                self.change_lane = False 
+            elif self.vehicle_state == "right" and not obs_front_left:
+                self.change_lane = False
+            elif self.vehicle_state == "middle":
+                self.change_lane = False
 
         # self.vehicle_state = "left"
         print(front_dist, self.vehicle_state, obs_front_left, obs_front_right, self.change_lane)
-        target_x = self.target_x
-        target_y = self.target_y
+        # target_x = self.target_x
+        # target_y = self.target_y
 
         # curr_x = currState.pose.position.x
         # curr_y = currState.pose.position.y
+        while not self.target_x or not self.target_y:
+            continue
         
-        distToTargetX = abs(target_x - curr_x)
-        distToTargetY = abs(target_y - curr_y)
+        distToTargetX = abs(self.target_x - curr_x)
+        distToTargetY = abs(self.target_y - curr_y)
 
-        if ((distToTargetX < 4 and distToTargetY < 4)) or self.counter > 100:
+        if ((distToTargetX < 5 and distToTargetY < 5)): #  or self.counter > 1000:
             self.counter = 0
-            prev_target_x = self.waypoint_list[self.pos_idx][0]
-            prev_target_y = self.waypoint_list[self.pos_idx][1]
+            prev_target_x = self.target_x
+            prev_target_y = self.target_y
 
-            if self.change_lane:
-                self.pos_idx = self.pos_idx + 100
-            else:
-                self.pos_idx = self.pos_idx + 50
-            # self.pos_idx = self.pos_idx % len(self.waypoint_list)
-            if self.pos_idx > self.change_lane_wp_idx + 150:
-                self.change_lane = False
+            # if self.change_lane:
+            #     self.pos_idx = self.pos_idx + 2
+            # else:
+            #     self.pos_idx = self.pos_idx + 1
+            # # self.pos_idx = self.pos_idx % len(self.waypoint_list)
 
-            if self.pos_idx > len(self.waypoint_list):
-                return None
+            # if self.pos_idx >= len(self.waypoint_list):
+            #     return None
 
-            self.target_x = self.waypoint_list[self.pos_idx][0]
-            self.target_y = self.waypoint_list[self.pos_idx][1]
+            # self.target_x = self.waypoint_list[self.pos_idx][0]
+            # self.target_y = self.waypoint_list[self.pos_idx][1]
+            self.target_x = self.waypoint.location.x 
+            self.target_y = self.waypoint.location.y
 
             target_orientation = np.arctan2(self.target_y-prev_target_y, 
                 self.target_x-prev_target_x)
@@ -130,10 +155,10 @@ class VehicleDecision():
                 self.target_x = self.target_x + x_offset
                 self.target_y = self.target_y + y_offset
 
-            print("reached",self.waypoint_list[self.pos_idx-20][0],self.waypoint_list[self.pos_idx-20][1],
-                "next",self.waypoint_list[self.pos_idx][0],self.waypoint_list[self.pos_idx][1])
+            print("reached",prev_target_x, prev_target_y,
+                "next",self.target_x, self.target_y)
         else:
             self.counter += 1
 
-        return [target_x, target_y, 0, 6]
+        return [self.target_x, self.target_y, 0, 6]
 

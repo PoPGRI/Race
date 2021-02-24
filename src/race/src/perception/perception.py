@@ -26,6 +26,6 @@ class VehiclePerception:
 
 if __name__ == "__main__":
     rospy.init_node("perception_node")
-    VehiclePerception(test=True)
+    VehiclePerception(role_name='hero0', test=True)
 
     rospy.spin()

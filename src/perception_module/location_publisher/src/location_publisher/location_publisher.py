@@ -71,5 +71,8 @@ if __name__ == "__main__":
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     # client.set_timeout(timeout)
     world = client.get_world()
-    lm = LocationModule(world, role_name)
-    publisher(lm, role_name)
+    lm = LocationModule(world, role_name)    
+    try:
+        publisher(lm, role_name)
+    except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down location publisher")

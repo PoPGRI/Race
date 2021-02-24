@@ -8,7 +8,7 @@ from popgri_msgs.msg import LaneList
 from popgri_msgs.msg import ObstacleInfo
 from popgri_msgs.msg import ObstacleList
 class PerceptionModule():
-    def __init__(self, carla_world, role_name, radius=20):
+    def __init__(self, carla_world, role_name, radius=15):
         self.sensing_radius = radius # default ?????
         self.world = carla_world
         self.vehicle = None
@@ -156,4 +156,7 @@ if __name__ == "__main__":
     # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule(world, role_name)
-    publisher(pm, role_name)
+    try:
+        publisher(pm, role_name)
+    except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down raceinfo publisher")
