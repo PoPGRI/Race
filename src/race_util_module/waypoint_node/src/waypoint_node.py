@@ -1,7 +1,7 @@
 import rospy 
 import numpy as np
 from geometry_msgs.msg import Vector3
-from std_msgs.msg import Int16
+from std_msgs.msg import String
 import time
 import pickle
 import carla
@@ -10,7 +10,7 @@ import os
 class WaypointNode:
 
     def __init__(self, world, role_name='ego_vehicle'):
-        self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, Int16, self.reachCallback)
+        self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
         self.waypoint_list = pickle.load(open('track1','rb'))
         self.role_name = role_name
         self.world = world
@@ -24,7 +24,7 @@ class WaypointNode:
             if len(self.waypoint_list) == 1:
                 self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(255, 255, 0, 255), life_time=0)
             else:
-                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(255, 0, 0, 255), life_time=2)
+                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(0, 255, 0, 255), life_time=2)
             return self.waypoint_list[0]
         else:
             return None
@@ -36,7 +36,7 @@ class WaypointNode:
 
 
 def run(wn, role_name):
-    rate = rospy.Rate(100)  # 100 Hz    
+    rate = rospy.Rate(20)  # 100 Hz    
     pubWaypoint = rospy.Publisher('/carla/%s/waypoints'%role_name, Vector3, queue_size=1)
     while not rospy.is_shutdown():
         waypoint = wn.getWaypoint()

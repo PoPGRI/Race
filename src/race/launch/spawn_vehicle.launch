@@ -16,9 +16,13 @@
 
   <!-- the control bridge -->
   <!-- carla manual control -->
-  <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
+  <!-- <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
     <arg name='role_name' value='$(arg role_name)'/>
-  </include>
+  </include> -->
+  <node pkg="race" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
   <!-- carla ackermann control -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
