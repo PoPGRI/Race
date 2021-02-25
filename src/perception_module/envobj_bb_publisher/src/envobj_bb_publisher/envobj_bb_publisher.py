@@ -115,8 +115,8 @@ def publisher(percep_mod, label_list, role_name):
                 info.name = str(vertices_of_one_box[1])
                 info.id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
                 bbs_msgs.bounding_box_vertices.append(info)
-                bb = vertices_of_one_box[3].bounding_box
-                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=0)
+                # bb = vertices_of_one_box[3].bounding_box
+                # percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=0)
             pub.publish(bbs_msgs)
         rate.sleep()
 
