@@ -143,9 +143,15 @@ def publisher(percep_mod, role_name):
             if i != len(lp) - 1:
                 next_p = lp[i+1]
                 vec = next_p.transform.location - loc
-                mark1, mark2 = get_markers(loc, vec, width)
-                percep_mod.world.debug.draw_point(mark1,life_time=2)
-                percep_mod.world.debug.draw_point(mark2,life_time=2)
+                if vec.y == 0:
+                    mark1 = carla.Location(loc.x+width/2, loc.y,loc.z)
+                    mark2 = carla.Location(loc.x-width/2, loc.y,loc.z)
+                    percep_mod.world.debug.draw_point(mark1,life_time=2)
+                    percep_mod.world.debug.draw_point(mark2,life_time=2)
+                else:    
+                    mark1, mark2 = get_markers(loc, vec, width)
+                    percep_mod.world.debug.draw_point(mark1,life_time=2)
+                    percep_mod.world.debug.draw_point(mark2,life_time=2)
             percep_mod.world.debug.draw_point(trans.location,life_time=2)
         obs_pub.publish(obsmsg)
         lane_pub.publish(lpmsg)
