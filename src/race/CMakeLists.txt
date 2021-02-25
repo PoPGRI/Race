@@ -161,6 +161,8 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/run.py
   scripts/spawn_npc.py
+  scripts/carla_manual_control.py
+  scripts/video_output.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

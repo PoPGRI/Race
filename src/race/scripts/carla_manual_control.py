@@ -293,7 +293,8 @@ class HUD(object):
         mono = default_font if default_font in fonts else fonts[0]
         mono = pygame.font.match_font(mono)
         self._font_mono = pygame.font.Font(mono, 14)
-        self._font_race = pygame.font.Font(mono, 20)
+        # NOTE This is the font info of the score
+        self._font_race = pygame.font.Font(mono, 24)
         self._notifications = FadingText(font, (width, 40), (0, height - 40))
         self.help = HelpText(pygame.font.Font(mono, 24), width, height)
         self._show_info = True
@@ -376,12 +377,14 @@ class HUD(object):
 
     def score_updated(self, data):
         """
+        NOTE added for race score
         Callback on car score updates
         """
         self.score = data.data
 
     def reached_updated(self, data):
         """
+        NOTE added for waypoint reaching information
         Callback when car reaches a waypoint
         """
         self.reached_info = data.data
@@ -422,7 +425,7 @@ class HUD(object):
             'Vehicle: % 20s' % ' '.join(self.vehicle_info.type.title().split('.')[1:]),
             'Speed:   % 15.0f km/h' % (3.6 * self.vehicle_status.velocity),
             u'Heading:% 16.0f\N{DEGREE SIGN} % 2s' % (yaw, heading),
-            'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (x, y)),
+            'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (x, -y)),
             'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (self.latitude, self.longitude)),
             'Height:  % 18.0f m' % z,
             '']
@@ -501,6 +504,7 @@ class HUD(object):
                     surface = self._font_mono.render(item, True, (255, 255, 255))
                     display.blit(surface, (8, v_offset))
                 v_offset += 18
+            # NOTE the 3 renderings below are for the race information
             surface = self._font_race.render("Score {:.2f}".format(self.score), True, (0, 255, 0))
             display.blit(surface, (8, v_offset))
             v_offset += 18
