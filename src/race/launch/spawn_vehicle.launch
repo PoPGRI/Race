@@ -23,6 +23,10 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
+  <node pkg="race" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
   <!-- carla ackermann control -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
@@ -46,9 +50,9 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
-  <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
+  <!-- <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
-  </include>
+  </include> -->
 
   <!-- the evaluation module -->
   <include file="$(find evaluation_node)/launch/evaluation_node.launch">
