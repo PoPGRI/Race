@@ -3,9 +3,12 @@ layout: page
 title: Installation
 ---
 
+### Step 0. Install the Carla Docker
+
+The instructions for CARLA installation can be found [here](https://carla.readthedocs.io/en/latest/build_linux/). It is recommended to use the [CARLA Docker](https://hub.docker.com/r/carlasim/carla). The instructions for ROS Noetic installation can be found [here](http://wiki.ros.org/noetic/Installation/Ubuntu).
+
 These instructions are adapted from the [Carla Documentation](https://carla.readthedocs.io/en/latest/build_docker/) and [this article](https://antc2lt.medium.com/carla-on-ubuntu-20-04-with-docker-5c2ccdfe2f71).
 
-### Installing the Carla Docker
 
 First, ensure that you are using the NVIDIA driver. This can be done by going to "Additional Drivers" in "Software and Updates".
 
@@ -26,7 +29,7 @@ docker run \
  bash
 ```
 
-### Using the PythonAPI
+### Step 1. Using the PythonAPI
 
 You can export the PythonAPI folder using the following command.
 ```
@@ -51,6 +54,6 @@ docker run \
  ./CarlaUE4.sh -opengl $1
 ```
 
-### Installing ROS
+### Step 2. Installing ROS
 
 The installation instructions for ROS can be found here: [http://wiki.ros.org/noetic/Installation/Ubuntu](http://wiki.ros.org/noetic/Installation/Ubuntu).
