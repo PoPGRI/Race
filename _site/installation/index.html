@@ -192,66 +192,62 @@
       
       <h1>Installation</h1>
       
-      <p><h3 id="step-0-install-the-carla-docker">Step 0. Install the Carla Docker</h3>
+      <p><h3 id="step-0-install-the-graic-docker">Step 0. Install the GRAIC Docker</h3>
 
-<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use the <a href="https://hub.docker.com/r/carlasim/carla">CARLA Docker</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
-
-<p>These instructions are adapted from the <a href="https://carla.readthedocs.io/en/latest/build_docker/">Carla Documentation</a> and <a href="https://antc2lt.medium.com/carla-on-ubuntu-20-04-with-docker-5c2ccdfe2f71">this article</a>.</p>
+<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use our <a href="https://hub.docker.com/r/sundw2014/graic">GRAIC Docker</a> image. The instructions here are for GRAIC installation on Ubuntu 20.04.</p>
 
 <p>First, ensure that you are using the NVIDIA driver. This can be done by going to “Additional Drivers” in “Software and Updates”.</p>
 
 <ol>
   <li>Install Docker CE. Instructions can be found here: <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
   <li>Install NVIDIA-Docker2. Instructions can be found here:<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker</a></li>
-  <li>Pull the Carla image: <code class="highlighter-rouge">docker pull carlasim/carla:version</code></li>
+  <li>Pull the GRAIC Docker image: <code class="highlighter-rouge">docker pull sundw2014/graic:latest</code></li>
 </ol>
 
-<p>You can now run the Docker container.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run \
- -p 2000-2002:2000-2002 \
- --runtime=nvidia \
- --gpus all \
- -e DISPLAY=$DISPLAY \
- -v /tmp/.X11-unix:/tmp/.X11-unix \
- -it \
- carlasim/carla \
- bash
-</code></pre></div></div>
+<p>Note that you may have to use the <code class="highlighter-rouge">sudo</code> command to run docker.</p>
 
-<h3 id="step-1-using-the-pythonapi">Step 1. Using the PythonAPI</h3>
+<h3 id="step-1-cloning-the-git-repo">Step 1. Cloning the Git repo</h3>
 
-<p>You can export the PythonAPI folder using the following command.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker cp &lt;container id&gt;:&lt;src path&gt; &lt;dst path&gt;
-</code></pre></div></div>
-
-<p>Here, the container id can be found when you enter Carla bash (ie. <code class="highlighter-rouge">docker cp &lt;container id&gt;:&lt;src path&gt; &lt;dst path&gt;</code>) or by running the command <code class="highlighter-rouge">docker ps -a</code> (if you have already closed the docker).</p>
-
-<p>The source path is <code class="highlighter-rouge">/home/carla/PythonAPI</code>.</p>
-
-<p>You will have to use Python 3.7. To run a python script in Carla, you can start the Carla container in one terminal, then run the python script. To run the Carla container, use the following commands.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run \
- -p 2000-2002:2000-2002 \
- --cpuset-cpus="0-5" \
- --runtime=nvidia \
- --gpus 'all,"capabilities=graphics,utility,display,video,compute"' \
- -e DISPLAY=$DISPLAY \
- -v /tmp/.X11-unix:/tmp/.X11-unix \
- -it \
- carlasim/carla \
- ./CarlaUE4.sh -opengl $1
-</code></pre></div></div>
+<p>Now that you have installed the GRAIC docker, you should clone the GRAIC repo.
+Use the command <code class="highlighter-rouge">git clone https://github.com/PoPGRI/Race.git</code> to save the repo to any directory.</p>
 
 <h3 id="step-2-installing-ros">Step 2. Installing ROS</h3>
 
-<p>The installation instructions for ROS can be found here: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a>.</p>
-</p>
-  </div>
-  
-  <div>
-      
-      <h1>Running GRAIC</h1>
-      
-      <p><p>The maps and vehicles used in GRAIC can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a>.</p>
+<p>GRAIC uses rostopics to communicate between its modules (described on the <a href="https://popgri.github.io/Race/docs/">docs</a> page).
+The installation instructions for ROS can be found here: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a>.</p>
+
+<h3 id="step-3-running-the-graic-docker-container">Step 3. Running the GRAIC Docker container</h3>
+
+<p>Now that everything has been installed, you can now run the GRAIC docker image.
+If everything works properly, once the GRAIC container is running, the baseline solution can also be run.
+To run the GRAIC Docker container, use the following instructions.</p>
+
+<p>Replace <code class="highlighter-rouge">[path-to-the-cloned-graic-repo]</code> with the path to the cloned repository.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [path-to-the-cloned-graic-repo]/src:/home/carla/graic-workspace/src:rw sundw2014/graic:latest carla-simulator/CarlaUE4.sh
+</code></pre></div></div>
+<p>Note that you may need to use the <code class="highlighter-rouge">sudo</code> command to run the Docker image.</p>
+
+<p>A window called CarlaUE4 will open.</p>
+
+<h3 id="step-4-running-the-baseline-solution">Step 4. Running the baseline solution</h3>
+
+<p>Now that the GRAIC Docker container is running, you should test that everything is working properly using the baseline solution.</p>
+
+<p>You can now access the bash of the running container using <code class="highlighter-rouge">docker exec -it graic_con /bin/bash</code>.
+If you have connected to the bash properly, then you will see the id of the container followed by <code class="highlighter-rouge">$:</code>.</p>
+
+<p>You can run our baseline solution using the following commands.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>catkin_make
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roslaunch race carla_single.launch
+</code></pre></div></div>
+<p>You are now ready to start creating controllers for GRAIC!</p>
+
+<p>The maps and vehicles used in GRAIC can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a>.</p>
 
 <p>To get started with your own controller, look at the interfaces described on our <a href="https://popgri.github.io/Race/docs/">docs</a> page.</p>
 </p>
