@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Documentation</title>
+  <title>Docs</title>
   <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   
@@ -41,9 +41,9 @@
   <!-- Facebook OGP cards -->
   <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 " />
-  <meta property="og:url" content="http://localhost:4000/documentation/">
+  <meta property="og:url" content="http://localhost:4000/docs/">
   <meta property="og:site_name" content="GRAIC" />
-  <meta property="og:title" content="Documentation" />
+  <meta property="og:title" content="Docs" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
@@ -54,18 +54,18 @@
   
   <!-- Twitter: card tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Documentation">
+  <meta name="twitter:title" content="Docs">
   <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/documentation/">
+  <meta name="twitter:url" content="http://localhost:4000/docs/">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/documentation/">
+  <link rel="canonical" href="http://localhost:4000/docs/">
 	<link rel="alternate" type="application/rss+xml" title="GRAIC" href="http://localhost:4000/feed.xml" />
 
 	<!-- Tooltips -->
@@ -95,7 +95,7 @@
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Documentation</a>
+	<li class="nav-link"><a href="/docs/">Docs</a>
 	
 
 	
@@ -103,7 +103,7 @@
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Installation</a>
+	<li class="nav-link"><a href="/installation/">Getting Started</a>
 	
 
 	
@@ -133,7 +133,7 @@
 	
 
 
-        <a href="https://github.com/PoPGRI/Race">GitHub</a>
+        <a href="https://github.com/PoPGRI/Race">Code</a>
       </ul>
     </nav>
   </div>
@@ -162,14 +162,14 @@
       
       <h1>Interfaces</h1>
       
-      <p><p>PoPGRI reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
+      <p><p>GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
 The coordinate system used by ROS is ENU. The perception module is written using Python.
 A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
 
-<p><img src="/Race/assets/interface.png" /></p>
+<p><img src="/Race/assets/interfaces.png" /></p>
 
 <h3 id="perception">Perception</h3>
-<p>The perception used in PoPGRI is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.</p>
+<p>The perception used in GRAIC is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.</p>
 
 <h4 id="obstacles">Obstacles</h4>
 <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and location. The perception can be retrieved by subscribing to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
@@ -242,7 +242,7 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Documentation</a>
+	<li class="nav-link"><a href="/docs/">Docs</a>
 	
 
 	
@@ -250,7 +250,7 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Installation</a>
+	<li class="nav-link"><a href="/installation/">Getting Started</a>
 	
 
 	

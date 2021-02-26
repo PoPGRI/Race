@@ -4,14 +4,14 @@ title: Interfaces
 permalink: /interfaces/
 main_nav: true
 ---
-PoPGRI reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
+GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
 The coordinate system used by ROS is ENU. The perception module is written using Python.
 A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.
 
- <img src="/Race/assets/interface.png">
+ <img src="/Race/assets/interfaces.png">
 
 ### Perception
-The perception used in PoPGRI is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a "lane"-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.
+The perception used in GRAIC is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a "lane"-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.
 
 #### Obstacles
 The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and location. The perception can be retrieved by subscribing to the rostopic `obstacles`.
