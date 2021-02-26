@@ -153,35 +153,38 @@
 </div>
 
 <div class="wrapper">
-  <i>This competition is currently under construction. The information on this page is subject to change.</i>
+  <i>GRAIC is currently under construction. Check back often.</i>
 </div>
 
 <div class="wrapper">
   
   <div>
       
-      <h1>Recommendations</h1>
+      <h1>Getting started</h1>
       
-      <p><p>PoPGRI uses the <a href="https://carla.org/">CARLA simulator</a> alongside <a href="https://www.ros.org/">ROS Noetic</a> to run synthesis algorithms. The CARLA simulator is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use the <a href="https://hub.docker.com/r/carlasim/carla">CARLA Docker</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
+      <p><p>This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.</p>
 
-<p>The software and system recommendations are listed below.</p>
+<h3 id="system-recommendation">System recommendation</h3>
 
-<h4 id="software-recommendations">Software Recommendations</h4>
+<p>GRAIC 2021 uses the <a href="https://carla.org/">CARLA simulator</a>, <a href="https://www.ros.org/">ROS Noetic</a> and CARLA is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. That is why you will want to run the simulator on a machine with a at least 16GB RAM and a powerful GPU.</p>
+
+<h4 id="hardware">Hardware</h4>
+<ul>
+  <li>Intel i7 gen / i9 gen / AMD ryzen 7 / ryzen 9, with at least 16 GB RAM</li>
+  <li>Nvidia RTX 2070 / 2080 / 3070 / 3080 with 4GB GPU video RAM</li>
+</ul>
+
+<h4 id="software">Software</h4>
 <ul>
   <li>Ubuntu 20.04</li>
   <li>Carla 0.9.11</li>
   <li>ROS Noetic</li>
   <li>Python 3.7</li>
+  <li>Open GL 3.3 or above and DirectX 10</li>
 </ul>
 
-<h4 id="system-recommendations">System Recommendations</h4>
-<ul>
-  <li>Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD ryzen 7 / AMD ryzen 9</li>
-  <li>+16 GB RAM memory</li>
-  <li>NVIDIA RTX 2070 / NVIDIA RTX 2080 / NVIDIA RTX 3070, NVIDIA RTX 3080</li>
-  <li>4GB GPU</li>
-  <li>Open GL 3.3 or above​ and ​DirectX 10</li>
-</ul>
+<p>We will not be able to provide much support for running GRAIC on other software configurations.</p>
+
 </p>
   </div>
   
@@ -189,9 +192,11 @@
       
       <h1>Installation</h1>
       
-      <p><p>These instructions are adapted from the <a href="https://carla.readthedocs.io/en/latest/build_docker/">Carla Documentation</a> and <a href="https://antc2lt.medium.com/carla-on-ubuntu-20-04-with-docker-5c2ccdfe2f71">this article</a>.</p>
+      <p><h3 id="step-0-install-the-carla-docker">Step 0. Install the Carla Docker</h3>
 
-<h3 id="installing-the-carla-docker">Installing the Carla Docker</h3>
+<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use the <a href="https://hub.docker.com/r/carlasim/carla">CARLA Docker</a>. The instructions for ROS Noetic installation can be found <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">here</a>.</p>
+
+<p>These instructions are adapted from the <a href="https://carla.readthedocs.io/en/latest/build_docker/">Carla Documentation</a> and <a href="https://antc2lt.medium.com/carla-on-ubuntu-20-04-with-docker-5c2ccdfe2f71">this article</a>.</p>
 
 <p>First, ensure that you are using the NVIDIA driver. This can be done by going to “Additional Drivers” in “Software and Updates”.</p>
 
@@ -213,7 +218,7 @@
  bash
 </code></pre></div></div>
 
-<h3 id="using-the-pythonapi">Using the PythonAPI</h3>
+<h3 id="step-1-using-the-pythonapi">Step 1. Using the PythonAPI</h3>
 
 <p>You can export the PythonAPI folder using the following command.</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker cp &lt;container id&gt;:&lt;src path&gt; &lt;dst path&gt;
@@ -236,7 +241,7 @@
  ./CarlaUE4.sh -opengl $1
 </code></pre></div></div>
 
-<h3 id="installing-ros">Installing ROS</h3>
+<h3 id="step-2-installing-ros">Step 2. Installing ROS</h3>
 
 <p>The installation instructions for ROS can be found here: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a>.</p>
 </p>
