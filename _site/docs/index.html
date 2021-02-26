@@ -162,40 +162,59 @@
       
       <h1>Interfaces</h1>
       
-      <p><p>GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules.
-The coordinate system used by ROS is ENU. The perception module is written using Python.
-A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
+      <p><p>GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules. More information can be found in the “Decision and Control” section.</p>
+
+<!-- The coordinate system used by ROS is ENU. The perception module is written using Python. -->
+
+<p>A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
 
 <p><img src="/Race/assets/interfaces.png" /></p>
 
-<h3 id="perception">Perception</h3>
-<p>The perception used in GRAIC is split into three components. The first component of perception returns the obstacles that are within the sensing radius of the vehicle. The second component of perception returns the current task that the vehicle is trying to achieve along with a “lane”-view of the track it is on. The final component of perception returns the bounding boxes of the environment objects (such as hedges, buildings, etc.) near the vehicle.</p>
+<p>The perception module publishes the rostopics <code class="highlighter-rouge">location</code> and <code class="highlighter-rouge">obstacles</code>. The decision and control module should publish the rostopics  <code class="highlighter-rouge">ackermann_cmd</code> <strong>or</strong> <code class="highlighter-rouge">vehicle_control_cmd</code>. Further details of these modules are detailed below.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Perception</h1>
+      
+      <p><p>The perception module consists of two rostopics: <code class="highlighter-rouge">obstacles</code> and <code class="highlighter-rouge">location</code>. These rostopics are updated at a rate of 10 Hz.</p>
 
-<h4 id="obstacles">Obstacles</h4>
-<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and location. The perception can be retrieved by subscribing to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
+<h3 id="obstacles">Obstacles</h3>
+<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
 <ul>
   <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “building”, etc.)</li>
-  <li>ID: An identifier for each obstacle (ie. “pedestrian 1”, etc.). This remains the same across all time steps.</li>
-  <li>Location: The location of the center of each obstacle given in [x, y, z] global coordinates</li>
+  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
+  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in [x, y, z] global coordinates</li>
 </ul>
 
-<p><em>The bounding box information will be updated soon.</em></p>
+<h3 id="location">Location</h3>
+<p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
+The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\( \theta_x,  \theta_y, \theta_z\)] in radians. The velocity of the vehicle is given as [\(v_x, v_y\)].</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Decision and Control</h1>
+      
+      <p><p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="highlighter-rouge">ackermann_cmd</code> or <code class="highlighter-rouge">vehicle_control_cmd</code>).</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Cars</h1>
+      
+      <p><p>The vehicle model will be provided by the competition hosts. Competitors can participate in either the “model-free” track or the “model-based” track.</p>
 
-<h4 id="lanes">Lanes</h4>
-<p>The current lane that the vehicle is in is described by a list of points between the current location of the vehicle and the end of the lane. This information is published to the rostopic <code class="highlighter-rouge">lane-waypoints</code>.</p>
+<h3 id="model-free-track">Model-free Track</h3>
+<p>In the model-free track, the competitors will provide controllers for the complicated vehicle models provided by CARLA. These vehicles can be either 4-wheeled vehicles or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="highlighter-rouge">ackermann_cmd</code> or <code class="highlighter-rouge">vehicle_control_cmd</code>.</p>
 
-<h4 id="environment-objects">Environment objects</h4>
-<p>The perception module also returns all the environment objects within the sensing radius of the vehicle. The bounding boxes of the environment objects are published to the rostopic <code class="highlighter-rouge">environment_obj_bb</code>.</p>
+<h3 id="model-based-track">Model-based Track</h3>
+<p>In the model-based track, competitors will be provided with an abstracted model to generate inputs for. The CARLA vehicle will exactly follow the dynamics detailed below. Prior to competition registration, competitors will be provided with a model-based simulator with certain parameters. These parameters will not be the same as those provided during the competition period. The controller modules that competitors create for the model-based track will use the same <code class="highlighter-rouge">ackermann_cmd</code> or <code class="highlighter-rouge">vehicle_control_cmd</code> rostopics as the model-free track.</p>
 
-<h3 id="decision-and-control">Decision and Control</h3>
-<p>The decision and control module is built by the competitors. All pre-computations required for the synthesis algorithms must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system. For more information, please refer to the diagram.
-The decision and control module should use the <a href="http://wiki.ros.org/ackermann_msgs"><code class="highlighter-rouge">ackermann_msgs</code> package</a>.</p>
-
-<h3 id="vehicle-model">Vehicle Model</h3>
-<p>The vehicle model will be provided by the competition hosts. There are 2 tracks that competitors can compete in. The first is the model-free track. In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The second track is the model track. In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla.</p>
-
-<h3 id="vehicle-model-dynamics">Vehicle Model Dynamics</h3>
-<p>The model used in the model track is detailed here.</p>
+<p>The dynamics for the vehicle model are provided below.</p>
 
 <h4 id="longitudinal-dynamics">Longitudinal Dynamics</h4>
 
@@ -219,6 +238,15 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 <p>where \(v\) and \(r\) are the lateral velocity and the second order derivative of the vehicle’s yaw angle, and \(\delta_{f}\) is the steering command.</p>
 
 <p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha r}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Race Environment</h1>
+      
+      <p><p>We will provide several race environments prior to the competition for competitors to test their controllers on. These competition tracks contain other vehicles, pedestrians, and various static obstacles that the vehicles must avoid. We will also provide an evaluation script so the competitors have an idea of how their vehicle performed.
+These race environments will be different than the ones provided during the competition. Additionally, the vehicles will be evaluated on tracks that the competitors will not have access to so that the generality of the decision and control modules can be tested.</p>
 </p>
   </div>
   
