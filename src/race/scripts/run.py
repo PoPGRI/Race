@@ -29,7 +29,7 @@ def Spawn(N, log, set_spectator=True):
             obj = f.read()
         obj = obj.replace('[[role_name]]', role_name)
 
-        init_pose = [193,45+i*10,1,0,0,90]
+        init_pose = [150,8+i*10,4,0,0,-180]
         v['init_pose'] = init_pose
         obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
 

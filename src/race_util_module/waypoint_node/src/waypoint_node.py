@@ -11,7 +11,7 @@ class WaypointNode:
 
     def __init__(self, world, role_name='ego_vehicle'):
         self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
-        self.waypoint_list = pickle.load(open('track1','rb'))
+        self.waypoint_list = pickle.load(open('track','rb'))
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
@@ -20,11 +20,11 @@ class WaypointNode:
         if len(self.waypoint_list) != 0:
             location = carla.Location(self.waypoint_list[0][0], self.waypoint_list[0][1], 1)
             rotation = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.rotation
-            box = carla.BoundingBox(location, carla.Vector3D(1,1,1))
+            box = carla.BoundingBox(location, carla.Vector3D(0,5,3))
             if len(self.waypoint_list) == 1:
-                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(255, 255, 0, 255), life_time=0)
+                self.world.debug.draw_box(box, rotation, thickness=0.5, color=carla.Color(255, 255, 0, 255), life_time=0)
             else:
-                self.world.debug.draw_box(box, rotation, thickness=0.1, color=carla.Color(0, 255, 0, 255), life_time=2)
+                self.world.debug.draw_box(box, rotation, thickness=0.5, color=carla.Color(0, 255, 0, 255), life_time=2)
             return self.waypoint_list[0]
         else:
             return None
@@ -36,7 +36,7 @@ class WaypointNode:
 
 
 def run(wn, role_name):
-    rate = rospy.Rate(20)  # 100 Hz    
+    rate = rospy.Rate(20)  # 20 Hz    
     pubWaypoint = rospy.Publisher('/carla/%s/waypoints'%role_name, Vector3, queue_size=1)
     while not rospy.is_shutdown():
         waypoint = wn.getWaypoint()

@@ -122,7 +122,7 @@ def publisher(percep_mod, role_name):
                 bb = ob.bounding_box
                 bb.location = loc
                 bb.rotation = ob.get_transform().rotation
-                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=2)
+                percep_mod.world.debug.draw_box(bb, bb.rotation, color=carla.Color(255, 0, 0, 0), life_time=1)
             obsmsg.append(temp)
         for i in range(len(lp)):
             p = lp[i]

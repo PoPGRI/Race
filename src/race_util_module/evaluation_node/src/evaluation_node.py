@@ -18,7 +18,7 @@ class EvaluationNode:
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, Vector3, self.waypointCallback)
         self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=1)
         self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=1)
-        # self.waypoint_list = pickle.load(open('waypoints','rb'))
+        self.pubCollision = rospy.Publisher('/carla/%s/colllision_detail'%role_name, String, queue_size=1)
         self.reachedPoints = []
         self.reachedPointsStamped = []
         self.speedList = []
@@ -40,6 +40,8 @@ class EvaluationNode:
         self.location = data
 
     def collisionCallback(self, data):
+        if not self.obs_map:
+            return
         hitObj = self.obs_map[str(data.other_actor_id)]+"_at_time_"+str(datetime.timedelta(
                 seconds=int(rospy.get_rostime().to_sec())))
         if hitObj in self.hitObjects:
@@ -47,6 +49,9 @@ class EvaluationNode:
 
         self.hitObjects.add(hitObj)
         rospy.loginfo("Collision with {}".format(self.obs_map[str(data.other_actor_id)]))
+        collisionInfo = String()
+        collisionInfo.data = hitObj
+        self.pubCollision.publish(collisionInfo)
         self.score -= 100.0
 
     def waypointCallback(self, data):
@@ -99,13 +104,13 @@ class EvaluationNode:
         f.write(str(self.score/2500*100).encode('ascii') + "\n".encode('ascii'))
         f.write("Obstacle hits: \n".encode('ascii'))
         f.write('\n'.join(self.hitObjects).encode('ascii'))
-        f.write("Waypoints reached: \n".encode('ascii'))
+        f.write("\nWaypoints reached: \n".encode('ascii'))
         f.write('\n'.join(self.reachedPointsStamped).encode('ascii'))
         f.close()
 
 
 def run(en, role_name):
-    rate = rospy.Rate(20)  # 100 Hz    
+    rate = rospy.Rate(20)  # 20 Hz    
     rospy.on_shutdown(en.onShutdown)
     pubEN = rospy.Publisher('/carla/%s/evaluation'%role_name, EvaluationInfo, queue_size=1)
     while not rospy.is_shutdown():
