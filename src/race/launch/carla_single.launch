@@ -29,6 +29,7 @@
   <node pkg="race" type="run.py" name="race_run" output="screen">
     <param name="N" value="$(arg N)" />
     <param name="log" value="$(arg log)" />
+    <param name="track" value="$(arg town)" />
   </node>
 
   <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen" />

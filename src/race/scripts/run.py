@@ -8,7 +8,7 @@ import os, signal
 
 import rospy
 
-def Spawn(N, log, set_spectator=True):
+def Spawn(N, log, track, set_spectator=True):
 
     rate = rospy.Rate(10)
 
@@ -29,16 +29,21 @@ def Spawn(N, log, set_spectator=True):
             obj = f.read()
         obj = obj.replace('[[role_name]]', role_name)
 
-        init_pose = [164,11+i*10,4,0,0,-180]
+        if track == "t1_triple":
+            init_pose = [164,11+i*10,4,0,0,-180]
+        else:
+            init_pose = [95.5,107+i*10,4,0,0,-136]
         v['init_pose'] = init_pose
         obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
+
+        v['track'] = track
 
         json_file = '/tmp/objects_%s.json'%role_name
         v['json_file'] = json_file
         with open(v['json_file'], 'w') as f:
             f.write(obj)
 
-        cmd = ('roslaunch race spawn_vehicle.launch config_file:=%s role_name:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['launch_log']])
+        cmd = ('roslaunch race spawn_vehicle.launch config_file:=%s role_name:=%s track:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['track'], v['launch_log']])
         # The os.setsid() is passed in the argument preexec_fn so
         # it's run after the fork() and before  exec() to run the shell.
         v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -68,9 +73,10 @@ if __name__ == '__main__':
     rospy.init_node('RaceMain')
     N = rospy.get_param("~N", 3)
     log = rospy.get_param("~log", '/tmp/')
+    track = rospy.get_param("~track", "t1_triple")
     import time
     time.sleep(10)
     try: 
-        Spawn(N, log)
+        Spawn(N, log, track)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("RaceMain shut down")

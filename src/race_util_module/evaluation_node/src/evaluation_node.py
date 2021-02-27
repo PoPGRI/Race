@@ -13,10 +13,12 @@ import datetime
 
 collisionPenalty = 60
 deviationPenalty = 30
+t1Factor = 800
+t2Factor = 1500
 
 class EvaluationNode:
 
-    def __init__(self, world, role_name='ego_vehicle'):
+    def __init__(self, world, role_name='ego_vehicle', track='t1_triple'):
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, Vector3, self.waypointCallback)
@@ -34,7 +36,10 @@ class EvaluationNode:
         self.waypoint = None
         self.obs_map = {}
         self.world = world
-
+        if track == 't1_triple':
+            self.scoreFactor = t1Factor
+        elif track == 't2_triple':
+            self.scoreFactor = t2Factor
         self.addActor()
 
         
@@ -116,7 +121,7 @@ class EvaluationNode:
         # print("hit: ", self.hitObjects)
         f = open(fname, 'wb')
         f.write("Final score: \n".encode('ascii'))
-        f.write(str(self.score/900*100).encode('ascii') + "\n".encode('ascii'))
+        f.write(str(self.score/self.scoreFactor*100).encode('ascii') + "\n".encode('ascii'))
         f.write("Obstacle hits: \n".encode('ascii'))
         f.write('\n'.join(self.hitObjects).encode('ascii'))
         f.write("\nWaypoints reached: \n".encode('ascii'))
@@ -135,19 +140,20 @@ def run(en, role_name):
         info.numObjectsHit = len(en.hitObjects)
         pubEN.publish(info)
         score_ = Float32()
-        score_.data = float(en.score/900*100)
+        score_.data = float(en.score/en.scoreFactor*100)
         en.pubScore.publish(score_)
         rate.sleep()
 
 if __name__ == "__main__":
     rospy.init_node("Evaluation_Node")
     role_name = rospy.get_param("~role_name", "ego_vehicle")
-    print("Start evaluating the performance of %s!"%role_name)
+    track = rospy.get_param("~track", "t1_triple")
+    rospy.loginfo("Start evaluating the performance of %s!"%role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
     client = carla.Client('localhost', 2000)
     world = client.get_world()
-    en = EvaluationNode(world, role_name=role_name)
+    en = EvaluationNode(world, role_name, track)
     try:
         run(en, role_name)
     except rospy.exceptions.ROSInterruptException:

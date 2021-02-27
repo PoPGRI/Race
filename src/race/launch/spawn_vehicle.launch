@@ -5,6 +5,7 @@
   <arg name='config_file' default=''/>
   <arg name="vehicle_filter" default='vehicle.*'/>
   <arg name="spawn_point" default=""/><!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
+  <arg name="track" default="t1_triple" />
 
   <!-- the ego vehicle, that will be controlled by an agent (e.g. carla_ad_agent) -->
   <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
@@ -57,10 +58,12 @@
   <!-- the evaluation module -->
   <include file="$(find evaluation_node)/launch/evaluation_node.launch">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
   </include>
 
   <include file="$(find waypoint_node)/launch/waypoint_node.launch">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
   </include>
 
 
