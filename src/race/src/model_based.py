@@ -20,9 +20,13 @@ class VehicleDynamics(object):
     def __init__(self):
         super(VehicleDynamics, self).__init__()
         self.m = 1500.0
+        self.f0 = 100.0
 
     def throttle_curve(self, thr):
         return 0.7 * 9.81 * self.m * thr
+
+    def brake_curve(self, brake):
+        return 1.0 * 9.81 * self.m * brake
 
     def vehicle_dyn(self, state, input):
         # INPUTS: state = [x,y,u,v,Psi,r] --- logitude velocity, lateral velocity, yaw angle and yaw angular velocity
@@ -37,7 +41,7 @@ class VehicleDynamics(object):
         b = L-a
         f1 = 0.1
         f2 = 0.01
-        f0 = 100.0
+        f0 = self.f0
         x,y,u,v,Psi,r = state[0],state[1],state[2],state[3],state[4],state[5]
         f_tra, delta = input[0],input[1]
         # derivatives
@@ -51,8 +55,8 @@ class VehicleDynamics(object):
 
 class ModelBasedVehicle:
     def __init__(self, role_name):
-        # subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
         self.role_name = role_name
@@ -67,6 +71,7 @@ class ModelBasedVehicle:
             Kd=0.05,
             sample_time=0.05,
             output_limits=(0., 1.))
+        self.vehicle_control_cmd = None
         self.find_ego_vehicle()
         self.init_state()
 
@@ -85,10 +90,22 @@ class ModelBasedVehicle:
         self.vehicle.set_simulate_physics(False)
 
     def controlCallback(self, data):
-        thr = data.throttle
-        ste = data.steer
-        print(thr, ste)
-        self.input[0] = self.vehicle_dyn.throttle_curve(thr)
+        self.vehicle_control_cmd = data
+
+    def computeInput(self):
+        throttle = data.throttle
+        brake = data.brake
+        steer = data.steer
+        reverse = data.reverse
+        if brake > 0:
+            if np.abs(self.state[2]) > 0.01:
+                self.input[0] = -np.sign(self.state[2]) * self.vehicle_dyn.brake_curve(brake) # brake
+            else:
+                self.input[0] = self.f0 # stop
+        else:
+            self.input[0] = self.vehicle_dyn.throttle_curve(thr)
+            if reverse:
+                self.input[0] = -self.input[0]
         self.input[1] = ste # FIXME
 
     def ackermannCallback(self, data):
