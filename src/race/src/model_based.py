@@ -76,8 +76,8 @@ class ModelBasedVehicle:
         self.find_ego_vehicle()
         self.init_state()
 
-        # subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
     def init_state(self):
@@ -124,7 +124,7 @@ class ModelBasedVehicle:
         self.input[0] = force
         steering_angle = data.steering_angle
         max_steering_angle = np.pi / 3
-        self.input[1] = steering_angle / max_steering_angle * 0.1
+        self.input[1] = steering_angle / max_steering_angle
 
     def tick(self, dt):
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
