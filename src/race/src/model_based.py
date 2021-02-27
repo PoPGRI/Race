@@ -23,7 +23,7 @@ class VehicleDynamics(object):
         self.f0 = 100.0
 
     def throttle_curve(self, thr):
-        return 0.7 * 9.81 * self.m * thr
+        return 0.7 * 9.81 * self.m * thr + self.f0
 
     def brake_curve(self, brake):
         return 1.0 * 9.81 * self.m * brake
@@ -55,8 +55,8 @@ class VehicleDynamics(object):
 
 class ModelBasedVehicle:
     def __init__(self, role_name):
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        #subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
         self.role_name = role_name
@@ -93,20 +93,22 @@ class ModelBasedVehicle:
         self.vehicle_control_cmd = data
 
     def computeInput(self):
-        throttle = data.throttle
-        brake = data.brake
-        steer = data.steer
-        reverse = data.reverse
+        if self.vehicle_control_cmd is None:
+            return
+        throttle = self.vehicle_control_cmd.throttle
+        brake = self.vehicle_control_cmd.brake
+        steer = self.vehicle_control_cmd.steer
+        reverse = self.vehicle_control_cmd.reverse
         if brake > 0:
             if np.abs(self.state[2]) > 0.01:
                 self.input[0] = -np.sign(self.state[2]) * self.vehicle_dyn.brake_curve(brake) # brake
             else:
-                self.input[0] = self.f0 # stop
+                self.input[0] = self.vehicle_dyn.f0 # stop
         else:
-            self.input[0] = self.vehicle_dyn.throttle_curve(thr)
+            self.input[0] = self.vehicle_dyn.throttle_curve(throttle)
             if reverse:
                 self.input[0] = -self.input[0]
-        self.input[1] = ste # FIXME
+        self.input[1] = steer # FIXME
 
     def ackermannCallback(self, data):
         self.speed_control.setpoint = data.speed
@@ -116,13 +118,13 @@ class ModelBasedVehicle:
         self.input[1] = steering_angle / max_steering_angle
 
     def tick(self, dt):
+        self.computeInput()
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0]
         vehicle_transform.location.y = self.state[1]
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
-        print(vehicle_transform)
         self.speed_control.sample_time = dt
 
 def main(role_name):
