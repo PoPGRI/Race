@@ -13,7 +13,7 @@ class ControlNode:
 
     def controlCallback(self, data):
         newControlCmd = data
-        newControlCmd.steer = -data.steer
+        newControlCmd.steer = data.steer
         self.pubControl.publish(newControlCmd)
 
 if __name__ == "__main__":
