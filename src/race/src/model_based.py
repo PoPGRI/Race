@@ -92,7 +92,7 @@ class ModelBasedVehicle:
             if actor.attributes.get('role_name') == self.role_name:
                 self.vehicle = actor
                 break
-        self.vehicle.set_simulate_physics(False)
+        # self.vehicle.set_simulate_physics(False)
 
     def controlCallback(self, data):
         self.vehicle_control_cmd = data
@@ -127,11 +127,24 @@ class ModelBasedVehicle:
         self.input[1] = steering_angle / max_steering_angle
 
     def tick(self, dt):
+        # vehicle_transform = self.vehicle.get_transform()
+        # self.state[4] = np.deg2rad(vehicle_transform.rotation.yaw)
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
         self.state[4] = np.mod(self.state[4]+np.pi, 2*np.pi) - np.pi
+
+        _,_,u,v,Psi,r = self.state
+        # derivatives
+        dx = u*np.cos(Psi) - v*np.sin(Psi)
+        dy = u*np.sin(Psi) + v*np.cos(Psi)
+
+        v = carla.Vector3D(x = dx, y = dy)
+        self.vehicle.set_target_velocity(v)
+        # av = carla.Vector3D(z = np.rad2deg(r))
+        # self.vehicle.set_target_angular_velocity(av)
+
         vehicle_transform = self.vehicle.get_transform()
-        vehicle_transform.location.x = self.state[0]
-        vehicle_transform.location.y = self.state[1]
+        vehicle_transform.location.x = self.state[0] + v.x * dt
+        vehicle_transform.location.y = self.state[1] + v.y * dt
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
@@ -139,7 +152,7 @@ class ModelBasedVehicle:
 def main(role_name):
     vehicle = ModelBasedVehicle(role_name)
 
-    freq = 20
+    freq = 100
     rate = rospy.Rate(freq)
 
     while not rospy.is_shutdown():
