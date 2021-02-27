@@ -1,10 +1,15 @@
 ---
 layout: page
-title: Interfaces
+title: Docs
 permalink: /interfaces/
 main_nav: true
 ---
-GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision and control, and (iii) vehicle system. The competitors are provided with the perception and vehicle systems. The competitors must build their own decision and control modules. More information can be found in the "Decision and Control" section.
+
+This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent. 
+
+GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision & control, and (iii) vehicle and environment system. As competitors, you will be provided with the perception and vehicle systems and you will build your own decision and control module. 
+
+More information can be found in the "Decision and Control" section.
 
 <!-- The coordinate system used by ROS is ENU. The perception module is written using Python. -->
 
