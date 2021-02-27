@@ -11,7 +11,7 @@ class WaypointNode:
 
     def __init__(self, world, role_name='ego_vehicle'):
         self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
-        self.waypoint_list = pickle.load(open('track','rb'))
+        self.waypoint_list = pickle.load(open('track1','rb'))
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()

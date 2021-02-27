@@ -6,7 +6,7 @@
   <arg name='timeout' default='10'/>
 
   <!-- Map to load on startup (either a predefined CARLA town (e.g. 'Town01'), or a OpenDRIVE map file) -->
-  <arg name="town" default='track1_loop'/>
+  <arg name="town" default='t1_triple'/>
 
   <!-- Synchronous mode-->
   <arg name='synchronous_mode' default=''/>

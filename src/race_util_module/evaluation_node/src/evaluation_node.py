@@ -1,6 +1,7 @@
 import rospy 
 import numpy as np
 from carla_msgs.msg import CarlaCollisionEvent
+from carla_msgs.msg import CarlaLaneInvasionEvent
 from popgri_msgs.msg import LocationInfo, EvaluationInfo
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import Int16, Float32, String
@@ -10,28 +11,37 @@ import carla
 import os
 import datetime
 
+collisionPenalty = 60
+deviationPenalty = 30
+
 class EvaluationNode:
 
     def __init__(self, world, role_name='ego_vehicle'):
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, Vector3, self.waypointCallback)
+        self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
         self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=1)
         self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=1)
-        self.pubCollision = rospy.Publisher('/carla/%s/colllision_detail'%role_name, String, queue_size=1)
+        self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=1)
         self.reachedPoints = []
         self.reachedPointsStamped = []
         self.speedList = []
         self.hitObjects = set()
-        self.deviationCount = 0
         self.score = 0.0
         self.location = None
         self.role_name = role_name
         self.waypoint = None
-
-        actor_list = world.get_actors()
-        env_list = world.get_environment_objects()
         self.obs_map = {}
+        self.world = world
+
+        self.addActor()
+
+        
+    def addActor(self):
+        actor_list = self.world.get_actors()
+        env_list = self.world.get_environment_objects()
+        
         for actor in actor_list:
             self.obs_map[str(actor.id)] = str(actor.type_id) + '_' + str(actor.id)
         self.obs_map['0'] = 'fence'
@@ -52,10 +62,15 @@ class EvaluationNode:
         collisionInfo = String()
         collisionInfo.data = hitObj
         self.pubCollision.publish(collisionInfo)
-        self.score -= 100.0
+        self.score -= collisionPenalty
 
     def waypointCallback(self, data):
         self.waypoint = data
+
+    def laneCallback(self, data):
+        for marking in data.crossed_lane_markings:
+            if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
+                self.score -= deviationPenalty
 
     def calculateScore(self):
         location = self.location
@@ -101,7 +116,7 @@ class EvaluationNode:
         # print("hit: ", self.hitObjects)
         f = open(fname, 'wb')
         f.write("Final score: \n".encode('ascii'))
-        f.write(str(self.score/2500*100).encode('ascii') + "\n".encode('ascii'))
+        f.write(str(self.score/900*100).encode('ascii') + "\n".encode('ascii'))
         f.write("Obstacle hits: \n".encode('ascii'))
         f.write('\n'.join(self.hitObjects).encode('ascii'))
         f.write("\nWaypoints reached: \n".encode('ascii'))
@@ -120,7 +135,7 @@ def run(en, role_name):
         info.numObjectsHit = len(en.hitObjects)
         pubEN.publish(info)
         score_ = Float32()
-        score_.data = float(en.score/2500*100)
+        score_.data = float(en.score/900*100)
         en.pubScore.publish(score_)
         rate.sleep()
 

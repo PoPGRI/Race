@@ -52,8 +52,8 @@ class VehicleDynamics(object):
 class ModelBasedVehicle:
     def __init__(self, role_name):
         # subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subAckermann = rospy.Subscriber('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, self.ackermannCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
         self.role_name = role_name
         client = carla.Client('localhost', 2000)

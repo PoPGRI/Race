@@ -101,11 +101,13 @@ def publisher(percep_mod, role_name):
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
     lane_pub = rospy.Publisher('/carla/%s/lane_waypoints'%role_name, LaneList, queue_size=1)
     rate = rospy.Rate(20)
+    draw_counter = 0
     while not rospy.is_shutdown():
         obs = percep_mod.get_all_obstacles_within_range()
         lp = percep_mod.get_lane_way_point()
         obsmsg = []
         lpmsg = []
+        draw_counter += 1
         if obs is None or lp is None:
             continue
         for ob in obs:
@@ -122,7 +124,8 @@ def publisher(percep_mod, role_name):
                 bb = ob.bounding_box
                 bb.location = loc
                 bb.rotation = ob.get_transform().rotation
-                percep_mod.world.debug.draw_box(bb, bb.rotation, color=carla.Color(255, 0, 0), life_time=0.5)
+                if draw_counter % 8 == 0:
+                    percep_mod.world.debug.draw_box(bb, bb.rotation, color=carla.Color(255, 0, 0), life_time=0.5)
                 vertices = bb.get_local_vertices()
                 for v in vertices:
                     vertex = BBSingleInfo()
