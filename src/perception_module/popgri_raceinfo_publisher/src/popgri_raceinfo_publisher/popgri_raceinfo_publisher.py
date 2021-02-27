@@ -7,6 +7,7 @@ from popgri_msgs.msg import LaneInfo
 from popgri_msgs.msg import LaneList
 from popgri_msgs.msg import ObstacleInfo
 from popgri_msgs.msg import ObstacleList
+from popgri_msgs.msg import BBSingleInfo
 class PerceptionModule():
     def __init__(self, carla_world, role_name, radius=15):
         self.sensing_radius = radius # default ?????
@@ -47,7 +48,7 @@ class PerceptionModule():
 
                 if 'vehicle' in actor.type_id and actor.id != vehicle.id:
                     filtered_obstacles.append(actor)
-                elif 'walker' in actor.type_id:
+                elif 'pedestrian' in actor.type_id:
                     filtered_obstacles.append(actor)
                 elif 'static.prop' in actor.type_id:
                     filtered_obstacles.append(actor)
@@ -117,12 +118,18 @@ def publisher(percep_mod, role_name):
             temp.location.y = loc.y
             temp.location.z = loc.z
             # draw bounding box for vehicles and walkers
-            if 'vehicle' in ob.type_id or 'walker' in ob.type_id:
-                loc = ob.get_location()
+            if 'vehicle' in ob.type_id or 'pedestrian' in ob.type_id:
                 bb = ob.bounding_box
                 bb.location = loc
                 bb.rotation = ob.get_transform().rotation
-                percep_mod.world.debug.draw_box(bb, bb.rotation, color=carla.Color(255, 0, 0, 0), life_time=1)
+                percep_mod.world.debug.draw_box(bb, bb.rotation, color=carla.Color(255, 0, 0), life_time=0.5)
+                vertices = bb.get_local_vertices()
+                for v in vertices:
+                    vertex = BBSingleInfo()
+                    vertex.vertex_location.x = v.x
+                    vertex.vertex_location.y = v.y
+                    vertex.vertex_location.z = v.z
+                    temp.vertices_locations.append(vertex)
             obsmsg.append(temp)
         for i in range(len(lp)):
             p = lp[i]
