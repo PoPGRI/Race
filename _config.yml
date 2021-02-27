@@ -41,6 +41,7 @@ collections:
   - about
   - documentation
   - installation
+  - outreach
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:

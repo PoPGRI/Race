@@ -12,4 +12,4 @@ A diagram of the competition interfaces is shown below. The decision and control
 
  <img src="/Race/assets/interfaces.png">
 
- The perception module publishes the rostopics `location` and `obstacles`. The decision and control module should publish the rostopics  `ackermann_cmd` **or** `vehicle_control_cmd`. Further details of these modules are detailed below.
+ The perception module publishes the rostopics `location`, `obstacles`, `environment_obj_bb`. The waypoints that the competitors must reach are also shared with the competitors in a file called `waypoint_list.py`. The decision and control module should publish the rostopics  `ackermann_cmd` **or** `vehicle_control_cmd`. Further details of these modules are detailed below.

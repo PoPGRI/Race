@@ -8,11 +8,11 @@ main_nav: false
 _Generalized RAcing Intelligence Competition (GRAIC)_ is a simulation framework for developing intelligent racing agents that can work with different vehicles and environments. GRAIC will be released for a synthesis competition at [CPS-IOT Week 2021](https://cps-iot-week2021.isis.vanderbilt.edu/) and possibly will continue with future robotics and autonomy events. Decision making and control for racing has many competing approaches. How can we reliably evaluate the merits of different algorithms, independent of the ever-improving computing and sensing modules? Most algorithms and tools are hyper-customized to vehicles. Some only work on particular computing platforms.  We hope that GRAIC will bring the research community together and help arrive at an acceptable answer.
 
 # The competition
-The participants will submit a piece of code (_the synthesizer_) for generating _agents_ for controlling vehicles. This agent will then control the vehicle in a partially known, complex, simulated _track_. At runtime, the input to the agent will come from a _perception oracle_ that will provide as input a local view of obstacles and gates on the track near the vehicle. The outputs from the agent will drive the vehicle. The synthesizer will take as input (a) black-box executable for simulating the vehicle in an empty track, (b) track parameters, such as speed of dynamic obstacles, curvatures, etc.
+The participants will submit a piece of code (_the decision and control module_) for generating _agents_ for controlling vehicles. This agent will then control the vehicle in a partially known, complex, simulated _track_. At runtime, the input to the agent will come from a _perception oracle_ that will provide as input a local view of obstacles and gates on the track near the vehicle. The outputs from the agent will drive the vehicle. The decision and control module will take as input (a) black-box executable for simulating the vehicle in an empty track, (b) track parameters, such as speed of dynamic obstacles, curvatures, etc.
 
 ## Evaluation:
 
-The competition will be based on running the synthesizer and the synthesized agent in a number of different tracks and with different vehicles. The metrics will be for example, course completion speed, safety violations, computational load on agent, simulation load, etc.  
+The competition will be based on running the decision and control module and the controlled agent in a number of different tracks and with different vehicles. The metrics will be for example, course completion speed, safety violations, computational load on agent, simulation load, etc.  
 
 Several different test environments and 2-3 models will be used for generating these metrics. Each participating controller will perform the race solitarily for this year’s competition. Simulating multiple agents in complex environments deterministically is a complicated challenge. In the future, we do intend to make the competition a truly multi-agent race.
 
@@ -26,9 +26,9 @@ Several different test environments and 2-3 models will be used for generating t
 
 There are two available tracks to compete in.
 
-* Model-Free Track - In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The synthesis algorithms used in this track must be able to compute inputs for the system even though the full dynamics of the system are unknown.
+* Model-Free Track - In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The decision and control algorithms used in this track must be able to compute inputs for the system even though the full dynamics of the system are unknown.
 
-* Model Track - In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla. The synthesis algorithms in this track can take advantage of the fact that the full dynamics of the system are known.
+* Model Track - In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla. The decision and control algorithms in this track can take advantage of the fact that the full dynamics of the system are known.
 
 
 
@@ -37,9 +37,9 @@ There are two available tracks to compete in.
 This year the competition will be entirely simulation-based. We will create a timeline for the following significant milestones leading upto CPSWeek.
 - Information session
 - Registration of participants
-- Publication of vehicle models/executables, and training tracks, and specifications for the synthesizer
+- Publication of vehicle models/executables, and training tracks, and specifications for the decision and control module
 - Publication of performance evaluation code with metrics
 - Preliminary submissions for “type checking” entries
 - Final submissions, and competition
 
-Technical details about submissions, repositories, docker, VM, etc. will be announced in due course. We plan to learn from and collaborate with organizers of previous competitions for [F1/10](https://cps-vo.org/group/CPSchallenge), ARCH (https://cps-vo.org/group/ARCH/FriendlyCompetition), [Neural Network verification](https://sites.google.com/view/vnn20/vnncomp),  and [formal synthesis](http://docs.fmrchallenge.org/en/v0.0.4/).
+Technical details about submissions, repositories, docker, VM, etc. will be announced in due course. We plan to learn from and collaborate with organizers of previous competitions for [F1/10](https://cps-vo.org/group/CPSchallenge), [ARCH](https://cps-vo.org/group/ARCH/FriendlyCompetition), [Neural Network verification](https://sites.google.com/view/vnn20/vnncomp),  [ROAR](https://vivecenter.berkeley.edu/research1/roar/), and [formal synthesis](http://docs.fmrchallenge.org/en/v0.0.4/).

@@ -99,11 +99,15 @@
 	
 
 	
-	<li class="nav-link"><a href="/about/">About</a>
+	<li class="nav-link"><a href="/installation/">Getting Started</a>
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	<li class="nav-link"><a href="/outreach/">Outreach</a>
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
 	
 
 	
@@ -170,7 +174,7 @@
 
 <p><img src="/Race/assets/interfaces.png" /></p>
 
-<p>The perception module publishes the rostopics <code class="highlighter-rouge">location</code> and <code class="highlighter-rouge">obstacles</code>. The decision and control module should publish the rostopics  <code class="highlighter-rouge">ackermann_cmd</code> <strong>or</strong> <code class="highlighter-rouge">vehicle_control_cmd</code>. Further details of these modules are detailed below.</p>
+<p>The perception module publishes the rostopics <code class="highlighter-rouge">location</code>, <code class="highlighter-rouge">obstacles</code>, <code class="highlighter-rouge">environment_obj_bb</code>. The waypoints that the competitors must reach are also shared with the competitors in a file called <code class="highlighter-rouge">waypoint_list.py</code>. The decision and control module should publish the rostopics  <code class="highlighter-rouge">ackermann_cmd</code> <strong>or</strong> <code class="highlighter-rouge">vehicle_control_cmd</code>. Further details of these modules are detailed below.</p>
 </p>
   </div>
   
@@ -178,19 +182,43 @@
       
       <h1>Perception</h1>
       
-      <p><p>The perception module consists of two rostopics: <code class="highlighter-rouge">obstacles</code> and <code class="highlighter-rouge">location</code>. These rostopics are updated at a rate of 10 Hz.</p>
+      <p><p>The perception module consists of multiple rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> information may change. These rostopics are updated at a rate of 10 Hz.</p>
 
-<h3 id="obstacles">Obstacles</h3>
+<h3 id="obstacles-dynamic">Obstacles (<span style="color:blue">Dynamic</span>)</h3>
 <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
 <ul>
-  <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “building”, etc.)</li>
+  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
+  <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “motorcycle”, etc.)</li>
   <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
-  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in [x, y, z] global coordinates</li>
 </ul>
 
-<h3 id="location">Location</h3>
+<p>These obstacles are published to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
+
+<h3 id="environment-objects-static">Environment objects (<span style="color:red">Static</span>)</h3>
+<p>The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large object. These objects are provided to the competitor as a list where each entry consists of the following:</p>
+<ul>
+  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
+  <li>Type: Type: The type of obstacle detected (ie. “sidewalk”, “fence”, “building”, etc.)</li>
+  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
+</ul>
+
+<p>These objects are published to the rostopic <code class="highlighter-rouge">environment_obj_bb</code>.</p>
+
+<h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
 <p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
 The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\( \theta_x,  \theta_y, \theta_z\)] in radians. The velocity of the vehicle is given as [\(v_x, v_y\)].</p>
+
+<p>The location is published to the rostopic <code class="highlighter-rouge">location</code></p>
+
+<h3 id="lane-waypoints-static">Lane waypoints (<span style="color:red">Static</span>)</h3>
+<p>The lane waypoints (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
+
+<p>The lane waypoints are published to the rostopic <code class="highlighter-rouge">lane_waypoints</code>.</p>
+
+<h3 id="milestone-waypoints">Milestone waypoints</h3>
+<p><strong>Not to be confused with lane waypoints.</strong> These are the high level waypoints that the competitors must pass. These high level waypoints are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.</p>
+
+<p>The milestone waypoints are provided in <code class="highlighter-rouge">waypoint_list.py</code>.</p>
 </p>
   </div>
   
@@ -199,6 +227,10 @@ The position is given as [x, y, z] in ENU coordinates. The rotation is given as 
       <h1>Decision and Control</h1>
       
       <p><p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="highlighter-rouge">ackermann_cmd</code> or <code class="highlighter-rouge">vehicle_control_cmd</code>).</p>
+
+<p>Our baseline decision and controller can be found in the files <code class="highlighter-rouge">Race/src/race/src/decision/</code> and <code class="highlighter-rouge">Race/src/race/src/controller/</code> respectively.
+The decision module determines what waypoint the vehicle should move to. If there is an obstacle in front of the vehicle, then the waypoint is chosen such that the vehicle can avoid it.
+The controller module is a simple waypoint following controller. The competitors can use these modules as references for how to create their own controllers.</p>
 </p>
   </div>
   
@@ -250,6 +282,19 @@ These race environments will be different than the ones provided during the comp
 </p>
   </div>
   
+  <div>
+      
+      <h1>Evaluation</h1>
+      
+      <p><p><em>Evaluation metrics subject to change!</em></p>
+
+<p>The evaluation of the decision and control module will take many factors into account.
+Each competitor starts with a score of zero.
+The final score is based on the average speed and completion time of the vehicle.
+Each time an obstacle is hit, the score is reduced by 100.</p>
+</p>
+  </div>
+  
 </div>
 </div>
 
@@ -274,11 +319,15 @@ These race environments will be different than the ones provided during the comp
 	
 
 	
-	<li class="nav-link"><a href="/about/">About</a>
+	<li class="nav-link"><a href="/installation/">Getting Started</a>
 	
 
 	
-	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	<li class="nav-link"><a href="/outreach/">Outreach</a>
+	
+
+	
+	<li class="nav-link"><a href="/about/">About</a>
 	
 
 	
