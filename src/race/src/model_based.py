@@ -1,5 +1,5 @@
-import carla
-import rospy
+import carla 
+import rospy 
 import numpy as np
 import sys
 from ackermann_msgs.msg import AckermannDrive
@@ -47,11 +47,16 @@ class VehicleDynamics(object):
         # derivatives
         dx = u*np.cos(Psi) - v*np.sin(Psi)
         dy = u*np.sin(Psi) + v*np.cos(Psi)
-        du = (f_tra - f1*u - f2*u**2 - f0)/m;
-        dv = -(C_af + C_ar)*v/m/(u+1e-3) + (b*C_ar - a*C_af)*r/m/(u+1e-3) - u*r + C_af*delta/m
+        du = (f_tra - f1*u - f2*u**2 - f0)/m
+        sign = np.sign(u)
+        if sign == 0:
+            sign = 1
+        safe_u = sign * (np.abs(u)+10.)
+        dv = -(C_af + C_ar)*v/m/safe_u + (b*C_ar - a*C_af)*r/m/safe_u - u*r + C_af*delta/m
         dPsi = r
-        dr = (b*C_ar - a*C_af)*v/Iz/(u+1e-3) -(a**2*C_af + b**2*C_ar)*r/Iz/(u+1e-3) + a*C_af*delta/Iz
-        return np.array([dx,dy,du,dv,dPsi,dr])
+        dr = (b*C_ar - a*C_af)*v/Iz/safe_u -(a**2*C_af + b**2*C_ar)*r/Iz/safe_u + a*C_af*delta/Iz
+        dot = np.array([dx,dy,du,dv,dPsi,dr])
+        return dot
 
 class ModelBasedVehicle:
     def __init__(self, role_name):
@@ -71,7 +76,7 @@ class ModelBasedVehicle:
         self.find_ego_vehicle()
         self.init_state()
 
-        #subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        # subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
@@ -119,10 +124,11 @@ class ModelBasedVehicle:
         self.input[0] = force
         steering_angle = data.steering_angle
         max_steering_angle = np.pi / 3
-        self.input[1] = steering_angle / max_steering_angle
+        self.input[1] = steering_angle / max_steering_angle * 0.1
 
     def tick(self, dt):
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
+        self.state[4] = np.mod(self.state[4]+np.pi, 2*np.pi) - np.pi
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0]
         vehicle_transform.location.y = self.state[1]
