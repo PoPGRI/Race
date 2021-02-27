@@ -1,47 +1,33 @@
 import carla 
 import rospy 
 import numpy as np
-from popgri_msgs.msg import LocationInfo, LaneList
-import math
+import sys
 
-class ModelBasedVehicle:
-    def __init__(self, role_name, world):
-        # role_name = "hero0"
-        subLocation = rospy.Subscriber("/carla/%s/location"%role_name, LocationInfo, self.locationCallback)
-        subLaneWaypoints = rospy.Subscriber("/carla/%s/lane_waypoints"%role_name, LaneList, self.waypointCallback)
+def rk4(dyn, state, input, dt):
+    state = np.array(state)
+    input = np.array(input)
+    F1 = dt*dyn(state,input)
+    F2 = dt*dyn(state + F1/2,input)
+    F3 = dt*dyn(state + F2/2,input)
+    F4 = dt*dyn(state + F3,input)
+    state_next = state + 1.0/6.0*(F1 + 2.0*F2 + 2.0*F3 + F4)
+    return state_next.tolist()
 
-        self.role_name = role_name
-        self.world = world
-        self.vehicle = None
-        self.location = None 
-        self.rotation = None 
-        self.velocity = None
-        self.waypoint = None
+class VehicleDynamics(object):
+    def __init__(self):
+        super(VehicleDynamics, self).__init__()
+        self.m = 1500.0
 
-        self.find_ego_vehicle()
+    def throttle_curve(thr):
+        return 0.7 * 9.81 * self.m * thr
 
-    def find_ego_vehicle(self):
-        for actor in self.world.get_actors():
-            if actor.attributes.get('role_name') == self.role_name:
-                self.vehicle = actor
-                break
-        self.vehicle.set_simulate_physics(False) 
-        
-    def locationCallback(self, data):
-        self.location = (data.location.x, data.location.y, data.location.z)
-        self.rotation = (np.radians(data.rotation.x), np.radians(data.rotation.y), np.radians(data.rotation.z))
-        self.velocity = (data.velocity.x, data.velocity.y)
-
-    def waypointCallback(self, data):
-        self.waypoint = (data.lane_waypoints[-1].location.x, data.lane_waypoints[-1].location.y)
-
-    def vehicle_dyn(self, state,input):
+    def vehicle_dyn(state, input):
         # INPUTS: state = [x,y,u,v,Psi,r] --- logitude velocity, lateral velocity, yaw angle and yaw angular velocity
         #         input = [f_tra, delta] --- traction force and steering input
         # constants
         a = 1.14 # distance to front axie
         L = 2.54
-        m = 1500.0 # mass
+        m = self.m # mass
         Iz = 2420.0
         C_af = 44000.0*2
         C_ar = 47000.0*2
@@ -60,99 +46,73 @@ class ModelBasedVehicle:
         dr = (b*C_ar - a*C_af)*v/Iz/u -(a**2*C_af + b**2*C_ar)*r/Iz/u + a*C_af*delta/Iz
         return np.array([dx,dy,du,dv,dPsi,dr])
 
-def rk4(dyn, state, input, dt, param):
-    state = np.array(state)
-    input = np.array(input)
-    F1 = dt*dyn(state,input)
-    F2 = dt*dyn(state + F1/2,input)
-    F3 = dt*dyn(state + F2/2,input)
-    F4 = dt*dyn(state + F3,input)
-    state_next = state + 1.0/6.0*(F1 + 2.0*F2 + 2.0*F3 + F4)
-    return state_next.tolist()
+class ModelBasedVehicle:
+    def __init__(self, role_name):
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subAckermann = rospy.Subscriber('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, self.ackermannCallback)
+
+        self.role_name = role_name
+        client = carla.Client('localhost', 2000)
+        self.world = client.get_world()
+        self.vehicle_dyn = VehicleDynamics()
+        self.state = None
+        self.input = [0, 0]
+        self.vehicle = None
+        self.speed_control = PID(Kp=1.0,
+            Ki=0.1,
+            Kd=0.05,
+            sample_time=0.01,
+            output_limits=(0., 1.))
+        self.find_ego_vehicle()
+        self.init_state()
+
+    def init_state(self):
+        vehicle_transform = self.vehicle.get_transform()
+        x = vehicle_transform.location.x
+        y = vehicle_transform.location.y
+        Psi = np.deg2rad(vehicle_transform.rotation.yaw)
+        self.state = [x, y, 0, 0, Psi, 0]
+
+    def find_ego_vehicle(self):
+        for actor in self.world.get_actors():
+            if actor.attributes.get('role_name') == self.role_name:
+                self.vehicle = actor
+                break
+        self.vehicle.set_simulate_physics(False)
+
+    def controlCallback(self, data):
+        thr = data.throttle
+        ste = data.steer
+        self.input[0] = self.vehicle_dyn.throttle_curve(thr)
+        self.input[1] = ste # FIXME
+
+    def ackermannCallback(self, data):
+        self.speed_control.setpoint = data.speed
+        self.input[0] = self.vehicle_dyn.throttle_curve(self.speed_control(self.state[2]))
+        steering_angle = data.steering_angle
+        max_steering_angle = np.pi / 3
+        self.input[1] = steering_angle / max_steering_angle
+
+    def tick(self, dt):
+        self.state = rk4(self.vehicle_dyn, self.state, self.input, dt)
+        vehicle_transform = self.vehicle.get_transform()
+        vehicle_transform.location.x = self.state[0]
+        vehicle_transform.location.y = self.state[1]
+        vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
+        self.vehicle.set_transform(vehicle_transform)
+        self.speed_control.sample_time = dt
 
 def main(role_name):
-    client = carla.Client('localhost', 2000)
-    # client.set_timeout(2.0)
-    world = client.get_world()
-    # map = world.get_map()
+    vehicle = ModelBasedVehicle(role_name)
 
-    # settings = world.get_settings()
-
-    # use synchronous_mode
-    dt = 0.01
-    # settings.fixed_delta_seconds = dt
-    # settings.synchronous_mode = True
-    # world.apply_settings(settings)
-
-    vehicle = ModelBasedVehicle(role_name, world)
-
-    while not vehicle.vehicle or not vehicle.location:
-        continue 
-
-    x = vehicle.location[0]
-    y = vehicle.location[1] 
-    print(vehicle.location)
-    u = 20
-    v = 0
-    Psi = vehicle.rotation[2]
-    r = 0
-    ud = 20
-    param = {}
-
-    rate = rospy.Rate(100)
-
-    # get nearest waypoint
-    # wp_current = vehicle.location
-    # wp_next = wp_current.next_until_lane_end(5)[0]
-
-    wp_next = vehicle.waypoint
-    while not wp_next:
-        wp_next = vehicle.waypoint
+    freq = 100
+    rate = rospy.Rate(freq)
 
     while not rospy.is_shutdown():
-        # get nearest waypoint
-        wp_current = vehicle.location
-        # wp_next = wp_current.next_until_lane_end(5)[0]
-        # wp_next = vehicle.waypoint
-
-        if not wp_current or not wp_next:
-            continue
-        
-        # print("Current: ", wp_current)
-        # print("Next: ", wp_next)
-        dy = wp_next[1] - vehicle.location[1];
-        dx = wp_next[0] - vehicle.location[0];
-
-        if abs(dy) < 5 and abs(dx) < 5:
-            wp_next = vehicle.waypoint
-        # propogate the vehicle position
-        vehicle_transform = vehicle.vehicle.get_transform()
-        # vehicle_transform.location +=  vehicle_transform.get_forward_vector()*u*dt + vehicle_transform.get_right_vector()*v*dt
-        vehicle_transform.location.x = x
-        vehicle_transform.location.y = y
-        vehicle_transform.location.z = vehicle.location[2]
-        vehicle_transform.rotation.yaw = np.rad2deg(Psi);
-        vehicle.vehicle.set_transform(vehicle_transform)
-
-        # print("the yaw is %d",np.rad2deg(Psi))
-        # control inputs
-        acc = -500*(u-ud);
-        # steer = -0.1*(vehicle_transform.rotation.yaw-wp_current.transform.rotation.yaw)/180.0*math.pi; # steer > 0 the vehicle is turning right
-        steer = -0.5*(np.deg2rad(vehicle_transform.rotation.yaw)-math.atan2(dy,dx))
-        steer =  min(math.pi/2.0, max(-math.pi/2.0, steer))
-        # steer = 0.2
-        # propogate the vehicle velocity
-        # print("Before: ", [x,y,u,v,Psi,r])
-        [x,y,u,v,Psi,r] = rk4(vehicle.vehicle_dyn, [x,y,u,v,Psi,r], [acc,steer], dt, param)
-        # print("After: ", [x,y,u,v,Psi,r])
-        # print("the yaw difference is %d",np.deg2rad(vehicle_transform.rotation.yaw)-math.atan2(dy,dx))
-        # print("the steering is %d",steer)
-
+        vehicle.tick(1./freq)
         rate.sleep()
 
 if __name__ == "__main__":
-    rospy.init_node("model_based_node")
-    role_name = "hero0" # NOTE hardcode for now
-
+    role_name = sys.argv[1]
+    rospy.init_node("model_based_node_%s"%role_name)
     main(role_name)
-    
