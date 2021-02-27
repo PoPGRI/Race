@@ -1,5 +1,5 @@
-import carla 
-import rospy 
+import carla
+import rospy
 import numpy as np
 import sys
 from ackermann_msgs.msg import AckermannDrive
@@ -55,10 +55,6 @@ class VehicleDynamics(object):
 
 class ModelBasedVehicle:
     def __init__(self, role_name):
-        #subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
-
         self.role_name = role_name
         client = carla.Client('localhost', 2000)
         self.world = client.get_world()
@@ -66,14 +62,18 @@ class ModelBasedVehicle:
         self.state = None
         self.input = [0, 0]
         self.vehicle = None
-        self.speed_control = PID(Kp=1.0,
-            Ki=0.1,
-            Kd=0.05,
+        self.speed_control = PID(Kp=1.5,
+            Ki=1.5,
+            Kd=0.,
             sample_time=0.05,
             output_limits=(0., 1.))
-        self.vehicle_control_cmd = None
+        self.vehicle_control_cmd = CarlaEgoVehicleControl(throttle=0.)
         self.find_ego_vehicle()
         self.init_state()
+
+        #subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
     def init_state(self):
         vehicle_transform = self.vehicle.get_transform()
@@ -91,6 +91,7 @@ class ModelBasedVehicle:
 
     def controlCallback(self, data):
         self.vehicle_control_cmd = data
+        self.computeInput()
 
     def computeInput(self):
         if self.vehicle_control_cmd is None:
@@ -112,13 +113,15 @@ class ModelBasedVehicle:
 
     def ackermannCallback(self, data):
         self.speed_control.setpoint = data.speed
-        self.input[0] = self.vehicle_dyn.throttle_curve(self.speed_control(self.state[2]))
+        force = self.speed_control(self.state[2])
+        force_range = [-self.vehicle_dyn.brake_curve(1.), self.vehicle_dyn.throttle_curve(1.)]
+        force = force_range[0] + force * (force_range[1] - force_range[0])
+        self.input[0] = force
         steering_angle = data.steering_angle
         max_steering_angle = np.pi / 3
         self.input[1] = steering_angle / max_steering_angle
 
     def tick(self, dt):
-        self.computeInput()
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0]
