@@ -2,6 +2,9 @@ import carla
 import rospy 
 import numpy as np
 import sys
+from ackermann_msgs.msg import AckermannDrive
+from carla_msgs.msg import CarlaEgoVehicleControl
+from simple_pid import PID
 
 def rk4(dyn, state, input, dt):
     state = np.array(state)
@@ -18,10 +21,10 @@ class VehicleDynamics(object):
         super(VehicleDynamics, self).__init__()
         self.m = 1500.0
 
-    def throttle_curve(thr):
+    def throttle_curve(self, thr):
         return 0.7 * 9.81 * self.m * thr
 
-    def vehicle_dyn(state, input):
+    def vehicle_dyn(self, state, input):
         # INPUTS: state = [x,y,u,v,Psi,r] --- logitude velocity, lateral velocity, yaw angle and yaw angular velocity
         #         input = [f_tra, delta] --- traction force and steering input
         # constants
@@ -41,13 +44,14 @@ class VehicleDynamics(object):
         dx = u*np.cos(Psi) - v*np.sin(Psi)
         dy = u*np.sin(Psi) + v*np.cos(Psi)
         du = (f_tra - f1*u - f2*u**2 - f0)/m;
-        dv = -(C_af + C_ar)*v/m/u + (b*C_ar - a*C_af)*r/m/u - u*r + C_af*delta/m
+        dv = -(C_af + C_ar)*v/m/(u+1e-3) + (b*C_ar - a*C_af)*r/m/(u+1e-3) - u*r + C_af*delta/m
         dPsi = r
-        dr = (b*C_ar - a*C_af)*v/Iz/u -(a**2*C_af + b**2*C_ar)*r/Iz/u + a*C_af*delta/Iz
+        dr = (b*C_ar - a*C_af)*v/Iz/(u+1e-3) -(a**2*C_af + b**2*C_ar)*r/Iz/(u+1e-3) + a*C_af*delta/Iz
         return np.array([dx,dy,du,dv,dPsi,dr])
 
 class ModelBasedVehicle:
     def __init__(self, role_name):
+        # subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, self.ackermannCallback)
 
@@ -61,7 +65,7 @@ class ModelBasedVehicle:
         self.speed_control = PID(Kp=1.0,
             Ki=0.1,
             Kd=0.05,
-            sample_time=0.01,
+            sample_time=0.05,
             output_limits=(0., 1.))
         self.find_ego_vehicle()
         self.init_state()
@@ -83,6 +87,7 @@ class ModelBasedVehicle:
     def controlCallback(self, data):
         thr = data.throttle
         ste = data.steer
+        print(thr, ste)
         self.input[0] = self.vehicle_dyn.throttle_curve(thr)
         self.input[1] = ste # FIXME
 
@@ -94,18 +99,19 @@ class ModelBasedVehicle:
         self.input[1] = steering_angle / max_steering_angle
 
     def tick(self, dt):
-        self.state = rk4(self.vehicle_dyn, self.state, self.input, dt)
+        self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0]
         vehicle_transform.location.y = self.state[1]
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
+        print(vehicle_transform)
         self.speed_control.sample_time = dt
 
 def main(role_name):
     vehicle = ModelBasedVehicle(role_name)
 
-    freq = 100
+    freq = 20
     rate = rospy.Rate(freq)
 
     while not rospy.is_shutdown():
