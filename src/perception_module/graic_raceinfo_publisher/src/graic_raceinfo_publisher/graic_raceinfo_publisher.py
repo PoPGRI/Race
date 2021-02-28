@@ -72,9 +72,6 @@ class PerceptionModule():
         vehicle_location = vehicle.get_location()
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
-        # rospy.logwarn("Current road id is %s"%cur_waypoint.road_id)
-        # rospy.logwarn("Current section id is %s"%cur_waypoint.section_id)
-        # rospy.logwarn("Current lane id is %s"%cur_waypoint.lane_id)
         # return list of waypoints from cur_waypoint to 10 meters ahead
         wp_to_end = cur_waypoint.next_until_lane_end(distance)
         if len(wp_to_end) > 20:

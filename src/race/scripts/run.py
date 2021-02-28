@@ -44,7 +44,7 @@ def Spawn(N, log, track, model_type, num_wheels, set_spectator=True):
 
         if track == "t1_triple":
             init_pose = [164,11+i*10,4,0,0,-180]
-        else:
+        elif track == "t2_triple":
             init_pose = [95.5,107+i*10,4,0,0,-136]
         v['init_pose'] = init_pose
         obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
