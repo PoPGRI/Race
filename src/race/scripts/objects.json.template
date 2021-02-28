@@ -2,7 +2,7 @@
     "objects": 
     [
         {
-            "type": "vehicle.tesla.model3",
+            "type": "[[vehicle]]",
             "spawn_point": {[[spawn_point]]},
             "id": "[[role_name]]",
             "sensors": 

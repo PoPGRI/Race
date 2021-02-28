@@ -112,8 +112,6 @@ class EvaluationNode:
             self.speedList = []
             self.score += vBar
 
-        # return self.score, self.hitObjects
-
     def onShutdown(self):
         fname = 'score_{}_{}'.format(self.role_name, time.asctime())
         rospy.loginfo("Final score: {}".format(self.score))

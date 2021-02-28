@@ -13,7 +13,8 @@ class VehicleDecision():
     def __init__(self, role_name):
         self.subWaypoint = rospy.Subscriber("/carla/%s/lane_waypoints"%role_name, LaneList, self.waypointCallback)
 
-        self.vehicle_state = 'middle'
+        self.vehicle_state = 'straight'
+        self.lane_state = 0
         self.counter = 0
 
         self.waypoint = None
@@ -27,6 +28,7 @@ class VehicleDecision():
 
     def waypointCallback(self, data):
         self.waypoint = data.lane_waypoints[-1]
+        self.lane_state = self.waypoint.lane_state
         if not self.target_x or not self.target_y:
             self.target_x = self.waypoint.location.x 
             self.target_y = self.waypoint.location.y
@@ -61,75 +63,53 @@ class VehicleDecision():
                     psi = np.arctan(ry/rx)
                     if rx > 0:
                         front_dist = np.sqrt(dy*dy + dx*dx)
-                        print("detected object is at {} away and {} radians".format(front_dist, psi))
+                        # print("detected object is at {} away and {} radians".format(front_dist, psi))
                         if psi < 0.2 and psi > -0.2:
                             obs_front = True
                         elif psi > 0.2:
                             obs_right = True
                         elif psi < -0.2:
-                            obs_left = True
-                    elif rx < 0:
-                        if psi > 0.2:
-                            obs_left = True
-                        elif psi < -0.2:
-                            obs_right = True 
+                            obs_left = True 
 
 
-        prev_vehicle_state = self.vehicle_state          
-        if self.vehicle_state == "left":
-            if not self.change_lane:
-                if front_dist > self.detect_dist and not obs_right:
-                    self.vehicle_state = "middle"
-                elif front_dist <= self.detect_dist:
-                    if not obs_right:
-                        self.vehicle_state = "middle"
-                    else:
-                        self.vehicle_state = "stop"
-
-        elif self.vehicle_state == "right":
-            if not self.change_lane:
-                if front_dist > self.detect_dist and not obs_left:
-                    self.vehicle_state = "middle"
-                elif front_dist <= self.detect_dist:
-                    if not obs_left:
-                        self.vehicle_state = "middle"
-                    else:
-                        self.vehicle_state = "stop"
-
-        elif self.vehicle_state == "middle":
-            if front_dist > self.detect_dist:
-                self.vehicle_state = "middle"
-            else:
-                if not obs_front:
-                    self.vehicle_state = "middle"
-                elif not obs_right:
-                    self.vehicle_state = "right"
-                elif not obs_left:
-                    self.vehicle_state = "left"
+        # prev_vehicle_state = self.vehicle_state          
+        if self.lane_state == LaneInfo.LEFT_LANE:
+            if front_dist <= self.detect_dist and obs_front:
+                if not obs_right:
+                    self.vehicle_state = "turn-right"
                 else:
                     self.vehicle_state = "stop"
+            else:
+                self.vehicle_state = "straight"
+
+        elif self.lane_state == LaneInfo.RIGHT_LANE:
+            if front_dist <= self.detect_dist and obs_front:
+                if not obs_left:
+                    self.vehicle_state = "turn-left"
+                else:
+                    self.vehicle_state = "stop"
+            else:
+                self.vehicle_state = "straight"
+
+        elif self.lane_state == LaneInfo.CENTER_LANE:
+            if front_dist > self.detect_dist:
+                self.vehicle_state = "straight"
+            else:
+                if not obs_front:
+                    self.vehicle_state = "straight"
+                elif not obs_right:
+                    self.vehicle_state = "turn-right"
+                elif not obs_left:
+                    self.vehicle_state = "turn-left"
+                else:
+                    self.vehicle_state = "stop"
+
+        if self.vehicle_state == "stop":
+            self.speed = 0
         else:
             self.speed = 20
-            if front_dist > self.detect_dist:
-                self.vehicle_state = "middle"
-            elif not obs_left:
-                self.vehicle_state = "left"
-            elif not obs_right:
-                self.vehicle_state = "right"
-        
-        if prev_vehicle_state != self.vehicle_state and self.vehicle_state != "middle":
-            self.change_lane = True
 
-        # if self.change_lane: # and self.counter > 100:
-        #     self.counter = 0
-        #     if self.vehicle_state == "left" and not obs_right:
-        #         self.change_lane = False 
-        #     elif self.vehicle_state == "right" and not obs_left:
-        #         self.change_lane = False
-        #     elif self.vehicle_state == "middle":
-        #         self.change_lane = False
-
-        print(front_dist, self.vehicle_state, obs_front, obs_left, obs_right, self.change_lane)
+        print(front_dist, self.lane_state, self.vehicle_state, obs_front, obs_left, obs_right)
 
         while not self.target_x or not self.target_y:
             continue
@@ -147,18 +127,17 @@ class VehicleDecision():
 
             target_orientation = np.arctan2(self.target_y-prev_target_y, 
                 self.target_x-prev_target_x)
-            if self.vehicle_state == "stop":
-                self.speed = 0
-            elif self.vehicle_state == "right" and self.change_lane:
-                self.change_lane = False
+            
+            if self.vehicle_state == "turn-right":
+                # self.change_lane = False
                 tmp_x = 4
                 tmp_y = 0
                 x_offset = np.cos(target_orientation+np.pi/2)*tmp_x - np.sin(target_orientation+np.pi/2)*tmp_y
                 y_offset = np.sin(target_orientation+np.pi/2)*tmp_x + np.cos(target_orientation+np.pi/2)*tmp_y
                 self.target_x = self.target_x + x_offset
                 self.target_y = self.target_y + y_offset
-            elif self.vehicle_state == "left" and self.change_lane:
-                self.change_lane = False
+            elif self.vehicle_state == "turn-left":
+                # self.change_lane = False
                 tmp_x = 4
                 tmp_y = 0
                 x_offset = np.cos(target_orientation-np.pi/2)*tmp_x - np.sin(target_orientation-np.pi/2)*tmp_y

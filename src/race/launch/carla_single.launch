@@ -16,6 +16,9 @@
   <arg name='N' default='1' />
   <arg name='log' default='/tmp/' />
 
+  <arg name='model_type' default='model_free' />
+  <arg name='num_wheels' default='4' />
+
   <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch">
     <arg name='host' value='$(arg host)'/>
     <arg name='port' value='$(arg port)'/>
@@ -30,6 +33,8 @@
     <param name="N" value="$(arg N)" />
     <param name="log" value="$(arg log)" />
     <param name="track" value="$(arg town)" />
+    <param name="model_type" value="$(arg model_type)" />
+    <param name="num_wheels" value="$(arg num_wheels)" />
   </node>
 
   <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen" />
