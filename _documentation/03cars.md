@@ -7,11 +7,11 @@ main_nav: true
 The vehicle model will be provided by the competition hosts. Competitors can participate in either the "model-free" track or the "model-based" track.
 
 ### Model-free Track
-In the model-free track, the competitors will provide controllers for the complicated vehicle models provided by CARLA. These vehicles can be either 4-wheeled vehicles or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_cmd` or `vehicle_control_cmd`.
+In the model-free track, the competitors will provide controllers for the complicated vehicle models provided by CARLA. These vehicles can be either 4-wheeled vehicles or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`.
 
 
 ### Model-based Track
-In the model-based track, competitors will be provided with an abstracted model to generate inputs for. The CARLA vehicle will exactly follow the dynamics detailed below. Prior to competition registration, competitors will be provided with a model-based simulator with certain parameters. These parameters will not be the same as those provided during the competition period. The controller modules that competitors create for the model-based track will use the same `ackermann_cmd` or `vehicle_control_cmd` rostopics as the model-free track.
+In the model-based track, competitors will be provided with an abstracted model to generate inputs for. The CARLA vehicle will exactly follow the dynamics detailed below. Prior to competition registration, competitors will be provided with a model-based simulator with certain parameters. These parameters will not be the same as those provided during the competition period. The controller modules that competitors create for the model-based track will use the same `ackermann_control` or `vehicle_control` rostopics as the model-free track.
 
 The dynamics for the vehicle model are provided below.
 
