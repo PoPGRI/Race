@@ -5,61 +5,38 @@
   <arg name='port' default='2000'/>
   <arg name='timeout' default='10'/>
 
-  <!-- Ego vehicle -->
-  <arg name='role_name' default='ego_vehicle'/>
-  <arg name="vehicle_filter" default='vehicle.*'/>
-  <arg name="spawn_point" default=""/><!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
-
   <!-- Map to load on startup (either a predefined CARLA town (e.g. 'Town01'), or a OpenDRIVE map file) -->
-  <arg name="town" default=''/>
-
-  <!-- Enable/disable passive mode -->
-  <arg name='passive' default=''/>
+  <arg name="town" default='t1_triple'/>
 
   <!-- Synchronous mode-->
   <arg name='synchronous_mode' default=''/>
   <arg name='synchronous_mode_wait_for_vehicle_control_command' default=''/>
   <arg name='fixed_delta_seconds' default=''/>
 
+  <arg name='N' default='1' />
+  <arg name='log' default='/tmp/' />
+
+  <arg name='model_type' default='model_free' />
+  <arg name='num_wheels' default='4' />
 
   <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch">
     <arg name='host' value='$(arg host)'/>
     <arg name='port' value='$(arg port)'/>
     <arg name='town' value='$(arg town)'/>
     <arg name='timeout' value='$(arg timeout)'/>
-    <arg name='passive' value='$(arg passive)'/>
     <arg name='synchronous_mode' value='$(arg synchronous_mode)'/>
     <arg name='synchronous_mode_wait_for_vehicle_control_command' value='$(arg synchronous_mode_wait_for_vehicle_control_command)'/>
     <arg name='fixed_delta_seconds' value='$(arg fixed_delta_seconds)'/>
   </include>
 
-  <!-- the ego vehicle, that will be controlled by an agent (e.g. carla_ad_agent) -->
-  <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
-    <arg name="objects_definition_file" value='$(find carla_spawn_objects)/config/objects.json'/>
-    <arg name='role_name' value='$(arg role_name)'/>
-    <arg name="spawn_point_ego_vehicle" value="$(arg spawn_point)"/>
-    <arg name="spawn_sensors_only" value="false"/>
-  </include>
+  <node pkg="race" type="run.py" name="race_run" output="screen">
+    <param name="N" value="$(arg N)" />
+    <param name="log" value="$(arg log)" />
+    <param name="track" value="$(arg town)" />
+    <param name="model_type" value="$(arg model_type)" />
+    <param name="num_wheels" value="$(arg num_wheels)" />
+  </node>
 
-  <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-  </include>
-
-
-  <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
-    <arg name='role_name' value='$(arg role_name)'/>
-  </include>
-
-  <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-  </include>
-
-  <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-  </include>
-
-  <include file="$(find location_publisher)/launch/location_publisher.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-  </include>
+  <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen" />
 
 </launch>

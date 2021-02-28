@@ -5,6 +5,8 @@
   <arg name='config_file' default=''/>
   <arg name="vehicle_filter" default='vehicle.*'/>
   <arg name="spawn_point" default=""/><!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
+  <arg name="track" default="t1_triple" />
+  <arg name="model_free" default="1" />
 
   <!-- the ego vehicle, that will be controlled by an agent (e.g. carla_ad_agent) -->
   <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
@@ -16,17 +18,39 @@
 
   <!-- the control bridge -->
   <!-- carla manual control -->
-  <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
+  <!-- <include file="$(find carla_manual_control)/launch/carla_manual_control.launch">
     <arg name='role_name' value='$(arg role_name)'/>
-  </include>
-  <!-- carla ackermann control -->
+  </include> -->
+  <node pkg="race" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
+  <node pkg="race" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
+  <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <group if="$(arg model_free)">
+    <include file="$(find ackermann_node)/launch/ackermann_node.launch">
+      <arg name='role_name' value='$(arg role_name)' />
+    </include>
+
+    <include file="$(find control_node)/launch/control_node.launch">
+      <arg name='role_name' value='$(arg role_name)' />
+    </include>
+  </group>
+
+  <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(arg model_free)">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
   <!-- the perception module -->
-  <!-- popgri race info -->
-  <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">
+  <!-- graic race info -->
+  <include file="$(find graic_raceinfo_publisher)/launch/graic_raceinfo_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
@@ -34,8 +58,20 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
-  <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
+  <!-- <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
+  </include> -->
+
+  <!-- the evaluation module -->
+  <include file="$(find evaluation_node)/launch/evaluation_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
   </include>
+
+  <include file="$(find waypoint_node)/launch/waypoint_node.launch">
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
+  </include>
+
 
 </launch>
