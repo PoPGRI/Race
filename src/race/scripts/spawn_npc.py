@@ -98,7 +98,7 @@ def main():
     walkers_list = []
     all_id = []
     client = carla.Client('localhost', 2000)
-    client.set_timeout(10.0)
+    client.set_timeout(20.0)
     synchronous_master = False
     random.seed(int(time.time()))
 
