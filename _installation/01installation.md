@@ -16,17 +16,17 @@ First, ensure that you are using the NVIDIA driver. This can be done by going to
 Note that you may have to use the `sudo` command to run docker.
 
 
-### Step 1. Cloning the Git repo
+### Step 1. Clone the Git repo
 
 Now that you have installed the GRAIC docker, you should clone the GRAIC repo.
 Use the command `git clone https://github.com/PoPGRI/Race.git` to save the repo to any directory.
 
-### Step 2. Installing ROS
+### Step 2. Install ROS
 
 GRAIC uses rostopics to communicate between its modules (described on the [docs](https://popgri.github.io/Race/docs/) page).
 The installation instructions for ROS can be found here: [http://wiki.ros.org/noetic/Installation/Ubuntu](http://wiki.ros.org/noetic/Installation/Ubuntu).
 
-### Step 3. Running the GRAIC Docker container
+### Step 3. Run the GRAIC Docker container
 
 Now that everything has been installed, you can now run the GRAIC docker image.
 If everything works properly, once the GRAIC container is running, the baseline solution can also be run.
@@ -40,7 +40,7 @@ Note that you may need to use the `sudo` command to run the Docker image.
 
 A window called CarlaUE4 will open.
 
-### Step 4. Running the baseline solution
+### Step 4. Run the baseline solution
 
 Now that the GRAIC Docker container is running, you should test that everything is working properly using the baseline solution.
 
