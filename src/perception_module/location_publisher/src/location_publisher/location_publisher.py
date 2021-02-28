@@ -3,7 +3,7 @@ import carla
 import rospy
 import sys
 
-from popgri_msgs.msg import LocationInfo
+from graic_msgs.msg import LocationInfo
 
 class LocationModule:
     def __init__(self, carla_world, role_name='ego_vehicle'):
@@ -62,7 +62,7 @@ def publisher(location_module, role_name):
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
-    rospy.init_node('popgri_raceinfo_publisher', anonymous=True)
+    rospy.init_node('graic_raceinfo_publisher', anonymous=True)
     # host = rospy.get_param("/carla/host", "127.0.0.1")
     # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)

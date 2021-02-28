@@ -4,9 +4,9 @@ import carla
 import rospy
 # import sys
 import numpy as np
-from popgri_msgs.msg import BBInfo
-from popgri_msgs.msg import BBList
-from popgri_msgs.msg import BBSingleInfo
+from graic_msgs.msg import BBInfo
+from graic_msgs.msg import BBList
+from graic_msgs.msg import BBSingleInfo
 class PerceptionModule_BB():
     def __init__(self, carla_world, role_name='ego_vehicle', radius=15):
         self.sensing_radius = radius 

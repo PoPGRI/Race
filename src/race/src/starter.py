@@ -2,12 +2,12 @@ import rospy
 import numpy as np
 import argparse
 import time
-from popgri_msgs.msg import ObstacleList, ObstacleInfo
-from popgri_msgs.msg import LocationInfo
+from graic_msgs.msg import ObstacleList, ObstacleInfo
+from graic_msgs.msg import LocationInfo
 from ackermann_msgs.msg import AckermannDrive
 from carla_msgs.msg import CarlaEgoVehicleControl
-from popgri_msgs.msg import LaneList
-from popgri_msgs.msg import LaneInfo
+from graic_msgs.msg import LaneList
+from graic_msgs.msg import LaneInfo
 
 
 class VehicleController():

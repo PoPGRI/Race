@@ -2,7 +2,7 @@ import rospy
 import numpy as np
 from carla_msgs.msg import CarlaCollisionEvent
 from carla_msgs.msg import CarlaLaneInvasionEvent
-from popgri_msgs.msg import LocationInfo, EvaluationInfo
+from graic_msgs.msg import LocationInfo, EvaluationInfo
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import Int16, Float32, String
 import time

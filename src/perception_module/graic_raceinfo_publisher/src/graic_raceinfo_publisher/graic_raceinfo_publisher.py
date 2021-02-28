@@ -3,11 +3,11 @@ import numpy as np
 import carla
 import rospy
 import sys
-from popgri_msgs.msg import LaneInfo
-from popgri_msgs.msg import LaneList
-from popgri_msgs.msg import ObstacleInfo
-from popgri_msgs.msg import ObstacleList
-from popgri_msgs.msg import BBSingleInfo
+from graic_msgs.msg import LaneInfo
+from graic_msgs.msg import LaneList
+from graic_msgs.msg import ObstacleInfo
+from graic_msgs.msg import ObstacleList
+from graic_msgs.msg import BBSingleInfo
 class PerceptionModule():
     def __init__(self, carla_world, role_name, radius=15):
         self.sensing_radius = radius # default ?????
@@ -174,7 +174,7 @@ def publisher(percep_mod, role_name):
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
-    rospy.init_node('popgri_raceinfo_publisher', anonymous=True)
+    rospy.init_node('graic_raceinfo_publisher', anonymous=True)
     # host = rospy.get_param("/carla/host", "127.0.0.1")
     # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)

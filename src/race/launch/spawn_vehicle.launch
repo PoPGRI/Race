@@ -49,8 +49,8 @@
   </include>
 
   <!-- the perception module -->
-  <!-- popgri race info -->
-  <include file="$(find popgri_raceinfo_publisher)/launch/popgri_raceinfo_publisher.launch">
+  <!-- graic race info -->
+  <include file="$(find graic_raceinfo_publisher)/launch/graic_raceinfo_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
