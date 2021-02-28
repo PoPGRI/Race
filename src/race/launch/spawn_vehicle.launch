@@ -29,7 +29,7 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
-  <!-- carla ackermann control -->
+  <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
@@ -43,6 +43,10 @@
       <arg name='role_name' value='$(arg role_name)' />
     </include>
   </group>
+
+  <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(arg model_free)">
+    <arg name='role_name' value='$(arg role_name)' />
+  </include>
 
   <!-- the perception module -->
   <!-- popgri race info -->

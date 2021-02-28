@@ -149,7 +149,7 @@ class ModelBasedVehicle:
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
 
-def main(role_name):
+def run(role_name):
     vehicle = ModelBasedVehicle(role_name)
 
     freq = 100
@@ -160,6 +160,6 @@ def main(role_name):
         rate.sleep()
 
 if __name__ == "__main__":
-    role_name = sys.argv[1]
-    rospy.init_node("model_based_node_%s"%role_name)
-    main(role_name)
+    rospy.init_node("Model_based_node")
+    role_name = rospy.get_param("~role_name", "ego_vehicle")
+    run(role_name)
