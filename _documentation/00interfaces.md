@@ -5,9 +5,9 @@ permalink: /interfaces/
 main_nav: true
 ---
 
-This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent. 
+This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.
 
-GRAIC reduces an autonomous system into 3 submodules: (i) perception, (ii) decision & control, and (iii) vehicle and environment system. As competitors, you will be provided with the perception and vehicle systems and you will build your own decision and control module. 
+The GRAIC framework has several running modules, however competitors only need to be concerned with three: (i) perception, (ii) decision & control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle inputs types and you will build your own decision and control module.
 
 More information can be found in the "Decision and Control" section.
 
@@ -17,4 +17,5 @@ A diagram of the competition interfaces is shown below. The decision and control
 
  <img src="/Race/assets/interfaces.png">
 
- The perception module publishes the rostopics `location`, `obstacles`, `environment_obj_bb`. The waypoints that the competitors must reach are also shared with the competitors in a file called `waypoint_list.py`. The decision and control module should publish the rostopics  `ackermann_cmd` **or** `vehicle_control_cmd`. Further details of these modules are detailed below.
+ The perception module publishes the rostopics `location`, `obstacles`, `environment_obj_bb`. The waypoints that the competitors must reach are also shared with the competitors in the rostopic `wp`. The decision and control module should publish the rostopics  `ackermann_cmd` **or** `vehicle_control_cmd`. Further details of these modules are detailed below.
+ The rest of the framework is shown in orange. This information is shown to provide details on how the GRAIC framework works, but the competitors only need to be concerned with the modules shown in green and blue.

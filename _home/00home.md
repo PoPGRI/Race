@@ -4,8 +4,11 @@ title: Description
 permalink: /description/
 main_nav: false
 ---
+_Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race affiliated with [CPS-IOT Week 2021](https://cps-iot-week2021.isis.vanderbilt.edu/). GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.
 
-_Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race affiliated with [CPS-IOT Week 2021](https://cps-iot-week2021.isis.vanderbilt.edu/). GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun. 
+If you are interested in participating in GRAIC or just want to stay up to date, please fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link) and we will add you to our mailing list.
+Updates can also be found at the bottom of this page.
+
 
 # Tl;dr
 
@@ -22,4 +25,7 @@ At runtime, the input to the controller will come from a _perception oracle_ tha
 * Your controller will run races across multiple vehicles and tracks
 * Different race categories for model-free and model-based vehicles
 
+## Contact Information
 
+If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
+If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link), we will add you to our mailing list.

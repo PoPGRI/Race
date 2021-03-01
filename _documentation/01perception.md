@@ -36,4 +36,4 @@ The lane waypoints are published to the rostopic `lane_waypoints`.
 ### Milestone waypoints
 **Not to be confused with lane waypoints.** These are the high level waypoints that the competitors must pass. These high level waypoints are given in \\([x,y,z]\\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.
 
-The milestone waypoints are provided in `waypoint_node.py`.
+The milestone waypoints are published to the rostopic `wp`.

@@ -162,54 +162,31 @@
       
       <h1>Description</h1>
       
-      <p><p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulation framework for developing intelligent racing agents that can work with different vehicles and environments. GRAIC will be released for a synthesis competition at <a href="https://cps-iot-week2021.isis.vanderbilt.edu/">CPS-IOT Week 2021</a> and possibly will continue with future robotics and autonomy events. Decision making and control for racing has many competing approaches. How can we reliably evaluate the merits of different algorithms, independent of the ever-improving computing and sensing modules? Most algorithms and tools are hyper-customized to vehicles. Some only work on particular computing platforms.  We hope that GRAIC will bring the research community together and help arrive at an acceptable answer.</p>
+      <p><p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cps-iot-week2021.isis.vanderbilt.edu/">CPS-IOT Week 2021</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
 
-<h1 id="the-competition">The competition</h1>
-<p>The participants will submit a piece of code (<em>the decision and control module</em>) for generating <em>agents</em> for controlling vehicles. This agent will then control the vehicle in a partially known, complex, simulated <em>track</em>. At runtime, the input to the agent will come from a <em>perception oracle</em> that will provide as input a local view of obstacles and gates on the track near the vehicle. The outputs from the agent will drive the vehicle. The decision and control module will take as input (a) black-box executable for simulating the vehicle in an empty track, (b) track parameters, such as speed of dynamic obstacles, curvatures, etc.</p>
+<p>If you are interested in participating in GRAIC or just want to stay up to date, please fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a> and we will add you to our mailing list.
+Updates can also be found at the bottom of this page.</p>
 
-<h2 id="evaluation">Evaluation:</h2>
+<h1 id="tldr">Tl;dr</h1>
 
-<p>The competition will be based on running the decision and control module and the controlled agent in a number of different tracks and with different vehicles. The metrics will be for example, course completion speed, safety violations, computational load on agent, simulation load, etc.</p>
+<p>We are providing a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.</p>
 
-<p>Several different test environments and 2-3 models will be used for generating these metrics. Each participating controller will perform the race solitarily for this year’s competition. Simulating multiple agents in complex environments deterministically is a complicated challenge. In the future, we do intend to make the competition a truly multi-agent race.</p>
+<h1 id="details">Details</h1>
 
-<h2 id="features">Features:</h2>
-<ul>
-  <li>
-    <p>We want this competition to focus on decision making, control, transfer, safety, robustness, and reliable performance, and not so much on perception. Hence, the perception oracle.</p>
-  </li>
-  <li>
-    <p>We want to go beyond approaches that are overfitted for specific vehicles and tracks. Hense, the offline generation of the agent and the online performance evalulation.</p>
-  </li>
-</ul>
+<p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. All of these will be published in ROS topics. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle, through ROS interfaces. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/docs/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
 
-<h2 id="tracks">Tracks</h2>
-<p><em>Track information is subject to change</em></p>
-
-<p>There are two available tracks to compete in.</p>
+<h2 id="highlights">Highlights</h2>
 
 <ul>
-  <li>
-    <p>Model-Free Track - In this track, the vehicle system provided by Carla is used. This vehicle system is very complicated and cannot be fully known. The decision and control algorithms used in this track must be able to compute inputs for the system even though the full dynamics of the system are unknown.</p>
-  </li>
-  <li>
-    <p>Model Track - In this track, a vehicle model (such as the bicycle model) will be provided to the competitors. This model is simpler than the one provided by Carla. The decision and control algorithms in this track can take advantage of the fact that the full dynamics of the system are known.</p>
-  </li>
+  <li>GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API</li>
+  <li>Your controller will run races across multiple vehicles and tracks</li>
+  <li>Different race categories for model-free and model-based vehicles</li>
 </ul>
 
-<h2 id="plan-for-both-in-person-and-remote-possibilities">Plan for both in-person and remote possibilities</h2>
+<h2 id="contact-information">Contact Information</h2>
 
-<p>This year the competition will be entirely simulation-based. We will create a timeline for the following significant milestones leading upto CPSWeek.</p>
-<ul>
-  <li>Information session</li>
-  <li>Registration of participants</li>
-  <li>Publication of vehicle models/executables, and training tracks, and specifications for the decision and control module</li>
-  <li>Publication of performance evaluation code with metrics</li>
-  <li>Preliminary submissions for “type checking” entries</li>
-  <li>Final submissions, and competition</li>
-</ul>
-
-<p>Technical details about submissions, repositories, docker, VM, etc. will be announced in due course. We plan to learn from and collaborate with organizers of previous competitions for <a href="https://cps-vo.org/group/CPSchallenge">F1/10</a>, <a href="https://cps-vo.org/group/ARCH/FriendlyCompetition">ARCH</a>, <a href="https://sites.google.com/view/vnn20/vnncomp">Neural Network verification</a>,  <a href="https://vivecenter.berkeley.edu/research1/roar/">ROAR</a>, and <a href="http://docs.fmrchallenge.org/en/v0.0.4/">formal synthesis</a>.</p>
+<p>If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
+If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a>, we will add you to our mailing list.</p>
 </p>
   </div>
   
@@ -226,6 +203,14 @@
   <li>May 11: Submission deadline for controllers</li>
   <li>May 18-21: Results announced</li>
 </ul>
+</p>
+  </div>
+  
+  <div>
+      
+      <h1>Updates</h1>
+      
+      <p><!-- * 02/28/2021 - We have released our beta! Please go to the [Getting started](https://popgri.github.io/Race/installation/) page to download. We invite all feedback. -->
 </p>
   </div>
   
