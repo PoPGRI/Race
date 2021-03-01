@@ -4,7 +4,7 @@ title: Perception
 main_nav: true
 ---
 
-The perception module consists of multiple rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> information may change. These rostopics are updated at a rate of 10 Hz.
+The perception module consists of multiple rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> information may change. These rostopics are updated at a rate of 20 Hz.
 
 ### Obstacles (<span style="color:blue">Dynamic</span>)
 The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.
@@ -37,3 +37,7 @@ The lane markers are published to the rostopic `lane_markers`.
 **Not to be confused with lane waypoints.** These are the high level waypoints that the competitors must pass. These high level waypoints are given in \\([x,y,z]\\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.
 
 The milestone waypoints are published to the rostopic `waypoints`.
+
+<img src="/Race/assets/perception_screenshot.png">
+
+From the above image, the objects with RED bounding boxes are obstacles; the green arcs are the milestone waypoints; the black line segments on the road are lane markers. 
