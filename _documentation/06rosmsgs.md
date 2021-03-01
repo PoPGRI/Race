@@ -1,10 +1,10 @@
 ---
 layout: page
-title: ROS Messages
+title: ROS messages
 main_nav: true
 ---
 
-We have defined several ROS message type for the perception module to publish. 
+We have defined several ROS message type for the perception module to publish.
 
 **BBInfo**
 ```
@@ -12,13 +12,13 @@ We have defined several ROS message type for the perception module to publish.
 string type # Type of object within bounding box
 string name # Name of the object
 uint32 id # Id of the object
-BBSingleInfo[] vertices_locations # List of locations of the vertices 
+BBSingleInfo[] vertices_locations # List of locations of the vertices
 ```
 
 **BBList**
 ```
 # Bounding box list
-BBInfo[] bounding_box_vertices # List of BBInfo 
+BBInfo[] bounding_box_vertices # List of BBInfo
 ```
 
 **BBSingleInfo**
@@ -36,13 +36,13 @@ uint32 numObjectsHit # Number of objects the car has hit
 
 **LaneInfo**
 ```
-# Information about a lane marker 
+# Information about a lane marker
 geometry_msgs/Vector3 location # Location of the lane marker
 geometry_msgs/Vector3 rotation # Rotation of the lane marker
 
 uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
 
-uint32 LEFT_LANE=3 
+uint32 LEFT_LANE=3
 unit32 CENTER_LANE=4
 uint32 RIGHT_LANE=5
 ```

@@ -4,23 +4,23 @@ title: Perception
 main_nav: true
 ---
 
-The perception module consists of multiple rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> information may change. These rostopics are updated at a rate of 20 Hz.
+The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> may change. These rostopics are updated at a rate of 20 Hz.
 
-### Obstacles (<span style="color:blue">Dynamic</span>)
+### Dynamic obstacles (<span style="color:blue">Dynamic</span>)
 The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.
 - Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
 - Type: The type of obstacle detected (ie. “pedestrian”, “car”, "motorcycle", etc.)
-- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
+- ID: An identifier for each obstacle (ie.  "1”, etc.). This identifier remains the same across all time steps.
 
 These obstacles are published to the rostopic `obstacles`.
 
-### Environment objects (<span style="color:red">Static</span>)
-The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large object. These objects are provided to the competitor as a list where each entry consists of the following:
+### Static obstacles objects (<span style="color:red">Static</span>)
+The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
 - Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
-- Type: Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
+- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
 - ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
 
-These objects are published to the rostopic `environment_obj_bb`.
+These objects are also published to the rostopic `obstacles`.
 
 ### Location (<span style="color:blue">Dynamic</span>)
 The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
@@ -33,11 +33,11 @@ The lane markers (or *lane markers*) describe the current lane that the vehicle 
 
 The lane markers are published to the rostopic `lane_markers`.
 
-### Milestone waypoints
-**Not to be confused with lane waypoints.** These are the high level waypoints that the competitors must pass. These high level waypoints are given in \\([x,y,z]\\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.
+### Milestones
+These are the waypoints along the track that the vehicle must pass. These milestones are given in \\([x,y,z]\\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.
 
-The milestone waypoints are published to the rostopic `waypoints`.
+The milestones are published to the rostopic `waypoints`.
 
 <img src="/Race/assets/perception_screenshot.png">
 
-From the above image, the objects with RED bounding boxes are obstacles; the green arcs are the milestone waypoints; the black line segments on the road are lane markers. 
+From the above image, the RED bounding boxes are obstacles; the green arcs are the milestones; the black line segments on the road are the current lane markers.
