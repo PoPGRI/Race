@@ -31,6 +31,7 @@ class PerceptionModule_BB():
         radius = self.sensing_radius
         box_loc = box.location
         # cast vertices to the same plane as the ego vehicle
+        # calculate distance to edge
         x_half_width = box.extent.x
         y_half_width = box.extent.y
         v1 = carla.Location(box_loc.x+x_half_width, box_loc.y+y_half_width, self_loc.z)
@@ -47,17 +48,11 @@ class PerceptionModule_BB():
                 return True
             if (self.distance_from_point_to_line(self_loc, v2, v4) <= radius):
                 return True
-        # otherwise calculate the distance using center of the vehicle and box
-        trans = carla.Transform(carla.Location(0,0,0), carla.Rotation(0,0,0))
-        # obtain a vector pointing from self_loc to box center in world space
-        vec_from_self_to_box = box_loc - self_loc
-        vec_from_self_to_box.z = 0
-        normalized_vec = vec_from_self_to_box/self.distance_between_points(vec_from_self_to_box, vec_from_self_to_box)
-        # calculate the location which is 'radius' away from the vehicle along the vec
-        tip_of_vec = normalized_vec*radius
-        loc_of_vec = tip_of_vec + self_loc
-        if box.contains(loc_of_vec, trans):
-            return True
+        # calculate distance to vertices
+        vertices = [v1, v2, v3, v4]
+        for v in vertices:
+            if self.distance_between_points(self_loc ,v) <= radius:
+                return True
         return False 
     # calculate the distance from point x to the line connecting p1 and p2
     def distance_from_point_to_line(self, x, p1, p2):
