@@ -20,7 +20,7 @@ class WaypointNode:
         if len(self.waypoint_list) != 0:
             location = carla.Location(self.waypoint_list[0][0], self.waypoint_list[0][1], self.waypoint_list[0][2])
             rotation = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.rotation
-            box = carla.BoundingBox(location, carla.Vector3D(0,5,3))
+            box = carla.BoundingBox(location, carla.Vector3D(0,6,3))
             if len(self.waypoint_list) == 1:
                 self.world.debug.draw_box(box, rotation, thickness=0.5, color=carla.Color(255, 255, 0, 255), life_time=0)
             else:
