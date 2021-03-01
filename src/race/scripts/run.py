@@ -37,6 +37,10 @@ def Spawn(N, log, track, model_type, num_wheels, set_spectator=True):
             rospy.logwarn("Wrong choice of model type %s; use model_free as default"%model_type)
             model_type = "model_free"
         
+        if model_type == "model_based" and track == "t2_triple":
+            rospy.logerr("Please don't chooce model_based vehicle when running track2")
+            raise rospy.exceptions.ROSInterruptException
+        
         if model_type == "model_free":
             v['model_free'] = 1
         else:
