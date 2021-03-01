@@ -9,6 +9,8 @@ The instructions for CARLA installation can be found [here](https://carla.readth
 
 First, ensure that you are using the NVIDIA driver. This can be done by going to "Additional Drivers" in "Software and Updates".
 
+ <img src="/Race/assets/driver_settings.png">
+
 1. Install Docker CE. Instructions can be found here: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 2. Install NVIDIA-Docker2. Instructions can be found here:[https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
 3. Pull the GRAIC Docker image: `docker pull sundw2014/graic:latest`
@@ -41,6 +43,8 @@ Note that you may need to use the `sudo` command to run the Docker image.
 
 A window called CarlaUE4 will open.
 
+<img src="/Race/assets/carlaue4.png">
+
 ### Step 4. Run the baseline solution
 
 Now that the GRAIC Docker container is running, you should test that everything is working properly using the baseline solution.
@@ -63,6 +67,9 @@ roslaunch race carla_single.launch num_wheels:=4 model_type:=model_free
 ```
 
 A vehicle should appear in the CARLA window.
+
+<img src="/Race/assets/baseline.png">
+
 Now open a new and use `docker exec -it graic_con /bin/bash` and run the following in the CARLA container.
 ```
 cd graic-workspace/
@@ -76,6 +83,7 @@ cd src/race/src/
 ```
 python baseline.py
 ```
+The vehicle should start moving and a score should appear.
 
 You are now ready to start creating controllers for GRAIC!
 
