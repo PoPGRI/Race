@@ -168,18 +168,16 @@
       
       <p><p>This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.</p>
 
-<p>The GRAIC framework has several running modules, however competitors only need to be concerned with three: (i) perception, (ii) decision &amp; control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle inputs types and you will build your own decision and control module.</p>
+<p>The GRAIC framework has several modules, however competitors only need to be concerned with three: (i) perception, (ii) decision &amp; control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle API and you will build your own decision &amp; control module.</p>
 
-<p>More information can be found in the “Decision and Control” section.</p>
-
-<!-- The coordinate system used by ROS is ENU. The perception module is written using Python. -->
-
-<p>A diagram of the competition interfaces is shown below. The decision and control modules built by the competitors will merely be swapped out. Therefore, the decision and control modules must take in only the local perception provided by the perception module and output only the vehicle input required by the vehicle system.</p>
+<p>A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision &amp; control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.</p>
 
 <p><img src="/Race/assets/interfaces.png" /></p>
 
-<p>The perception module publishes the rostopics <code class="highlighter-rouge">location</code>, <code class="highlighter-rouge">obstacles</code>, <code class="highlighter-rouge">environment_obj_bb</code>. The waypoints that the competitors must reach are also shared with the competitors in the rostopic <code class="highlighter-rouge">wp</code>. The decision and control module should publish the rostopics  <code class="highlighter-rouge">ackermann_cmd</code> <strong>or</strong> <code class="highlighter-rouge">vehicle_control_cmd</code>. Further details of these modules are detailed below.
- The rest of the framework is shown in orange. This information is shown to provide details on how the GRAIC framework works, but the competitors only need to be concerned with the modules shown in green and blue.</p>
+<p>The perception module publishes the rostopics <code class="highlighter-rouge">location</code>, <code class="highlighter-rouge">obstacles</code>, <code class="highlighter-rouge">lane_markers</code>, and <code class="highlighter-rouge">environment_obj_bb</code>. The waypoints that the competitors must reach are also provided in the rostopic <code class="highlighter-rouge">waypoint</code>. The decision &amp; control module should publish the rostopics  <code class="highlighter-rouge">ackermann_control</code> <strong>or</strong> <code class="highlighter-rouge">vehicle_control</code>. Further details of these topics are given below.
+ Again, this information shows how the GRAIC framework works, but the competitors only need to build the blue module.</p>
+
+<p>Note: For all the rostopics in this document, the full rostopic name should be <code class="highlighter-rouge">/carla/&lt;vehicle-name&gt;/&lt;topic-name&gt;</code>. E.g. <code class="highlighter-rouge">/carla/ego_vehicle/location</code> will provide location information for the car named “ego_vehicle”</p>
 </p>
   </div>
   
@@ -187,27 +185,27 @@
       
       <h1>Perception</h1>
       
-      <p><p>The perception module consists of multiple rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> information may change. These rostopics are updated at a rate of 10 Hz.</p>
+      <p><p>The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> may change. These rostopics are updated at a rate of 20 Hz.</p>
 
-<h3 id="obstacles-dynamic">Obstacles (<span style="color:blue">Dynamic</span>)</h3>
+<h3 id="dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</h3>
 <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
 <ul>
   <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
   <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “motorcycle”, etc.)</li>
-  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
+  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This identifier remains the same across all time steps.</li>
 </ul>
 
 <p>These obstacles are published to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
 
-<h3 id="environment-objects-static">Environment objects (<span style="color:red">Static</span>)</h3>
-<p>The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large object. These objects are provided to the competitor as a list where each entry consists of the following:</p>
+<h3 id="static-obstacles-objects-static">Static obstacles objects (<span style="color:red">Static</span>)</h3>
+<p>The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:</p>
 <ul>
   <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
-  <li>Type: Type: The type of obstacle detected (ie. “sidewalk”, “fence”, “building”, etc.)</li>
+  <li>Type: The type of obstacle detected (ie. “sidewalk”, “fence”, “building”, etc.)</li>
   <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
 </ul>
 
-<p>These objects are published to the rostopic <code class="highlighter-rouge">environment_obj_bb</code>.</p>
+<p>These objects are also published to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
 
 <h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
 <p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
@@ -215,15 +213,19 @@ The position is given as [x, y, z] in ENU coordinates. The rotation is given as 
 
 <p>The location is published to the rostopic <code class="highlighter-rouge">location</code></p>
 
-<h3 id="lane-waypoints-static">Lane waypoints (<span style="color:red">Static</span>)</h3>
-<p>The lane waypoints (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
+<h3 id="lane-markers-static">Lane markers (<span style="color:red">Static</span>)</h3>
+<p>The lane markers (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
 
-<p>The lane waypoints are published to the rostopic <code class="highlighter-rouge">lane_waypoints</code>.</p>
+<p>The lane markers are published to the rostopic <code class="highlighter-rouge">lane_markers</code>.</p>
 
-<h3 id="milestone-waypoints">Milestone waypoints</h3>
-<p><strong>Not to be confused with lane waypoints.</strong> These are the high level waypoints that the competitors must pass. These high level waypoints are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.</p>
+<h3 id="milestones">Milestones</h3>
+<p>These are the waypoints along the track that the vehicle must pass. These milestones are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.</p>
 
-<p>The milestone waypoints are published to the rostopic <code class="highlighter-rouge">wp</code>.</p>
+<p>The milestones are published to the rostopic <code class="highlighter-rouge">waypoints</code>.</p>
+
+<p><img src="/Race/assets/perception_screenshot.png" /></p>
+
+<p>From the above image, the RED bounding boxes are obstacles; the green arcs are the milestones; the black line segments on the road are the current lane markers.</p>
 </p>
   </div>
   
@@ -231,9 +233,9 @@ The position is given as [x, y, z] in ENU coordinates. The rotation is given as 
       
       <h1>Decision and Control</h1>
       
-      <p><p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="highlighter-rouge">ackermann_control</code> using message type <code class="highlighter-rouge">AckermannDrive</code> or <code class="highlighter-rouge">vehicle_control</code> using message type <code class="highlighter-rouge">CarleEgoVehicleContrl</code>).</p>
+      <p><p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="highlighter-rouge">ackermann_control</code> using message type <code class="highlighter-rouge">AckermannDrive</code> or <code class="highlighter-rouge">vehicle_control</code> using message type <code class="highlighter-rouge">CarleEgoVehicleControl</code>).</p>
 
-<p>Our baseline decision and controller can be found in the files <code class="highlighter-rouge">Race/src/race/src/baseline.py</code>. 
+<p>Our baseline decision and controller can be found in the file <code class="highlighter-rouge">Race/src/race/src/baseline.py</code>. 
 The decision module determines what waypoint the vehicle should move to. If there is an obstacle in front of the vehicle, then the waypoint is chosen such that the vehicle can avoid it.
 The controller module is a simple waypoint following controller. The competitors can use these modules as references for how to create their own controllers.</p>
 </p>
@@ -241,25 +243,23 @@ The controller module is a simple waypoint following controller. The competitors
   
   <div>
       
-      <h1>Cars</h1>
+      <h1>Vehicles</h1>
       
-      <p><p>The vehicle model will be provided by the competition hosts. Competitors can participate in either the “model-free” track or the “model-based” track.</p>
+      <p><p>The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the “model-agnostic” or the “model-based” options, or both.</p>
 
-<h3 id="model-free-track">Model-free Track</h3>
-<p>In the model-free track, the competitors will provide controllers for the complicated vehicle models provided by CARLA. These vehicles can be either 4-wheeled vehicles or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code>.</p>
+<h3 id="model-agnostic-option">Model-agnostic option</h3>
+<p>In the model-agnostic category, vehicle physics is given by CARLA’s vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code>.</p>
 
-<h3 id="model-based-track">Model-based Track</h3>
-<p>In the model-based track, competitors will be provided with an abstracted model to generate inputs for. The CARLA vehicle will exactly follow the dynamics detailed below. Prior to competition registration, competitors will be provided with a model-based simulator with certain parameters. These parameters will not be the same as those provided during the competition period. The controller modules that competitors create for the model-based track will use the same <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code> rostopics as the model-free track.</p>
+<h3 id="model-based-option">Model-based option</h3>
+<p>In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code> rostopics above.</p>
 
-<p>The dynamics for the vehicle model are provided below.</p>
-
-<h4 id="longitudinal-dynamics">Longitudinal Dynamics</h4>
+<h4 id="longitudinal-dynamics">Longitudinal dynamics</h4>
 
 <script type="math/tex; mode=display">\dot{u} = a - f_1 u - f_2 u^{2} - f_3,</script>
 
 <p>where $u$ is the forward velocity of the vehicle and \(a\) is the acceleration generated by the throttle input.</p>
 
-<h4 id="lateral-dynamics">Lateral Dynamics</h4>
+<h4 id="lateral-dynamics">Lateral dynamics</h4>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{bmatrix} \dot{v}\\ \dot{r}
@@ -280,24 +280,87 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
   
   <div>
       
-      <h1>Race Environment</h1>
+      <h1>Test environments and scoring</h1>
       
-      <p><p>We will provide several race environments prior to the competition for competitors to test their controllers on. These competition tracks contain other vehicles, pedestrians, and various static obstacles that the vehicles must avoid. We will also provide an evaluation script so the competitors have an idea of how their vehicle performed.
-These race environments will be different than the ones provided during the competition. Additionally, the vehicles will be evaluated on tracks that the competitors will not have access to so that the generality of the decision and control modules can be tested.</p>
+      <p><p>We are providing several test environments with tracks, other vehicles, pedestrians, and static obstacles that the vehicles must avoid. We are also providing a scoring function.
+These test environments will be different than the ones used during the final race.</p>
+
+<h1 id="evaluation">Evaluation</h1>
+
+<p><em>We are yet to finalize the scoring function!</em></p>
+
+<p>Roughly, the final will be calculated based on the average speed and completion time of the vehicle. There will be big penalties for hitting obstacles and running offtrack.</p>
 </p>
   </div>
   
   <div>
       
-      <h1>Evaluation</h1>
+      <h1>ROS messages</h1>
       
-      <p><p><em>Evaluation metrics subject to change!</em></p>
+      <p><p>We have defined several ROS message type for the perception module to publish.</p>
 
-<p>The evaluation of the decision and control module will take many factors into account.
-Each competitor starts with a score of zero.
-The final score is based on the average speed and completion time of the vehicle.
-Each time an obstacle is hit, the score is reduced by 100.
-Each time the car deviates the road and hit sidewalk, the score is reduced by 50.</p>
+<p><strong>BBInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box Information
+string type # Type of object within bounding box
+string name # Name of the object
+uint32 id # Id of the object
+BBSingleInfo[] vertices_locations # List of locations of the vertices
+</code></pre></div></div>
+
+<p><strong>BBList</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box list
+BBInfo[] bounding_box_vertices # List of BBInfo
+</code></pre></div></div>
+
+<p><strong>BBSingleInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information of a single bounding box vertex
+geometry_msgs/Vector3 vertex_location
+</code></pre></div></div>
+
+<p><strong>EvaluationInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the evaluation of the current vehicle
+int32 score # Instant score that the car has got
+uint32 numObjectsHit # Number of objects the car has hit
+</code></pre></div></div>
+
+<p><strong>LaneInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about a lane marker
+geometry_msgs/Vector3 location # Location of the lane marker
+geometry_msgs/Vector3 rotation # Rotation of the lane marker
+
+uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
+
+uint32 LEFT_LANE=3
+unit32 CENTER_LANE=4
+uint32 RIGHT_LANE=5
+</code></pre></div></div>
+
+<p><strong>LaneList</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Lane marker list
+LaneInfo[] lane_markers # A list of lane_markers
+</code></pre></div></div>
+
+<p><strong>LocationInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location information message type
+string actor_name # Name of the actor(current car)
+uint32 actor_id # ID of the actor(current car)
+geometry_msgs/Vector3 location
+geometry_msgs/Vector3 rotation
+geometry_msgs/Vector3 velocity
+</code></pre></div></div>
+
+<p><strong>ObstacleInfo</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the obstacle
+string obstacle_name # Name of the obstacle
+uint32 obstacle_id # ID of the obstacle
+geometry_msgs/Vector3 location
+BBSingleInfo[] vertices_locations # Bounding box of the obstacle
+</code></pre></div></div>
+
+<p><strong>ObstacleList</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># List of the obstacles
+ObstacleInfo[] obstacles
+</code></pre></div></div>
 </p>
   </div>
   

@@ -4,14 +4,14 @@ title: Vehicles
 main_nav: true
 ---
 
-The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the "model-free" or the "model-based" category.
+The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the "model-agnostic" or the "model-based" options, or both.
 
-### Model-free category
-In the model-free category, vehicle physics is given by CARLA's vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`.
+### Model-agnostic option
+In the model-agnostic category, vehicle physics is given by CARLA's vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`.
 
 
-### Model-based category
-In the model-based category, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same `ackermann_control` or `vehicle_control` rostopics above.
+### Model-based option
+In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same `ackermann_control` or `vehicle_control` rostopics above.
 
 #### Longitudinal dynamics
 
