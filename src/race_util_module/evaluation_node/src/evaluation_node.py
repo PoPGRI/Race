@@ -13,8 +13,8 @@ import datetime
 
 collisionPenalty = 60
 deviationPenalty = 30
-t1Factor = 800
-t2Factor = 1500
+t1Factor = 900
+t2Factor = 1600
 
 class EvaluationNode:
 

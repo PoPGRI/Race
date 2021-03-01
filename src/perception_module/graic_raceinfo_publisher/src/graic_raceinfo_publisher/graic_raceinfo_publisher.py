@@ -99,7 +99,7 @@ def get_markers(cur_loc, v, w):
 def publisher(percep_mod, role_name):
     # main function
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
-    lane_pub = rospy.Publisher('/carla/%s/lane_waypoints'%role_name, LaneList, queue_size=1)
+    lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneList, queue_size=1)
     rate = rospy.Rate(20)
     draw_counter = 0
     while not rospy.is_shutdown():

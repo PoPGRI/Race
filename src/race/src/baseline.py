@@ -11,7 +11,7 @@ from graic_msgs.msg import LaneInfo
 
 class VehicleDecision():
     def __init__(self, role_name):
-        self.subWaypoint = rospy.Subscriber("/carla/%s/lane_waypoints"%role_name, LaneList, self.waypointCallback)
+        self.subWaypoint = rospy.Subscriber("/carla/%s/lane_markers"%role_name, LaneList, self.waypointCallback)
 
         self.vehicle_state = 'straight'
         self.lane_state = 0
@@ -27,7 +27,7 @@ class VehicleDecision():
 
 
     def waypointCallback(self, data):
-        self.waypoint = data.lane_waypoints[-1]
+        self.waypoint = data.lane_markers[-1]
         self.lane_state = self.waypoint.lane_state
         if not self.target_x or not self.target_y:
             self.target_x = self.waypoint.location.x 
