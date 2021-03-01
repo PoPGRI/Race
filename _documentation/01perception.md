@@ -28,12 +28,12 @@ The position is given as [x, y, z] in ENU coordinates. The rotation is given as 
 
 The location is published to the rostopic `location`
 
-### Lane waypoints (<span style="color:red">Static</span>)
-The lane waypoints (or *lane markers*) describe the current lane that the vehicle is in.
+### Lane markers (<span style="color:red">Static</span>)
+The lane markers (or *lane markers*) describe the current lane that the vehicle is in.
 
-The lane waypoints are published to the rostopic `lane_waypoints`.
+The lane markers are published to the rostopic `lane_markers`.
 
 ### Milestone waypoints
 **Not to be confused with lane waypoints.** These are the high level waypoints that the competitors must pass. These high level waypoints are given in \\([x,y,z]\\) global coordinates and appear as a green gate on the map. The competitors must reach these waypoints in the order provided to score.
 
-The milestone waypoints are published to the rostopic `wp`.
+The milestone waypoints are published to the rostopic `waypoints`.
