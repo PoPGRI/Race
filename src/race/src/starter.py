@@ -14,6 +14,7 @@ class VehicleController():
 
     def __init__(self, role_name='ego_vehicle'):
         # Publisher to publish the control input to the vehicle model
+        self.role_name = role_name
         self.controlPub = rospy.Publisher("/carla/%s/ackermann_control"%role_name, AckermannDrive, queue_size = 1)
 
     def execute(self):
@@ -22,6 +23,12 @@ class VehicleController():
         newAckermannCmd.speed = 0
         newAckermannCmd.steering_angle = 0
         self.controlPub.publish(newAckermannCmd)
+
+class VehicleDecision():
+    def __init__(self, role_name='ego_vehicle'):
+        self.role_name = role_name
+
+    # TODO Add your decision logic here
 
 class VehiclePerception:
     def __init__(self, role_name='ego_vehicle'):
@@ -54,6 +61,8 @@ def run_model(role_name):
         controlModule.stop()
     rospy.on_shutdown(shut_down)
 
+    print("Starter code is running")
+
     while not rospy.is_shutdown():
         rate.sleep()  # Wait a while before trying to get a new state
         obstacleList = perceptionModule.obstacleList
@@ -62,8 +71,6 @@ def run_model(role_name):
         currState =  (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
         if not currState or not currState[0]:
             continue
-
-        # TODO Add your decision logic here
 
         # Execute 
         controlModule.execute()
