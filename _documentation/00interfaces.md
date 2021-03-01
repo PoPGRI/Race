@@ -7,7 +7,7 @@ main_nav: true
 
 This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.
 
-The GRAIC framework has several running modules, however competitors only need to be concerned with three: (i) perception, (ii) decision & control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle inputs types and you will build your own decision and control module.
+The GRAIC framework has several modules, however competitors only need to be concerned with three: (i) perception, (ii) decision & control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle inputs types and you will build your own decision and control module.
 
 More information can be found in the "Decision and Control" section.
 
