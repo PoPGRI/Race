@@ -40,4 +40,5 @@ The milestones are published to the rostopic `waypoints`.
 
 <img src="/Race/assets/perception_screenshot.png">
 
-From the above image, the RED bounding boxes are obstacles; the green arcs are the milestones; the black line segments on the road are the current lane markers.
+From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
+There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)
