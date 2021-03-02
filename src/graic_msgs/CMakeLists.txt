@@ -55,7 +55,6 @@ add_message_files(
    ObstacleList.msg
    LocationInfo.msg
    BBInfo.msg
-   BBList.msg 
    BBSingleInfo.msg
    EvaluationInfo.msg
 )
