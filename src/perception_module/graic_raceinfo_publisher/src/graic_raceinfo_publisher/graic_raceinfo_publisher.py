@@ -8,6 +8,7 @@ from graic_msgs.msg import LaneList
 from graic_msgs.msg import ObstacleInfo
 from graic_msgs.msg import ObstacleList
 from graic_msgs.msg import BBSingleInfo
+from geometry_msgs.msg import Vector3
 class PerceptionModule():
     def __init__(self, carla_world, role_name, radius=15):
         self.sensing_radius = radius # default ?????
@@ -78,17 +79,11 @@ class PerceptionModule():
                 return True
             if (self.distance_from_point_to_line(self_loc, v2, v4) <= radius):
                 return True
-        # otherwise calculate the distance using center of the vehicle and box
-        trans = carla.Transform(carla.Location(0,0,0), carla.Rotation(0,0,0))
-        # obtain a vector pointing from self_loc to box center in world space
-        vec_from_self_to_box = box_loc - self_loc
-        vec_from_self_to_box.z = 0
-        normalized_vec = vec_from_self_to_box/self.distance_between_points(vec_from_self_to_box, vec_from_self_to_box)
-        # calculate the location which is 'radius' away from the vehicle along the vec
-        tip_of_vec = normalized_vec*radius
-        loc_of_vec = tip_of_vec + self_loc
-        if box.contains(loc_of_vec, trans):
-            return True
+        # calculate distance to vertices
+        vertices = [v1, v2, v3, v4]
+        for v in vertices:
+            if self.distance_between_points(self_loc ,v) <= radius:
+                return True
         return False
         # calculate the distance from point x to the line connecting p1 and p2
     def distance_from_point_to_line(self, x, p1, p2):
@@ -134,10 +129,34 @@ class PerceptionModule():
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         # return list of waypoints from cur_waypoint to 10 meters ahead
-        wp_to_end = cur_waypoint.next_until_lane_end(distance)
-        if len(wp_to_end) > 20:
-            wp_to_end = wp_to_end[0:20]
-        return wp_to_end
+        waypoints = cur_waypoint.next_until_lane_end(distance)
+        num_of_wp = len(waypoints)
+        if num_of_wp > 20:
+            waypoints = waypoints[0:20]
+        if num_of_wp < 20:
+            if waypoints[num_of_wp-1].is_junction:
+                # debug
+                waypoints.append(waypoints[num_of_wp-1].get_junction().get_waypoints(lane_type=carla.LaneType.Driving))
+                # approximate a point in next lane
+                vec = vehicle.get_velocity()
+                vec = vec_end/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
+                vec = vec*2
+                vec_end = waypoints[num_of_wp-1].transform.location
+                if num_of_wp > 1:
+                    vec_start = waypoints[num_of_wp-2].transform.location
+                    vec = vec_end - vec_start
+                    vec = vec*5
+                approx_next_loc = vec + vec_end
+                approx_waypoint = carla_map.get_waypoint(approx_next_loc)
+                markers_before = approx_waypoint.previous_until_lane_start(distance)
+                waypoints.append(markers_before)
+                new_num_of_markers = len(waypoints)
+                if new_num_of_markers < 20:
+                    markers_after = approx_waypoint.next_until_lane_end(distance)
+                    waypoints.append(markers_after)
+                    if len(waypoints) > 20:
+                            waypoints = waypoints[0:20]
+        return waypoints
 # helper function for calculating lane markers
 # approximate the locations of lane markers by the assumptions: 
 # 1. the lane markers have the same z coordinates as the current location 
@@ -152,32 +171,37 @@ def get_markers(cur_loc, v, w):
     n2 = (-x/y)*m2
     marker1 = cur_loc + carla.Location(m1, n1, 0)
     marker2 = cur_loc + carla.Location(m2, n2, 0)
-    return (marker2, marker1)
+    x1 = np.array([marker1.x, marker1.y, marker1.z])
+    x2 = np.array([x, y, z])
+    if np.cross(x1, x2)[2] > 0:
+        return (marker1, marker2)
+    else:
+        return (marker2, marker1)
 # helper function for creating lane markers information
-def get_marker_info(marker, rot, state_id):
-    info_mark = LaneInfo()
-    info_mark.location.x = marker.x
-    info_mark.location.y = marker.y
-    info_mark.location.z = marker.z
-    info_mark.rotation.x = rot.pitch
-    info_mark.rotation.y = rot.yaw
-    info_mark.rotation.z = rot.roll
-    info_mark.lane_state = state_id
-    return info_mark
+def get_marker_info(loc, rot):
+    mark_loc = Vector3()
+    mark_rot = Vector3()
+    mark_loc.x = loc.x
+    mark_loc.y = loc.y
+    mark_loc.z = loc.z
+    mark_rot.x = rot.pitch
+    mark_rot.y = rot.yaw
+    mark_rot.z = rot.roll
+    return (mark_loc, mark_rot)
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
     # main function
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
-    lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneList, queue_size=1)
+    lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=1)
     rate = rospy.Rate(20)
     draw_counter = 0
     while not rospy.is_shutdown():
         obs = percep_mod.get_all_obstacles_within_range()
         lp = percep_mod.get_lane_markers()
         obs_msg = []
-        mark_msg_center = []
-        mark_msg_left = []
-        mark_msg_right = []
+        # mark_msg_center = []
+        # mark_msg_left = []
+        # mark_msg_right = []
         draw_counter += 1
         if obs is None or lp is None:
             continue
@@ -207,20 +231,19 @@ def publisher(percep_mod, role_name, label_list):
             obs_msg.append(info)
         # TODO: fix left and right markers' rotation
         # TODO: add gradient
+        marker_msg = LaneInfo()
+        marker_center_list = LaneList()
+        marker_left_list = LaneList()
+        marker_right_list = LaneList()
         for i in range(len(lp)):
             p = lp[i]
-            info = LaneInfo()
             trans = p.transform
             loc = trans.location
             rot  = trans.rotation
-            info.location.x = loc.x
-            info.location.y = loc.y
-            info.location.z = loc.z
-            info.rotation.x = rot.pitch
-            info.rotation.y = rot.yaw
-            info.rotation.z = rot.roll
-            info.lane_state = abs(p.lane_id)
-            mark_msg_center.append(info)
+            mark_loc, mark_rot = get_marker_info(loc, rot)
+            marker_msg.lane_state = abs(p.lane_id)
+            marker_center_list.location.append(mark_loc)
+            marker_center_list.rotation.append(mark_rot)
             # draw left and right lane markers
             width = p.lane_width
             next_p = None
@@ -230,17 +253,28 @@ def publisher(percep_mod, role_name, label_list):
                 mark1 = carla.Location(loc.x-width/2, loc.y,loc.z)
                 mark2 = carla.Location(loc.x+width/2, loc.y,loc.z)
                 if vec.y == 0:
-                    mark_msg_left.append(get_marker_info(mark1, rot, abs(p.lane_id)))
-                    mark_msg_right.append(get_marker_info(mark2, rot, abs(p.lane_id)))
+                    mark_loc, mark_rot = get_marker_info(mark1, rot)
+                    marker_left_list.location.append(mark_loc)
+                    marker_left_list.rotation.append(mark_rot)
+                    mark_loc, mark_rot = get_marker_info(mark2, rot)
+                    marker_right_list.location.append(mark_loc)
+                    marker_right_list.rotation.append(mark_rot)
                     percep_mod.world.debug.draw_point(mark1,life_time=1)
                     percep_mod.world.debug.draw_point(mark2,life_time=1)
                 else:    
                     mark1, mark2 = get_markers(loc, vec, width)
-                    mark_msg_left.append(get_marker_info(mark1, rot, abs(p.lane_id)))
-                    mark_msg_right.append(get_marker_info(mark2, rot, abs(p.lane_id)))
-                    percep_mod.world.debug.draw_point(mark1, color=carla.Color(255, 0, 0), life_time=1)
-                    percep_mod.world.debug.draw_point(mark2, color=carla.Color(0, 0, 255), life_time=1)
+                    mark_loc, mark_rot = get_marker_info(mark1, rot)
+                    marker_left_list.location.append(mark_loc)
+                    marker_left_list.rotation.append(mark_rot)
+                    mark_loc, mark_rot = get_marker_info(mark2, rot)
+                    marker_right_list.location.append(mark_loc)
+                    marker_right_list.rotation.append(mark_rot)
+                    percep_mod.world.debug.draw_point(mark1,life_time=1)
+                    percep_mod.world.debug.draw_point(mark2,life_time=1)
             percep_mod.world.debug.draw_point(trans.location,life_time=1)
+        marker_msg.lane_markers_center = marker_center_list
+        marker_msg.lane_markers_left = marker_left_list
+        marker_msg.lane_markers_right = marker_right_list
         for label in label_list:
             # get all vertices of all bounding boxes which are within the radius with label 'label'
             vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
@@ -264,11 +298,7 @@ def publisher(percep_mod, role_name, label_list):
                 percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=1)
                 obs_msg.append(info)
         obs_pub.publish(obs_msg)
-        mark_msg = LaneList()
-        mark_msg.lane_markers_center = mark_msg_center
-        mark_msg.lane_markers_left = mark_msg_left
-        mark_msg.lane_markers_right = mark_msg_right
-        lane_pub.publish(mark_msg)
+        lane_pub.publish(marker_msg)
         rate.sleep()
 
 
