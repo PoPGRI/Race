@@ -2,7 +2,7 @@ import rospy
 import numpy as np
 from carla_msgs.msg import CarlaCollisionEvent
 from carla_msgs.msg import CarlaLaneInvasionEvent
-from graic_msgs.msg import LocationInfo, EvaluationInfo
+from graic_msgs.msg import LocationInfo, EvaluationInfo, WaypointInfo
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import Int16, Float32, String
 import time
@@ -21,7 +21,7 @@ class EvaluationNode:
     def __init__(self, world, role_name='ego_vehicle', track='t1_triple'):
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
-        self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, Vector3, self.waypointCallback)
+        self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
         self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
         self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=1)
         self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=1)
@@ -34,6 +34,7 @@ class EvaluationNode:
         self.location = None
         self.role_name = role_name
         self.waypoint = None
+        self.reachEnd = False
         self.obs_map = {}
         self.world = world
         if track == 't1_triple':
@@ -57,6 +58,10 @@ class EvaluationNode:
     def collisionCallback(self, data):
         if not self.obs_map:
             return
+
+        if self.reachEnd:
+            return 
+        
         hitObj = self.obs_map[str(data.other_actor_id)]+"_at_time_"+str(datetime.timedelta(
                 seconds=int(rospy.get_rostime().to_sec())))
         if hitObj in self.hitObjects:
@@ -70,9 +75,13 @@ class EvaluationNode:
         self.score -= collisionPenalty
 
     def waypointCallback(self, data):
-        self.waypoint = data
+        self.waypoint = data.location
+        self.reachEnd = data.isFinal
 
     def laneCallback(self, data):
+        if self.reachEnd:
+            return 
+        
         for marking in data.crossed_lane_markings:
             if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
                 self.score -= deviationPenalty

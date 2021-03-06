@@ -275,28 +275,29 @@ def publisher(percep_mod, role_name, label_list):
         marker_msg.lane_markers_center = marker_center_list
         marker_msg.lane_markers_left = marker_left_list
         marker_msg.lane_markers_right = marker_right_list
-        for label in label_list:
-            # get all vertices of all bounding boxes which are within the radius with label 'label'
-            vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
-            if not vertices_of_cur_label:
-                continue
-            for vertices_of_one_box in vertices_of_cur_label:
-                info = ObstacleInfo()
-                for loc in vertices_of_one_box[0]:
-                    vertex = BBSingleInfo()
-                    vertex.vertex_location.x = loc.x
-                    vertex.vertex_location.y = loc.y
-                    vertex.vertex_location.z = loc.z
-                    info.vertices_locations.append(vertex)
-                info.obstacle_name = str(vertices_of_one_box[1])
-                info.obstacle_id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
-                obstacle_loc = vertices_of_one_box[3]
-                info.location.x = obstacle_loc.x
-                info.location.y = obstacle_loc.y
-                info.location.z = obstacle_loc.z
-                bb = vertices_of_one_box[4]
-                percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=1)
-                obs_msg.append(info)
+        # NOTE Environment objects note used now
+        # for label in label_list:
+        #     # get all vertices of all bounding boxes which are within the radius with label 'label'
+        #     vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
+        #     if not vertices_of_cur_label:
+        #         continue
+        #     for vertices_of_one_box in vertices_of_cur_label:
+        #         info = ObstacleInfo()
+        #         for loc in vertices_of_one_box[0]:
+        #             vertex = BBSingleInfo()
+        #             vertex.vertex_location.x = loc.x
+        #             vertex.vertex_location.y = loc.y
+        #             vertex.vertex_location.z = loc.z
+        #             info.vertices_locations.append(vertex)
+        #         info.obstacle_name = str(vertices_of_one_box[1])
+        #         info.obstacle_id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
+        #         obstacle_loc = vertices_of_one_box[3]
+        #         info.location.x = obstacle_loc.x
+        #         info.location.y = obstacle_loc.y
+        #         info.location.z = obstacle_loc.z
+        #         bb = vertices_of_one_box[4]
+        #         percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=1)
+        #         obs_msg.append(info)
         obs_pub.publish(obs_msg)
         lane_pub.publish(marker_msg)
         rate.sleep()

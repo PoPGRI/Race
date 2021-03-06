@@ -57,6 +57,7 @@ add_message_files(
    BBInfo.msg
    BBSingleInfo.msg
    EvaluationInfo.msg
+   WaypointInfo.msg
 )
 
 ## Generate services in the 'srv' folder
