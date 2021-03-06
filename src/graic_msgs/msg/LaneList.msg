@@ -1,1 +1,2 @@
-LaneInfo[] lane_markers
+geometry_msgs/Vector3[] location
+geometry_msgs/Vector3[] rotation

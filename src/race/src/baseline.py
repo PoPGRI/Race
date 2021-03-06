@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 import time
 from graic_msgs.msg import ObstacleList, ObstacleInfo
-from graic_msgs.msg import LocationInfo
+from graic_msgs.msg import LocationInfo, WaypointInfo
 from ackermann_msgs.msg import AckermannDrive
 from carla_msgs.msg import CarlaEgoVehicleControl
 from graic_msgs.msg import LaneList
@@ -11,13 +11,14 @@ from graic_msgs.msg import LaneInfo
 
 class VehicleDecision():
     def __init__(self, role_name):
-        self.subWaypoint = rospy.Subscriber("/carla/%s/lane_markers"%role_name, LaneList, self.waypointCallback)
+        self.subLaneMarker = rospy.Subscriber("/carla/%s/lane_markers"%role_name, LaneInfo, self.lanemarkerCallback)
+        self.subWaypoint = rospy.Subscriber("/carla/%s/waypoints"%role_name, WaypointInfo, self.waypointCallback)
 
         self.vehicle_state = 'straight'
         self.lane_state = 0
         self.counter = 0
 
-        self.waypoint = None
+        self.lane_marker = None
         self.target_x = None 
         self.target_y = None
         self.change_lane = False
@@ -25,13 +26,18 @@ class VehicleDecision():
         self.detect_dist = 15
         self.speed = 20
 
+        self.reachEnd = False
 
-    def waypointCallback(self, data):
-        self.waypoint = data.lane_markers[-1]
-        self.lane_state = self.waypoint.lane_state
+
+    def lanemarkerCallback(self, data):
+        self.lane_marker = data.lane_markers_center.location[-1]
+        self.lane_state = data.lane_state
         if not self.target_x or not self.target_y:
-            self.target_x = self.waypoint.location.x 
-            self.target_y = self.waypoint.location.y
+            self.target_x = self.lane_marker.x 
+            self.target_y = self.lane_marker.y
+    
+    def waypointCallback(self, data):
+        self.reachEnd = data.isFinal
 
         
     def get_ref_state(self, currState, obstacleList):
@@ -42,6 +48,9 @@ class VehicleDecision():
                 obstacleList: List of obstacles
             Outputs: reference state position and velocity of the vehicle 
         """
+        if self.reachEnd:
+            return None
+        # print("Reach end: ", self.reachEnd)
 
         curr_x = currState[0][0]
         curr_y = currState[0][1]
@@ -122,8 +131,8 @@ class VehicleDecision():
             prev_target_x = self.target_x
             prev_target_y = self.target_y
 
-            self.target_x = self.waypoint.location.x 
-            self.target_y = self.waypoint.location.y
+            self.target_x = self.lane_marker.x 
+            self.target_y = self.lane_marker.y
 
             target_orientation = np.arctan2(self.target_y-prev_target_y, 
                 self.target_x-prev_target_x)
