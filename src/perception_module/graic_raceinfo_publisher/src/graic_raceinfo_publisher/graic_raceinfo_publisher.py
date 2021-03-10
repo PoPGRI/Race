@@ -41,7 +41,7 @@ class PerceptionModule():
             cur_loc = actor.get_location()
             # determine whether actor is within the radius
             if vehicle_loc.distance(cur_loc) <= radius:
-                # we need to throw out actors such as camera
+                # we need to exclude actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
 
@@ -118,7 +118,7 @@ class PerceptionModule():
         return filtered_obstacles
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
-    def get_lane_markers(self, distance=0.5):
+    def get_lane_markers(self, distance=0.5, num_of_points=20):
         if self.vehicle == None:
             self.find_ego_vehicle()
             # rospy.loginfo("No ego vehicle.")
@@ -129,33 +129,9 @@ class PerceptionModule():
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         # return list of waypoints from cur_waypoint to 10 meters ahead
-        waypoints = cur_waypoint.next_until_lane_end(distance)
-        num_of_wp = len(waypoints)
-        if num_of_wp > 20:
-            waypoints = waypoints[0:20]
-        if num_of_wp < 20:
-            if waypoints[num_of_wp-1].is_junction:
-                # debug
-                waypoints.append(waypoints[num_of_wp-1].get_junction().get_waypoints(lane_type=carla.LaneType.Driving))
-                # approximate a point in next lane
-                vec = vehicle.get_velocity()
-                vec = vec_end/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
-                vec = vec*2
-                vec_end = waypoints[num_of_wp-1].transform.location
-                if num_of_wp > 1:
-                    vec_start = waypoints[num_of_wp-2].transform.location
-                    vec = vec_end - vec_start
-                    vec = vec*5
-                approx_next_loc = vec + vec_end
-                approx_waypoint = carla_map.get_waypoint(approx_next_loc)
-                markers_before = approx_waypoint.previous_until_lane_start(distance)
-                waypoints.append(markers_before)
-                new_num_of_markers = len(waypoints)
-                if new_num_of_markers < 20:
-                    markers_after = approx_waypoint.next_until_lane_end(distance)
-                    waypoints.append(markers_after)
-                    if len(waypoints) > 20:
-                            waypoints = waypoints[0:20]
+        waypoints = []
+        for i in range(num_of_points):
+            waypoints.extend(cur_waypoint.next((i+1)*distance))
         return waypoints
 # helper function for calculating lane markers
 # approximate the locations of lane markers by the assumptions: 
@@ -199,9 +175,6 @@ def publisher(percep_mod, role_name, label_list):
         obs = percep_mod.get_all_obstacles_within_range()
         lp = percep_mod.get_lane_markers()
         obs_msg = []
-        # mark_msg_center = []
-        # mark_msg_left = []
-        # mark_msg_right = []
         draw_counter += 1
         if obs is None or lp is None:
             continue
@@ -229,7 +202,6 @@ def publisher(percep_mod, role_name, label_list):
                     vertex.vertex_location.z = v.z
                     info.vertices_locations.append(vertex)
             obs_msg.append(info)
-        # TODO: fix left and right markers' rotation
         # TODO: add gradient
         marker_msg = LaneInfo()
         marker_center_list = LaneList()
