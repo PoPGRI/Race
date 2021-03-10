@@ -118,7 +118,7 @@ class PerceptionModule():
         return filtered_obstacles
     # get set of waypoints separated by parameter -- distance -- along the lane
     # reference: https://github.com/carla-simulator/carla/issues/1254
-    def get_lane_markers(self, distance=0.5):
+    def get_lane_markers(self, distance=0.5, num_of_points=20):
         if self.vehicle == None:
             self.find_ego_vehicle()
             # rospy.loginfo("No ego vehicle.")
@@ -129,31 +129,9 @@ class PerceptionModule():
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         # return list of waypoints from cur_waypoint to 10 meters ahead
-        # waypoints = cur_waypoint.next_until_lane_end(distance)
-        # # waypoints = cur_waypoint.next(20)
-        # num_of_wp = len(waypoints)
-        # if num_of_wp >= 20:
-        #     waypoints = waypoints[0:19]
-        # elif any(p.is_junction for p in waypoints):
-        #     # dist = 10
-        #     extra_waypoints = cur_waypoint.next(15)
-        #     last_extra_point = extra_waypoints[len(extra_waypoints)-1]
-        #     # if last_extra_point.lane_id
-        #     last_point = carla_map.get_waypoint(last_extra_point.transform.location)
-        #     markers_before = last_point.previous_until_lane_start(distance)
-        #     waypoints.extend(markers_before)
-        #     new_num_of_markers = len(waypoints)
-        #     if new_num_of_markers < 20:
-        #         markers_after = last_point.next_until_lane_end(distance)
-        #         waypoints.extend(markers_after)
-        #         if len(waypoints) > 20:
-        #                 waypoints = waypoints[0:19]
-
-        # waypoints = cur_waypoint.next(1)
-        # waypoints.append(cur_waypoint.next(2))
         waypoints = []
-        for i in range(10):
-            waypoints.extend(cur_waypoint.next(i+1))
+        for i in range(num_of_points):
+            waypoints.extend(cur_waypoint.next((i+1)/2))
         return waypoints
 # helper function for calculating lane markers
 # approximate the locations of lane markers by the assumptions: 
@@ -197,9 +175,6 @@ def publisher(percep_mod, role_name, label_list):
         obs = percep_mod.get_all_obstacles_within_range()
         lp = percep_mod.get_lane_markers()
         obs_msg = []
-        # mark_msg_center = []
-        # mark_msg_left = []
-        # mark_msg_right = []
         draw_counter += 1
         if obs is None or lp is None:
             continue
