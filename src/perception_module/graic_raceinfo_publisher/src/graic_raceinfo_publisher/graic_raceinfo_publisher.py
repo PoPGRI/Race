@@ -131,7 +131,7 @@ class PerceptionModule():
         # return list of waypoints from cur_waypoint to 10 meters ahead
         waypoints = []
         for i in range(num_of_points):
-            waypoints.extend(cur_waypoint.next((i+1)/2))
+            waypoints.extend(cur_waypoint.next((i+1)*distance))
         return waypoints
 # helper function for calculating lane markers
 # approximate the locations of lane markers by the assumptions: 
