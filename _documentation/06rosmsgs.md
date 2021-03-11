@@ -36,21 +36,23 @@ uint32 numObjectsHit # Number of objects the car has hit
 
 **LaneInfo**
 ```
-# Information about a lane marker
-geometry_msgs/Vector3 location # Location of the lane marker
-geometry_msgs/Vector3 rotation # Rotation of the lane marker
-
 uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
 
 uint32 LEFT_LANE=3
 unit32 CENTER_LANE=4
 uint32 RIGHT_LANE=5
+
+# Information about each lane
+LaneList lane_markers_center
+LaneList lane_markers_left
+LaneList lane_markers_right
 ```
 
 **LaneList**
 ```
-# Lane marker list
-LaneInfo[] lane_markers # A list of lane_markers
+# Location and rotation of the lane markers
+geometry_msgs/Vector3[] location
+geometry_msgs/Vector3[] rotation
 ```
 
 **LocationInfo**
@@ -76,4 +78,10 @@ BBSingleInfo[] vertices_locations # Bounding box of the obstacle
 ```
 # List of the obstacles
 ObstacleInfo[] obstacles
+```
+
+**WaypointInfo**
+```
+bool isFinal # Flag indicating if publishes final milestone waypoint
+geometry_msgs/Vector3 location # Location of the milestone waypoint
 ```
