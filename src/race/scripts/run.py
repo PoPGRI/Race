@@ -12,7 +12,7 @@ import rospy
 four_wheel_vehicle = ['vehicle.audi.a2','vehicle.tesla.model3','vehicle.bmw.grandtourer','vehicle.audi.etron','vehicle.seat.leon','vehicle.mustang.mustang','vehicle.tesla.cybertruck','vehicle.lincoln.mkz2017','vehicle.lincoln2020.mkz2020','vehicle.dodge_charger.police','vehicle.audi.tt','vehicle.jeep.wrangler_rubicon','vehicle.chevrolet.impala','vehicle.nissan.patrol','vehicle.nissan.micra','vehicle.mercedesccc.mercedesccc','vehicle.mini.cooperst','vehicle.chargercop2020.chargercop2020','vehicle.toyota.prius','vehicle.mercedes-benz.coupe','vehicle.citroen.c3','vehicle.charger2020.charger2020']
 two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.gazelle.omafiets','vehicle.yamaha.yzf','vehicle.harley-davidson.low_rider','vehicle.diamondback.century']
 
-def Spawn(N, log, track, model_type, num_wheels, set_spectator=True):
+def Spawn(N, log, track, model_type, num_wheels, offscreen, set_spectator=True):
 
     rate = rospy.Rate(10)
 
@@ -69,7 +69,7 @@ def Spawn(N, log, track, model_type, num_wheels, set_spectator=True):
         with open(v['json_file'], 'w') as f:
             f.write(obj)
 
-        cmd = ('roslaunch race spawn_vehicle.launch config_file:=%s role_name:=%s track:=%s model_free:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['track'], v['model_free'], v['launch_log']])
+        cmd = ('roslaunch race spawn_vehicle.launch config_file:=%s role_name:=%s track:=%s model_free:=%s offscreen:=%s &> %s')%tuple([v['json_file'], v['role_name'], v['track'], v['model_free'], offscreen, v['launch_log']])
         # The os.setsid() is passed in the argument preexec_fn so
         # it's run after the fork() and before  exec() to run the shell.
         v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -102,9 +102,10 @@ if __name__ == '__main__':
     track = rospy.get_param("~track", "t1_triple")
     model_type = rospy.get_param("~model_type", "model_free")
     num_wheels = rospy.get_param("~num_wheels", 4)
+    offscreen = rospy.get_param("~offscreen", False)
     import time
     time.sleep(10)
     try: 
-        Spawn(N, log, track, model_type, num_wheels)
+        Spawn(N, log, track, model_type, num_wheels, offscreen)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("RaceMain shut down")
