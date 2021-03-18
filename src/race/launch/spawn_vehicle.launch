@@ -1,6 +1,8 @@
 <!-- -->
 <launch>
   <!-- Ego vehicle -->
+  <arg name='host' default='localhost'/>
+  <arg name='port' default='2000'/>
   <arg name='role_name' default='ego_vehicle'/>
   <arg name='config_file' default=''/>
   <arg name="vehicle_filter" default='vehicle.*'/>
@@ -44,16 +46,22 @@
 
   <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(arg model_free)">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
   </include>
 
   <!-- the perception module -->
   <!-- graic race info -->
   <include file="$(find graic_raceinfo_publisher)/launch/graic_raceinfo_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
   </include>
 
   <include file="$(find location_publisher)/launch/location_publisher.launch">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
   </include>
 
   <!-- <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
@@ -62,11 +70,15 @@
 
   <!-- the evaluation module -->
   <include file="$(find evaluation_node)/launch/evaluation_node.launch">
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
   </include>
 
   <include file="$(find waypoint_node)/launch/waypoint_node.launch">
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
   </include>

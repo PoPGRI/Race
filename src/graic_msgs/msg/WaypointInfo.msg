@@ -1,2 +1,3 @@
-bool isFinal
+bool reachedFinal
+string role_name
 geometry_msgs/Vector3 location

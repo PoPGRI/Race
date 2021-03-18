@@ -32,6 +32,8 @@
   </include>
 
   <node pkg="race" type="run.py" name="race_run" output="screen">
+    <param name="host" value="$(arg host)" />
+    <param name="port" value="$(arg port)" />
     <param name="N" value="$(arg N)" />
     <param name="log" value="$(arg log)" />
     <param name="track" value="$(arg track)" />
@@ -40,6 +42,9 @@
     <param name="offscreen" value="$(arg offscreen)" />
   </node>
 
-  <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen" />
+  <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen">
+    <param name="host" value="$(arg host)" />
+    <param name="port" value="$(arg port)" />
+  </node>
 
 </launch>

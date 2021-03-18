@@ -59,9 +59,9 @@ class VehicleDynamics(object):
         return dot
 
 class ModelBasedVehicle:
-    def __init__(self, role_name):
+    def __init__(self, role_name, host, port):
         self.role_name = role_name
-        client = carla.Client('localhost', 2000)
+        client = carla.Client(host, port)
         self.world = client.get_world()
         self.vehicle_dyn = VehicleDynamics()
         self.state = None
@@ -161,5 +161,7 @@ def run(role_name):
 
 if __name__ == "__main__":
     rospy.init_node("Model_based_node")
+    host = rospy.get_param('~host', 'localhost')
+    port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
-    run(role_name)
+    run(role_name, host, port)

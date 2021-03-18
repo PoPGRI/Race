@@ -63,11 +63,11 @@ def publisher(location_module, role_name):
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
     rospy.init_node('graic_raceinfo_publisher', anonymous=True)
-    # host = rospy.get_param("/carla/host", "127.0.0.1")
-    # port = rospy.get_param("/carla/host", 2000)
+    host = rospy.get_param("~host", "localhost")
+    port = rospy.get_param("~port", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
     # role_name = rospy.get_param('role_name', 'ego_vehicle')
-    client = carla.Client('localhost', 2000)
+    client = carla.Client(host, port)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     # client.set_timeout(timeout)
     world = client.get_world()
