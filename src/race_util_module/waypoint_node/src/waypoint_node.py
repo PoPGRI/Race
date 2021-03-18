@@ -45,8 +45,9 @@ def run(wn, role_name):
     while not rospy.is_shutdown():
         waypoint = wn.getWaypoint()
         pub_waypoint = WaypointInfo()
+        pub_waypoint.role_name = role_name
         if not waypoint:
-            pub_waypoint.isFinal = True
+            pub_waypoint.reachedFinal = True
         else:
             pub_waypoint.location.x = waypoint[0]
             pub_waypoint.location.y = waypoint[1]
@@ -56,12 +57,14 @@ def run(wn, role_name):
 
 if __name__ == "__main__":
     rospy.init_node("Waypoint_Node")
+    host = rospy.get_param('~host', 'localhost')
+    port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     track = rospy.get_param("~track", "t1_triple")
     rospy.loginfo("Start publishing waypoints for %s!"%role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
-    client = carla.Client('localhost', 2000)
+    client = carla.Client(host, port)
     world = client.get_world()
     wn = WaypointNode(world, role_name, track)
     try:
