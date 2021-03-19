@@ -1,0 +1,1 @@
+rm -r /home/lucas/Desktop/Race/src/race/scripts/video_generation/images/*
