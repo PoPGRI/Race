@@ -18,7 +18,7 @@ from cv_bridge import CvBridge, CvBridgeError
 # reference:
 # https://gist.github.com/rethink-imcmahon/77a1a4d5506258f3dc1f
 class VideoGeneration:
-    def __init__(self, role_name, path="/home/carla/graic-workspace/src/race/scripts/video_generation/images/"):
+    def __init__(self, role_name, path):
          self.bridge = CvBridge()
          self.role_name = role_name
          self.counter = 0
@@ -50,8 +50,13 @@ if __name__ == "__main__":
     rospy.init_node("VideoGeneration_Node")
     role_name = rospy.get_param("~role_name", "ego_vehicle")
 
-    vg = VideoGeneration(role_name)
-    os.system("pwd")
+    
+    path = os.getcwd() + '/video_generation/images/'
+    print(path)
+    # os.chdir(os.path.dirname(__file__))
+    # cwd = os.getcwd()
+    vg = VideoGeneration(role_name, path)
+    
     try:
         vg.generate_video_from_images()
     except rospy.exceptions.ROSInterruptException:
