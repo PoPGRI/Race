@@ -40,19 +40,21 @@ class VideoGeneration:
         (
             ff
             .input(os.path.join(self.path, "*.jpg"), pattern_type='glob', framerate=20)
-            .output("output.mp4")
+            .output("output_{}_{}.mp4".format(self.role_name, time.asctime().replace(' ', '_')))
             .run()
         )
+
+        # os.system("./video_generation/clean.sh")
         # p=os.path.join("/home/carla/graic-workspace/src/race/scripts/video_generation/", "output.mp4")
         # os.system("ffmpeg -framerate 25 -i frame%04d.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p " + p)
     
 if __name__ == "__main__":
     rospy.init_node("VideoGeneration_Node")
-    role_name = rospy.get_param("~role_name", "ego_vehicle")
+    role_name = rospy.get_param("~role_name", "hero0")
 
     
     path = os.getcwd() + '/video_generation/images/'
-    print(path)
+    # print(path)
     # os.chdir(os.path.dirname(__file__))
     # cwd = os.getcwd()
     vg = VideoGeneration(role_name, path)
