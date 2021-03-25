@@ -268,13 +268,13 @@ def run_model(role_name):
         controlModule.execute(currState, refState)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Running vechile")
+    # parser = argparse.ArgumentParser(description="Running vechile")
 
-    role_name_default = 'ego_vehicle'
+    # role_name_default = 'ego_vehicle'
 
-    parser.add_argument('--name', type=str, help='Rolename of the vehicle', default=role_name_default)
-    argv = parser.parse_args()
-    role_name = argv.name
+    # parser.add_argument('--name', type=str, help='Rolename of the vehicle', default=role_name_default)
+    # argv = parser.parse_args()
+    role_name = 'ego_vehicle'
     rospy.init_node("baseline")
     # role_name = 'hero0'
     try:

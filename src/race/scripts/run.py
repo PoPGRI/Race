@@ -152,6 +152,16 @@ if __name__ == '__main__':
     time.sleep(10)
     try: 
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
+
+        res = subprocess.run(["python3",
+            "/home/younger/work/scenario_runner/scenario_runner.py",
+            "--route",
+            "/home/younger/work/scenario_runner/srunner/data/routes_race.xml", 
+            "/home/younger/work/scenario_runner/srunner/data/scenario_race.json",
+            "0", 
+            "--output"
+        ], capture_output=True)
+
         run(cn)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("CommandNode shut down")

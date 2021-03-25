@@ -43,9 +43,9 @@
     <param name="offscreen" value="$(arg offscreen)" />
   </node>
 
-  <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen">
+  <!-- <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen">
     <param name="host" value="$(arg host)" />
     <param name="port" value="$(arg port)" />
-  </node>
+  </node> -->
 
 </launch>

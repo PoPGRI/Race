@@ -37,6 +37,7 @@ class EvaluationNode:
         self.reachEnd = False
         self.obs_map = {}
         self.world = world
+        self.trajectory_list = []
         if track == 't1_triple':
             self.scoreFactor = t1Factor
         elif track == 't2_triple':
@@ -126,6 +127,7 @@ class EvaluationNode:
 
     def onShutdown(self):
         fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_'))
+        fname_trajectory = 'trajectory_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_'))
         rospy.loginfo("Final score: {}".format(self.score))
         # fname = 'score_h'
         # print("hit: ", self.hitObjects)
@@ -136,8 +138,14 @@ class EvaluationNode:
         f.write('\n'.join(self.hitObjects).encode('ascii'))
         f.write("\nWaypoints reached: \n".encode('ascii'))
         f.write('\n'.join(self.reachedPointsStamped).encode('ascii'))
+
         f.close()
 
+        pickle.dump(self.trajectory_list, open(fname_trajectory, 'wb+'))
+        # f = open(fname_trajectory, 'w+')
+        # for i in range(len(self.trajectory_list)):
+        #     f.write(str(self.trajectory_list[i])+'\n')
+        # f.close()
 
 def run(en, role_name):
     rate = rospy.Rate(20)  # 20 Hz    
@@ -153,6 +161,24 @@ def run(en, role_name):
         score_.data = float(en.score/en.scoreFactor*100)
         en.pubScore.publish(score_)
         rate.sleep()
+
+        # Get all actors
+        actor_list = en.world.get_actors()
+        actors_state = []
+        for actor in actor_list:
+            if 'vehicle' in actor.type_id:
+                actor_transform = actor.get_transform()
+                tmp = [
+                    actor_transform.location.x,
+                    actor_transform.location.y,
+                    actor_transform.location.z,
+                    actor_transform.rotation.roll,
+                    actor_transform.rotation.pitch,
+                    actor_transform.rotation.yaw,
+                ]
+                actors_state += tmp
+
+        en.trajectory_list.append(actors_state)
 
 if __name__ == "__main__":
     rospy.init_node("Evaluation_Node")
