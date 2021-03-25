@@ -23,9 +23,9 @@ class EvaluationNode:
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
         self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
-        self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=1)
-        self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=1)
-        self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=1)
+        self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=None)
+        self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=None)
+        self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=None)
         self.reachedPoints = []
         self.reachedPointsStamped = []
         self.speedList = []
@@ -61,9 +61,12 @@ class EvaluationNode:
 
         if self.reachEnd:
             return 
+
+        if not str(data.other_actor_id) in self.obs_map:
+            self.obs_map[str(data.other_actor_id)] = str(self.world.get_actor(data.other_actor_id).type_id) + '_' + str(data.other_actor_id)
         
-        hitObj = self.obs_map[str(data.other_actor_id)]+"_at_time_"+str(datetime.timedelta(
-                seconds=int(rospy.get_rostime().to_sec())))
+        hitObj = self.obs_map[str(data.other_actor_id)] # +"_at_time_"+str(datetime.timedelta(
+                # seconds=int(rospy.get_rostime().to_sec())))
         if hitObj in self.hitObjects:
             return
 
@@ -139,7 +142,7 @@ class EvaluationNode:
 def run(en, role_name):
     rate = rospy.Rate(20)  # 20 Hz    
     rospy.on_shutdown(en.onShutdown)
-    pubEN = rospy.Publisher('/carla/%s/evaluation'%role_name, EvaluationInfo, queue_size=1)
+    pubEN = rospy.Publisher('/carla/%s/evaluation'%role_name, EvaluationInfo, queue_size=None)
     while not rospy.is_shutdown():
         en.calculateScore()
         info = EvaluationInfo()

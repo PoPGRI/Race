@@ -152,7 +152,7 @@ class ModelBasedVehicle:
 def run(role_name):
     vehicle = ModelBasedVehicle(role_name)
 
-    freq = 100
+    freq = 20
     rate = rospy.Rate(freq)
 
     while not rospy.is_shutdown():

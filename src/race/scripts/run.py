@@ -18,7 +18,7 @@ two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.ga
 car_name_prefix = 'hero' # NOTE 
 
 class CommandNode:
-    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=False):
+    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=True):
         self.host = host 
         self.port = port
         self.N = N 
@@ -44,7 +44,9 @@ class CommandNode:
         client = carla.Client(self.host, self.port)
         world = client.get_world()
         spectator = world.get_spectator()
-        center = np.mean([v['init_pose'][:3] for v in vehicles], axis=0)
+        # center = np.mean([self.vehicles[role_name]['init_pose'][:3] for role_name in self.vehicles], axis=0)
+        # print(center)
+        center = [164,11,4]
         transform = carla.Transform(carla.Location(x=center[0], y=-center[1], z=center[2] + 40),
                                     carla.Rotation(pitch=-89, yaw=-62.5))
         spectator.set_transform(transform)
@@ -56,7 +58,7 @@ class CommandNode:
 
             v['launch_log'] = self.log+'/hero%d_launch_log.txt'%i
 
-            role_name = car_name_prefix + str(i)
+            role_name = 'ego_vehicle'# car_name_prefix + str(i)
             v['role_name'] = role_name
 
             with open('objects.json.template', 'r') as f:
@@ -86,7 +88,7 @@ class CommandNode:
             v['track'] = self.track
 
             if self.num_wheels == 4 or model_type=="model_based":
-                vehicle = random.choice(four_wheel_vehicle)
+                vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
             elif self.num_wheels == 2:
                 vehicle = random.choice(two_wheel_vehicle)
             else:
@@ -125,7 +127,7 @@ class CommandNode:
         if count == self.N:
             self.shut_down()
 def run(cn):
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(20)
     rospy.on_shutdown(cn.shut_down)
 
     while not rospy.is_shutdown():

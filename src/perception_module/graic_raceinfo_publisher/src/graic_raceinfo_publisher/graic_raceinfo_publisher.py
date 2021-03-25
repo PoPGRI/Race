@@ -167,8 +167,8 @@ def get_marker_info(loc, rot):
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
     # main function
-    obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
-    lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=1)
+    obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=None)
+    lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=None)
     rate = rospy.Rate(20)
     draw_counter = 0
     while not rospy.is_shutdown():

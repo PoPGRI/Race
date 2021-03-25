@@ -239,7 +239,7 @@ class VehiclePerception:
 
 def run_model(role_name):
     
-    rate = rospy.Rate(100)  # 100 Hz    
+    rate = rospy.Rate(20)  # 100 Hz    
 
     perceptionModule = VehiclePerception(role_name=role_name)
     decisionModule = VehicleDecision(role_name)
@@ -276,7 +276,7 @@ if __name__ == "__main__":
     argv = parser.parse_args()
     role_name = argv.name
     rospy.init_node("baseline")
-    role_name = 'hero0'
+    # role_name = 'hero0'
     try:
         run_model(role_name)
     except rospy.exceptions.ROSInterruptException:

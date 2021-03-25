@@ -8,7 +8,7 @@ class ControlNode:
 
     def __init__(self, role_name='ego_vehicle'):
         self.subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
-        self.pubControl = rospy.Publisher('/carla/%s/vehicle_control_cmd'%role_name, CarlaEgoVehicleControl, queue_size=1)
+        self.pubControl = rospy.Publisher('/carla/%s/vehicle_control_cmd'%role_name, CarlaEgoVehicleControl, queue_size=None)
         self.role_name = role_name
 
     def controlCallback(self, data):
