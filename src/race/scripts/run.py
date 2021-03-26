@@ -15,10 +15,32 @@ from graic_msgs.msg import WaypointInfo
 four_wheel_vehicle = ['vehicle.audi.a2','vehicle.tesla.model3','vehicle.bmw.grandtourer','vehicle.audi.etron','vehicle.seat.leon','vehicle.mustang.mustang','vehicle.tesla.cybertruck','vehicle.lincoln.mkz2017','vehicle.lincoln2020.mkz2020','vehicle.dodge_charger.police','vehicle.audi.tt','vehicle.jeep.wrangler_rubicon','vehicle.chevrolet.impala','vehicle.nissan.patrol','vehicle.nissan.micra','vehicle.mercedesccc.mercedesccc','vehicle.mini.cooperst','vehicle.chargercop2020.chargercop2020','vehicle.toyota.prius','vehicle.mercedes-benz.coupe','vehicle.citroen.c3','vehicle.charger2020.charger2020']
 two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.gazelle.omafiets','vehicle.yamaha.yzf','vehicle.harley-davidson.low_rider','vehicle.diamondback.century']
 
+car_makes = {
+    "Audi A2": 'vehicle.audi.a2',
+    "Tesla Model 3": 'vehicle.tesla.model3',
+    "BMW Gran Tourer": 'vehicle.bmw.grandtourer',
+    "Audi e-tron": 'vehicle.audi.etron',
+    "SEAT Leon": 'vehicle.seat.leon',
+    "Mustang": 'vehicle.mustang.mustang',
+    "Tesla Cybertruck": 'vehicle.tesla.cybertruck',
+    "Lincoln MKZ": 'vehicle.lincoln2020.mkz2020',
+    "Dodge Charger Pursuit Police Car": 'vehicle.dodge_charger.police',
+    "Audi TT": 'vehicle.audi.tt',
+    "Jeep Wrangler Rubicon": 'vehicle.jeep.wrangler_rubicon',
+    "Chevrolet Impala": 'vehicle.chevrolet.impala',
+    "Nissan Patrol": 'vehicle.nissan.patrol',
+    "Nissan Micra": 'vehicle.nissan.micra',
+    "Mini Cooper": 'vehicle.mini.cooperst',
+    "Toyota Prius": 'vehicle.toyota.prius',
+    "Mercedes-Benz Coupe": 'vehicle.mercedes-benz.coupe',
+    "Citroen C3": 'vehicle.citroen.c3',
+    "Dodge Charger": 'vehicle.charger2020.charger2020'
+}
+
 car_name_prefix = 'hero' # NOTE 
 
 class CommandNode:
-    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=False):
+    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, car_make, set_spectator=False):
         self.host = host 
         self.port = port
         self.N = N 
@@ -29,6 +51,7 @@ class CommandNode:
         self.offscreen = offscreen
         self.set_spectator = set_spectator
         self.vehicles = {}
+        self.car_make = car_make
 
         if self.set_spectator:
             self.setSpectator()
@@ -86,7 +109,7 @@ class CommandNode:
             v['track'] = self.track
 
             if self.num_wheels == 4 or model_type=="model_based":
-                vehicle = random.choice(four_wheel_vehicle)
+                vehicle = car_makes[self.car_make]
             elif self.num_wheels == 2:
                 vehicle = random.choice(two_wheel_vehicle)
             else:
@@ -142,6 +165,7 @@ if __name__ == '__main__':
     model_type = rospy.get_param("~model_type", "model_free")
     num_wheels = rospy.get_param("~num_wheels", 4)
     offscreen = rospy.get_param("~offscreen", False)
+    car_make = rospy.get_param("~car_make", "Audi e-tron")
 
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
@@ -149,7 +173,7 @@ if __name__ == '__main__':
     import time
     time.sleep(10)
     try: 
-        cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
+        cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen, car_make)
         run(cn)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("CommandNode shut down")

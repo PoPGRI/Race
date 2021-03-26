@@ -29,9 +29,9 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
- <node pkg="race" type="generate_video.py" name="video_genereator_$(arg role_name)" output="screen">
+ <!-- <node pkg="race" type="generate_video.py" name="video_genereator_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)"/>
-  </node>
+  </node> -->
 
   <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
