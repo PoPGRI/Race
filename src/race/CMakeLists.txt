@@ -163,6 +163,7 @@ catkin_install_python(PROGRAMS
   scripts/spawn_npc.py
   scripts/carla_manual_control.py
   scripts/video_output.py
+  scripts/generate_video.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

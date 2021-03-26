@@ -40,7 +40,7 @@ class VideoGeneration:
         (
             ff
             .input(os.path.join(self.path, "*.jpg"), pattern_type='glob', framerate=20)
-            .output("output_{}_{}.mp4".format(self.role_name, time.asctime().replace(' ', '_')))
+            .output("./video_generation/output_{}_{}.mp4".format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_')))
             .run()
         )
 
@@ -53,10 +53,11 @@ if __name__ == "__main__":
     role_name = rospy.get_param("~role_name", "hero0")
 
     
-    path = os.getcwd() + '/video_generation/images/'
+    # path = os.getcwd() + '/video_generation/images/'
     # print(path)
-    # os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.dirname('/home/carla/'))
     # cwd = os.getcwd()
+    path = os.getcwd() + '/video_generation/images/'
     vg = VideoGeneration(role_name, path)
     
     try:

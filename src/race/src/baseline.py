@@ -118,7 +118,7 @@ class VehicleDecision():
         else:
             self.speed = 20
 
-        print(front_dist, self.lane_state, self.vehicle_state, obs_front, obs_left, obs_right)
+        # print(front_dist, self.lane_state, self.vehicle_state, obs_front, obs_left, obs_right)
 
         while not self.target_x or not self.target_y:
             continue
