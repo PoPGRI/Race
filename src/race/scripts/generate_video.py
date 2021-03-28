@@ -55,9 +55,10 @@ if __name__ == "__main__":
     
     # path = os.getcwd() + '/video_generation/images/'
     # print(path)
-    os.chdir(os.path.dirname('/home/carla/'))
+    # os.chdir(os.path.dirname(__file__))
     # cwd = os.getcwd()
     path = os.getcwd() + '/video_generation/images/'
+    print(path)
     vg = VideoGeneration(role_name, path)
     
     try:
