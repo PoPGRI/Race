@@ -76,7 +76,7 @@ class EvaluationNode:
 
     def waypointCallback(self, data):
         self.waypoint = data.location
-        self.reachEnd = data.isFinal
+        self.reachEnd = data.reachedFinal
 
     def laneCallback(self, data):
         if self.reachEnd:
@@ -108,7 +108,7 @@ class EvaluationNode:
         if distanceToX < 8 and distanceToY < 8 and not (waypoint.x, waypoint.y) in self.reachedPoints: 
             # Reach information
             reached = String()
-            reachInfo = "({:.2f}, {:.2f}) at time {}".format(waypoint.x, waypoint.y, str(datetime.timedelta(
+            reachInfo = "({} reached {:.2f}, {:.2f}) at time {}".format(self.role_name, waypoint.x, waypoint.y, str(datetime.timedelta(
                 seconds=int(rospy.get_rostime().to_sec()))))
             reached.data = reachInfo
             self.pubReach.publish(reached)
@@ -122,7 +122,7 @@ class EvaluationNode:
             self.score += vBar
 
     def onShutdown(self):
-        fname = 'score_{}_{}'.format(self.role_name, time.asctime())
+        fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
         rospy.loginfo("Final score: {}".format(self.score))
         # fname = 'score_h'
         # print("hit: ", self.hitObjects)
@@ -153,12 +153,14 @@ def run(en, role_name):
 
 if __name__ == "__main__":
     rospy.init_node("Evaluation_Node")
+    host = rospy.get_param('~host', 'localhost')
+    port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     track = rospy.get_param("~track", "t1_triple")
     rospy.loginfo("Start evaluating the performance of %s!"%role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
-    client = carla.Client('localhost', 2000)
+    client = carla.Client(host, port)
     world = client.get_world()
     en = EvaluationNode(world, role_name, track)
     try:

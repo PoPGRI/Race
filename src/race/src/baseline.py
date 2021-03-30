@@ -37,7 +37,7 @@ class VehicleDecision():
             self.target_y = self.lane_marker.y
     
     def waypointCallback(self, data):
-        self.reachEnd = data.isFinal
+        self.reachEnd = data.reachedFinal
 
         
     def get_ref_state(self, currState, obstacleList):

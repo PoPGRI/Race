@@ -11,7 +11,7 @@ import glob
 import os
 import sys
 import time
-
+import rospy
 import carla
 
 from carla import VehicleLightState as vls
@@ -20,7 +20,7 @@ from carla import VehicleLightState as vls
 import logging
 from numpy import random
 
-def main():
+def main(host, port):
     # argparser = argparse.ArgumentParser(
     #     description=__doc__)
     # argparser.add_argument(
@@ -97,7 +97,7 @@ def main():
     vehicles_list = []
     walkers_list = []
     all_id = []
-    client = carla.Client('localhost', 2000)
+    client = carla.Client(host, port)
     client.set_timeout(20.0)
     synchronous_master = False
     random.seed(int(time.time()))
@@ -293,9 +293,11 @@ def main():
         time.sleep(0.5)
 
 if __name__ == '__main__':
-
+    rospy.init_node("spawn_npc")
+    host = rospy.get_param("~host", 'localhost')
+    port = rospy.get_param("~port", 2000)
     try:
-        main()
+        main(host, port)
     except KeyboardInterrupt:
         pass
     finally:
