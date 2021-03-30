@@ -56,7 +56,11 @@ class CommandNode:
 
             v['launch_log'] = self.log+'/hero%d_launch_log.txt'%i
 
-            role_name = car_name_prefix + str(i)
+            # NOTE this is hardcode for now since it seems like 
+            # carla ros bridge has a problem spawning vehicle with 
+            # role_name other than 'ego_vehicle'
+            # more information: https://github.com/carla-simulator/ros-bridge/issues/517 
+            role_name = 'ego_vehicle' # car_name_prefix + str(i)
             v['role_name'] = role_name
 
             with open('objects.json.template', 'r') as f:
