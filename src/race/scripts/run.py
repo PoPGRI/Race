@@ -18,11 +18,7 @@ two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.ga
 car_name_prefix = 'hero' # NOTE 
 
 class CommandNode:
-<<<<<<< HEAD
     def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=True):
-=======
-    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=False):
->>>>>>> 4a61f0debbba570cf7b334f1426046ef3d94989b
         self.host = host 
         self.port = port
         self.N = N 
@@ -62,15 +58,11 @@ class CommandNode:
 
             v['launch_log'] = self.log+'/hero%d_launch_log.txt'%i
 
-<<<<<<< HEAD
-            role_name = 'ego_vehicle'# car_name_prefix + str(i)
-=======
             # NOTE this is hardcode for now since it seems like 
             # carla ros bridge has a problem spawning vehicle with 
             # role_name other than 'ego_vehicle'
             # more information: https://github.com/carla-simulator/ros-bridge/issues/517 
             role_name = 'ego_vehicle' # car_name_prefix + str(i)
->>>>>>> 4a61f0debbba570cf7b334f1426046ef3d94989b
             v['role_name'] = role_name
 
             with open('objects.json.template', 'r') as f:
@@ -100,11 +92,7 @@ class CommandNode:
             v['track'] = self.track
 
             if self.num_wheels == 4 or model_type=="model_based":
-<<<<<<< HEAD
                 vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
-=======
-                vehicle = random.choice(four_wheel_vehicle)
->>>>>>> 4a61f0debbba570cf7b334f1426046ef3d94989b
             elif self.num_wheels == 2:
                 vehicle = random.choice(two_wheel_vehicle)
             else:
@@ -168,19 +156,16 @@ if __name__ == '__main__':
     time.sleep(10)
     try: 
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
-<<<<<<< HEAD
 
         res = subprocess.run(["python3",
-            "/home/younger/work/scenario_runner/scenario_runner.py",
+            "/home/carla/scenario_runner/scenario_runner.py",
             "--route",
-            "/home/younger/work/scenario_runner/srunner/data/routes_race.xml", 
-            "/home/younger/work/scenario_runner/srunner/data/scenario_race.json",
+            "/home/carla/scenario_runner/srunner/data/routes_race.xml", 
+            "/home/carla/scenario_runner/srunner/data/scenario_race.json",
             "0", 
             "--output"
         ], capture_output=True)
 
-=======
->>>>>>> 4a61f0debbba570cf7b334f1426046ef3d94989b
         run(cn)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("CommandNode shut down")
