@@ -82,6 +82,7 @@ ObstacleInfo[] obstacles
 
 **WaypointInfo**
 ```
-bool isFinal # Flag indicating if publishes final milestone waypoint
+bool reachedFinal # Flag indicating if publishes final milestone waypoint
+string role_name 
 geometry_msgs/Vector3 location # Location of the milestone waypoint
 ```
