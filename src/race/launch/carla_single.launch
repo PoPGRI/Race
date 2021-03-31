@@ -9,9 +9,9 @@
   <arg name="track" default='t1_triple'/>
 
   <!-- Synchronous mode-->
-  <arg name='synchronous_mode' default=''/>
-  <arg name='synchronous_mode_wait_for_vehicle_control_command' default=''/>
-  <arg name='fixed_delta_seconds' default=''/>
+  <arg name='synchronous_mode' default='True'/>
+  <arg name='synchronous_mode_wait_for_vehicle_control_command' default='False'/>
+  <arg name='fixed_delta_seconds' default='0.05'/>
 
   <arg name='N' default='1' />
   <arg name='log' default='/tmp/' />

@@ -126,8 +126,8 @@ class EvaluationNode:
             self.score += vBar
 
     def onShutdown(self):
-        fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_'))
-        fname_trajectory = 'trajectory_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_'))
+        fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
+        fname_trajectory = 'trajectory_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
         rospy.loginfo("Final score: {}".format(self.score))
         # fname = 'score_h'
         # print("hit: ", self.hitObjects)

@@ -40,7 +40,7 @@ class VideoGeneration:
         (
             ff
             .input(os.path.join(self.path, "*.jpg"), pattern_type='glob', framerate=20)
-            .output("output_{}_{}.mp4".format(self.role_name, time.asctime().replace(' ', '_')))
+            .output("output_{}_{}.mp4".format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_')))
             .run()
         )
 
