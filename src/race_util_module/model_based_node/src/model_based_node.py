@@ -81,6 +81,8 @@ class ModelBasedVehicle:
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
     def init_state(self):
+        while not self.vehicle:
+            self.find_ego_vehicle()
         vehicle_transform = self.vehicle.get_transform()
         x = vehicle_transform.location.x
         y = vehicle_transform.location.y
@@ -149,8 +151,8 @@ class ModelBasedVehicle:
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
 
-def run(role_name):
-    vehicle = ModelBasedVehicle(role_name)
+def run(role_name, host, port):
+    vehicle = ModelBasedVehicle(role_name, host, port)
 
     freq = 20
     rate = rospy.Rate(freq)

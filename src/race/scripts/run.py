@@ -69,9 +69,9 @@ class CommandNode:
                 obj = f.read()
             obj = obj.replace('[[role_name]]', role_name)
 
-            if self.model_type != "model_free" and model_type != "model_based":
+            if self.model_type != "model_free" and self.model_type != "model_based":
                 rospy.logwarn("Wrong choice of model type %s; use model_free as default"%self.model_type)
-                model_type = "model_free"
+                self.model_type = "model_free"
 
             if self.model_type == "model_based" and self.track == "t2_triple":
                 rospy.logerr("Please don't chooce model_based vehicle when running track2")
@@ -91,7 +91,7 @@ class CommandNode:
 
             v['track'] = self.track
 
-            if self.num_wheels == 4 or model_type=="model_based":
+            if self.num_wheels == 4 or self.model_type=="model_based":
                 vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
             elif self.num_wheels == 2:
                 vehicle = random.choice(two_wheel_vehicle)
