@@ -38,6 +38,7 @@ class EvaluationNode:
         self.obs_map = {}
         self.world = world
         self.trajectory_list = []
+        self.deviated = False
         if track == 't1_triple':
             self.scoreFactor = t1Factor
         elif track == 't2_triple':
@@ -87,7 +88,8 @@ class EvaluationNode:
             return 
         
         for marking in data.crossed_lane_markings:
-            if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
+            if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID and not self.deviated:
+                self.deviated = True
                 self.score -= deviationPenalty
 
     def calculateScore(self):
