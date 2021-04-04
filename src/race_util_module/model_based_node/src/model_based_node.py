@@ -76,7 +76,7 @@ class ModelBasedVehicle:
         self.find_ego_vehicle()
         self.init_state()
 
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
@@ -147,6 +147,7 @@ class ModelBasedVehicle:
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0] + v.x * dt
         vehicle_transform.location.y = self.state[1] + v.y * dt
+        vehicle_transform.location.z = 0
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
