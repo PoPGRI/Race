@@ -133,6 +133,37 @@ class PerceptionModule():
         for i in range(num_of_points):
             waypoints.extend(cur_waypoint.next((i+1)*distance))
         return waypoints
+    
+    def get_left_lane_markers(self, distance=0.5, num_of_points=20):
+        if self.vehicle == None:
+            self.find_ego_vehicle()
+            return
+        vehicle = self.vehicle
+        carla_map = self.world.get_map()
+        vehicle_location = vehicle.get_location()
+        cur_waypoint = carla_map.get_waypoint(vehicle_location)
+        left_waypoint = cur_waypoint.get_left_lane()
+        if left_waypoint == None:
+            return None
+        waypoints = []
+        for i in range(num_of_points):
+            waypoints.extend(left_waypoint.next((i+1)*distance))
+        return waypoints
+    def get_right_lane_markers(self, distance=0.5, num_of_points=20):
+        if self.vehicle == None:
+            self.find_ego_vehicle()
+            return
+        vehicle = self.vehicle
+        carla_map = self.world.get_map()
+        vehicle_location = vehicle.get_location()
+        cur_waypoint = carla_map.get_waypoint(vehicle_location)
+        right_waypoint = cur_waypoint.get_right_lane()
+        if right_waypoint == None:
+            return None
+        waypoints = []
+        for i in range(num_of_points):
+            waypoints.extend(right_waypoint.next((i+1)*distance))
+        return waypoints
 # helper function for calculating lane markers
 # approximate the locations of lane markers by the assumptions: 
 # 1. the lane markers have the same z coordinates as the current location 
@@ -164,19 +195,73 @@ def get_marker_info(loc, rot):
     mark_rot.y = rot.yaw
     mark_rot.z = rot.roll
     return (mark_loc, mark_rot)
+
+def fill_marker_msg(lp, percep_mod, visualize=True):
+    marker_msg = LaneInfo()
+    marker_center_list = LaneList()
+    marker_left_list = LaneList()
+    marker_right_list = LaneList()
+    for i in range(len(lp)):
+        p = lp[i]
+        trans = p.transform
+        loc = trans.location
+        rot  = trans.rotation
+        mark_loc, mark_rot = get_marker_info(loc, rot)
+        marker_msg.lane_state = abs(p.lane_id)
+        marker_center_list.location.append(mark_loc)
+        marker_center_list.rotation.append(mark_rot)
+        # draw left and right lane markers
+        width = p.lane_width
+        next_p = None
+        if i != len(lp) - 1:
+            next_p = lp[i+1]
+            vec = next_p.transform.location - loc
+            mark1 = carla.Location(loc.x-width/2, loc.y,loc.z)
+            mark2 = carla.Location(loc.x+width/2, loc.y,loc.z)
+            if vec.y == 0:
+                mark_loc, mark_rot = get_marker_info(mark1, rot)
+                marker_left_list.location.append(mark_loc)
+                marker_left_list.rotation.append(mark_rot)
+                mark_loc, mark_rot = get_marker_info(mark2, rot)
+                marker_right_list.location.append(mark_loc)
+                marker_right_list.rotation.append(mark_rot)
+                if visualize:
+                    percep_mod.world.debug.draw_point(mark1,life_time=1)
+                    percep_mod.world.debug.draw_point(mark2,life_time=1)
+            else:    
+                mark1, mark2 = get_markers(loc, vec, width)
+                mark_loc, mark_rot = get_marker_info(mark1, rot)
+                marker_left_list.location.append(mark_loc)
+                marker_left_list.rotation.append(mark_rot)
+                mark_loc, mark_rot = get_marker_info(mark2, rot)
+                marker_right_list.location.append(mark_loc)
+                marker_right_list.rotation.append(mark_rot)
+                if visualize:
+                    percep_mod.world.debug.draw_point(mark1,life_time=1)
+                    percep_mod.world.debug.draw_point(mark2,life_time=1)
+            if visualize:
+                percep_mod.world.debug.draw_point(trans.location,life_time=1)
+        marker_msg.lane_markers_center = marker_center_list
+        marker_msg.lane_markers_left = marker_left_list
+        marker_msg.lane_markers_right = marker_right_list
+    return marker_msg
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
     # main function
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
     lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=1)
+    left_lane_pub = rospy.Publisher('/carla/%s/left_lane_markers'%role_name, LaneList, queue_size=1)
+    right_lane_pub = rospy.Publisher('/carla/%s/right_lane_markers'%role_name, LaneList, queue_size=1)
     rate = rospy.Rate(20)
     draw_counter = 0
     while not rospy.is_shutdown():
         obs = percep_mod.get_all_obstacles_within_range()
-        lp = percep_mod.get_lane_markers()
+        lane_markers = percep_mod.get_lane_markers()
+        left_lane_markers = percep_mod.get_left_lane_markers()
+        right_lane_markers = percep_mod.get_right_lane_markers()
         obs_msg = []
         draw_counter += 1
-        if obs is None or lp is None:
+        if obs is None or lane_markers is None:
             continue
         for ob in obs:
             info = ObstacleInfo()
@@ -202,52 +287,12 @@ def publisher(percep_mod, role_name, label_list):
                     vertex.vertex_location.z = v.z
                     info.vertices_locations.append(vertex)
             obs_msg.append(info)
-        # TODO: add gradient
-        marker_msg = LaneInfo()
-        marker_center_list = LaneList()
-        marker_left_list = LaneList()
-        marker_right_list = LaneList()
-        for i in range(len(lp)):
-            p = lp[i]
-            trans = p.transform
-            loc = trans.location
-            rot  = trans.rotation
-            mark_loc, mark_rot = get_marker_info(loc, rot)
-            marker_msg.lane_state = abs(p.lane_id)
-            marker_center_list.location.append(mark_loc)
-            marker_center_list.rotation.append(mark_rot)
-            # draw left and right lane markers
-            width = p.lane_width
-            next_p = None
-            if i != len(lp) - 1:
-                next_p = lp[i+1]
-                vec = next_p.transform.location - loc
-                mark1 = carla.Location(loc.x-width/2, loc.y,loc.z)
-                mark2 = carla.Location(loc.x+width/2, loc.y,loc.z)
-                if vec.y == 0:
-                    mark_loc, mark_rot = get_marker_info(mark1, rot)
-                    marker_left_list.location.append(mark_loc)
-                    marker_left_list.rotation.append(mark_rot)
-                    mark_loc, mark_rot = get_marker_info(mark2, rot)
-                    marker_right_list.location.append(mark_loc)
-                    marker_right_list.rotation.append(mark_rot)
-                    percep_mod.world.debug.draw_point(mark1,life_time=1)
-                    percep_mod.world.debug.draw_point(mark2,life_time=1)
-                else:    
-                    mark1, mark2 = get_markers(loc, vec, width)
-                    mark_loc, mark_rot = get_marker_info(mark1, rot)
-                    marker_left_list.location.append(mark_loc)
-                    marker_left_list.rotation.append(mark_rot)
-                    mark_loc, mark_rot = get_marker_info(mark2, rot)
-                    marker_right_list.location.append(mark_loc)
-                    marker_right_list.rotation.append(mark_rot)
-                    percep_mod.world.debug.draw_point(mark1,life_time=1)
-                    percep_mod.world.debug.draw_point(mark2,life_time=1)
-            percep_mod.world.debug.draw_point(trans.location,life_time=1)
-        marker_msg.lane_markers_center = marker_center_list
-        marker_msg.lane_markers_left = marker_left_list
-        marker_msg.lane_markers_right = marker_right_list
-        # NOTE Environment objects note used now
+        marker_msg = fill_marker_msg(lane_markers, percep_mod)
+        left_marker_info = fill_marker_msg(left_lane_markers, percep_mod, visualize=False)
+        right_marker_info = fill_marker_msg(right_lane_markers, percep_mod, visualize=False)
+        left_marker_msg = left_marker_info.lane_markers_left
+        right_marker_msg = right_marker_info.lane_markers_right 
+        # NOTE Environment objects note used now    
         # for label in label_list:
         #     # get all vertices of all bounding boxes which are within the radius with label 'label'
         #     vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
@@ -258,7 +303,7 @@ def publisher(percep_mod, role_name, label_list):
         #         for loc in vertices_of_one_box[0]:
         #             vertex = BBSingleInfo()
         #             vertex.vertex_location.x = loc.x
-        #             vertex.vertex_location.y = loc.y
+        #             vertex.vertex_location.y = loc.yospy.Publisher('/carla/%s/lane_markers'%role_name, LaneList, queue_size=1)
         #             vertex.vertex_location.z = loc.z
         #             info.vertices_locations.append(vertex)
         #         info.obstacle_name = str(vertices_of_one_box[1])
@@ -272,17 +317,19 @@ def publisher(percep_mod, role_name, label_list):
         #         obs_msg.append(info)
         obs_pub.publish(obs_msg)
         lane_pub.publish(marker_msg)
+        left_lane_pub.publish(left_marker_msg)
+        right_lane_pub.publish(right_marker_msg)
         rate.sleep()
 
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
     rospy.init_node('graic_raceinfo_publisher', anonymous=True)
-    host = rospy.get_param("~host", "localhost")
-    port = rospy.get_param("~port", 2000)
+    # host = rospy.get_param("/carla/host", "127.0.0.1")
+    # port = rospy.get_param("/carla/host", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
-    client = carla.Client(host, port)
+    client = carla.Client('localhost', 2000)
     # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule(world, role_name)
