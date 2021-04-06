@@ -198,7 +198,7 @@
       
       <p><h3 id="step-0-install-the-graic-docker">Step 0. Install the GRAIC Docker</h3>
 
-<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use our <a href="https://hub.docker.com/r/sundw2014/graic">GRAIC Docker</a> image. The instructions here are for GRAIC installation on Ubuntu 20.04.</p>
+<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use our <a href="https://hub.docker.com/r/pricejiang/graic">GRAIC Docker</a> image. The instructions here are for GRAIC installation on Ubuntu 20.04.</p>
 
 <p>First, ensure that you are using the NVIDIA driver. This can be done by going to “Additional Drivers” in “Software and Updates”.</p>
 
@@ -207,7 +207,7 @@
 <ol>
   <li>Install Docker CE. Instructions can be found here: <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
   <li>Install NVIDIA-Docker2. Instructions can be found here:<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker</a></li>
-  <li>Pull the GRAIC Docker image: <code class="highlighter-rouge">docker pull sundw2014/graic:latest</code></li>
+  <li>Pull the GRAIC Docker image: <code class="highlighter-rouge">docker pull pricejiang/graic:latest</code></li>
 </ol>
 
 <p>Note that you may have to use the <code class="highlighter-rouge">sudo</code> command to run docker.
@@ -227,7 +227,7 @@ If everything works properly, once the GRAIC container is running, the baseline 
 To run the GRAIC Docker container, use the following instructions.</p>
 
 <p>Replace <code class="highlighter-rouge">[PATH-TO-THE-DOWNLOADED-CODE]</code> with the path to the source code and <code class="highlighter-rouge">[PATH-TO-THE-DOWNLOADED-MAP]</code> with the path to the downloaded map.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [PATH-TO-THE-DOWNLOADED CODE]/src:/home/carla/graic-workspace/src:rw -v [PATH-TO-THE-DOWNLOADED-MAP]/map_package/:/home/carla/carla-simulator/CarlaUE4/Content/map_package/:ro sundw2014/graic carla-simulator/CarlaUE4.sh -opengl
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [PATH-TO-THE-DOWNLOADED CODE]/src:/home/carla/graic-workspace/src:rw -v [PATH-TO-THE-DOWNLOADED-MAP]/map_package/:/home/carla/carla-simulator/CarlaUE4/Content/map_package/:ro pricejiang/graic carla-simulator/CarlaUE4.sh -opengl
 </code></pre></div></div>
 <p>Note that you may need to use the <code class="highlighter-rouge">sudo</code> command to run the Docker image.</p>
 
