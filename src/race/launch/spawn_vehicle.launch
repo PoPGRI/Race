@@ -38,6 +38,13 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
+  <include file="$(find scenario_node)/launch/scenario_node.launch">
+    <arg name='host' value='$(arg host)'/>
+    <arg name='port' value='$(arg port)'/>
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
+  </include>
+
   <group if="$(arg model_free)">
     <include file="$(find ackermann_node)/launch/ackermann_node.launch">
       <arg name='role_name' value='$(arg role_name)' />

@@ -157,14 +157,14 @@ if __name__ == '__main__':
     try: 
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
 
-        res = subprocess.run(["python3",
-            "/home/carla/scenario_runner/scenario_runner.py",
-            "--route",
-            "/home/carla/scenario_runner/srunner/data/routes_race.xml", 
-            "/home/carla/scenario_runner/srunner/data/scenario_race.json",
-            "0", 
-            "--output"
-        ], capture_output=True)
+        # res = subprocess.run(["python3",
+        #     "/home/carla/scenario_runner/scenario_runner.py",
+        #     "--route",
+        #     "/home/carla/scenario_runner/srunner/data/routes_race.xml", 
+        #     "/home/carla/scenario_runner/srunner/data/scenario_race.json",
+        #     "0", 
+        #     "--output"
+        # ], capture_output=True)
 
         run(cn)
     except rospy.exceptions.ROSInterruptException:
