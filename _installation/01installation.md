@@ -22,7 +22,7 @@ This may take a while.
 ### Step 1. Download the source code and map
 
 Now that you have installed the GRAIC docker, you should download the source code and map for GRAIC.
-These can be found as a [release](https://github.com/PoPGRI/Race/releases/tag/0.1.0) on our GitHub.
+These can be found as a [release](https://github.com/PoPGRI/Race/releases/tag/0.1.2) on our GitHub.
 Both the source code and map are zip files, so you will need to uncompress these files.
 You can extract them to any directory.
 
@@ -90,4 +90,4 @@ We have provided a template controller for you to get started on creating your o
 This template can be found on our [GitHub](https://github.com/PoPGRI/Race) and it is called `src/race/src/starter.py`.
 You will not have to edit any part of the file other than line 66. You should replace `TODO Add your decision logic here` with the decision logic of your controller.
 
-To further understand how to create controllers, take a look at the interfaces described on our [docs](https://popgri.github.io/Race/docs/) page.
+To further understand how to create controllers, take a look at the interfaces described on our [docs](https://popgri.github.io/Race/documentation/) page.

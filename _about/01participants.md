@@ -14,7 +14,7 @@ Currently, people from 13 universities have expressed interest in GRAIC! If you 
 * University of California, San Diego
 * University of California, Santa Barbara
 * University of California, Santa Cruz
-* University of Illinois Urbana-Champaign
+* University of Illinois at Urbana-Champaign
 * University of Michigan
 * University of North Carolina at Chapel Hill
 * University of Texas at Austin
