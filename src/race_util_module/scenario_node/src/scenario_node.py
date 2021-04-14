@@ -7,10 +7,47 @@ import time
 import pickle
 import carla
 import os
+from enum import Enum
 
-from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
+from carla_msgs.msg import CarlaCollisionEvent
+from carla_msgs.msg import CarlaLaneInvasionEvent
+
 from scenario_runner import ScenarioRunner
+from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
 from typing import List, Dict
+
+
+
+class ScenarioConfig:
+    def __init__(self, track, scenario, triggerPoint): 
+        self.scenario_config = {
+            track: [
+                {
+                    "available_event_configurations": [
+                        {
+                            "transform": {
+                                "pitch": "0",
+                                "x": str(triggerPoint.location.x),
+                                "y": str(triggerPoint.location.y),
+                                "yaw": str(triggerPoint.rotation.yaw),
+                                "z": "1.22"
+                            }
+                        }
+                    ],
+                    "scenario_type": scenario.value
+                }
+            ]
+        }
+
+class UnitScenarioMap(Enum):
+    BadMerge = "ScenarioBM"
+    GhostCutIn = "GhostCutIn"
+    ScenarioA = "ScenarioA"
+    ScenarioB = "ScenarioB"
+
+class ScenarioCategory(Enum):
+    UnitScenario = 0
+    CompositeScenario = 1
 
 class ScenarioArguments:
     def __init__(self, route_config: List[RouteScenarioConfiguration], scenario_config: Dict,
@@ -45,26 +82,94 @@ class ScenarioArguments:
         self.route = route_config
         self.scenario_config = scenario_config
 
-class ScenarioGenerator:
-    scenarios = []
-    def __init__(self, ego_vehicle, role_name, waypoints):
-        pass 
+# class ScenarioType(Enum):
+#     UnitScenario = 0
+#     CompositeScenario = 1
 
-    def createScenario(self, ego_vehicle_status, result=None):
-        pass
+# class Scenario:
+#     def __init__(self, location, category, names, startPoint, endPoint):
+#         self.location = location 
+#         self.category = category
+#         self.names = names
+#         self.startPoint = startPoint
+#         self.endPoint = endPoint
+
+#         if self.category == ScenarioCategory.UnitScenario:
+#             assert(len(self.names) == 1)
+
+#         for name in self.names:
+#             if not name in UnitScenarioMap:
+#                 raise RuntimeError("Unknown Unit Scenario, please check the input")
+
+
+class ScenarioList:
+    def __init__(self):
+        self.unitScenarios = ["ScenarioBM", "ScenarioBM"]
+        self.compositeScenarios = []
+        self.availableScenarios = ["ScenarioBM"]
+
+        # for name in UnitScenarioMap:
+        #     scenario = Scenario()
+        #     self.unitScenarios.append(scenario)
+        #     self.availableScenarios.append(scenario)
+    
+    def getUnitScenario(self):
+        scenario = self.unitScenarios.pop(0)
+        return scenario
+    
+    def hasUnitScenario(self):
+        return len(self.unitScenarios) > 0
+
+    def removeScenarios(self, result):
+        if result[0] == False:
+            self.availableScenarios.remove(result[1])
+
+    def getCompositeScenario(self):
+        # NOTE some heurstics can be applied here
+        return scenario
+
+class ScenarioGenerator:
+    def __init__(self, config):
+        self.scenarioList = ScenarioList()
+    
+    def generateScenario(self, ego_vehicle_status, result=None):
+        if not result:
+            return self.scenarioList.getUnitScenario()
+        else:
+            self.scenarioList.removeScenarios(result)
+            if self.scenarioList.hasUnitScenario():
+                return self.scenarioList.getUnitScenario()
+            else:
+                return self.scenarioList.getCompositeScenario()
 
 class ScenarioNode:
 
     def __init__(self, world, role_name='ego_vehicle', track='t1_tripe'):
-        # self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
-        # self.waypoint_list = pickle.load(open(track,'rb')) 
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
+        self.waypoint_list = pickle.load(open(track,'rb'))
+        self.map = world.get_map()
         self.ego_vehicle = None
-        self.scenarioGenerator = ScenarioGenerator(None, None, None)
+        self.track = track
+        self.wp_idx = 0
+        self.collisionTest = True
+        self.laneDepartureTest = True
+        self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
+        self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
+        # self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
+        self.scenarioGenerator = ScenarioGenerator(None)
 
         self.findEgoVehicle()
+
+    def collisionCallback(self, data):
+        self.collisionTest = False 
+    
+    def laneCallback(self, data):
+        self.laneDepartureTest = False
+
+    # def waypointCallback(self, data):
+
 
     def findEgoVehicle(self):
         for actor in self.world.get_actors():
@@ -78,95 +183,43 @@ class ScenarioNode:
         return self.findEgoVehicle().get_transform()
 
     def createScenarioConfig(self, result=None):
-        # self.scenarioGenerator.createScenario(self.getVehicleStatus(), result)
-        if result is None:
-            scenario_config = {
-                "t1_triple": [
-                    {
-                        "available_event_configurations": [
-                            {
-                                "transform": {
-                                    "pitch": "0",
-                                    "x": "93.1460952758789",
-                                    "y": "-1.4191741943359375",
-                                    "yaw": "133.83380126953125",
-                                    "z": "1.22"
-                                }
-                            }
-                        ],
-                        "scenario_type": "ScenarioBM"
-                    }
-                ]
-            }
-            
-            route_config_list = []
-            route_config = RouteScenarioConfiguration()
-            route_config.town = 't1_triple'
-            route_config.name = 'RouteScenario_0'
-            route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
-            route_config.scenario_config = scenario_config
-            waypoint_list = []
-            waypoint_list.append(carla.Location(
-                x=164.0,
-                y=-11.0,
-                z=0.0
-            ))
+        # self.scenarioGenerator.generateScenario(self.getVehicleStatus(), result)
+        # if result is None:
+        if self.wp_idx + 7 >= len(self.waypoint_list):
+            return None
+        location = carla.Location(self.waypoint_list[self.wp_idx+4][0], self.waypoint_list[self.wp_idx+4][1], self.waypoint_list[self.wp_idx+4][2])
+        trigger_point = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform
+        # trigger_point = self.waypoint_list[4]
+        scenarioConfig = ScenarioConfig(self.track, UnitScenarioMap.BadMerge, trigger_point)
+        scenarioConfig.scenario_config
+        scenario_config = scenarioConfig.scenario_config
 
-            waypoint_list.append(carla.Location(
-                x=14.7,
-                y=69.2,
-                z=0.0
-            ))
+        route_config_list = []
+        route_config = RouteScenarioConfiguration()
+        route_config.town = self.track
+        route_config.name = 'RouteScenario_0'
+        route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
+        route_config.scenario_config = scenario_config
+        wp = []
+        wp.append(carla.Location(
+            x=self.waypoint_list[self.wp_idx][0],
+            y=self.waypoint_list[self.wp_idx][1],
+            z=0.0
+        ))
 
-            route_config.trajectory = waypoint_list
+        wp.append(carla.Location(
+            x=self.waypoint_list[self.wp_idx+6][0],
+            y=self.waypoint_list[self.wp_idx+6][1],
+            z=0.0
+        ))
 
-            route_config_list.append(route_config)
+        route_config.trajectory = wp
 
-            args = ScenarioArguments(route_config_list, scenario_config)
-        else:
-            scenario_config = {
-                "t1_triple": [
-                    {
-                        "available_event_configurations": [
-                            {
-                                "transform": {
-                                    "pitch": "0",
-                                    "x": "-85.89",
-                                    "y": "27.30",
-                                    "yaw": "-98.2802734375",
-                                    "z": "1.22"
-                                }
-                            }
-                        ],
-                        "scenario_type": "ScenarioBM"
-                    }
-                ]
-            }
-            
-            route_config_list = []
-            route_config = RouteScenarioConfiguration()
-            route_config.town = 't1_triple'
-            route_config.name = 'RouteScenario_0'
-            route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
-            route_config.scenario_config = scenario_config
-            waypoint_list = []
-            waypoint_list.append(carla.Location(
-                x=-23.14,
-                y=66.14,
-                z=0.0
-            ))
+        route_config_list.append(route_config)
 
-            waypoint_list.append(carla.Location(
-                x=-74.07,
-                y=-90.74,
-                z=0.0
-            ))
-
-            route_config.trajectory = waypoint_list
-
-            route_config_list.append(route_config)
-
-            args = ScenarioArguments(route_config_list, scenario_config)
+        args = ScenarioArguments(route_config_list, scenario_config)
+        self.wp_idx += 7
+        
         return args
 
     def launchScenarioRunner(self, scenarioConfig):
@@ -176,23 +229,31 @@ class ScenarioNode:
 
         return True
 
-    def parseResults(self, results):
-        pass 
+    def parseResults(self):
+        if not self.laneDepartureTest or not self.collisionTest:
+            # Failed scenario
+            # Perform composite clean
+            return False 
+        else:
+            return True
 
 def run(sn, role_name):
-    # rate = rospy.Rate(20)  # 20 Hz    
+    # rate = rospy.Rate(1)  # 20 Hz    
     # pubWaypoint = rospy.Publisher('/carla/%s/waypoints'%role_name, WaypointInfo, queue_size=None)
     # Send out all unit scenariose
-    scenarioConfig = sn.createScenarioConfig()
-    firstResults = sn.launchScenarioRunner(scenarioConfig)
-    sn.parseResults(firstResults)
-    scenarioConfig = sn.createScenarioConfig(firstResults)
-    secondResults = sn.launchScenarioRunner(scenarioConfig)
-    sn.parseResults(secondResults)
+    # scenarioConfig = sn.createScenarioConfig()
+    # firstResults = sn.launchScenarioRunner(scenarioConfig)
+    # sn.parseResults()
+    # scenarioConfig = sn.createScenarioConfig(firstResults)
+    # secondResults = sn.launchScenarioRunner(scenarioConfig)
+    # sn.parseResults()
 
     # NOTE Question: Do we need to send out scores often? 
-    # while not rospy.is_shutdown():
-    #     rate.sleep()
+    while not rospy.is_shutdown():
+        scenarioConfig = sn.createScenarioConfig()
+        if scenarioConfig:
+            sn.launchScenarioRunner(scenarioConfig)
+        # rate.sleep()
 
 if __name__ == "__main__":
     rospy.init_node("Scenario_Node")
