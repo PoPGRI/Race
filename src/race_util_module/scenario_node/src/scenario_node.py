@@ -16,7 +16,7 @@ from carla_msgs.msg import CarlaLaneInvasionEvent
 from scenario_runner import ScenarioRunner
 from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
 from typing import List, Dict
-
+from itertools import permutations
 
 
 class ScenarioConfig:
@@ -56,22 +56,6 @@ class UnitScenarioMap(Enum):
     LeadCutIn = "ScenarioLeadCut"
     LeadSlowDown = "ScenarioLeadSlow"
 
-# class ScenarioCategory(Enum):
-#     UnitScenario = 0
-#     CompositeScenario = 1
-
-# class Scenario:
-#     def __init__(self, category, names):
-#         self.category = category
-#         self.names = names
-
-#         if self.category == ScenarioCategory.UnitScenario:
-#             assert(len(self.names) == 1)
-
-#         for name in self.names:
-#             if not name in UnitScenarioMap:
-#                 raise RuntimeError("Unknown Unit Scenario, please check the input")
-
 
 class ScenarioArguments:
     def __init__(self, route_config: List[RouteScenarioConfiguration], scenario_config: Dict,
@@ -109,17 +93,17 @@ class ScenarioArguments:
 class ScenarioList:
     def __init__(self):
         self.unitScenarios = []
-        self.compositeScenarios = []
         self.availableScenarios = []
 
         for scenario in UnitScenarioMap:
             self.unitScenarios.append(scenario)
             self.availableScenarios.append(scenario)
+        self.compositeScenarios = list(permutations(self.unitScenarios, len(self.unitScenarios)))
     
     def getUnitScenario(self):
         scenario = self.unitScenarios.pop(0)
-        print("Get scenario: ", scenario)
-        print("Remaining scenario: ", self.unitScenarios)
+        # print("Get scenario: ", scenario)
+        # print("Remaining scenario: ", self.unitScenarios)
         return [scenario]
     
     def hasUnitScenario(self):
@@ -128,16 +112,19 @@ class ScenarioList:
     def update(self, result):
         # NOTE scenario update heuristic:
         # 1. remove the one that fails
-        print("=========> Updating with results: ", result)
-        print("=========> available: ", self.availableScenarios)
-        if result[0] == False:
-            if len(result[1]) == 1:
-                self.availableScenarios.remove(result[1][0])
+        # print("=========> Updating with results: ", result)
+        # print("=========> available: ", self.availableScenarios)
+        # if result[0] == False:
+        #     if len(result[1]) == 1:
+        #         self.availableScenarios.remove(result[1][0])
+        pass
 
     def getCompositeScenario(self):
         # NOTE composite heurstics can be applied here
-        if len(self.availableScenarios) > 1:
-            return random.sample(self.availableScenarios, len(self.availableScenarios)-1)
+        if self.compositeScenarios:
+            # return list(np.random.choice(self.availableScenarios, 6))
+            scenario = self.compositeScenarios.pop(0)
+            return scenario
         else:
             return None
 
@@ -189,17 +176,12 @@ class ScenarioNode:
                 self.ego_vehicle = actor
                 break
 
-    # def getVehicleStatus(self):
-    #     if not self.ego_vehicle:
-    #         self.findEgoVehicle()
-    #     return self.findEgoVehicle().get_transform()
-
     def createScenarioConfig(self, result=None):
         self.scenario = self.scenarioGenerator.generateScenario(result)
 
         if not self.scenario or self.wp_idx + 7 >= len(self.waypoint_list):
             return None
-        location = carla.Location(self.waypoint_list[self.wp_idx+4][0], self.waypoint_list[self.wp_idx+4][1], self.waypoint_list[self.wp_idx+4][2])
+        location = carla.Location(self.waypoint_list[self.wp_idx+2][0], self.waypoint_list[self.wp_idx+2][1], self.waypoint_list[self.wp_idx+2][2])
         trigger_points = []
         for i in range(len(self.scenario)):
             if i != 0:
@@ -207,7 +189,6 @@ class ScenarioNode:
             else:
                 trigger_point = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform
             trigger_points.append(trigger_point)
-        # trigger_point2 = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).next(15)[0].transform
         
         scenarioConfig = ScenarioConfig(self.track)
         scenario_config = scenarioConfig.getScenario(self.scenario, trigger_points)
