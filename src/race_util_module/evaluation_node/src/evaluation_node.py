@@ -18,7 +18,7 @@ t2Factor = 1600
 
 class EvaluationNode:
 
-    def __init__(self, world, role_name='ego_vehicle', track='t1_triple'):
+    def __init__(self, world, role_name='ego_vehicle', track='t1_triple', reset=True):
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
@@ -37,14 +37,24 @@ class EvaluationNode:
         self.reachEnd = False
         self.obs_map = {}
         self.world = world
+        self.map = self.world.get_map()
         self.trajectory_list = []
         self.deviated = False
+        self.reset = reset
         if track == 't1_triple':
             self.scoreFactor = t1Factor
         elif track == 't2_triple':
             self.scoreFactor = t2Factor
         self.addActor()
+        self.vehicle = None
+        while not self.vehicle:
+            self.find_ego_vehicle()
 
+    def find_ego_vehicle(self):
+        for actor in self.world.get_actors():
+            if actor.attributes.get('role_name') == self.role_name:
+                self.vehicle = actor
+                break
         
     def addActor(self):
         actor_list = self.world.get_actors()
@@ -63,12 +73,24 @@ class EvaluationNode:
 
         if self.reachEnd:
             return 
+        
+        if str(data.other_actor_id) == '0':
+            return
 
         if not str(data.other_actor_id) in self.obs_map:
             self.obs_map[str(data.other_actor_id)] = str(self.world.get_actor(data.other_actor_id).type_id) + '_' + str(data.other_actor_id)
         
-        hitObj = self.obs_map[str(data.other_actor_id)] # +"_at_time_"+str(datetime.timedelta(
-                # seconds=int(rospy.get_rostime().to_sec())))
+        hitObj = self.obs_map[str(data.other_actor_id)]  +"_at_time_"+str(datetime.timedelta(
+                 seconds=int(rospy.get_rostime().to_sec())))
+        
+        if str(data.other_actor_id) != '0' and self.reset:
+            transform = self.map.get_waypoint(self.vehicle.get_location() - 15*self.vehicle.get_transform().get_forward_vector(), project_to_road=True, lane_type=carla.LaneType.Driving).transform
+            transform.location.z += 1
+            transform.rotation.roll = 0
+            transform.rotation.pitch = 0
+            self.vehicle.set_transform(transform)
+            self.vehicle.set_target_angular_velocity(carla.Vector3D(x=0,y=0))
+
         if hitObj in self.hitObjects:
             return
 
@@ -89,7 +111,7 @@ class EvaluationNode:
         
         for marking in data.crossed_lane_markings:
             if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID and not self.deviated:
-                self.deviated = True
+                # self.deviated = True
                 self.score -= deviationPenalty
 
     def calculateScore(self):
