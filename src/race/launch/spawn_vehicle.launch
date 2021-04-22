@@ -85,6 +85,7 @@
     <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
+    <arg name='model_free' value='$(arg model_free)' />
   </include>
 
   <include file="$(find waypoint_node)/launch/waypoint_node.launch">

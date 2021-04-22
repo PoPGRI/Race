@@ -63,6 +63,7 @@ class ModelBasedVehicle:
         self.role_name = role_name
         client = carla.Client(host, port)
         self.world = client.get_world()
+        self.map = self.world.get_map()
         self.vehicle_dyn = VehicleDynamics()
         self.state = None
         self.input = [0, 0]
@@ -147,7 +148,7 @@ class ModelBasedVehicle:
         vehicle_transform = self.vehicle.get_transform()
         vehicle_transform.location.x = self.state[0] + v.x * dt
         vehicle_transform.location.y = self.state[1] + v.y * dt
-        vehicle_transform.location.z = 0
+        vehicle_transform.location.z = self.map.get_waypoint(vehicle_transform.location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.location.z
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt

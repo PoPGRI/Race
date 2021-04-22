@@ -210,12 +210,17 @@ if __name__ == "__main__":
     port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     track = rospy.get_param("~track", "t1_triple")
+    model_free = rospy.get_param("~model_free", 1)
     rospy.loginfo("Start evaluating the performance of %s!"%role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
     client = carla.Client(host, port)
     world = client.get_world()
-    en = EvaluationNode(world, role_name, track)
+    if model_free:
+        reset = True
+    else:
+        reset = False
+    en = EvaluationNode(world, role_name, track, reset)
     try:
         run(en, role_name)
     except rospy.exceptions.ROSInterruptException:
