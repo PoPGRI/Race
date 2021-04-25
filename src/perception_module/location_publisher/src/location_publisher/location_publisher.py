@@ -40,11 +40,14 @@ def publisher(location_module, role_name):
     while not location_module.vehicle:
         location_module.find_ego_vehicle()
         continue
+    prev_location = None
     while not rospy.is_shutdown():
         info = LocationInfo()
         info.actor_name = location_module.getName()
         info.actor_id = location_module.getId()
         location = location_module.getLocation()
+        if prev_location is None:
+            prev_location = location
         info.location.x = location.x 
         info.location.y = location.y 
         info.location.z = location.z 
@@ -56,8 +59,12 @@ def publisher(location_module, role_name):
         info.velocity.x = velocity.x
         info.velocity.y = velocity.y 
         info.velocity.z = velocity.z
+        if (info.velocity.x == info.velocity.y == info.velocity.z == 0):
+            info.velocity.x = (location.x - prev_location.x) * 20.
+            info.velocity.y = (location.y - prev_location.y) * 20.
+        prev_location = location
         pub.publish(info)
-    rate.sleep()
+        rate.sleep()
 
 
 if __name__ == "__main__":
