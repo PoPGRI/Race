@@ -51,6 +51,8 @@ class ScenarioConfig:
         return self.scenario_config
 
 class UnitScenarioMap(Enum):
+    StationaryObjectCrossing = "ScenarioStationaryObject"
+    DynamicObjectCrossing = "ScenarioDynamicObject"
     BadMerge = "ScenarioBM"
     GhostCutIn = "ScenarioGhost"
     LeadCutIn = "ScenarioLeadCut"
@@ -98,7 +100,7 @@ class ScenarioList:
         for scenario in UnitScenarioMap:
             self.unitScenarios.append(scenario)
             self.availableScenarios.append(scenario)
-        self.compositeScenarios = list(permutations(self.unitScenarios, len(self.unitScenarios)))
+        self.compositeScenarios = list(permutations(self.unitScenarios, 4))
     
     def getUnitScenario(self):
         scenario = self.unitScenarios.pop(0)
