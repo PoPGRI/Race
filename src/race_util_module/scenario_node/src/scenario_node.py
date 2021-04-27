@@ -61,7 +61,7 @@ class UnitScenarioMap(Enum):
 
 class ScenarioArguments:
     def __init__(self, route_config: List[RouteScenarioConfiguration], scenario_config: Dict,
-        host = '127.0.0.1', port = '2000', timeout = '10.0', trafficManagerPort = '8000',
+        host = '127.0.0.1', port = 2000, timeout = '10.0', trafficManagerPort = '8000',
         trafficManagerSeed = '0', sync = False, agent = None, agentConfig = '', output = True,
         result_file = False, junit = False, json = False, outputDir = '', configFile = '', 
         additionalScenario = '', debug = False, reloadWorld = False, record = '', 
@@ -146,7 +146,7 @@ class ScenarioGenerator:
 
 class ScenarioNode:
 
-    def __init__(self, world, role_name='ego_vehicle', track='t1_tripe'):
+    def __init__(self, world, role_name='ego_vehicle', track='t1_tripe', port=2000):
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
@@ -158,6 +158,7 @@ class ScenarioNode:
         self.collisionTest = True
         self.laneDepartureTest = True
         self.scenario = None
+        self.port = port
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
         self.scenarioGenerator = ScenarioGenerator(None)
@@ -218,7 +219,7 @@ class ScenarioNode:
 
         route_config_list.append(route_config)
 
-        args = ScenarioArguments(route_config_list, scenario_config)
+        args = ScenarioArguments(route_config_list, scenario_config, port=self.port)
         self.wp_idx += 7
         
         return args
@@ -256,7 +257,7 @@ if __name__ == "__main__":
     cwd = os.getcwd()
     client = carla.Client(host, port)
     world = client.get_world()
-    sn = ScenarioNode(world, role_name, track)
+    sn = ScenarioNode(world, role_name, track, port)
     try:
         run(sn, role_name)
     except rospy.exceptions.ROSInterruptException:
