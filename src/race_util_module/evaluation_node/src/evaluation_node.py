@@ -224,3 +224,4 @@ if __name__ == "__main__":
     try:
         run(en, role_name)
     except rospy.exceptions.ROSInterruptException:
+        rospy.loginfo("Shutting down evaluation node")
