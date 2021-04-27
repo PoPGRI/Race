@@ -51,12 +51,12 @@ class ScenarioConfig:
         return self.scenario_config
 
 class UnitScenarioMap(Enum):
-    StationaryObjectCrossing = "ScenarioStationaryObject"
-    DynamicObjectCrossing = "ScenarioDynamicObject"
-    BadMerge = "ScenarioBM"
+    # StationaryObjectCrossing = "ScenarioStationaryObject"
+    # DynamicObjectCrossing = "ScenarioDynamicObject"
+    # BadMerge = "ScenarioBM"
     GhostCutIn = "ScenarioGhost"
-    LeadCutIn = "ScenarioLeadCut"
-    LeadSlowDown = "ScenarioLeadSlow"
+    # LeadCutIn = "ScenarioLeadCut"
+    # LeadSlowDown = "ScenarioLeadSlow"
 
 
 class ScenarioArguments:
@@ -123,12 +123,12 @@ class ScenarioList:
 
     def getCompositeScenario(self):
         # NOTE composite heurstics can be applied here
-        if self.compositeScenarios:
-            # return list(np.random.choice(self.availableScenarios, 6))
-            scenario = self.compositeScenarios.pop(0)
-            return scenario
-        else:
-            return None
+        # if self.compositeScenarios:
+        #     # return list(np.random.choice(self.availableScenarios, 6))
+        #     scenario = self.compositeScenarios.pop(0)
+        #     return scenario
+        # else:
+        return None
 
 class ScenarioGenerator:
     def __init__(self, config):
