@@ -88,11 +88,13 @@ class ModelBasedVehicle:
         self.state = [x, y, 0, 0, Psi, 0]
 
     def find_ego_vehicle(self):
-        for actor in self.world.get_actors():
-            if actor.attributes.get('role_name') == self.role_name:
-                self.vehicle = actor
-                break
-        # self.vehicle.set_simulate_physics(False)
+        self.vehicle = None
+        while self.vehicle is None:
+            for actor in self.world.get_actors():
+                if actor.attributes.get('role_name') == self.role_name:
+                    self.vehicle = actor
+                    break
+        self.vehicle.set_simulate_physics(False)
 
     def controlCallback(self, data):
         self.vehicle_control_cmd = data
@@ -137,22 +139,23 @@ class ModelBasedVehicle:
         dx = u*np.cos(Psi) - v*np.sin(Psi)
         dy = u*np.sin(Psi) + v*np.cos(Psi)
 
-        v = carla.Vector3D(x = dx, y = dy)
-        self.vehicle.set_target_velocity(v)
+        # v = carla.Vector3D(x = dx, y = dy)
+        # self.vehicle.set_target_velocity(v)
         # av = carla.Vector3D(z = np.rad2deg(r))
         # self.vehicle.set_target_angular_velocity(av)
 
         vehicle_transform = self.vehicle.get_transform()
-        vehicle_transform.location.x = self.state[0] + v.x * dt
-        vehicle_transform.location.y = self.state[1] + v.y * dt
+        vehicle_transform.location.x = self.state[0]# + v.x * dt
+        vehicle_transform.location.y = self.state[1]# + v.y * dt
+        vehicle_transform.location.z = 0
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
 
-def run(role_name):
-    vehicle = ModelBasedVehicle(role_name)
+def run(role_name, host, port):
+    vehicle = ModelBasedVehicle(role_name, host, port)
 
-    freq = 100
+    freq = 20
     rate = rospy.Rate(freq)
 
     while not rospy.is_shutdown():

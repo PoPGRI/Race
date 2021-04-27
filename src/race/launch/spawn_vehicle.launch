@@ -44,7 +44,7 @@
     </include>
   </group>
 
-  <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(arg model_free)">
+  <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(eval arg('model_free') > 0)">
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='host' value='$(arg host)' />
     <arg name='port' value='$(arg port)' />
