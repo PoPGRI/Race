@@ -276,7 +276,7 @@ if __name__ == "__main__":
     argv = parser.parse_args()
     role_name = argv.name
     rospy.init_node("baseline")
-    role_name = 'hero0'
+    role_name = 'ego_vehicle'
     try:
         run_model(role_name)
     except rospy.exceptions.ROSInterruptException:
