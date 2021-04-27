@@ -11,8 +11,10 @@ import carla
 import os
 import datetime
 
-collisionPenalty = 40
-deviationPenalty = 10
+collisionPenalty = 60
+deviationPenalty = 30
+t1Factor = 900
+t2Factor = 1600
 
 class EvaluationNode:
 
@@ -26,8 +28,7 @@ class EvaluationNode:
         self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=None)
         self.reachedPoints = []
         self.reachedPointsStamped = []
-        # self.speedList = []
-        self.reachedTime = 0
+        self.speedList = []
         self.hitObjects = set()
         self.score = 0.0
         self.location = None
@@ -40,6 +41,10 @@ class EvaluationNode:
         self.trajectory_list = []
         self.deviated = False
         self.reset = reset
+        if track == 't1_triple':
+            self.scoreFactor = t1Factor
+        elif track == 't2_triple':
+            self.scoreFactor = t2Factor
         self.addActor()
         self.vehicle = None
         while not self.vehicle:
@@ -94,7 +99,7 @@ class EvaluationNode:
         collisionInfo = String()
         collisionInfo.data = hitObj
         self.pubCollision.publish(collisionInfo)
-        self.score += collisionPenalty
+        self.score -= collisionPenalty
 
     def waypointCallback(self, data):
         self.waypoint = data.location
@@ -107,7 +112,7 @@ class EvaluationNode:
         for marking in data.crossed_lane_markings:
             if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID and not self.deviated:
                 # self.deviated = True
-                self.score += deviationPenalty
+                self.score -= deviationPenalty
 
     def calculateScore(self):
         location = self.location
@@ -119,6 +124,13 @@ class EvaluationNode:
         
         distanceToX = abs(x - waypoint.x)
         distanceToY = abs(y - waypoint.y)
+
+
+        vx = location.velocity.x
+        vy = location.velocity.y
+        v = np.sqrt(vx*vx + vy*vy)
+        if v > 0.5:
+            self.speedList.append(v)
         
         # NOTE reached function; range
         if distanceToX < 8 and distanceToY < 8 and not (waypoint.x, waypoint.y) in self.reachedPoints: 
@@ -127,14 +139,15 @@ class EvaluationNode:
             reachInfo = "({} reached {:.2f}, {:.2f}) at time {}".format(self.role_name, waypoint.x, waypoint.y, str(datetime.timedelta(
                 seconds=int(rospy.get_rostime().to_sec()))))
             reached.data = reachInfo
-            
             self.pubReach.publish(reached)
             self.reachedPoints.append((waypoint.x, waypoint.y))
             self.reachedPointsStamped.append(reachInfo)
 
-            if self.reachedTime != 0: 
-                self.score += int(rospy.get_rostime().to_sec()) - self.reachedTime
-            self.reachedTime = int(rospy.get_rostime().to_sec())
+            vBar = np.average(self.speedList)
+            if np.isnan(vBar):
+                return
+            self.speedList = []
+            self.score += vBar
 
     def onShutdown(self):
         fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
@@ -144,7 +157,7 @@ class EvaluationNode:
         # print("hit: ", self.hitObjects)
         f = open(fname, 'wb')
         f.write("Final score: \n".encode('ascii'))
-        f.write(str(self.score).encode('ascii') + "\n".encode('ascii'))
+        f.write(str(self.score/self.scoreFactor*100).encode('ascii') + "\n".encode('ascii'))
         f.write("Obstacle hits: \n".encode('ascii'))
         f.write('\n'.join(self.hitObjects).encode('ascii'))
         f.write("\nWaypoints reached: \n".encode('ascii'))
@@ -169,7 +182,7 @@ def run(en, role_name):
         info.numObjectsHit = len(en.hitObjects)
         pubEN.publish(info)
         score_ = Float32()
-        score_.data = float(en.score)
+        score_.data = float(en.score/en.scoreFactor*100)
         en.pubScore.publish(score_)
         rate.sleep()
 
@@ -211,5 +224,3 @@ if __name__ == "__main__":
     try:
         run(en, role_name)
     except rospy.exceptions.ROSInterruptException:
-        rospy.loginfo("Shutting down the evaluation node")
-
