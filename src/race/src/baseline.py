@@ -23,7 +23,7 @@ class VehicleDecision():
         self.target_y = None
         self.change_lane = False
         self.change_lane_wp_idx = 0
-        self.detect_dist = 15
+        self.detect_dist = 30
         self.speed = 20
 
         self.reachEnd = False
@@ -114,7 +114,7 @@ class VehicleDecision():
                     self.vehicle_state = "stop"
 
         if self.vehicle_state == "stop":
-            self.speed = 0
+            self.speed = 5
         else:
             self.speed = 20
 
@@ -139,7 +139,7 @@ class VehicleDecision():
             
             if self.vehicle_state == "turn-right":
                 # self.change_lane = False
-                tmp_x = 4
+                tmp_x = 6
                 tmp_y = 0
                 x_offset = np.cos(target_orientation+np.pi/2)*tmp_x - np.sin(target_orientation+np.pi/2)*tmp_y
                 y_offset = np.sin(target_orientation+np.pi/2)*tmp_x + np.cos(target_orientation+np.pi/2)*tmp_y
@@ -147,7 +147,7 @@ class VehicleDecision():
                 self.target_y = self.target_y + y_offset
             elif self.vehicle_state == "turn-left":
                 # self.change_lane = False
-                tmp_x = 4
+                tmp_x = 6
                 tmp_y = 0
                 x_offset = np.cos(target_orientation-np.pi/2)*tmp_x - np.sin(target_orientation-np.pi/2)*tmp_y
                 y_offset = np.sin(target_orientation-np.pi/2)*tmp_x + np.cos(target_orientation-np.pi/2)*tmp_y
