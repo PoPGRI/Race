@@ -45,7 +45,7 @@ class WaypointNode:
 
 def run(wn, role_name):
     rate = rospy.Rate(20)  # 20 Hz    
-    pubWaypoint = rospy.Publisher('/carla/%s/waypoints'%role_name, WaypointInfo, queue_size=None)
+    pubWaypoint = rospy.Publisher('/carla/%s/waypoints'%role_name, WaypointInfo, queue_size=1)
     while not rospy.is_shutdown():
         waypoint = wn.getWaypoint()
         pub_waypoint = WaypointInfo()

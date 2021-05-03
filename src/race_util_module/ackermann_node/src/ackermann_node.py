@@ -10,7 +10,7 @@ class AckermannNode:
 
     def __init__(self, role_name='ego_vehicle'):
         self.subControl = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.controlCallback)
-        self.pubControl = rospy.Publisher('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, queue_size=None)
+        self.pubControl = rospy.Publisher('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, queue_size=1)
         self.role_name = role_name
 
     def controlCallback(self, data):

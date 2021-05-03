@@ -21,9 +21,9 @@ class EvaluationNode:
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
         self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
-        self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=None)
-        self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=None)
-        self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=None)
+        self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=1)
+        self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=1)
+        self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=1)
         self.reachedPoints = []
         self.reachedPointsStamped = []
         # self.speedList = []
@@ -163,7 +163,7 @@ class EvaluationNode:
 def run(en, role_name):
     rate = rospy.Rate(20)  # 20 Hz    
     rospy.on_shutdown(en.onShutdown)
-    pubEN = rospy.Publisher('/carla/%s/evaluation'%role_name, EvaluationInfo, queue_size=None)
+    pubEN = rospy.Publisher('/carla/%s/evaluation'%role_name, EvaluationInfo, queue_size=1)
     while not rospy.is_shutdown():
         en.calculateScore()
         info = EvaluationInfo()

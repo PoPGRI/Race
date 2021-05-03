@@ -35,7 +35,7 @@ class LocationModule:
 
 def publisher(location_module, role_name):
     # main function
-    pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=None)
+    pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=1)
     rate = rospy.Rate(20)
     while not location_module.vehicle:
         location_module.find_ego_vehicle()

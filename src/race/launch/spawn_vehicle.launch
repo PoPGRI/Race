@@ -29,7 +29,7 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
-  <!--NOTE Comment the next three lines to remove automatically starting baseline controller-->
+  <!--NOTE Uncomment the next three lines to automatically starting baseline controller-->
   <!-- <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)"/>
   </node> -->
