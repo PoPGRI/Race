@@ -5,9 +5,12 @@ main_nav: true
 ---
 
 The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the "model-agnostic" or the "model-based" options, or both.
+The information about the vehicles will be provided in a configuration file.
 
 ### Model-agnostic option
 In the model-agnostic category, vehicle physics is given by CARLA's vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`.
+
+The vehicles that will be used in the competition are shown in the 'configuration file' section.
 
 
 ### Model-based option
@@ -34,3 +37,27 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 where \\(v\\) and \\(r\\) are the lateral velocity and the second order derivative of the vehicle's yaw angle, and \\(\delta_{f}\\) is the steering command.
 
 \\(f_1\\), \\(f_2\\), \\(f_3\\), \\(a\\), \\(b\\), \\(C_{ \alpha r}\\), \\(C_{ \alpha r}\\), \\(I_{z}\\) and \\(m\\) are parameters corresponding to the vehicle. Please refer to the book "Automotive Control Systems" by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.
+
+The potential parameters for the race are shown in the 'configuration file' section.
+
+### Configuration file
+
+*This information will soon be updated*
+
+There will be a configuration file that includes vehicle information.
+Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.
+
+|Vehicle name    |Vehicle ID              |
+|:--------------:|:----------------------:|
+|BMW Isetta      |vehicle.bmw.isetta      |
+|Tesla cybertruck|vehicle.tesla.cybertruck|
+|                |                        |
+|                |                        |
+
+
+Table for model-based information:
+
+|Parameters   |Vehicle ID          |
+|:-----------:|:------------------:|
+|             |                    |
+|             |                    |

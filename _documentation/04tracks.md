@@ -1,18 +1,28 @@
 ---
 layout: page
-title: Test environments and scoring
+title: Racing environments and scoring
 main_nav: true
 ---
 
-We are providing several test environments with tracks, other vehicles, pedestrians, and static obstacles that the vehicles must avoid. We are also providing a scoring function.
+We are providing several test environments with maps, other vehicles, pedestrians, and static obstacles that the ego vehicle must avoid. We are also providing a scoring function.
+
+# Maps
+
 These test environments will be different than the ones used during the final race.
-Below are two of the tracks that are included with our beta release.
+Below are two of the maps that are included with our beta release.
 
 <img src="/Race/assets/track1.png">
 <img src="/Race/assets/track2.png">
 
+# Scenarios
+
+Scenarios will be constructed from vehicles and pedestrians.
+These vehicles and pedestrians can be either static or dynamic.
+Some example scenarios that the ego vehicle can encounter are a pedestrian crossing the street or congested traffic.
+
 # Evaluation
 
-*We are yet to finalize the scoring function!*
+The evaluation functions is roughly the following:
 
-Roughly, the final will be calculated based on the average speed and completion time of the vehicle. There will be big penalties for hitting obstacles and running offtrack.
+The time that it takes to pass each milestone waypoint is added to the total score. There will be some penalty added for every collision or when the vehicle runs out of bounds.
+The winner of the competition will be the average lowest score over multiple scenarios.

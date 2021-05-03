@@ -3,6 +3,7 @@ layout: page
 title: Updates
 main_nav: false
 ---
+**If you miss the registration deadline, please email us at [graic2021@gmail.com](mailto:graic2021@gmail.com).**
 
 * [CPS Week registration is now open!](https://cps-iot-week2021.isis.vanderbilt.edu/registration.html). Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up.
 * **03/30/2021** - [GRAIC Beta Release v0.1.2](https://github.com/PoPGRI/Race/releases/tag/0.1.2). We have updated the CARLA docker image.

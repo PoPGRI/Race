@@ -187,6 +187,8 @@
       
       <p><p>The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> may change. These rostopics are updated at a rate of 20 Hz.</p>
 
+<p>The perception distance will remained fixed across all the races. This distance is 60m.</p>
+
 <h3 id="dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</h3>
 <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
 <ul>
@@ -246,10 +248,13 @@ The controller module is a simple waypoint following controller. The competitors
       
       <h1>Vehicles</h1>
       
-      <p><p>The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the “model-agnostic” or the “model-based” options, or both.</p>
+      <p><p>The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the “model-agnostic” or the “model-based” options, or both.
+The information about the vehicles will be provided in a configuration file.</p>
 
 <h3 id="model-agnostic-option">Model-agnostic option</h3>
 <p>In the model-agnostic category, vehicle physics is given by CARLA’s vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code>.</p>
+
+<p>The vehicles that will be used in the competition are shown in the ‘configuration file’ section.</p>
 
 <h3 id="model-based-option">Model-based option</h3>
 <p>In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same <code class="highlighter-rouge">ackermann_control</code> or <code class="highlighter-rouge">vehicle_control</code> rostopics above.</p>
@@ -276,21 +281,92 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 <p>where \(v\) and \(r\) are the lateral velocity and the second order derivative of the vehicle’s yaw angle, and \(\delta_{f}\) is the steering command.</p>
 
 <p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha r}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
+
+<p>The potential parameters for the race are shown in the ‘configuration file’ section.</p>
+
+<h3 id="configuration-file">Configuration file</h3>
+
+<p><em>This information will soon be updated</em></p>
+
+<p>There will be a configuration file that includes vehicle information.
+Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Vehicle name</th>
+      <th style="text-align: center">Vehicle ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">BMW Isetta</td>
+      <td style="text-align: center">vehicle.bmw.isetta</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tesla cybertruck</td>
+      <td style="text-align: center">vehicle.tesla.cybertruck</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Table for model-based information:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Parameters</th>
+      <th style="text-align: center">Vehicle ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
 </p>
   </div>
   
   <div>
       
-      <h1>Test environments and scoring</h1>
+      <h1>Racing environments and scoring</h1>
       
-      <p><p>We are providing several test environments with tracks, other vehicles, pedestrians, and static obstacles that the vehicles must avoid. We are also providing a scoring function.
-These test environments will be different than the ones used during the final race.</p>
+      <p><p>We are providing several test environments with maps, other vehicles, pedestrians, and static obstacles that the ego vehicle must avoid. We are also providing a scoring function.</p>
+
+<h1 id="maps">Maps</h1>
+
+<p>These test environments will be different than the ones used during the final race.
+Below are two of the maps that are included with our beta release.</p>
+
+<p><img src="/Race/assets/track1.png" />
+<img src="/Race/assets/track2.png" /></p>
+
+<h1 id="scenarios">Scenarios</h1>
+
+<p>Scenarios will be constructed from vehicles and pedestrians.
+These vehicles and pedestrians can be either static or dynamic.
+Some example scenarios that the ego vehicle can encounter are a pedestrian crossing the street or congested traffic.</p>
 
 <h1 id="evaluation">Evaluation</h1>
 
-<p><em>We are yet to finalize the scoring function!</em></p>
+<p>The evaluation functions is roughly the following:</p>
 
-<p>Roughly, the final will be calculated based on the average speed and completion time of the vehicle. There will be big penalties for hitting obstacles and running offtrack.</p>
+<p>The time that it takes to pass each milestone waypoint is added to the total score. There will be some penalty added for every collision or when the vehicle runs out of bounds.
+The winner of the competition will be the average lowest score over multiple scenarios.</p>
 </p>
   </div>
   
