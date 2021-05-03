@@ -139,6 +139,8 @@ class EvaluationNode:
     def onShutdown(self):
         fname = 'score_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
         # fname_trajectory = 'trajectory_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
+        if not self.reachEnd:
+            self.score = 'infinity'
         rospy.loginfo("Final score: {}".format(self.score))
         # fname = 'score_h'
         # print("hit: ", self.hitObjects)
