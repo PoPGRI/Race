@@ -14,4 +14,5 @@
 **/devel/
 **/.vscode/*
 **/score_*
+**/trajectory_*
 .catkin_workspace

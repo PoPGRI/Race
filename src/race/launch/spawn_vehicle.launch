@@ -29,9 +29,21 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
+  <!--NOTE Uncomment the next three lines to automatically starting baseline controller-->
+  <!-- <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node> -->
+
   <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
+  </include>
+
+  <include file="$(find scenario_node)/launch/scenario_node.launch">
+    <arg name='host' value='$(arg host)'/>
+    <arg name='port' value='$(arg port)'/>
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
   </include>
 
   <group if="$(arg model_free)">
@@ -74,6 +86,7 @@
     <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
+    <arg name='model_free' value='$(arg model_free)' />
   </include>
 
   <include file="$(find waypoint_node)/launch/waypoint_node.launch">

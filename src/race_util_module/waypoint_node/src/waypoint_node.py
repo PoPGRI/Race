@@ -1,4 +1,5 @@
 import rospy 
+import rospkg
 import numpy as np
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import String
@@ -12,7 +13,10 @@ class WaypointNode:
 
     def __init__(self, world, role_name='ego_vehicle', track='t1_tripe'):
         self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
-        self.waypoint_list = pickle.load(open(track,'rb'))
+        rospack = rospkg.RosPack()
+        fpath = rospack.get_path('config_node')
+        self.waypoint_list = pickle.load(open(fpath+'/'+track,'rb'))
+        self.waypoint_list.pop(0)
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()

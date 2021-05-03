@@ -10,7 +10,7 @@ from graic_msgs.msg import ObstacleList
 from graic_msgs.msg import BBSingleInfo
 from geometry_msgs.msg import Vector3
 class PerceptionModule():
-    def __init__(self, carla_world, role_name, radius=15):
+    def __init__(self, carla_world, role_name, radius=60):
         self.sensing_radius = radius # default ?????
         self.world = carla_world
         self.vehicle = None

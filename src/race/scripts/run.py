@@ -1,7 +1,7 @@
 import os
 import sys
 # import argparse
-
+import rospkg
 import subprocess
 # from subprocess import DEVNULL, STDOUT, check_call
 import os, signal
@@ -12,13 +12,13 @@ import numpy as np
 import rospy
 from graic_msgs.msg import WaypointInfo
 
-four_wheel_vehicle = ['vehicle.audi.a2','vehicle.tesla.model3','vehicle.bmw.grandtourer','vehicle.audi.etron','vehicle.seat.leon','vehicle.mustang.mustang','vehicle.tesla.cybertruck','vehicle.lincoln.mkz2017','vehicle.lincoln2020.mkz2020','vehicle.dodge_charger.police','vehicle.audi.tt','vehicle.jeep.wrangler_rubicon','vehicle.chevrolet.impala','vehicle.nissan.patrol','vehicle.nissan.micra','vehicle.mercedesccc.mercedesccc','vehicle.mini.cooperst','vehicle.chargercop2020.chargercop2020','vehicle.toyota.prius','vehicle.mercedes-benz.coupe','vehicle.citroen.c3','vehicle.charger2020.charger2020']
+four_wheel_vehicle = ['vehicle.audi.a2','vehicle.tesla.model3','vehicle.bmw.grandtourer','vehicle.audi.etron','vehicle.seat.leon','vehicle.mustang.mustang','vehicle.tesla.cybertruck','vehicle.lincoln.mkz2017','vehicle.lincoln2020.mkz2020','vehicle.dodge_charger.police','vehicle.audi.tt','vehicle.jeep.wrangler_rubicon','vehicle.chevrolet.impala','vehicle.nissan.patrol','vehicle.nissan.micra','vehicle.mercedesccc.mercedesccc','vehicle.mini.cooperst','vehicle.chargercop2020.chargercop2020','vehicle.toyota.prius','vehicle.mercedes-benz.coupe','vehicle.citroen.c3','vehicle.charger2020.charger2020', 'vehicle.bmw.isetta']
 two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.gazelle.omafiets','vehicle.yamaha.yzf','vehicle.harley-davidson.low_rider','vehicle.diamondback.century']
 
 car_name_prefix = 'hero' # NOTE 
 
 class CommandNode:
-    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=False):
+    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=True):
         self.host = host 
         self.port = port
         self.N = N 
@@ -44,7 +44,9 @@ class CommandNode:
         client = carla.Client(self.host, self.port)
         world = client.get_world()
         spectator = world.get_spectator()
-        center = np.mean([v['init_pose'][:3] for v in vehicles], axis=0)
+        # center = np.mean([self.vehicles[role_name]['init_pose'][:3] for role_name in self.vehicles], axis=0)
+        # print(center)
+        center = [164,11,4]
         transform = carla.Transform(carla.Location(x=center[0], y=-center[1], z=center[2] + 40),
                                     carla.Rotation(pitch=-89, yaw=-62.5))
         spectator.set_transform(transform)
@@ -69,11 +71,11 @@ class CommandNode:
 
             if self.model_type != "model_free" and self.model_type != "model_based":
                 rospy.logwarn("Wrong choice of model type %s; use model_free as default"%self.model_type)
-                model_type = "model_free"
+                self.model_type = "model_free"
 
-            if self.model_type == "model_based" and self.track == "t2_triple":
-                rospy.logerr("Please don't chooce model_based vehicle when running track2")
-                raise rospy.exceptions.ROSInterruptException
+            # if self.model_type == "model_based" and self.track == "t2_triple":
+            #     rospy.logerr("Please don't chooce model_based vehicle when running track2")
+            #     raise rospy.exceptions.ROSInterruptException
 
             if self.model_type == "model_free":
                 v['model_free'] = 1
@@ -84,13 +86,17 @@ class CommandNode:
                 init_pose = [164,11+i*10,4,0,0,-180]
             elif self.track == "t2_triple":
                 init_pose = [95.5,107+i*10,4,0,0,-136]
+            elif self.track == "track5":
+                init_pose = [215.90, 202.04+i*10,4,0,0,82]
+            else:
+                init_pose = [0,0,4,0,0,0]
             v['init_pose'] = init_pose
             obj = obj.replace('[[spawn_point]]', '"x": %f, "y": %f, "z": %f, "roll": %f, "pitch": %f, "yaw": %f'%tuple(init_pose))
 
             v['track'] = self.track
 
             if self.num_wheels == 4 or self.model_type=="model_based":
-                vehicle = random.choice(four_wheel_vehicle)
+                vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
             elif self.num_wheels == 2:
                 vehicle = random.choice(two_wheel_vehicle)
             else:
@@ -104,6 +110,14 @@ class CommandNode:
                 f.write(obj)
 
             v['finished'] = False
+
+            rospack = rospkg.RosPack()
+            config_path = rospack.get_path('config_node')
+            fname = config_path + '/' + 'race_config'
+            f = open(fname, 'w')
+            f.write((vehicle+'\n'))
+            f.write(str(60))
+            f.close()
 
             cmd = ('roslaunch race spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, v['model_free'], v['launch_log']])
             # The os.setsid() is passed in the argument preexec_fn so
@@ -129,7 +143,7 @@ class CommandNode:
         if count == self.N:
             self.shut_down()
 def run(cn):
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(20)
     rospy.on_shutdown(cn.shut_down)
 
     while not rospy.is_shutdown():
@@ -154,6 +168,16 @@ if __name__ == '__main__':
     time.sleep(10)
     try: 
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
+
+        # res = subprocess.run(["python3",
+        #     "/home/carla/scenario_runner/scenario_runner.py",
+        #     "--route",
+        #     "/home/carla/scenario_runner/srunner/data/routes_race.xml", 
+        #     "/home/carla/scenario_runner/srunner/data/scenario_race.json",
+        #     "0", 
+        #     "--output"
+        # ], capture_output=True)
+
         run(cn)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("CommandNode shut down")

@@ -18,7 +18,7 @@ from cv_bridge import CvBridge, CvBridgeError
 class VideoOutput:
     def __init__(self, role_name='ego_vehicle'):
         self.bridge = CvBridge()
-        self.videoPub = rospy.Publisher("/carla/%s/video_output"%role_name, Image, queue_size=10)
+        self.videoPub = rospy.Publisher("/carla/%s/video_output"%role_name, Image, queue_size=1)
         self.videoSub = rospy.Subscriber("/carla/%s/rgb_view/image"%role_name, Image, self.imageCallback)
         self.scoreSub = rospy.Subscriber("/carla/%s/score"%role_name, Float32, self.scoreCallback)
         self.reachedSub = rospy.Subscriber("/carla/%s/reached"%role_name, String, self.reachedCallback)

@@ -63,6 +63,7 @@ class ModelBasedVehicle:
         self.role_name = role_name
         client = carla.Client(host, port)
         self.world = client.get_world()
+        self.map = self.world.get_map()
         self.vehicle_dyn = VehicleDynamics()
         self.state = None
         self.input = [0, 0]
@@ -76,11 +77,13 @@ class ModelBasedVehicle:
         self.find_ego_vehicle()
         self.init_state()
 
-        subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
+        subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_control'%role_name, AckermannDrive, self.ackermannCallback)
 
     def init_state(self):
+        while not self.vehicle:
+            self.find_ego_vehicle()
         vehicle_transform = self.vehicle.get_transform()
         x = vehicle_transform.location.x
         y = vehicle_transform.location.y
@@ -145,9 +148,12 @@ class ModelBasedVehicle:
         # self.vehicle.set_target_angular_velocity(av)
 
         vehicle_transform = self.vehicle.get_transform()
+        # vehicle_transform.location.x = self.state[0] + v.x * dt
+        # vehicle_transform.location.y = self.state[1] + v.y * dt
+        # vehicle_transform.location.z = self.map.get_waypoint(vehicle_transform.location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.location.z
         vehicle_transform.location.x = self.state[0]# + v.x * dt
         vehicle_transform.location.y = self.state[1]# + v.y * dt
-        vehicle_transform.location.z = 0
+        vehicle_transform.location.z = self.map.get_waypoint(vehicle_transform.location, project_to_road=True, lane_type=carla.LaneType.Driving).transform.location.z
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
