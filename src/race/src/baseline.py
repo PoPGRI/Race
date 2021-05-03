@@ -276,7 +276,6 @@ if __name__ == "__main__":
     sensing_radius = race_config.readline().decode('ascii').strip()
     role_name = 'ego_vehicle'
     rospy.init_node("baseline")
-    # role_name = 'hero0'
     try:
         run_model(role_name)
     except rospy.exceptions.ROSInterruptException:
