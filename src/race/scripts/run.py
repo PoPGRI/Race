@@ -1,7 +1,7 @@
 import os
 import sys
 # import argparse
-
+import rospkg
 import subprocess
 # from subprocess import DEVNULL, STDOUT, check_call
 import os, signal
@@ -110,6 +110,14 @@ class CommandNode:
                 f.write(obj)
 
             v['finished'] = False
+
+            rospack = rospkg.RosPack()
+            config_path = rospack.get_path('config_node')
+            fname = config_path + '/' + 'race_config'
+            f = open(fname, 'w')
+            f.write((vehicle+'\n'))
+            f.write(str(60))
+            f.close()
 
             cmd = ('roslaunch race spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, v['model_free'], v['launch_log']])
             # The os.setsid() is passed in the argument preexec_fn so

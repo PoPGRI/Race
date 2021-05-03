@@ -29,9 +29,10 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
-  <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
+  <!--NOTE Comment the next three lines to remove automatically starting baseline controller-->
+  <!-- <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)"/>
-  </node>
+  </node> -->
 
   <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">

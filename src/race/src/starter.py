@@ -1,4 +1,5 @@
 import rospy
+import rospkg
 import numpy as np
 import argparse
 import time
@@ -76,15 +77,14 @@ def run_model(role_name):
         controlModule.execute()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Running vechile")
+    roskpack = rospkg.RosPack() 
+    config_path = roskpack.get_path('config_node')
+    race_config = open(config_path+'/'+'race_config', 'rb')
+    vehicle_typeid = race_config.readline().decode('ascii').strip()
+    sensing_radius = race_config.readline().decode('ascii').strip()
+    role_name = 'ego_vehicle'
 
-    role_name_default = 'ego_vehicle'
-
-    parser.add_argument('--name', type=str, help='Rolename of the vehicle', default=role_name_default)
-    argv = parser.parse_args()
-    role_name = argv.name
     rospy.init_node("baseline")
-    role_name = 'hero0'
     try:
         run_model(role_name)
     except rospy.exceptions.ROSInterruptException:
