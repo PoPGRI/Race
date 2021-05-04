@@ -7,7 +7,7 @@ main_nav: false
 
 * **05/03/2021** [Pre-submission](https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link). You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.
 
-* **05/03/2021** [GRAIC Beta Release v0.2.0](https://github.com/PoPGRI/Race/releases/tag/0.1.2). We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.
+* **05/03/2021** [GRAIC Beta Release v0.2.1](https://github.com/PoPGRI/Race/releases/tag/0.2.1). We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.
 
 * [CPS Week registration is now open!](https://cps-iot-week2021.isis.vanderbilt.edu/registration.html). Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up.
 * **03/30/2021** - [GRAIC Beta Release v0.1.2](https://github.com/PoPGRI/Race/releases/tag/0.1.2). We have updated the CARLA docker image.
