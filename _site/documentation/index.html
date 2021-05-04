@@ -199,15 +199,13 @@
 
 <p>These obstacles are published to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
 
-<h3 id="static-obstacles-objects-static">Static obstacles objects (<span style="color:red">Static</span>)</h3>
-<p>The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:</p>
-<ul>
-  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
-  <li>Type: The type of obstacle detected (ie. “sidewalk”, “fence”, “building”, etc.)</li>
-  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This remains the same across all time steps.</li>
-</ul>
+<!-- ### Static obstacles objects (<span style="color:red">Static</span>)
+The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
+- Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
+- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
+- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
 
-<p>These objects are also published to the rostopic <code class="highlighter-rouge">obstacles</code>.</p>
+These objects are also published to the rostopic `obstacles`. -->
 
 <h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
 <p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
@@ -219,6 +217,8 @@ The position is given as [x, y, z] in ENU coordinates. The rotation is given as 
 <p>The lane markers (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
 
 <p>The lane markers are published to the rostopic <code class="highlighter-rouge">lane_markers</code>.</p>
+
+<p>The edges of the road are also included. The left edge is provided in <code class="highlighter-rouge">left_lane_markers</code> and the right edge is provided in <code class="highlighter-rouge">right_lane_markers</code>.</p>
 
 <h3 id="milestones">Milestones</h3>
 <p>These are the waypoints along the track that the vehicle must pass. These milestones are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.</p>
@@ -280,7 +280,7 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 
 <p>where \(v\) and \(r\) are the lateral velocity and the second order derivative of the vehicle’s yaw angle, and \(\delta_{f}\) is the steering command.</p>
 
-<p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha r}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
+<p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha f}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
 
 <p>The potential parameters for the race are shown in the ‘configuration file’ section.</p>
 
@@ -308,12 +308,12 @@ Below is a table with information on the different vehicles for the model-agnost
       <td style="text-align: center">vehicle.tesla.cybertruck</td>
     </tr>
     <tr>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
+      <td style="text-align: center">Mercedes Benz</td>
+      <td style="text-align: center">vehicle.mercedes-benz.coupe</td>
     </tr>
     <tr>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
+      <td style="text-align: center">Kawasaki Ninja</td>
+      <td style="text-align: center">vehicle.kawasaki.ninja</td>
     </tr>
   </tbody>
 </table>
@@ -323,18 +323,30 @@ Below is a table with information on the different vehicles for the model-agnost
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">Parameters</th>
+      <th style="text-align: center">\(m\)</th>
+      <th style="text-align: center">\(f_1\)</th>
+      <th style="text-align: center">\(f_2\)</th>
+      <th style="text-align: center">\(f_3\)</th>
+      <th style="text-align: center">\(a\)</th>
+      <th style="text-align: center">\(b\)</th>
+      <th style="text-align: center">\(C_{\alpha f}\)</th>
+      <th style="text-align: center">\(C_{\alpha r}\)</th>
+      <th style="text-align: center">\(I_z\)</th>
       <th style="text-align: center">Vehicle ID</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
+      <td style="text-align: center">1800</td>
+      <td style="text-align: center">40.59</td>
+      <td style="text-align: center">0.01</td>
+      <td style="text-align: center">74.63</td>
+      <td style="text-align: center">1.2</td>
+      <td style="text-align: center">1.65</td>
+      <td style="text-align: center">1.4e5</td>
+      <td style="text-align: center">1.2e5</td>
+      <td style="text-align: center">3270</td>
+      <td style="text-align: center">vehicle.model_based.1</td>
     </tr>
   </tbody>
 </table>

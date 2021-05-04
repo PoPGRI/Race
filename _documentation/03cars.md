@@ -36,7 +36,7 @@ C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
 
 where \\(v\\) and \\(r\\) are the lateral velocity and the second order derivative of the vehicle's yaw angle, and \\(\delta_{f}\\) is the steering command.
 
-\\(f_1\\), \\(f_2\\), \\(f_3\\), \\(a\\), \\(b\\), \\(C_{ \alpha r}\\), \\(C_{ \alpha r}\\), \\(I_{z}\\) and \\(m\\) are parameters corresponding to the vehicle. Please refer to the book "Automotive Control Systems" by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.
+\\(f_1\\), \\(f_2\\), \\(f_3\\), \\(a\\), \\(b\\), \\(C_{ \alpha r}\\), \\(C_{ \alpha f}\\), \\(I_{z}\\) and \\(m\\) are parameters corresponding to the vehicle. Please refer to the book "Automotive Control Systems" by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.
 
 The potential parameters for the race are shown in the 'configuration file' section.
 
@@ -47,17 +47,16 @@ The potential parameters for the race are shown in the 'configuration file' sect
 There will be a configuration file that includes vehicle information.
 Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.
 
-|Vehicle name    |Vehicle ID              |
-|:--------------:|:----------------------:|
-|BMW Isetta      |vehicle.bmw.isetta      |
-|Tesla cybertruck|vehicle.tesla.cybertruck|
-|                |                        |
-|                |                        |
+|Vehicle name    |Vehicle ID                 |
+|:--------------:|:-------------------------:|
+|BMW Isetta      |vehicle.bmw.isetta         |
+|Tesla cybertruck|vehicle.tesla.cybertruck   |
+|Mercedes Benz   |vehicle.mercedes-benz.coupe|
+|Kawasaki Ninja  |vehicle.kawasaki.ninja     |
 
 
 Table for model-based information:
 
-|Parameters   |Vehicle ID          |
-|:-----------:|:------------------:|
-|             |                    |
-|             |                    |
+|\\(m\\)|\\(f_1\\)|\\(f_2\\)|\\(f_3\\)|\\(a\\)|\\(b\\)|\\(C_{\alpha f}\\)|\\(C_{\alpha r}\\)|\\(I_z\\)|Vehicle ID           |
+|:-----:|:-------:|:-------:|:-------:|:-----:|:-----:|:----------------:|:----------------:|:-------:|:-------------------:|
+|1800   |40.59    |0.01     |74.63    |1.2    |1.65   |1.4e5             |1.2e5             |3270     |vehicle.model_based.1|
