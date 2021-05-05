@@ -11,6 +11,7 @@ The perception distance will remained fixed across all the races. This distance 
 ### Dynamic obstacles (<span style="color:blue">Dynamic</span>)
 The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.
 - Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
+- 
 - Type: The type of obstacle detected (ie. “pedestrian”, “car”, "motorcycle", etc.)
 - ID: An identifier for each obstacle (ie.  "1”, etc.). This identifier remains the same across all time steps.
 
