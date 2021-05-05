@@ -47,3 +47,14 @@ The milestones are published to the rostopic `waypoints`.
 
 From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
 There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)
+
+### Perception rostopics
+
+Here is a table with the rostopics associated with perception and what they return.
+
+|Name                |Type        |Description                                                                                   |
+|:------------------:|:----------:|:---------------------------------------------------------------------------------------------|
+|`obstacles`         |ObstacleList|Dynamic obstacle information                                                                  |
+|`lane_markers`      |LaneInfo    |Left, center, and right lane markers that define the lane that the ego vehicle is currently on|
+|`left_lane_markers` |LaneList    |Lane markers that define the outermost left edge                                              |
+|`right_lane_markers`|LaneList    |Lane markers that define the outermost right edge                                             |
