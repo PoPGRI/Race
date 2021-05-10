@@ -1,4 +1,5 @@
 import rospy
+import rospkg
 import numpy as np
 import argparse
 import time
@@ -23,7 +24,7 @@ class VehicleDecision():
         self.target_y = None
         self.change_lane = False
         self.change_lane_wp_idx = 0
-        self.detect_dist = 15
+        self.detect_dist = 30
         self.speed = 20
 
         self.reachEnd = False
@@ -114,7 +115,7 @@ class VehicleDecision():
                     self.vehicle_state = "stop"
 
         if self.vehicle_state == "stop":
-            self.speed = 0
+            self.speed = 5
         else:
             self.speed = 20
 
@@ -139,7 +140,7 @@ class VehicleDecision():
             
             if self.vehicle_state == "turn-right":
                 # self.change_lane = False
-                tmp_x = 4
+                tmp_x = 6
                 tmp_y = 0
                 x_offset = np.cos(target_orientation+np.pi/2)*tmp_x - np.sin(target_orientation+np.pi/2)*tmp_y
                 y_offset = np.sin(target_orientation+np.pi/2)*tmp_x + np.cos(target_orientation+np.pi/2)*tmp_y
@@ -147,7 +148,7 @@ class VehicleDecision():
                 self.target_y = self.target_y + y_offset
             elif self.vehicle_state == "turn-left":
                 # self.change_lane = False
-                tmp_x = 4
+                tmp_x = 6
                 tmp_y = 0
                 x_offset = np.cos(target_orientation-np.pi/2)*tmp_x - np.sin(target_orientation-np.pi/2)*tmp_y
                 y_offset = np.sin(target_orientation-np.pi/2)*tmp_x + np.cos(target_orientation-np.pi/2)*tmp_y
@@ -268,15 +269,13 @@ def run_model(role_name):
         controlModule.execute(currState, refState)
 
 if __name__ == "__main__":
-    # parser = argparse.ArgumentParser(description="Running vechile")
-
-    # role_name_default = 'ego_vehicle'
-
-    # parser.add_argument('--name', type=str, help='Rolename of the vehicle', default=role_name_default)
-    # argv = parser.parse_args()
+    roskpack = rospkg.RosPack() 
+    config_path = roskpack.get_path('config_node')
+    race_config = open(config_path+'/'+'race_config', 'rb')
+    vehicle_typeid = race_config.readline().decode('ascii').strip()
+    sensing_radius = race_config.readline().decode('ascii').strip()
     role_name = 'ego_vehicle'
     rospy.init_node("baseline")
-    # role_name = 'hero0'
     try:
         run_model(role_name)
     except rospy.exceptions.ROSInterruptException:

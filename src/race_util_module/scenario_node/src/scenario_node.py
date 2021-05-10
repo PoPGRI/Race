@@ -1,4 +1,5 @@
 import rospy 
+import rospkg
 import numpy as np
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import String
@@ -51,12 +52,12 @@ class ScenarioConfig:
         return self.scenario_config
 
 class UnitScenarioMap(Enum):
-    # StationaryObjectCrossing = "ScenarioStationaryObject"
-    # DynamicObjectCrossing = "ScenarioDynamicObject"
-    # BadMerge = "ScenarioBM"
+    StationaryObjectCrossing = "ScenarioStationaryObject"
+    DynamicObjectCrossing = "ScenarioDynamicObject"
+    BadMerge = "ScenarioBM"
     GhostCutIn = "ScenarioGhost"
-    # LeadCutIn = "ScenarioLeadCut"
-    # LeadSlowDown = "ScenarioLeadSlow"
+    LeadCutIn = "ScenarioLeadCut"
+    LeadSlowDown = "ScenarioLeadSlow"
 
 
 class ScenarioArguments:
@@ -93,13 +94,15 @@ class ScenarioArguments:
         self.scenario_config = scenario_config
 
 class ScenarioList:
-    def __init__(self):
+    def __init__(self, track_id):
         self.unitScenarios = []
-        self.availableScenarios = []
+        # self.availableScenarios = []
 
         for scenario in UnitScenarioMap:
             self.unitScenarios.append(scenario)
-            self.availableScenarios.append(scenario)
+            # self.availableScenarios.append(scenario)
+        track_id-=1
+        self.unitScenarios = self.unitScenarios[track_id:] + self.unitScenarios[:track_id]
         self.compositeScenarios = list(permutations(self.unitScenarios, 4))
     
     def getUnitScenario(self):
@@ -123,16 +126,16 @@ class ScenarioList:
 
     def getCompositeScenario(self):
         # NOTE composite heurstics can be applied here
-        # if self.compositeScenarios:
-        #     # return list(np.random.choice(self.availableScenarios, 6))
-        #     scenario = self.compositeScenarios.pop(0)
-        #     return scenario
-        # else:
-        return None
+        if self.compositeScenarios:
+            # return list(np.random.choice(self.availableScenarios, 6))
+            scenario = self.compositeScenarios.pop(0)
+            return scenario
+        else:
+            return None
 
 class ScenarioGenerator:
-    def __init__(self, config):
-        self.scenarioList = ScenarioList()
+    def __init__(self, track_id):
+        self.scenarioList = ScenarioList(track_id)
     
     def generateScenario(self, result=None):
         if not result:
@@ -150,7 +153,11 @@ class ScenarioNode:
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
-        self.waypoint_list = pickle.load(open(track,'rb'))
+        rospack = rospkg.RosPack()
+        fpath = rospack.get_path('config_node')
+        self.waypoint_list = pickle.load(open(fpath+'/'+track,'rb'))
+        track_id = self.waypoint_list.pop(0)
+        # self.waypoint_list = pickle.load(open(track,'rb'))
         self.map = world.get_map()
         self.ego_vehicle = None
         self.track = track
@@ -161,7 +168,7 @@ class ScenarioNode:
         self.port = port
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
-        self.scenarioGenerator = ScenarioGenerator(None)
+        self.scenarioGenerator = ScenarioGenerator(track_id)
 
         self.findEgoVehicle()
 
