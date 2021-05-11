@@ -86,6 +86,10 @@ class CommandNode:
                 init_pose = [164,11+i*10,4,0,0,-180]
             elif self.track == "t2_triple":
                 init_pose = [95.5,107+i*10,4,0,0,-136]
+            elif self.track == "t3":
+                init_pose = [77.0, 114+i*10,4,0,0,-18]
+            elif self.track == "t4":
+                init_pose = [162.2, 88.4+i*10,4,0,0,-55]
             elif self.track == "track5":
                 init_pose = [215.90, 202.04+i*10,4,0,0,82]
             else:
