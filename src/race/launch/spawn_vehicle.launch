@@ -29,9 +29,9 @@
     <param name="role_name" value="$(arg role_name)"/>
   </node>
 
-  <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
+  <!-- <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)"/>
-  </node>
+  </node> -->
 
   <!-- control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
