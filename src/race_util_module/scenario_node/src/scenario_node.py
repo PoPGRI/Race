@@ -61,7 +61,7 @@ class ScenarioConfig:
         return self.scenario_config
 
 class UnitScenarioMap(Enum):
-    StationaryObjectCrossing = "ScenarioStationaryObject"
+    # StationaryObjectCrossing = "ScenarioStationaryObject"
     DynamicObjectCrossing = "ScenarioDynamicObject"
     BadMerge = "ScenarioBM"
     GhostCutIn = "ScenarioGhost"
