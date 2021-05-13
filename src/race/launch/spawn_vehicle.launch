@@ -10,6 +10,7 @@
   <arg name="track" default="t1_triple" />
   <arg name="model_free" default="1" />
   <arg name="offscreen" default="false" />
+  <arg name="scenario" default="true" />
 
   <!-- the ego vehicle, that will be controlled by an agent (e.g. carla_ad_agent) -->
   <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
@@ -38,12 +39,14 @@
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
-  <include file="$(find scenario_node)/launch/scenario_node.launch">
-    <arg name='host' value='$(arg host)'/>
-    <arg name='port' value='$(arg port)'/>
-    <arg name='role_name' value='$(arg role_name)' />
-    <arg name='track' value='$(arg track)' />
-  </include>
+  <group if="$(arg scenario)">
+    <include file="$(find scenario_node)/launch/scenario_node.launch">
+      <arg name='host' value='$(arg host)'/>
+      <arg name='port' value='$(arg port)'/>
+      <arg name='role_name' value='$(arg role_name)' />
+      <arg name='track' value='$(arg track)' />
+    </include>
+  </group>
 
   <group if="$(arg model_free)">
     <include file="$(find ackermann_node)/launch/ackermann_node.launch">

@@ -19,8 +19,8 @@ def rk4(dyn, state, input, dt):
 class VehicleDynamics(object):
     def __init__(self):
         super(VehicleDynamics, self).__init__()
-        self.m = 1500.0
-        self.f0 = 100.0
+        self.m = 1800.0
+        self.f0 = 40.59
 
     def throttle_curve(self, thr):
         return 0.7 * 9.81 * self.m * thr + self.f0
@@ -32,15 +32,15 @@ class VehicleDynamics(object):
         # INPUTS: state = [x,y,u,v,Psi,r] --- logitude velocity, lateral velocity, yaw angle and yaw angular velocity
         #         input = [f_tra, delta] --- traction force and steering input
         # constants
-        a = 1.14 # distance to front axie
-        L = 2.54
+        a = 1.2 # distance to front axie
+        L = 2.84
         m = self.m # mass
-        Iz = 2420.0
-        C_af = 44000.0*2
-        C_ar = 47000.0*2
-        b = L-a
-        f1 = 0.1
-        f2 = 0.01
+        Iz = 3270.0
+        C_af = 1.4e5
+        C_ar = 1.2e5
+        b = 1.65
+        f1 = 0.01
+        f2 = 74.63
         f0 = self.f0
         x,y,u,v,Psi,r = state[0],state[1],state[2],state[3],state[4],state[5]
         f_tra, delta = input[0],input[1]
