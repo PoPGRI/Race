@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from operator import le
+from pickle import NONE, TRUE
 import numpy as np
 import carla
 import rospy
@@ -16,7 +18,11 @@ class PerceptionModule():
         self.vehicle = None
         self.role_name = role_name
         self.find_ego_vehicle()
-        
+    
+    def get_vehicle_location(self):
+        vehicle = self.vehicle
+        vehicle_loc = vehicle.get_location()
+        return vehicle_loc
     # find ego vehicle
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
@@ -117,7 +123,6 @@ class PerceptionModule():
                 filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id, env_bb.transform.location, env_bb.bounding_box))
         return filtered_obstacles
     # get set of waypoints separated by parameter -- distance -- along the lane
-    # reference: https://github.com/carla-simulator/carla/issues/1254
     def get_lane_markers(self, distance=0.5, num_of_points=20):
         if self.vehicle == None:
             self.find_ego_vehicle()
@@ -143,7 +148,7 @@ class PerceptionModule():
         vehicle_location = vehicle.get_location()
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         left_waypoint = cur_waypoint.get_left_lane()
-        if left_waypoint == None:
+        if left_waypoint is None:
             return None
         waypoints = []
         for i in range(num_of_points):
@@ -158,32 +163,54 @@ class PerceptionModule():
         vehicle_location = vehicle.get_location()
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         right_waypoint = cur_waypoint.get_right_lane()
-        if right_waypoint == None:
+        if right_waypoint is None:
             return None
         waypoints = []
         for i in range(num_of_points):
             waypoints.extend(right_waypoint.next((i+1)*distance))
         return waypoints
-# helper function for calculating lane markers
-# approximate the locations of lane markers by the assumptions: 
-# 1. the lane markers have the same z coordinates as the current location 
-# 2. the vector pointing from cur_loc to any one of the lane marker is perpendicular to the vector pointing from cur_loc to the next way point ahead
-def get_markers(cur_loc, v, w):
-    x = v.x
-    y = v.y
-    z = v.z
-    m1 = np.sqrt((w*w*y*y)/4/(x*x+y*y))
-    n1 = (-x/y)*m1
-    m2 = -m1
-    n2 = (-x/y)*m2
-    marker1 = cur_loc + carla.Location(m1, n1, 0)
-    marker2 = cur_loc + carla.Location(m2, n2, 0)
-    x1 = np.array([marker1.x, marker1.y, marker1.z])
-    x2 = np.array([x, y, z])
-    if np.cross(x1, x2)[2] > 0:
-        return (marker1, marker2)
-    else:
-        return (marker2, marker1)
+    def get_left_boundary_lane_center_markers(self, distance=0.5, num_of_points=20):
+        cur_loc = self.get_vehicle_location()
+        carla_map = self.world.get_map()
+        cur_waypoint = carla_map.get_waypoint(cur_loc)
+        left_waypoint_tmp = cur_waypoint.get_left_lane()
+        left_waypoint = None
+        while left_waypoint_tmp is not None:
+            left_waypoint = left_waypoint_tmp
+            left_waypoint_tmp = left_waypoint_tmp.get_left_lane()
+        if left_waypoint is None:
+            return None
+        waypoints = []
+        for i in range(num_of_points):
+            waypoints.extend(left_waypoint.next((i+1)*distance))
+        return waypoints
+    def get_right_boundary_lane_center_markers(self, distance=0.5, num_of_points=20):
+        cur_loc = self.get_vehicle_location()
+        carla_map = self.world.get_map()
+        cur_waypoint = carla_map.get_waypoint(cur_loc)
+        right_waypoint_tmp = cur_waypoint.get_left_lane()
+        right_waypoint = None
+        while right_waypoint_tmp is not None:
+            right_waypoint = right_waypoint_tmp
+            right_waypoint_tmp = right_waypoint_tmp.get_right_lane()
+        if right_waypoint is None:
+            return None
+        waypoints = []
+        for i in range(num_of_points):
+            waypoints.extend(right_waypoint.next((i+1)*distance))
+        return waypoints
+def get_right_marker(cur_transform, width):
+    vec = cur_transform.get_right_vector()
+    vec_normalized = vec/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
+    cur_loc = cur_transform.location
+    approx_right_marker = cur_loc + (width/2)*vec_normalized
+    return carla.Location(approx_right_marker.x, approx_right_marker.y, approx_right_marker.z)
+def get_left_marker(cur_transform, width):
+    vec = cur_transform.get_right_vector()
+    vec_normalized = vec/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
+    cur_loc = cur_transform.location
+    approx_left_marker = cur_loc - (width/2)*vec_normalized
+    return carla.Location(approx_left_marker.x, approx_left_marker.y, approx_left_marker.z)
 # helper function for creating lane markers information
 def get_marker_info(loc, rot):
     mark_loc = Vector3()
@@ -195,8 +222,7 @@ def get_marker_info(loc, rot):
     mark_rot.y = rot.yaw
     mark_rot.z = rot.roll
     return (mark_loc, mark_rot)
-
-def fill_marker_msg(lp, percep_mod, visualize=True):
+def fill_marker_msg(lp, percep_mod, visualize=True, side=0):
     marker_msg = LaneInfo()
     marker_center_list = LaneList()
     marker_left_list = LaneList()
@@ -210,40 +236,25 @@ def fill_marker_msg(lp, percep_mod, visualize=True):
         marker_msg.lane_state = abs(p.lane_id)
         marker_center_list.location.append(mark_loc)
         marker_center_list.rotation.append(mark_rot)
+        if side == 0:
+            percep_mod.world.debug.draw_point(loc, life_time=1)
         # draw left and right lane markers
-        width = p.lane_width
-        next_p = None
-        if i != len(lp) - 1:
-            next_p = lp[i+1]
-            vec = next_p.transform.location - loc
-            mark1 = carla.Location(loc.x-width/2, loc.y,loc.z)
-            mark2 = carla.Location(loc.x+width/2, loc.y,loc.z)
-            if vec.y == 0:
-                mark_loc, mark_rot = get_marker_info(mark1, rot)
-                marker_left_list.location.append(mark_loc)
-                marker_left_list.rotation.append(mark_rot)
-                mark_loc, mark_rot = get_marker_info(mark2, rot)
-                marker_right_list.location.append(mark_loc)
-                marker_right_list.rotation.append(mark_rot)
-                if visualize:
-                    percep_mod.world.debug.draw_point(mark1,life_time=1)
-                    percep_mod.world.debug.draw_point(mark2,life_time=1)
-            else:    
-                mark1, mark2 = get_markers(loc, vec, width)
-                mark_loc, mark_rot = get_marker_info(mark1, rot)
-                marker_left_list.location.append(mark_loc)
-                marker_left_list.rotation.append(mark_rot)
-                mark_loc, mark_rot = get_marker_info(mark2, rot)
-                marker_right_list.location.append(mark_loc)
-                marker_right_list.rotation.append(mark_rot)
-                if visualize:
-                    percep_mod.world.debug.draw_point(mark1,life_time=1)
-                    percep_mod.world.debug.draw_point(mark2,life_time=1)
-            if visualize:
-                percep_mod.world.debug.draw_point(trans.location,life_time=1)
-        marker_msg.lane_markers_center = marker_center_list
-        marker_msg.lane_markers_left = marker_left_list
-        marker_msg.lane_markers_right = marker_right_list
+        left_marker_loc = get_left_marker(trans, p.lane_width)
+        left_marker_loc_info, left_marker_rot_info = get_marker_info(left_marker_loc, rot)
+        marker_left_list.location.append(left_marker_loc_info)
+        # TODO: How to approximate rotation???
+        marker_left_list.rotation.append(left_marker_rot_info)
+        if side == 1 or side == 0:
+            percep_mod.world.debug.draw_point(left_marker_loc, life_time=1)
+        right_marker_loc = get_right_marker(trans, p.lane_width)
+        right_marker_loc_info, right_marker_rot_info = get_marker_info(right_marker_loc, rot) 
+        marker_right_list.location.append(right_marker_loc_info)
+        marker_right_list.rotation.append(right_marker_rot_info)
+        if side == -1 or side == 0:
+            percep_mod.world.debug.draw_point(right_marker_loc, life_time=1)
+    marker_msg.lane_markers_center = marker_center_list
+    marker_msg.lane_markers_left = marker_left_list
+    marker_msg.lane_markers_right = marker_right_list
     return marker_msg
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
@@ -257,8 +268,6 @@ def publisher(percep_mod, role_name, label_list):
     while not rospy.is_shutdown():
         obs = percep_mod.get_all_obstacles_within_range()
         lane_markers = percep_mod.get_lane_markers()
-        left_lane_markers = percep_mod.get_left_lane_markers()
-        right_lane_markers = percep_mod.get_right_lane_markers()
         obs_msg = []
         draw_counter += 1
         if obs is None or lane_markers is None:
@@ -288,10 +297,17 @@ def publisher(percep_mod, role_name, label_list):
                     info.vertices_locations.append(vertex)
             obs_msg.append(info)
         marker_msg = fill_marker_msg(lane_markers, percep_mod)
-        left_marker_info = fill_marker_msg(left_lane_markers, percep_mod, visualize=False)
-        right_marker_info = fill_marker_msg(right_lane_markers, percep_mod, visualize=False)
-        left_marker_msg = left_marker_info.lane_markers_left
-        right_marker_msg = right_marker_info.lane_markers_right 
+        left_boundary_lane_center_markers = percep_mod.get_left_boundary_lane_center_markers()
+        if left_boundary_lane_center_markers is None:
+            left_boundary_lane_center_markers = lane_markers
+        right_boundary_lane_center_markers = percep_mod.get_right_boundary_lane_center_markers()
+        if right_boundary_lane_center_markers is None:
+            right_boundary_lane_center_markers = lane_markers
+        left_marker_info = fill_marker_msg(left_boundary_lane_center_markers, percep_mod, side=-1)
+        right_marker_info = fill_marker_msg(right_boundary_lane_center_markers, percep_mod, side=1)
+        # TODO: sidewalks also return lane markers???
+        left_marker_msg = left_marker_info.lane_markers_right
+        right_marker_msg = right_marker_info.lane_markers_left 
         # NOTE Environment objects note used now    
         # for label in label_list:
         #     # get all vertices of all bounding boxes which are within the radius with label 'label'
