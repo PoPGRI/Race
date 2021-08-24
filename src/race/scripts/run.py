@@ -18,7 +18,7 @@ two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.ga
 car_name_prefix = 'hero' # NOTE 
 
 class CommandNode:
-    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, set_spectator=True):
+    def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, scenario, set_spectator=True):
         self.host = host 
         self.port = port
         self.N = N 
@@ -27,6 +27,7 @@ class CommandNode:
         self.model_type = model_type
         self.num_wheels = num_wheels
         self.offscreen = offscreen
+        self.scenario = scenario
         self.set_spectator = set_spectator
         self.vehicles = {}
 
@@ -84,10 +85,19 @@ class CommandNode:
 
             if self.track == "t1_triple":
                 init_pose = [164,11+i*10,4,0,0,-180]
+                vehicle = "vehicle.bmw.isetta"
             elif self.track == "t2_triple":
                 init_pose = [95.5,107+i*10,4,0,0,-136]
+                vehicle = "vehicle.tesla.cybertruck"
+            elif self.track == "t3":
+                init_pose = [77.0, 114+i*10,4,0,0,-18]
+                vehicle = "vehicle.tesla.model3"
+            elif self.track == "t4":
+                vehicle = "vehicle.kawasaki.ninja"
+                init_pose = [162.2, 88.4+i*10,4,0,0,-55]
             elif self.track == "track5":
                 init_pose = [215.90, 202.04+i*10,4,0,0,82]
+                vehicle = "vehicle.mercedes-benz.coupe"
             else:
                 init_pose = [0,0,4,0,0,0]
             v['init_pose'] = init_pose
@@ -95,12 +105,12 @@ class CommandNode:
 
             v['track'] = self.track
 
-            if self.num_wheels == 4 or self.model_type=="model_based":
-                vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
-            elif self.num_wheels == 2:
-                vehicle = random.choice(two_wheel_vehicle)
-            else:
-                rospy.logerr("Wrong choice of number of wheels %s"%self.num_wheels)
+            # if self.num_wheels == 4 or self.model_type=="model_based":
+            #     vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
+            # elif self.num_wheels == 2:
+            #     vehicle = random.choice(two_wheel_vehicle)
+            # else:
+            #     rospy.logerr("Wrong choice of number of wheels %s"%self.num_wheels)
 
             obj = obj.replace('[[vehicle]]', vehicle)
 
@@ -115,11 +125,14 @@ class CommandNode:
             config_path = rospack.get_path('config_node')
             fname = config_path + '/' + 'race_config'
             f = open(fname, 'w')
-            f.write((vehicle+'\n'))
+            if self.model_type == "model_based":
+                f.write('vehicle.model_based.1'+'\n')
+            else:
+                f.write(vehicle+'\n')
             f.write(str(60))
             f.close()
 
-            cmd = ('roslaunch race spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, v['model_free'], v['launch_log']])
+            cmd = ('roslaunch race spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s scenario:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, self.scenario, v['model_free'], v['launch_log']])
             # The os.setsid() is passed in the argument preexec_fn so
             # it's run after the fork() and before  exec() to run the shell.
             v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -160,6 +173,7 @@ if __name__ == '__main__':
     model_type = rospy.get_param("~model_type", "model_free")
     num_wheels = rospy.get_param("~num_wheels", 4)
     offscreen = rospy.get_param("~offscreen", False)
+    scenario = rospy.get_param("~scenario", True)
 
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
@@ -167,7 +181,7 @@ if __name__ == '__main__':
     import time
     time.sleep(10)
     try: 
-        cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen)
+        cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen, scenario)
 
         # res = subprocess.run(["python3",
         #     "/home/carla/scenario_runner/scenario_runner.py",

@@ -167,13 +167,13 @@ class KeyboardControl(object):
 
         self.vehicle_control_manual_override_publisher = rospy.Publisher(
             "/carla/{}/vehicle_control_manual_override".format(self.role_name),
-            Bool, queue_size=1, latch=True)
+            Bool, queue_size=None, latch=True)
         self.vehicle_control_manual_override = False
         self.auto_pilot_enable_publisher = rospy.Publisher(
-            "/carla/{}/enable_autopilot".format(self.role_name), Bool, queue_size=1)
+            "/carla/{}/enable_autopilot".format(self.role_name), Bool, queue_size=None)
         self.vehicle_control_publisher = rospy.Publisher(
             "/carla/{}/vehicle_control_cmd_manual".format(self.role_name),
-            CarlaEgoVehicleControl, queue_size=1)
+            CarlaEgoVehicleControl, queue_size=None)
         self.carla_status_subscriber = rospy.Subscriber(
             "/carla/status", CarlaStatus, self._on_new_carla_frame)
 

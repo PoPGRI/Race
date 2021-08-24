@@ -19,6 +19,15 @@ from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioCo
 from typing import List, Dict
 from itertools import permutations
 
+def get_open_port():
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("",0))
+    s.listen(1)
+    port = s.getsockname()[1]
+    s.close()
+    return port
+
 
 class ScenarioConfig:
     def __init__(self, track): 
@@ -52,7 +61,7 @@ class ScenarioConfig:
         return self.scenario_config
 
 class UnitScenarioMap(Enum):
-    StationaryObjectCrossing = "ScenarioStationaryObject"
+    # StationaryObjectCrossing = "ScenarioStationaryObject"
     DynamicObjectCrossing = "ScenarioDynamicObject"
     BadMerge = "ScenarioBM"
     GhostCutIn = "ScenarioGhost"
@@ -71,7 +80,8 @@ class ScenarioArguments:
         self.host = host
         self.port = port
         self.timeout = timeout
-        self.trafficManagerPort = trafficManagerPort
+        # self.trafficManagerPort = trafficManagerPort
+        self.trafficManagerPort = get_open_port()
         self.trafficManagerSeed = trafficManagerSeed
         self.sync = sync
         self.agent = agent

@@ -21,6 +21,8 @@
 
   <arg name='offscreen' default='false' />
 
+  <arg name='scenario' default='true' />
+
   <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch">
     <arg name='host' value='$(arg host)'/>
     <arg name='port' value='$(arg port)'/>
@@ -41,6 +43,7 @@
     <param name="model_type" value="$(arg model_type)" />
     <param name="num_wheels" value="$(arg num_wheels)" />
     <param name="offscreen" value="$(arg offscreen)" />
+    <param name="scenario" value="$(arg scenario)" />
   </node>
 
   <!-- <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen">
