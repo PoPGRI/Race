@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Participants
+date:   2020-04-18T14:25:52-05:00
 ---
 
 Currently, people from 13 universities have expressed interest in GRAIC! If you or anyone you know is interested in participating, please fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).

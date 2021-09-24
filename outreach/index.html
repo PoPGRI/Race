@@ -7,10 +7,13 @@ main_nav: true
 <div class="wrapper">
   {% for entry in site.outreach %}
   <div>
-      {% if entry.title != blank %}
-      <h1>{{entry.title}}</h1>
+      {% capture year %}{{entry.date | date: "%Y"}}{% endcapture %}
+      {% if year == "2020" %}
+          {% if entry.title != blank %}
+          <h1>{{entry.title}}</h1>
+          {% endif %}
+          <p>{{entry.content}}</p>
       {% endif %}
-      <p>{{entry.content}}</p>
   </div>
   {% endfor %}
 </div>

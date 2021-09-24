@@ -43,6 +43,7 @@ collections:
   - installation
   - outreach
   - submissions
+  - archive
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:

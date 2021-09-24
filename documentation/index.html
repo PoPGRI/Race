@@ -15,17 +15,17 @@ main_nav: true
   </div>
 </div>
 
-<div class="wrapper">
-  <i>This competition is currently under construction. The information on this page is subject to change.</i>
-</div>
 
 <div class="wrapper">
   {% for entry in site.documentation %}
   <div>
-      {% if entry.title != blank %}
-      <h1>{{entry.title}}</h1>
+      {% capture year %}{{entry.date | date: "%Y"}}{% endcapture %}
+      {% if year == "2020" %}
+          {% if entry.title != blank %}
+          <h1>{{entry.title}}</h1>
+          {% endif %}
+          <p>{{entry.content}}</p>
       {% endif %}
-      <p>{{entry.content}}</p>
   </div>
   {% endfor %}
 </div>

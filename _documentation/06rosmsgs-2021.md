@@ -2,6 +2,7 @@
 layout: page
 title: ROS messages
 main_nav: true
+date:   2020-04-18T14:25:52-05:00
 ---
 
 We have defined several ROS message type for the perception module to publish.
@@ -83,6 +84,6 @@ ObstacleInfo[] obstacles
 **WaypointInfo**
 ```
 bool reachedFinal # Flag indicating if publishes final milestone waypoint
-string role_name 
+string role_name
 geometry_msgs/Vector3 location # Location of the milestone waypoint
 ```

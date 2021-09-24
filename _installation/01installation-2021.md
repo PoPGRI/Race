@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Installation
+date:   2020-04-18T14:25:52-05:00
 ---
 
 ### Step 0. Install the GRAIC Docker

@@ -95,7 +95,7 @@
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
+
 	
 
 	
@@ -103,7 +103,15 @@
 	
 
 	
+	<li class="nav-link"><a href="/archive/">Archive</a>
+	
+
+	
 	<li class="nav-link"><a href="/outreach/">Live Events</a>
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Docs</a>
 	
 
 	
@@ -112,6 +120,10 @@
 
 	
 	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	
+
+	
+
 	
 
 	
@@ -168,9 +180,11 @@
   
   <div>
       
-      <h1>Getting started</h1>
       
-      <p><p>This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.</p>
+          
+          <h1>Getting started</h1>
+          
+          <p><p>This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.</p>
 
 <h3 id="system-recommendation">System recommendation</h3>
 
@@ -192,15 +206,17 @@
 </ul>
 
 <p>We will not be able to provide much support for running GRAIC on other software configurations.</p>
-
 </p>
+      
   </div>
   
   <div>
       
-      <h1>Installation</h1>
       
-      <p><h3 id="step-0-install-the-graic-docker">Step 0. Install the GRAIC Docker</h3>
+          
+          <h1>Installation</h1>
+          
+          <p><h3 id="step-0-install-the-graic-docker">Step 0. Install the GRAIC Docker</h3>
 
 <p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use our <a href="https://hub.docker.com/r/pricejiang/graic">GRAIC Docker</a> image. The instructions here are for GRAIC installation on Ubuntu 20.04.</p>
 
@@ -211,10 +227,10 @@
 <ol>
   <li>Install Docker CE. Instructions can be found here: <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
   <li>Install NVIDIA-Docker2. Instructions can be found here:<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker</a></li>
-  <li>Pull the GRAIC Docker image: <code class="highlighter-rouge">docker pull pricejiang/graic:latest</code></li>
+  <li>Pull the GRAIC Docker image: <code class="language-plaintext highlighter-rouge">docker pull pricejiang/graic:latest</code></li>
 </ol>
 
-<p>Note that you may have to use the <code class="highlighter-rouge">sudo</code> command to run docker.
+<p>Note that you may have to use the <code class="language-plaintext highlighter-rouge">sudo</code> command to run docker.
 This may take a while.</p>
 
 <h3 id="step-1-download-the-source-code-and-map">Step 1. Download the source code and map</h3>
@@ -230,10 +246,10 @@ You can extract them to any directory.</p>
 If everything works properly, once the GRAIC container is running, the baseline solution can also be run.
 To run the GRAIC Docker container, use the following instructions.</p>
 
-<p>Replace <code class="highlighter-rouge">[PATH-TO-THE-DOWNLOADED-CODE]</code> with the path to the source code and <code class="highlighter-rouge">[PATH-TO-THE-DOWNLOADED-MAP]</code> with the path to the downloaded map.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [PATH-TO-THE-DOWNLOADED CODE]/src:/home/carla/graic-workspace/src:rw -v [PATH-TO-THE-DOWNLOADED-MAP]/map_package/:/home/carla/carla-simulator/CarlaUE4/Content/map_package/:ro pricejiang/graic carla-simulator/CarlaUE4.sh -opengl
+<p>Replace <code class="language-plaintext highlighter-rouge">[PATH-TO-THE-DOWNLOADED-CODE]</code> with the path to the source code and <code class="language-plaintext highlighter-rouge">[PATH-TO-THE-DOWNLOADED-MAP]</code> with the path to the downloaded map.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [PATH-TO-THE-DOWNLOADED CODE]/src:/home/carla/graic-workspace/src:rw -v [PATH-TO-THE-DOWNLOADED-MAP]/map_package/:/home/carla/carla-simulator/CarlaUE4/Content/map_package/:ro pricejiang/graic carla-simulator/CarlaUE4.sh -opengl
 </code></pre></div></div>
-<p>Note that you may need to use the <code class="highlighter-rouge">sudo</code> command to run the Docker image.</p>
+<p>Note that you may need to use the <code class="language-plaintext highlighter-rouge">sudo</code> command to run the Docker image.</p>
 
 <p>A window called CarlaUE4 will open.</p>
 
@@ -243,31 +259,31 @@ To run the GRAIC Docker container, use the following instructions.</p>
 
 <p>Now that the GRAIC Docker container is running, you should test that everything is working properly using the baseline solution.</p>
 
-<p>You can now access the bash of the running container using <code class="highlighter-rouge">docker exec -it graic_con /bin/bash</code> in a new terminal.
-If you have connected to the bash properly, then you will see the id of the container followed by <code class="highlighter-rouge">$:</code>.</p>
+<p>You can now access the bash of the running container using <code class="language-plaintext highlighter-rouge">docker exec -it graic_con /bin/bash</code> in a new terminal.
+If you have connected to the bash properly, then you will see the id of the container followed by <code class="language-plaintext highlighter-rouge">$:</code>.</p>
 
 <p>You can run our baseline solution using the following commands.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>catkin_make
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>catkin_make
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roslaunch race carla_single.launch num_wheels:=4 model_type:=model_free
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roslaunch race carla_single.launch num_wheels:=4 model_type:=model_free
 </code></pre></div></div>
 
 <p>A vehicle should appear in the CARLA window.</p>
 
 <p><img src="/Race/assets/baseline.png" /></p>
 
-<p>Now open a new and use <code class="highlighter-rouge">docker exec -it graic_con /bin/bash</code> and run the following in the CARLA container.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace/
+<p>Now open a new and use <code class="language-plaintext highlighter-rouge">docker exec -it graic_con /bin/bash</code> and run the following in the CARLA container.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace/
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd src/race/src/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd src/race/src/
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python baseline.py
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python baseline.py
 </code></pre></div></div>
 <p>The vehicle should start moving and a score should appear.</p>
 
@@ -276,11 +292,12 @@ If you have connected to the bash properly, then you will see the id of the cont
 <h3 id="step-4-create-your-own-controller">Step 4. Create your own controller</h3>
 
 <p>We have provided a template controller for you to get started on creating your own controller.
-This template can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a> and it is called <code class="highlighter-rouge">src/race/src/starter.py</code>.
-You will not have to edit any part of the file other than line 66. You should replace <code class="highlighter-rouge">TODO Add your decision logic here</code> with the decision logic of your controller.</p>
+This template can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a> and it is called <code class="language-plaintext highlighter-rouge">src/race/src/starter.py</code>.
+You will not have to edit any part of the file other than line 66. You should replace <code class="language-plaintext highlighter-rouge">TODO Add your decision logic here</code> with the decision logic of your controller.</p>
 
 <p>To further understand how to create controllers, take a look at the interfaces described on our <a href="https://popgri.github.io/Race/documentation/">docs</a> page.</p>
 </p>
+      
   </div>
   
 </div>
@@ -303,7 +320,7 @@ You will not have to edit any part of the file other than line 66. You should re
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
+
 	
 
 	
@@ -311,7 +328,15 @@ You will not have to edit any part of the file other than line 66. You should re
 	
 
 	
+	<li class="nav-link"><a href="/archive/">Archive</a>
+	
+
+	
 	<li class="nav-link"><a href="/outreach/">Live Events</a>
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Docs</a>
 	
 
 	
@@ -320,6 +345,10 @@ You will not have to edit any part of the file other than line 66. You should re
 
 	
 	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	
+
+	
+
 	
 
 	

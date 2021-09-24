@@ -2,6 +2,7 @@
 layout: page
 title: Updates
 main_nav: false
+date:   2020-04-18T14:25:52-05:00
 ---
 **If you miss the registration deadline, please email us at [graic2021@gmail.com](mailto:graic2021@gmail.com).**
 

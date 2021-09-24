@@ -1,9 +1,9 @@
 ---
 layout: default
-pagination:
-  enabled: true
+permalink: /archive/docs2021
+main_nav: true
 ---
-<div class="home">
+<div>
 
 <div class="site-header-container {% if site.cover %}has-cover{% endif %}" {% if site.cover %}style="background-image: url({{ site.cover | prepend: site.baseurl }});"{% endif %}>
   <div class="scrim {% if site.cover %}has-cover{% endif %}">
@@ -14,8 +14,9 @@ pagination:
   </div>
 </div>
 
+
 <div class="wrapper">
-  {% for entry in site.home %}
+  {% for entry in site.submissions %}
   <div>
       {% capture year %}{{entry.date | date: "%Y"}}{% endcapture %}
       {% if year == "2020" %}

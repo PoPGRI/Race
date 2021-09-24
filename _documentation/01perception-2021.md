@@ -2,6 +2,7 @@
 layout: page
 title: Perception
 main_nav: true
+date:   2020-04-18T14:25:52-05:00
 ---
 
 The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> may change. These rostopics are updated at a rate of 20 Hz.

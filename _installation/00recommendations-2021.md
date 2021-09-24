@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Getting started
+date:   2020-04-18T14:25:52-05:00
 ---
 This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.
 
@@ -19,5 +20,4 @@ GRAIC 2021 uses the [CARLA simulator](https://carla.org/), [ROS Noetic](https://
 - Python 3.7
 - Open GL 3.3 or above and DirectX 10
 
-We will not be able to provide much support for running GRAIC on other software configurations. 
-
+We will not be able to provide much support for running GRAIC on other software configurations.

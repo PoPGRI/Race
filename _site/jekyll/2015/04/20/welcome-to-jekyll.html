@@ -92,7 +92,7 @@
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
+
 	
 
 	
@@ -100,7 +100,15 @@
 	
 
 	
+	<li class="nav-link"><a href="/archive/">Archive</a>
+	
+
+	
 	<li class="nav-link"><a href="/outreach/">Live Events</a>
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Docs</a>
 	
 
 	
@@ -109,6 +117,10 @@
 
 	
 	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	
+
+	
+
 	
 
 	
@@ -173,11 +185,11 @@
 </section>
 
 <article class="post-content">
-  <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+  <p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
 
 <h2 id="adding-new-posts">Adding New Posts</h2>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>To add new posts, simply add a file in the <code class="language-plaintext highlighter-rouge">_posts</code> directory that follows the convention <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
 
 <h3 id="tags-and-categories">Tags and Categories</h3>
 
@@ -191,17 +203,17 @@
 
 <p>You can use <a href="https://highlightjs.org/">highlight.js</a> to add syntax highlight code snippets:</p>
 
-<p>Use the <a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid</a> <code class="highlighter-rouge">{% highlight &lt;language&gt; %}</code> tag to add syntax highlighting to code snippets.</p>
+<p>Use the <a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid</a> <code class="language-plaintext highlighter-rouge">{% highlight &lt;language&gt; %}</code> tag to add syntax highlighting to code snippets.</p>
 
 <p>For instance, this template…</p>
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html">{% highlight javascript %}    
 function demo(string, times) {    
   for (var i = 0; i <span class="nt">&lt;</span> <span class="nt">times</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>    
-    <span class="na">console</span><span class="err">.</span><span class="na">log</span><span class="err">(</span><span class="na">string</span><span class="err">);</span>    
+    <span class="na">console.log</span><span class="err">(</span><span class="na">string</span><span class="err">);</span>    
   <span class="err">}</span>    
 <span class="err">}</span>    
-<span class="na">demo</span><span class="err">("</span><span class="na">hello</span><span class="err">,</span> <span class="na">world</span><span class="err">!",</span> <span class="na">10</span><span class="err">);</span>
+<span class="na">demo</span><span class="err">("</span><span class="na">hello</span><span class="err">,</span> <span class="na">world</span><span class="err">!",</span> <span class="err">10);</span>
 <span class="err">{%</span> <span class="na">endhighlight</span> <span class="err">%}</span></code></pre></figure>
 
 <p>…will come out looking like this:</p>
@@ -233,16 +245,16 @@ function demo(string, times) {
 
 <h3 id="tooltips">Tooltips</h3>
 
-<p>With Tippy.js, you can add tooltips to your text with a little bit of HTML and JavaScript. First, create the tooltip trigger: <code class="highlighter-rouge">&lt;span class="tooltip" id="someId"&gt;trigger&lt;/span&gt;</code>. Then in a <code class="highlighter-rouge">&lt;script&gt;</code> tag at the bottom of your page, add some code to initialize the tooltip when the document is ready: <code class="highlighter-rouge">window.tooltips.push(['#someId', { content: "Content" }])</code></p>
+<p>With Tippy.js, you can add tooltips to your text with a little bit of HTML and JavaScript. First, create the tooltip trigger: <code class="language-plaintext highlighter-rouge">&lt;span class="tooltip" id="someId"&gt;trigger&lt;/span&gt;</code>. Then in a <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tag at the bottom of your page, add some code to initialize the tooltip when the document is ready: <code class="language-plaintext highlighter-rouge">window.tooltips.push(['#someId', { content: "Content" }])</code></p>
 
 <p>See the <a href="https://atomiks.github.io/tippyjs/">Tippy.js docs</a> for additional configuration that you can provide for your tooltips.</p>
 
-<p>You can also use a Liquid <code class="highlighter-rouge">include</code> to import tooltip text or HTML from an external file:</p>
+<p>You can also use a Liquid <code class="language-plaintext highlighter-rouge">include</code> to import tooltip text or HTML from an external file:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.tooltips.push(['#someOtherId', { content: "{% include tooltips/example.html %}" }])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.tooltips.push(['#someOtherId', { content: "{% include tooltips/example.html %}" }])
 </code></pre></div></div>
 
-<p>To modify the styles for tooltip triggers, find the <code class="highlighter-rouge">.tooltip</code> class in <code class="highlighter-rouge">_layout.scss</code>.</p>
+<p>To modify the styles for tooltip triggers, find the <code class="language-plaintext highlighter-rouge">.tooltip</code> class in <code class="language-plaintext highlighter-rouge">_layout.scss</code>.</p>
 
 <p>Here’s an <span class="tooltip" id="someId">example tooltip</span>, and <span class="tooltip" id="someOtherId">here’s another</span>.</p>
 
@@ -476,7 +488,7 @@ window.tooltips.push(['#someOtherId', { content: "Put your tooltip content here.
 	
 
 	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
+
 	
 
 	
@@ -484,7 +496,15 @@ window.tooltips.push(['#someOtherId', { content: "Put your tooltip content here.
 	
 
 	
+	<li class="nav-link"><a href="/archive/">Archive</a>
+	
+
+	
 	<li class="nav-link"><a href="/outreach/">Live Events</a>
+	
+
+	
+	<li class="nav-link"><a href="/documentation/">Docs</a>
 	
 
 	
@@ -493,6 +513,10 @@ window.tooltips.push(['#someOtherId', { content: "Put your tooltip content here.
 
 	
 	<li class="nav-link"><a href="/installation/">Getting Started</a>
+	
+
+	
+
 	
 
 	
