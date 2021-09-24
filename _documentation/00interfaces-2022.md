@@ -2,7 +2,7 @@
 layout: page
 title: Docs
 main_nav: true
-date:   2020-04-18T14:25:52-05:00
+date:   2022-04-18T14:25:52-05:00
 ---
 
 This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.
