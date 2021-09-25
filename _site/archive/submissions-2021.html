@@ -41,7 +41,7 @@
   <!-- Facebook OGP cards -->
   <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 " />
-  <meta property="og:url" content="http://localhost:4000/Race/archive/installation2021/">
+  <meta property="og:url" content="http://localhost:4000/archive/submissions-2021.html">
   <meta property="og:site_name" content="GRAIC" />
   <meta property="og:title" content="GRAIC" />
   <meta property="og:type" content="website" />
@@ -58,14 +58,14 @@
   <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
 ">
   <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/Race/archive/installation2021/">
+  <meta name="twitter:url" content="http://localhost:4000/archive/submissions-2021.html">
   
 
   
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/Race/archive/installation2021/">
+  <link rel="canonical" href="http://localhost:4000/archive/submissions-2021.html">
 	<link rel="alternate" type="application/rss+xml" title="GRAIC" href="http://localhost:4000/feed.xml" />
 
 	<!-- Tooltips -->
@@ -173,135 +173,18 @@
 </div>
 
 <div class="wrapper">
-  <i>GRAIC is currently under construction. Check back often.</i>
-</div>
-
-<div class="wrapper">
   
   <div>
       
       
           
-          <h1>Getting started</h1>
+          <h1>Submission links</h1>
           
-          <p><p>This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.</p>
-
-<h3 id="system-recommendation">System recommendation</h3>
-
-<p>GRAIC 2021 uses the <a href="https://carla.org/">CARLA simulator</a>, <a href="https://www.ros.org/">ROS Noetic</a> and CARLA is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. That is why you will want to run the simulator on a machine with a at least 16GB RAM and a powerful GPU.</p>
-
-<h4 id="hardware">Hardware</h4>
-<ul>
-  <li>Intel i7 gen / i9 gen / AMD ryzen 7 / ryzen 9, with at least 16 GB RAM</li>
-  <li>Nvidia RTX 2070 / 2080 / 3070 / 3080 with 4GB GPU video RAM</li>
+          <p><ul>
+  <li>Pre-submissions (<strong>THIS IS NOT THE FINAL SUBMISSION</strong>): <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link">Link</a></li>
+  <li>Final submission: <a href="https://docs.google.com/forms/d/e/1FAIpQLSc75rLz53adVMt4DdcJuLPgHtqa_IAiRM0IzwZnlFrnft8Reg/viewform?usp=sf_link">Link</a></li>
 </ul>
-
-<h4 id="software">Software</h4>
-<ul>
-  <li>Ubuntu 20.04</li>
-  <li>Carla 0.9.11</li>
-  <li>ROS Noetic</li>
-  <li>Python 3.7</li>
-  <li>Open GL 3.3 or above and DirectX 10</li>
-</ul>
-
-<p>We will not be able to provide much support for running GRAIC on other software configurations.</p>
 </p>
-      
-  </div>
-  
-  <div>
-      
-      
-          
-          <h1>Installation</h1>
-          
-          <p><h3 id="step-0-install-the-graic-docker">Step 0. Install the GRAIC Docker</h3>
-
-<p>The instructions for CARLA installation can be found <a href="https://carla.readthedocs.io/en/latest/build_linux/">here</a>. It is recommended to use our <a href="https://hub.docker.com/r/pricejiang/graic">GRAIC Docker</a> image. The instructions here are for GRAIC installation on Ubuntu 20.04.</p>
-
-<p>First, ensure that you are using the NVIDIA driver. This can be done by going to “Additional Drivers” in “Software and Updates”.</p>
-
-<p><img src="/Race/assets/driver_settings.png" /></p>
-
-<ol>
-  <li>Install Docker CE. Instructions can be found here: <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
-  <li>Install NVIDIA-Docker2. Instructions can be found here:<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker</a></li>
-  <li>Pull the GRAIC Docker image: <code class="language-plaintext highlighter-rouge">docker pull pricejiang/graic:latest</code></li>
-</ol>
-
-<p>Note that you may have to use the <code class="language-plaintext highlighter-rouge">sudo</code> command to run docker.
-This may take a while.</p>
-
-<h3 id="step-1-download-the-source-code-and-map">Step 1. Download the source code and map</h3>
-
-<p>Now that you have installed the GRAIC docker, you should download the source code and map for GRAIC.
-These can be found as a <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.2">release</a> on our GitHub.
-Both the source code and map are zip files, so you will need to uncompress these files.
-You can extract them to any directory.</p>
-
-<h3 id="step-2-run-the-graic-docker-container">Step 2. Run the GRAIC Docker container</h3>
-
-<p>Now that everything has been installed, you can now run the GRAIC docker image.
-If everything works properly, once the GRAIC container is running, the baseline solution can also be run.
-To run the GRAIC Docker container, use the following instructions.</p>
-
-<p>Replace <code class="language-plaintext highlighter-rouge">[PATH-TO-THE-DOWNLOADED-CODE]</code> with the path to the source code and <code class="language-plaintext highlighter-rouge">[PATH-TO-THE-DOWNLOADED-MAP]</code> with the path to the downloaded map.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v [PATH-TO-THE-DOWNLOADED CODE]/src:/home/carla/graic-workspace/src:rw -v [PATH-TO-THE-DOWNLOADED-MAP]/map_package/:/home/carla/carla-simulator/CarlaUE4/Content/map_package/:ro pricejiang/graic carla-simulator/CarlaUE4.sh -opengl
-</code></pre></div></div>
-<p>Note that you may need to use the <code class="language-plaintext highlighter-rouge">sudo</code> command to run the Docker image.</p>
-
-<p>A window called CarlaUE4 will open.</p>
-
-<p><img src="/Race/assets/carlaue4.png" /></p>
-
-<h3 id="step-3-run-the-baseline-solution">Step 3. Run the baseline solution</h3>
-
-<p>Now that the GRAIC Docker container is running, you should test that everything is working properly using the baseline solution.</p>
-
-<p>You can now access the bash of the running container using <code class="language-plaintext highlighter-rouge">docker exec -it graic_con /bin/bash</code> in a new terminal.
-If you have connected to the bash properly, then you will see the id of the container followed by <code class="language-plaintext highlighter-rouge">$:</code>.</p>
-
-<p>You can run our baseline solution using the following commands.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>catkin_make
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roslaunch race carla_single.launch num_wheels:=4 model_type:=model_free
-</code></pre></div></div>
-
-<p>A vehicle should appear in the CARLA window.</p>
-
-<p><img src="/Race/assets/baseline.png" /></p>
-
-<p>Now open a new and use <code class="language-plaintext highlighter-rouge">docker exec -it graic_con /bin/bash</code> and run the following in the CARLA container.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd graic-workspace/
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. devel/setup.bash
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd src/race/src/
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python baseline.py
-</code></pre></div></div>
-<p>The vehicle should start moving and a score should appear.</p>
-
-<p>You are now ready to start creating controllers for GRAIC!</p>
-
-<h3 id="step-4-create-your-own-controller">Step 4. Create your own controller</h3>
-
-<p>We have provided a template controller for you to get started on creating your own controller.
-This template can be found on our <a href="https://github.com/PoPGRI/Race">GitHub</a> and it is called <code class="language-plaintext highlighter-rouge">src/race/src/starter.py</code>.
-You will not have to edit any part of the file other than line 66. You should replace <code class="language-plaintext highlighter-rouge">TODO Add your decision logic here</code> with the decision logic of your controller.</p>
-
-<p>To further understand how to create controllers, take a look at the interfaces described on our <a href="https://popgri.github.io/Race/documentation/">docs</a> page.</p>
-</p>
-      
-  </div>
-  
-  <div>
-      
       
   </div>
   
