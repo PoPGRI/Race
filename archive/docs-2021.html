@@ -14,7 +14,7 @@ layout: default
 
 
 <div class="wrapper">
-  {% for entry in site.submissions %}
+  {% for entry in site.documentation %}
   <div>
       {% capture year %}{{entry.date | date: "%Y"}}{% endcapture %}
       {% if year == "2020" %}
