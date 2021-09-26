@@ -9,7 +9,7 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: GRAIC
+title: GRAIC '22
 subtitle: "A competition for intelligent racing"
 email: graic2021@gmail.com
 name:
