@@ -14,7 +14,7 @@ class WaypointNode:
     def __init__(self, world, role_name='ego_vehicle', track='t1_tripe'):
         self.subReach = rospy.Subscriber('/carla/%s/reached'%role_name, String, self.reachCallback)
         rospack = rospkg.RosPack()
-        fpath = rospack.get_path('config_node')
+        fpath = rospack.get_path('graic_config')
         self.waypoint_list = pickle.load(open(fpath+'/'+track,'rb'))
         self.waypoint_list.pop(0)
         self.role_name = role_name

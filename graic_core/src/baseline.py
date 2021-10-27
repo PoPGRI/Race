@@ -12,9 +12,6 @@ from graic_msgs.msg import LaneInfo
 
 class VehicleDecision():
     def __init__(self, role_name):
-        self.subLaneMarker = rospy.Subscriber("/carla/%s/lane_markers"%role_name, LaneInfo, self.lanemarkerCallback)
-        self.subWaypoint = rospy.Subscriber("/carla/%s/waypoints"%role_name, WaypointInfo, self.waypointCallback)
-
         self.vehicle_state = 'straight'
         self.lane_state = 0
         self.counter = 0
@@ -29,19 +26,7 @@ class VehicleDecision():
 
         self.reachEnd = False
 
-
-    def lanemarkerCallback(self, data):
-        self.lane_marker = data.lane_markers_center.location[-1]
-        self.lane_state = data.lane_state
-        if not self.target_x or not self.target_y:
-            self.target_x = self.lane_marker.x 
-            self.target_y = self.lane_marker.y
-    
-    def waypointCallback(self, data):
-        self.reachEnd = data.reachedFinal
-
-        
-    def get_ref_state(self, currState, obstacleList):
+    def get_ref_state(self, currState, obstacleList, lane_marker, waypoint):
         """
             Get the reference state for the vehicle according to the current state and result from perception module
             Inputs: 
@@ -49,6 +34,12 @@ class VehicleDecision():
                 obstacleList: List of obstacles
             Outputs: reference state position and velocity of the vehicle 
         """
+        self.reachEnd = waypoint.reachedFinal
+        self.lane_marker = lane_marker.lane_markers_center.location[-1]
+        self.lane_state = lane_marker.lane_state
+        if not self.target_x or not self.target_y:
+            self.target_x = self.lane_marker.x 
+            self.target_y = self.lane_marker.y
         if self.reachEnd:
             return None
         # print("Reach end: ", self.reachEnd)
@@ -166,14 +157,13 @@ class VehicleController():
 
     def __init__(self, role_name='ego_vehicle'):
         # Publisher to publish the control input to the vehicle model
-        self.controlPub = rospy.Publisher("/carla/%s/ackermann_control"%role_name, AckermannDrive, queue_size = 1)
 
     def stop(self):
         newAckermannCmd = AckermannDrive()
         newAckermannCmd.acceleration = -20
         newAckermannCmd.speed = 0
         newAckermannCmd.steering_angle = 0
-        self.controlPub.publish(newAckermannCmd)
+        return newAckermannCmd
 
     def execute(self, currentPose, targetPose):
         """
@@ -214,70 +204,19 @@ class VehicleController():
             newAckermannCmd = AckermannDrive()
             newAckermannCmd.speed = v
             newAckermannCmd.steering_angle = delta
-            self.controlPub.publish(newAckermannCmd)
+            return newAckermannCmd
         else:
-            self.stop()           
+            return self.stop()
 
-class VehiclePerception:
-    def __init__(self, role_name='ego_vehicle', test=False):
-        self.locationSub = rospy.Subscriber("/carla/%s/location"%role_name, LocationInfo, self.locationCallback)
-        self.obstacleSub = rospy.Subscriber("/carla/%s/obstacles"%role_name, ObstacleList, self.obstacleCallback)
-        self.position = None
-        self.velocity = None 
-        self.rotation = None
-        self.obstacleList = None
-
-        self.test=test
-        
-    def locationCallback(self, data):
-        self.position = (data.location.x, data.location.y)
-        self.rotation = (np.radians(data.rotation.x), np.radians(data.rotation.y), np.radians(data.rotation.z))
-        self.velocity = (data.velocity.x, data.velocity.y)
-
-    def obstacleCallback(self, data):
-        self.obstacleList = data.obstacles
-
-
-def run_model(role_name):
-    
-    rate = rospy.Rate(20)  # 100 Hz    
-
-    perceptionModule = VehiclePerception(role_name=role_name)
-    decisionModule = VehicleDecision(role_name)
-    controlModule = VehicleController(role_name=role_name)
-
-    def shut_down():
-        controlModule.stop()
-    rospy.on_shutdown(shut_down)
-
-    while not rospy.is_shutdown():
-        rate.sleep()  # Wait a while before trying to get a new state
-        obstacleList = perceptionModule.obstacleList
-
-        # Get the current position and orientation of the vehicle
-        currState =  (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
-        if not currState or not currState[0]:
-            continue
-        
+class Controller(object):
+    """docstring for Controller"""
+    def __init__(self,):
+        super(Controller, self).__init__()
+            self.decisionModule = VehicleDecision(role_name)
+            self.controlModule = VehicleController(role_name=role_name)
+    def execute(self, currentState, obstacleList, lane_marker, waypoint):
         # Get the target state from decision module
-        refState = decisionModule.get_ref_state(currState, obstacleList)
+        refState = decisionModule.get_ref_state(currState, obstacleList, lane_marker, waypoint)
         if not refState:
-            controlModule.stop()
-            exit(0)
-
-        # Execute 
-        controlModule.execute(currState, refState)
-
-if __name__ == "__main__":
-    roskpack = rospkg.RosPack() 
-    config_path = roskpack.get_path('config_node')
-    race_config = open(config_path+'/'+'race_config', 'rb')
-    vehicle_typeid = race_config.readline().decode('ascii').strip()
-    sensing_radius = race_config.readline().decode('ascii').strip()
-    role_name = 'ego_vehicle'
-    rospy.init_node("baseline")
-    try:
-        run_model(role_name)
-    except rospy.exceptions.ROSInterruptException:
-        print("stop")
-    
+            return controlModule.stop()
+        return controlModule.execute(currState, refState)

@@ -10,7 +10,7 @@
 
   <!-- Synchronous mode-->
   <arg name='synchronous_mode' default='True'/>
-  <arg name='synchronous_mode_wait_for_vehicle_control_command' default='False'/>
+  <arg name='synchronous_mode_wait_for_vehicle_control_command' default='True'/>
   <arg name='fixed_delta_seconds' default='0.05'/>
 
   <arg name='N' default='1' />
@@ -21,20 +21,19 @@
 
   <arg name='offscreen' default='false' />
 
-  <arg name='scenario' default='true' />
+  <arg name='scenario' default='True' />
 
   <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch">
     <arg name='host' value='$(arg host)'/>
     <arg name='port' value='$(arg port)'/>
     <arg name='town' value='$(arg track)'/>
     <arg name='timeout' value='$(arg timeout)'/>
-    <!-- <arg name='passive' value='True'/> -->
-    <!-- <arg name='synchronous_mode' value='$(arg synchronous_mode)'/> -->
-    <!-- <arg name='synchronous_mode_wait_for_vehicle_control_command' value='$(arg synchronous_mode_wait_for_vehicle_control_command)'/> -->
-    <!-- <arg name='fixed_delta_seconds' value='$(arg fixed_delta_seconds)'/> -->
+    <arg name='synchronous_mode' value='$(arg synchronous_mode)'/>
+    <arg name='synchronous_mode_wait_for_vehicle_control_command' value='$(arg synchronous_mode_wait_for_vehicle_control_command)'/>
+    <arg name='fixed_delta_seconds' value='$(arg fixed_delta_seconds)'/>
   </include>
 
-  <node pkg="race" type="run.py" name="race_run" output="screen">
+  <node pkg="graic_core" type="run.py" name="graic_core" output="screen">
     <param name="host" value="$(arg host)" />
     <param name="port" value="$(arg port)" />
     <param name="N" value="$(arg N)" />
@@ -45,10 +44,5 @@
     <param name="offscreen" value="$(arg offscreen)" />
     <param name="scenario" value="$(arg scenario)" />
   </node>
-
-  <!-- <node pkg="race" type="spawn_npc.py" name="spawn_npc" output="screen">
-    <param name="host" value="$(arg host)" />
-    <param name="port" value="$(arg port)" />
-  </node> -->
 
 </launch>

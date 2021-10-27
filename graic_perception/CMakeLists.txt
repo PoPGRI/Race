@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(graic_raceinfo_publisher)
+project(graic_perception)
 
 find_package(catkin REQUIRED COMPONENTS rospy roslaunch)
 
@@ -12,7 +12,7 @@ endif()
 catkin_package(CATKIN_DEPENDS rospy)
 
 catkin_install_python(
-  PROGRAMS src/graic_raceinfo_publisher/graic_raceinfo_publisher.py DESTINATION
+  PROGRAMS src/graic_perception.py DESTINATION
   ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY launch/

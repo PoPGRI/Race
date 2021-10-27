@@ -2,6 +2,6 @@ from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
 d = generate_distutils_setup(
-    packages=['waypoint_node'],
+    packages=['graic_waypoints'],
     package_dir={'': 'src'},
 )

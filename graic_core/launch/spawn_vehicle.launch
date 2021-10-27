@@ -11,79 +11,45 @@
   <arg name="model_free" default="1" />
   <arg name="offscreen" default="false" />
   <arg name="scenario" default="true" />
+  <arg name="2Dvis" default="false" />
 
-  <!-- the ego vehicle, that will be controlled by an agent (e.g. carla_ad_agent) -->
-  <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
+  <!-- spwan the ego vehicle -->
+  <include file="$(find carla_spawn_objects)/launch/carla_spawn_objects.launch">
     <arg name="objects_definition_file" value='$(arg config_file)'/>
-    <arg name='role_name' value='$(arg role_name)'/>
     <arg name="spawn_point_ego_vehicle" value="$(arg spawn_point)"/>
-    <arg name="spawn_sensors_only" value="false"/>
+    <arg name="spawn_sensors_only" value="false" />
   </include>
 
-  <!-- the control bridge -->
-  <!-- carla manual control -->
-  <node pkg="race" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
-    <param name="role_name" value="$(arg role_name)"/>
-  </node>
-
-  <node pkg="race" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
-    <param name="role_name" value="$(arg role_name)"/>
-  </node>
-
-  <!-- <node pkg="race" type="baseline.py" name="baseline_controller_$(arg role_name)" output="screen">
-    <param name="role_name" value="$(arg role_name)"/>
-  </node> -->
-
-  <!-- control nodes -->
+  <!-- carla_ackermann_control nodes -->
   <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
     <arg name='role_name' value='$(arg role_name)' />
   </include>
 
-  <group if="$(arg scenario)">
-    <include file="$(find scenario_node)/launch/scenario_node.launch">
-      <arg name='host' value='$(arg host)'/>
-      <arg name='port' value='$(arg port)'/>
-      <arg name='role_name' value='$(arg role_name)' />
-      <arg name='track' value='$(arg track)' />
-    </include>
+  <!-- carla manual control -->
+  <group if="$(arg 2Dvis)">
+    <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+      <param name="role_name" value="$(arg role_name)"/>
+    </node>
+    <!-- record video -->
+    <node pkg="graic_core" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
+      <param name="role_name" value="$(arg role_name)"/>
+    </node>
   </group>
-
-  <group if="$(arg model_free)">
-    <include file="$(find ackermann_node)/launch/ackermann_node.launch">
-      <arg name='role_name' value='$(arg role_name)' />
-    </include>
-
-    <include file="$(find control_node)/launch/control_node.launch">
-      <arg name='role_name' value='$(arg role_name)' />
-    </include>
+  <group unless="$(arg 2Dvis)">
+    <node pkg="graic_core" type="2D-visulize.py" name="2D-visualize$(arg role_name)" output="screen" unless="$(arg offscreen)">
+      <param name="role_name" value="$(arg role_name)"/>
+    </node>
   </group>
-
-  <include file="$(find model_based_node)/launch/model_based_node.launch" unless="$(eval arg('model_free') > 0)">
-    <arg name='role_name' value='$(arg role_name)' />
-    <arg name='host' value='$(arg host)' />
-    <arg name='port' value='$(arg port)' />
-  </include>
 
   <!-- the perception module -->
-  <!-- graic race info -->
-  <include file="$(find graic_raceinfo_publisher)/launch/graic_raceinfo_publisher.launch">
+  <include file="$(find graic_perception)/launch/graic_perception.launch">
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='host' value='$(arg host)' />
     <arg name='port' value='$(arg port)' />
   </include>
 
-  <include file="$(find location_publisher)/launch/location_publisher.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-    <arg name='host' value='$(arg host)' />
-    <arg name='port' value='$(arg port)' />
-  </include>
-
-  <!-- <include file="$(find envobj_bb_publisher)/launch/envobj_bb_publisher.launch">
-    <arg name='role_name' value='$(arg role_name)' />
-  </include> -->
-
-  <!-- the evaluation module -->
-  <include file="$(find evaluation_node)/launch/evaluation_node.launch">
+  <!-- the scorer module -->
+  <include file="$(find graic_scorer)/launch/graic_scorer.launch">
     <arg name='host' value='$(arg host)' />
     <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
@@ -91,12 +57,22 @@
     <arg name='model_free' value='$(arg model_free)' />
   </include>
 
-  <include file="$(find waypoint_node)/launch/waypoint_node.launch">
+  <!-- the waypoints module -->
+  <include file="$(find graic_waypoints)/launch/graic_waypoints.launch">
     <arg name='host' value='$(arg host)' />
     <arg name='port' value='$(arg port)' />
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
   </include>
 
+  <!-- the scenario module -->
+  <group if="$(arg scenario)">
+    <include file="$(find graic_scenario)/launch/graic_scenario.launch">
+      <arg name='host' value='$(arg host)'/>
+      <arg name='port' value='$(arg port)'/>
+      <arg name='role_name' value='$(arg role_name)' />
+      <arg name='track' value='$(arg track)' />
+    </include>
+  </group>
 
 </launch>

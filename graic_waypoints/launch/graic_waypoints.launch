@@ -8,7 +8,7 @@
 
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="waypoint_node" type="waypoint_node.py" name="waypoint_node_$(arg role_name)" output="screen">\
+  <node pkg="graic_waypoints" type="graic_waypoints.py" name="graic_waypoints_$(arg role_name)" output="screen">\
     <param name='host' value='$(arg host)' />
     <param name='port' value='$(arg port)' />
     <param name="role_name" value="$(arg role_name)" />

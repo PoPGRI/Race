@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(evaluation_node)
+project(graic_scorer)
 
 find_package(catkin REQUIRED COMPONENTS rospy roslaunch)
 
@@ -12,7 +12,7 @@ endif()
 catkin_package(CATKIN_DEPENDS rospy)
 
 catkin_install_python(
-  PROGRAMS src/evaluation_node.py DESTINATION
+  PROGRAMS src/graic_scorer.py DESTINATION
   ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY launch/

@@ -2,6 +2,6 @@ from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
 d = generate_distutils_setup(
-    packages=['scenario_node'],
+    packages=['graic_scenario'],
     package_dir={'': 'src'},
 )

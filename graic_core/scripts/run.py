@@ -59,11 +59,7 @@ class CommandNode:
 
             v['launch_log'] = self.log+'/hero%d_launch_log.txt'%i
 
-            # NOTE this is hardcode for now since it seems like 
-            # carla ros bridge has a problem spawning vehicle with 
-            # role_name other than 'ego_vehicle'
-            # more information: https://github.com/carla-simulator/ros-bridge/issues/517 
-            role_name = 'ego_vehicle' # car_name_prefix + str(i)
+            role_name = car_name_prefix + str(i)
             v['role_name'] = role_name
 
             with open('objects.json.template', 'r') as f:
@@ -73,10 +69,6 @@ class CommandNode:
             if self.model_type != "model_free" and self.model_type != "model_based":
                 rospy.logwarn("Wrong choice of model type %s; use model_free as default"%self.model_type)
                 self.model_type = "model_free"
-
-            # if self.model_type == "model_based" and self.track == "t2_triple":
-            #     rospy.logerr("Please don't chooce model_based vehicle when running track2")
-            #     raise rospy.exceptions.ROSInterruptException
 
             if self.model_type == "model_free":
                 v['model_free'] = 1
@@ -105,13 +97,6 @@ class CommandNode:
 
             v['track'] = self.track
 
-            # if self.num_wheels == 4 or self.model_type=="model_based":
-            #     vehicle = four_wheel_vehicle[1] # random.choice(four_wheel_vehicle)
-            # elif self.num_wheels == 2:
-            #     vehicle = random.choice(two_wheel_vehicle)
-            # else:
-            #     rospy.logerr("Wrong choice of number of wheels %s"%self.num_wheels)
-
             obj = obj.replace('[[vehicle]]', vehicle)
 
             json_file = '/tmp/objects_%s.json'%role_name
@@ -122,7 +107,7 @@ class CommandNode:
             v['finished'] = False
 
             rospack = rospkg.RosPack()
-            config_path = rospack.get_path('config_node')
+            config_path = rospack.get_path('graic_config')
             fname = config_path + '/' + 'race_config'
             f = open(fname, 'w')
             if self.model_type == "model_based":
@@ -143,8 +128,8 @@ class CommandNode:
 
     def shut_down(self):
         import rosnode 
-        # for v in self.vehicles.values():
-        #     os.killpg(os.getpgid(v['proc_handler'].pid), signal.SIGTERM)  # Send the signal to all the process groups
+        for v in self.vehicles.values():
+            os.killpg(os.getpgid(v['proc_handler'].pid), signal.SIGTERM)  # Send the signal to all the process groups
         names = rosnode.get_node_names()
         rosnode.kill_nodes(names)
 
@@ -155,8 +140,9 @@ class CommandNode:
                 count += 1
         if count == self.N:
             self.shut_down()
+
 def run(cn):
-    rate = rospy.Rate(20)
+    rate = rospy.Rate(100)
     rospy.on_shutdown(cn.shut_down)
 
     while not rospy.is_shutdown():
@@ -182,15 +168,6 @@ if __name__ == '__main__':
     time.sleep(10)
     try: 
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen, scenario)
-
-        # res = subprocess.run(["python3",
-        #     "/home/carla/scenario_runner/scenario_runner.py",
-        #     "--route",
-        #     "/home/carla/scenario_runner/srunner/data/routes_race.xml", 
-        #     "/home/carla/scenario_runner/srunner/data/scenario_race.json",
-        #     "0", 
-        #     "--output"
-        # ], capture_output=True)
 
         run(cn)
     except rospy.exceptions.ROSInterruptException:

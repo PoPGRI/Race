@@ -20,7 +20,7 @@ class EvaluationNode:
         self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
         self.subLocation = rospy.Subscriber('/carla/%s/location'%role_name, LocationInfo, self.locationCallback)
         self.subWaypoint = rospy.Subscriber('/carla/%s/waypoints'%role_name, WaypointInfo, self.waypointCallback)
-        self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
+        self.subLaneInvasion = rospy.Subscriber('/carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
         self.pubReach = rospy.Publisher('/carla/%s/reached'%role_name, String, queue_size=None)
         self.pubScore = rospy.Publisher('/carla/%s/score'%role_name, Float32, queue_size=None)
         self.pubCollision = rospy.Publisher('/carla/%s/collision_detail'%role_name, String, queue_size=None)

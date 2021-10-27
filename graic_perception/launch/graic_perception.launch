@@ -7,7 +7,7 @@
 
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="location_publisher" type="location_publisher.py" name="location_publisher_$(arg role_name)" output="screen">
+  <node pkg="graic_perception" type="graic_perception.py" name="graic_perception_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
     <param name='host' value='$(arg host)' />
     <param name='port' value='$(arg port)' />
