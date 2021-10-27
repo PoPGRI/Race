@@ -5,12 +5,14 @@ import numpy as np
 import carla
 import rospy
 import sys
+from graic_msgs.msg import LocationInfo
 from graic_msgs.msg import LaneInfo
 from graic_msgs.msg import LaneList
 from graic_msgs.msg import ObstacleInfo
 from graic_msgs.msg import ObstacleList
 from graic_msgs.msg import BBSingleInfo
 from geometry_msgs.msg import Vector3
+
 class PerceptionModule():
     def __init__(self, carla_world, role_name, radius=60):
         self.sensing_radius = radius # default ?????
@@ -18,27 +20,34 @@ class PerceptionModule():
         self.vehicle = None
         self.role_name = role_name
         self.find_ego_vehicle()
-    
+        self.carla_map = self.world.get_map()
+
     def get_vehicle_location(self):
-        vehicle = self.vehicle
-        vehicle_loc = vehicle.get_location()
-        return vehicle_loc
+        return self.vehicle.get_location()
+
+    def get_vehicle_rotation(self):
+        return self.vehicle.get_transform().rotation
+
+    def get_vehicle_velocity(self):
+        return self.vehicle.get_velocity()
+
     # find ego vehicle
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
             if actor.attributes.get('role_name') == self.role_name:
-            # if 'vehicle' in actor.type_id:
                 self.vehicle = actor
                 break
+
+    def getName(self):
+        return self.vehicle.type_id 
+
+    def getId(self):
+        return self.vehicle.id
+
     # return all the obstacles within the sensing radius of the vehicle
     def get_all_obstacles_within_range(self):
         # get every actor on stage
-        if self.vehicle == None:
-            self.find_ego_vehicle()
-            # rospy.loginfo("No ego vehicle.")
-            return
-        vehicle = self.vehicle
-        vehicle_loc = vehicle.get_location()
+        vehicle_loc = self.get_vehicle_location()
         all_actors = self.world.get_actors()
         radius = self.sensing_radius
         filtered_obstacles = []
@@ -50,7 +59,6 @@ class PerceptionModule():
                 # we need to exclude actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
-
                 if 'vehicle' in actor.type_id and actor.id != vehicle.id:
                     filtered_obstacles.append(actor)
                 elif 'pedestrian' in actor.type_id:
@@ -59,78 +67,10 @@ class PerceptionModule():
                     filtered_obstacles.append(actor)
         return filtered_obstacles
 
-    def set_radius(self, new_radius):
-        self.sensing_radius = new_radius
-    
-    def get_radius(self):
-        return self.sensing_radius
-    # determine if the bounding box contains the given point
-    def boundingbox_within_range(self, box, self_loc):
-        radius = self.sensing_radius
-        box_loc = box.location
-        # cast vertices to the same plane as the ego vehicle
-        x_half_width = box.extent.x
-        y_half_width = box.extent.y
-        v1 = carla.Location(box_loc.x+x_half_width, box_loc.y+y_half_width, self_loc.z)
-        v2 = carla.Location(box_loc.x+x_half_width, box_loc.y-y_half_width, self_loc.z)
-        v3 = carla.Location(box_loc.x-x_half_width, box_loc.y+y_half_width, self_loc.z)
-        v4 = carla.Location(box_loc.x-x_half_width, box_loc.y-y_half_width, self_loc.z)
-        if self_loc.y <= v1.y and self_loc.y >= v2.y:
-            if (self.distance_from_point_to_line(self_loc, v1, v2) <= radius):
-                return True
-            if (self.distance_from_point_to_line(self_loc, v3, v4) <= radius):
-                return True
-        if self_loc.x <= v1.x and self_loc.x >= v3.x:
-            if (self.distance_from_point_to_line(self_loc, v1, v3) <= radius):
-                return True
-            if (self.distance_from_point_to_line(self_loc, v2, v4) <= radius):
-                return True
-        # calculate distance to vertices
-        vertices = [v1, v2, v3, v4]
-        for v in vertices:
-            if self.distance_between_points(self_loc ,v) <= radius:
-                return True
-        return False
-        # calculate the distance from point x to the line connecting p1 and p2
-    def distance_from_point_to_line(self, x, p1, p2):
-        num = np.abs((p2.x - p1.x)*(p1.y - x.y) - (p1.x - x.x)*(p2.y - p1.y))
-        denom = np.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
-        return num/denom
-    def distance_between_points(self, p1, p2):
-        return np.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
-    # get city objects in terms of info on their bounding box
-    # return:vertices location in world space
-    # side effect: draw bounding box
-    def get_bb_global_ver_within_range(self, obj_type):
-        # TODO: need to check validity of object type
-        if self.vehicle == None:
-            self.find_ego_vehicle()
-            # rospy.loginfo("No ego vehicle.")
-            return
-        all_env_bbs = self.world.get_environment_objects(obj_type)
-        vehicle = self.vehicle
-        self_loc = vehicle.get_location()
-        radius = self.sensing_radius
-        filtered_obstacles = []
-        for env_bb in all_env_bbs:
-            # center of the bounding box in world space
-            center_of_box = env_bb.bounding_box.location
-            # dist = np.sqrt((center_of_box.x - self_loc.x)**2 + (center_of_box.y-self_loc.y)**2 + (center_of_box.z-self_loc.z)**2)
-            dist = self.distance_between_points(center_of_box, self_loc)
-            if dist <= radius:
-                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id, env_bb.transform.location, env_bb.bounding_box))
-            elif self.boundingbox_within_range(env_bb.bounding_box, self_loc):
-                filtered_obstacles.append((env_bb.bounding_box.get_local_vertices(), env_bb.name, env_bb.id, env_bb.transform.location, env_bb.bounding_box))
-        return filtered_obstacles
     # get set of waypoints separated by parameter -- distance -- along the lane
     def get_lane_markers(self, distance=0.5, num_of_points=20):
-        if self.vehicle == None:
-            self.find_ego_vehicle()
-            # rospy.loginfo("No ego vehicle.")
-            return
-        vehicle = self.vehicle
-        carla_map = self.world.get_map()
-        vehicle_location = vehicle.get_location()
+        carla_map = self.carla_map
+        vehicle_location = self.get_vehicle_location()
         # get a nearest waypoint
         cur_waypoint = carla_map.get_waypoint(vehicle_location)
         # return list of waypoints from cur_waypoint to 10 meters ahead
@@ -138,37 +78,7 @@ class PerceptionModule():
         for i in range(num_of_points):
             waypoints.extend(cur_waypoint.next((i+1)*distance))
         return waypoints
-    
-    def get_left_lane_markers(self, distance=0.5, num_of_points=20):
-        if self.vehicle == None:
-            self.find_ego_vehicle()
-            return
-        vehicle = self.vehicle
-        carla_map = self.world.get_map()
-        vehicle_location = vehicle.get_location()
-        cur_waypoint = carla_map.get_waypoint(vehicle_location)
-        left_waypoint = cur_waypoint.get_left_lane()
-        if left_waypoint is None:
-            return None
-        waypoints = []
-        for i in range(num_of_points):
-            waypoints.extend(left_waypoint.next((i+1)*distance))
-        return waypoints
-    def get_right_lane_markers(self, distance=0.5, num_of_points=20):
-        if self.vehicle == None:
-            self.find_ego_vehicle()
-            return
-        vehicle = self.vehicle
-        carla_map = self.world.get_map()
-        vehicle_location = vehicle.get_location()
-        cur_waypoint = carla_map.get_waypoint(vehicle_location)
-        right_waypoint = cur_waypoint.get_right_lane()
-        if right_waypoint is None:
-            return None
-        waypoints = []
-        for i in range(num_of_points):
-            waypoints.extend(right_waypoint.next((i+1)*distance))
-        return waypoints
+
     def get_left_boundary_lane_center_markers(self, distance=0.5, num_of_points=20):
         cur_loc = self.get_vehicle_location()
         carla_map = self.world.get_map()
@@ -184,6 +94,7 @@ class PerceptionModule():
         for i in range(num_of_points):
             waypoints.extend(left_waypoint.next((i+1)*distance))
         return waypoints
+
     def get_right_boundary_lane_center_markers(self, distance=0.5, num_of_points=20):
         cur_loc = self.get_vehicle_location()
         carla_map = self.world.get_map()
@@ -199,18 +110,21 @@ class PerceptionModule():
         for i in range(num_of_points):
             waypoints.extend(right_waypoint.next((i+1)*distance))
         return waypoints
+
 def get_right_marker(cur_transform, width):
     vec = cur_transform.get_right_vector()
     vec_normalized = vec/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
     cur_loc = cur_transform.location
     approx_right_marker = cur_loc + (width/2)*vec_normalized
     return carla.Location(approx_right_marker.x, approx_right_marker.y, approx_right_marker.z)
+
 def get_left_marker(cur_transform, width):
     vec = cur_transform.get_right_vector()
     vec_normalized = vec/np.sqrt((vec.x)**2 + (vec.y)**2 + (vec.z)**2)
     cur_loc = cur_transform.location
     approx_left_marker = cur_loc - (width/2)*vec_normalized
     return carla.Location(approx_left_marker.x, approx_left_marker.y, approx_left_marker.z)
+
 # helper function for creating lane markers information
 def get_marker_info(loc, rot):
     mark_loc = Vector3()
@@ -222,6 +136,7 @@ def get_marker_info(loc, rot):
     mark_rot.y = rot.yaw
     mark_rot.z = rot.roll
     return (mark_loc, mark_rot)
+
 def fill_marker_msg(lp, percep_mod, visualize=True, side=0):
     marker_msg = LaneInfo()
     marker_center_list = LaneList()
@@ -256,16 +171,20 @@ def fill_marker_msg(lp, percep_mod, visualize=True, side=0):
     marker_msg.lane_markers_left = marker_left_list
     marker_msg.lane_markers_right = marker_right_list
     return marker_msg
+
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
     # main function
+    loc_pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=None)
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
     lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=1)
     left_lane_pub = rospy.Publisher('/carla/%s/left_lane_markers'%role_name, LaneList, queue_size=1)
     right_lane_pub = rospy.Publisher('/carla/%s/right_lane_markers'%role_name, LaneList, queue_size=1)
-    rate = rospy.Rate(20)
     draw_counter = 0
+    prev_location = None
+
     while not rospy.is_shutdown():
+        percep_mod.world.wait_for_tick()
         obs = percep_mod.get_all_obstacles_within_range()
         lane_markers = percep_mod.get_lane_markers()
         obs_msg = []
@@ -308,39 +227,37 @@ def publisher(percep_mod, role_name, label_list):
         # TODO: sidewalks also return lane markers???
         left_marker_msg = left_marker_info.lane_markers_right
         right_marker_msg = right_marker_info.lane_markers_left 
-        # NOTE Environment objects note used now    
-        # for label in label_list:
-        #     # get all vertices of all bounding boxes which are within the radius with label 'label'
-        #     vertices_of_cur_label = percep_mod.get_bb_global_ver_within_range(label)
-        #     if not vertices_of_cur_label:
-        #         continue
-        #     for vertices_of_one_box in vertices_of_cur_label:
-        #         info = ObstacleInfo()
-        #         for loc in vertices_of_one_box[0]:
-        #             vertex = BBSingleInfo()
-        #             vertex.vertex_location.x = loc.x
-        #             vertex.vertex_location.y = loc.yospy.Publisher('/carla/%s/lane_markers'%role_name, LaneList, queue_size=1)
-        #             vertex.vertex_location.z = loc.z
-        #             info.vertices_locations.append(vertex)
-        #         info.obstacle_name = str(vertices_of_one_box[1])
-        #         info.obstacle_id = vertices_of_one_box[2] % 1013 # NOTE 1013 is a magic number, the purpose is to shorten the id from a very large number
-        #         obstacle_loc = vertices_of_one_box[3]
-        #         info.location.x = obstacle_loc.x
-        #         info.location.y = obstacle_loc.y
-        #         info.location.z = obstacle_loc.z
-        #         bb = vertices_of_one_box[4]
-        #         percep_mod.world.debug.draw_box(bb, bb.rotation, life_time=1)
-        #         obs_msg.append(info)
         obs_pub.publish(obs_msg)
         lane_pub.publish(marker_msg)
         left_lane_pub.publish(left_marker_msg)
         right_lane_pub.publish(right_marker_msg)
-        rate.sleep()
 
+        loc_info = LocationInfo()
+        loc_info.actor_name = percep_mod.getName()
+        loc_info.actor_id = percep_mod.getId()
+        location = percep_mod.get_vehicle_location()
+        if prev_location is None:
+            prev_location = location
+        loc_info.location.x = location.x 
+        loc_info.location.y = location.y 
+        loc_info.location.z = location.z 
+        rotation = percep_mod.get_vehicle_rotation()
+        loc_info.rotation.x = rotation.roll
+        loc_info.rotation.y = rotation.pitch
+        loc_info.rotation.z = rotation.yaw
+        velocity = percep_mod.get_vehicle_velocity()
+        loc_info.velocity.x = velocity.x
+        loc_info.velocity.y = velocity.y 
+        loc_info.velocity.z = velocity.z
+        if (loc_info.velocity.x == loc_info.velocity.y == loc_info.velocity.z == 0):
+            loc_info.velocity.x = (location.x - prev_location.x) * 20. # FIXME
+            loc_info.velocity.y = (location.y - prev_location.y) * 20. # FIXME
+        prev_location = location
+        loc_pub(loc_info)
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
-    rospy.init_node('graic_raceinfo_publisher', anonymous=True)
+    rospy.init_node('graic_perception', anonymous=True)
     host = rospy.get_param("~host", "localhost")
     port = rospy.get_param("~port", 2000)
     # timeout = rospy.get_param("/carla/timeout", 10)
@@ -349,6 +266,9 @@ if __name__ == "__main__":
     # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule(world, role_name)
+    while not pm.vehicle:
+        pm.find_ego_vehicle()
+
     default_list = [carla.CityObjectLabel.Buildings, carla.CityObjectLabel.Fences, carla.CityObjectLabel.Sidewalks, carla.CityObjectLabel.Walls, carla.CityObjectLabel.Vegetation]
     try:
         publisher(pm, role_name, default_list)
