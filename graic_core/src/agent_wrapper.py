@@ -86,15 +86,12 @@ def run_model(role_name, controller):
 
     while not rospy.is_shutdown():
         if perceptionModule.ready():
-            print('alive')
-            controlPub3.publish(CarlaEgoVehicleControl())
-            # # Get the current position and orientation of the vehicle
-            # currState = (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
-            # control = controller.execute(currState, perceptionModule.obstacleList, perceptionModule.lane_marker, perceptionModule.waypoint)
-            # perceptionModule.clear()
-            # publish_control(controlPub, control)
+            # Get the current position and orientation of the vehicle
+            currState = (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
+            control = controller.execute(currState, perceptionModule.obstacleList, perceptionModule.lane_marker, perceptionModule.waypoint)
+            perceptionModule.clear()
+            publish_control(controlPub, control)
         time.sleep(0.01)
-        # rate.sleep()  # Wait a while before trying to get a new state
 
 if __name__ == "__main__":
     rospy.init_node("graic_agent_wrapper", anonymous=True)
