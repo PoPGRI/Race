@@ -39,7 +39,7 @@ class PerceptionModule():
                 break
 
     def getName(self):
-        return self.vehicle.type_id 
+        return self.vehicle.type_id
 
     def getId(self):
         return self.vehicle.id
@@ -59,7 +59,7 @@ class PerceptionModule():
                 # we need to exclude actors such as camera
                 # types we need: vehicle, walkers, Traffic signs and traffic lights
                 # reference: https://github.com/carla-simulator/carla/blob/master/PythonAPI/carla/scene_layout.py
-                if 'vehicle' in actor.type_id and actor.id != vehicle.id:
+                if 'vehicle' in actor.type_id and actor.id != self.vehicle.id:
                     filtered_obstacles.append(actor)
                 elif 'pedestrian' in actor.type_id:
                     filtered_obstacles.append(actor)
@@ -162,7 +162,7 @@ def fill_marker_msg(lp, percep_mod, visualize=True, side=0):
         if side == 1 or side == 0:
             percep_mod.world.debug.draw_point(left_marker_loc, life_time=1)
         right_marker_loc = get_right_marker(trans, p.lane_width)
-        right_marker_loc_info, right_marker_rot_info = get_marker_info(right_marker_loc, rot) 
+        right_marker_loc_info, right_marker_rot_info = get_marker_info(right_marker_loc, rot)
         marker_right_list.location.append(right_marker_loc_info)
         marker_right_list.rotation.append(right_marker_rot_info)
         if side == -1 or side == 0:
@@ -175,7 +175,7 @@ def fill_marker_msg(lp, percep_mod, visualize=True, side=0):
 # publish obstacles and lane waypoints information
 def publisher(percep_mod, role_name, label_list):
     # main function
-    loc_pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=None)
+    loc_pub = rospy.Publisher('/carla/%s/location'%role_name, LocationInfo, queue_size=1)
     obs_pub = rospy.Publisher('/carla/%s/obstacles'%role_name, ObstacleList, queue_size=1)
     lane_pub = rospy.Publisher('/carla/%s/lane_markers'%role_name, LaneInfo, queue_size=1)
     left_lane_pub = rospy.Publisher('/carla/%s/left_lane_markers'%role_name, LaneList, queue_size=1)
@@ -184,7 +184,7 @@ def publisher(percep_mod, role_name, label_list):
     prev_location = None
 
     while not rospy.is_shutdown():
-        percep_mod.world.wait_for_tick()
+        print('alive')
         obs = percep_mod.get_all_obstacles_within_range()
         lane_markers = percep_mod.get_lane_markers()
         obs_msg = []
@@ -226,7 +226,7 @@ def publisher(percep_mod, role_name, label_list):
         right_marker_info = fill_marker_msg(right_boundary_lane_center_markers, percep_mod, side=1)
         # TODO: sidewalks also return lane markers???
         left_marker_msg = left_marker_info.lane_markers_right
-        right_marker_msg = right_marker_info.lane_markers_left 
+        right_marker_msg = right_marker_info.lane_markers_left
         obs_pub.publish(obs_msg)
         lane_pub.publish(marker_msg)
         left_lane_pub.publish(left_marker_msg)
@@ -238,22 +238,23 @@ def publisher(percep_mod, role_name, label_list):
         location = percep_mod.get_vehicle_location()
         if prev_location is None:
             prev_location = location
-        loc_info.location.x = location.x 
-        loc_info.location.y = location.y 
-        loc_info.location.z = location.z 
+        loc_info.location.x = location.x
+        loc_info.location.y = location.y
+        loc_info.location.z = location.z
         rotation = percep_mod.get_vehicle_rotation()
         loc_info.rotation.x = rotation.roll
         loc_info.rotation.y = rotation.pitch
         loc_info.rotation.z = rotation.yaw
         velocity = percep_mod.get_vehicle_velocity()
         loc_info.velocity.x = velocity.x
-        loc_info.velocity.y = velocity.y 
+        loc_info.velocity.y = velocity.y
         loc_info.velocity.z = velocity.z
         if (loc_info.velocity.x == loc_info.velocity.y == loc_info.velocity.z == 0):
             loc_info.velocity.x = (location.x - prev_location.x) * 20. # FIXME
             loc_info.velocity.y = (location.y - prev_location.y) * 20. # FIXME
         prev_location = location
-        loc_pub(loc_info)
+        loc_pub.publish(loc_info)
+        percep_mod.world.wait_for_tick(seconds=1000)
 
 if __name__ == "__main__":
     # reference: https://github.com/SIlvaMFPedro/ros_bridge/blob/master/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py
@@ -266,6 +267,8 @@ if __name__ == "__main__":
     # client.set_timeout(timeout)
     world = client.get_world()
     pm = PerceptionModule(world, role_name)
+    pm.world.wait_for_tick(seconds=1000)
+
     while not pm.vehicle:
         pm.find_ego_vehicle()
 

@@ -1,4 +1,4 @@
-import rospy 
+import rospy
 import rospkg
 import numpy as np
 from geometry_msgs.msg import Vector3
@@ -30,19 +30,19 @@ def get_open_port():
 
 
 class ScenarioConfig:
-    def __init__(self, track): 
+    def __init__(self, track):
         self.track = track
         self.scenario_config = {
             track: [
-                
+
             ]
         }
-    
+
     def getScenario(self, scenarios, triggerPoints):
         for config in zip(scenarios, triggerPoints):
             scenario = {
                 "available_event_configurations": [
-                    
+
                 ],
                 "scenario_type": config[0].value
             }
@@ -55,7 +55,7 @@ class ScenarioConfig:
                                     "z": str(config[1].location.z+1.22)
                                 }
                             }
-        
+
             scenario["available_event_configurations"].append(trigger_config)
             self.scenario_config[self.track].append(scenario)
         return self.scenario_config
@@ -73,8 +73,8 @@ class ScenarioArguments:
     def __init__(self, route_config: List[RouteScenarioConfiguration], scenario_config: Dict,
         host = '127.0.0.1', port = 2000, timeout = '10.0', trafficManagerPort = '8000',
         trafficManagerSeed = '0', sync = False, agent = None, agentConfig = '', output = True,
-        result_file = False, junit = False, json = False, outputDir = '', configFile = '', 
-        additionalScenario = '', debug = False, reloadWorld = False, record = '', 
+        result_file = False, junit = False, json = False, outputDir = '', configFile = '',
+        additionalScenario = '', debug = False, reloadWorld = False, record = '',
         randomize = False, repetitions = 1, waitForEgo = False
     ):
         self.host = host
@@ -114,13 +114,13 @@ class ScenarioList:
         track_id-=1
         self.unitScenarios = self.unitScenarios[track_id:] + self.unitScenarios[:track_id]
         self.compositeScenarios = list(permutations(self.unitScenarios, 4))
-    
+
     def getUnitScenario(self):
         scenario = self.unitScenarios.pop(0)
         # print("Get scenario: ", scenario)
         # print("Remaining scenario: ", self.unitScenarios)
         return [scenario]
-    
+
     def hasUnitScenario(self):
         return len(self.unitScenarios) > 0
 
@@ -146,7 +146,7 @@ class ScenarioList:
 class ScenarioGenerator:
     def __init__(self, track_id):
         self.scenarioList = ScenarioList(track_id)
-    
+
     def generateScenario(self, result=None):
         if not result:
             return self.scenarioList.getUnitScenario()
@@ -164,7 +164,7 @@ class ScenarioNode:
         self.world = world
         self.map = world.get_map()
         rospack = rospkg.RosPack()
-        fpath = rospack.get_path('config_node')
+        fpath = rospack.get_path('graic_config')
         self.waypoint_list = pickle.load(open(fpath+'/'+track,'rb'))
         track_id = self.waypoint_list.pop(0)
         # self.waypoint_list = pickle.load(open(track,'rb'))
@@ -183,8 +183,8 @@ class ScenarioNode:
         self.findEgoVehicle()
 
     def collisionCallback(self, data):
-        self.collisionTest = False 
-    
+        self.collisionTest = False
+
     def laneCallback(self, data):
         for marking in data.crossed_lane_markings:
             if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
@@ -209,7 +209,7 @@ class ScenarioNode:
             else:
                 trigger_point = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform
             trigger_points.append(trigger_point)
-        
+
         scenarioConfig = ScenarioConfig(self.track)
         scenario_config = scenarioConfig.getScenario(self.scenario, trigger_points)
         print("Config: ", scenario_config)
@@ -238,20 +238,20 @@ class ScenarioNode:
 
         args = ScenarioArguments(route_config_list, scenario_config, port=self.port)
         self.wp_idx += 7
-        
+
         return args
 
     def launchScenarioRunner(self, scenarioConfig):
         scenarios = ScenarioRunner(scenarioConfig)
-        scenarios.run() 
+        scenarios.run()
 
         return True
 
     def parseResults(self):
         if not self.laneDepartureTest or not self.collisionTest:
-            self.laneDepartureTest = True 
+            self.laneDepartureTest = True
             self.collisionTest = True
-            return (False, self.scenario) 
+            return (False, self.scenario)
         else:
             return (True, self.scenario)
 
@@ -279,4 +279,3 @@ if __name__ == "__main__":
         run(sn, role_name)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("Shutting down waypoint node")
-

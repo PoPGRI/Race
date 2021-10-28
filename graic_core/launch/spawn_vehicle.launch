@@ -26,7 +26,7 @@
   </include>
 
   <!-- carla manual control -->
-  <group if="$(arg 2Dvis)">
+  <group unless="$(arg 2Dvis)">
     <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
       <param name="role_name" value="$(arg role_name)"/>
     </node>
@@ -35,8 +35,8 @@
       <param name="role_name" value="$(arg role_name)"/>
     </node>
   </group>
-  <group unless="$(arg 2Dvis)">
-    <node pkg="graic_core" type="2D-visulize.py" name="2D-visualize$(arg role_name)" output="screen" unless="$(arg offscreen)">
+  <group if="$(arg 2Dvis)">
+    <node pkg="graic_core" type="2D_visulize.py" name="2D_visualize$(arg role_name)" output="screen" unless="$(arg offscreen)">
       <param name="role_name" value="$(arg role_name)"/>
     </node>
   </group>
@@ -47,32 +47,5 @@
     <arg name='host' value='$(arg host)' />
     <arg name='port' value='$(arg port)' />
   </include>
-
-  <!-- the scorer module -->
-  <include file="$(find graic_scorer)/launch/graic_scorer.launch">
-    <arg name='host' value='$(arg host)' />
-    <arg name='port' value='$(arg port)' />
-    <arg name='role_name' value='$(arg role_name)' />
-    <arg name='track' value='$(arg track)' />
-    <arg name='model_free' value='$(arg model_free)' />
-  </include>
-
-  <!-- the waypoints module -->
-  <include file="$(find graic_waypoints)/launch/graic_waypoints.launch">
-    <arg name='host' value='$(arg host)' />
-    <arg name='port' value='$(arg port)' />
-    <arg name='role_name' value='$(arg role_name)' />
-    <arg name='track' value='$(arg track)' />
-  </include>
-
-  <!-- the scenario module -->
-  <group if="$(arg scenario)">
-    <include file="$(find graic_scenario)/launch/graic_scenario.launch">
-      <arg name='host' value='$(arg host)'/>
-      <arg name='port' value='$(arg port)'/>
-      <arg name='role_name' value='$(arg role_name)' />
-      <arg name='track' value='$(arg track)' />
-    </include>
-  </group>
 
 </launch>

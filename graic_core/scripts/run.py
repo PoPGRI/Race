@@ -15,15 +15,15 @@ from graic_msgs.msg import WaypointInfo
 four_wheel_vehicle = ['vehicle.audi.a2','vehicle.tesla.model3','vehicle.bmw.grandtourer','vehicle.audi.etron','vehicle.seat.leon','vehicle.mustang.mustang','vehicle.tesla.cybertruck','vehicle.lincoln.mkz2017','vehicle.lincoln2020.mkz2020','vehicle.dodge_charger.police','vehicle.audi.tt','vehicle.jeep.wrangler_rubicon','vehicle.chevrolet.impala','vehicle.nissan.patrol','vehicle.nissan.micra','vehicle.mercedesccc.mercedesccc','vehicle.mini.cooperst','vehicle.chargercop2020.chargercop2020','vehicle.toyota.prius','vehicle.mercedes-benz.coupe','vehicle.citroen.c3','vehicle.charger2020.charger2020', 'vehicle.bmw.isetta']
 two_wheel_vehicle = ['vehicle.bh.crossbike','vehicle.kawasaki.ninja','vehicle.gazelle.omafiets','vehicle.yamaha.yzf','vehicle.harley-davidson.low_rider','vehicle.diamondback.century']
 
-car_name_prefix = 'hero' # NOTE 
+car_name_prefix = 'hero' # NOTE
 
 class CommandNode:
     def __init__(self, host, port, N, log, track, model_type, num_wheels, offscreen, scenario, set_spectator=True):
-        self.host = host 
+        self.host = host
         self.port = port
-        self.N = N 
-        self.log = log 
-        self.track = track 
+        self.N = N
+        self.log = log
+        self.track = track
         self.model_type = model_type
         self.num_wheels = num_wheels
         self.offscreen = offscreen
@@ -37,7 +37,7 @@ class CommandNode:
         self.spawnCars()
 
     def waypointCallback(self, data):
-        role_name = data.role_name 
+        role_name = data.role_name
         reachFinal = data.reachedFinal
         self.vehicles[role_name]['finished'] = reachFinal
 
@@ -117,7 +117,7 @@ class CommandNode:
             f.write(str(60))
             f.close()
 
-            cmd = ('roslaunch race spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s scenario:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, self.scenario, v['model_free'], v['launch_log']])
+            cmd = ('roslaunch graic_core spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s scenario:=%s model_free:=%s &> %s')%tuple([self.host, self.port, v['json_file'], v['role_name'], v['track'], self.offscreen, self.scenario, v['model_free'], v['launch_log']])
             # The os.setsid() is passed in the argument preexec_fn so
             # it's run after the fork() and before  exec() to run the shell.
             v['proc_handler'] = subprocess.Popen(cmd, preexec_fn=os.setsid, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -127,7 +127,7 @@ class CommandNode:
 
 
     def shut_down(self):
-        import rosnode 
+        import rosnode
         for v in self.vehicles.values():
             os.killpg(os.getpgid(v['proc_handler'].pid), signal.SIGTERM)  # Send the signal to all the process groups
         names = rosnode.get_node_names()
@@ -166,7 +166,7 @@ if __name__ == '__main__':
 
     import time
     time.sleep(10)
-    try: 
+    try:
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels, offscreen, scenario)
 
         run(cn)

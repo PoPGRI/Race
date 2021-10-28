@@ -11,13 +11,13 @@ from graic_msgs.msg import LaneList
 from graic_msgs.msg import LaneInfo
 
 class VehicleDecision():
-    def __init__(self, role_name):
+    def __init__(self):
         self.vehicle_state = 'straight'
         self.lane_state = 0
         self.counter = 0
 
         self.lane_marker = None
-        self.target_x = None 
+        self.target_x = None
         self.target_y = None
         self.change_lane = False
         self.change_lane_wp_idx = 0
@@ -29,16 +29,17 @@ class VehicleDecision():
     def get_ref_state(self, currState, obstacleList, lane_marker, waypoint):
         """
             Get the reference state for the vehicle according to the current state and result from perception module
-            Inputs: 
+            Inputs:
                 currState: [Loaction, Rotation, Velocity] the current state of vehicle
                 obstacleList: List of obstacles
-            Outputs: reference state position and velocity of the vehicle 
+            Outputs: reference state position and velocity of the vehicle
         """
-        self.reachEnd = waypoint.reachedFinal
+        # self.reachEnd = waypoint.reachedFinal
+
         self.lane_marker = lane_marker.lane_markers_center.location[-1]
         self.lane_state = lane_marker.lane_state
         if not self.target_x or not self.target_y:
-            self.target_x = self.lane_marker.x 
+            self.target_x = self.lane_marker.x
             self.target_y = self.lane_marker.y
         if self.reachEnd:
             return None
@@ -58,7 +59,7 @@ class VehicleDecision():
                     dy = vertex.vertex_location.y - curr_y
                     dx = vertex.vertex_location.x - curr_x
                     yaw = currState[1][2]
-                    rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy 
+                    rx = np.cos(-yaw) * dx - np.sin(-yaw) * dy
                     ry = np.cos(-yaw) * dy + np.sin(-yaw) * dx
 
                     psi = np.arctan(ry/rx)
@@ -70,10 +71,10 @@ class VehicleDecision():
                         elif psi > 0.2:
                             obs_right = True
                         elif psi < -0.2:
-                            obs_left = True 
+                            obs_left = True
 
 
-        # prev_vehicle_state = self.vehicle_state          
+        # prev_vehicle_state = self.vehicle_state
         if self.lane_state == LaneInfo.LEFT_LANE:
             if front_dist <= self.detect_dist and obs_front:
                 if not obs_right:
@@ -114,21 +115,21 @@ class VehicleDecision():
 
         while not self.target_x or not self.target_y:
             continue
-        
+
         distToTargetX = abs(self.target_x - curr_x)
         distToTargetY = abs(self.target_y - curr_y)
 
-        if ((distToTargetX < 5 and distToTargetY < 5)): 
-            
+        if ((distToTargetX < 5 and distToTargetY < 5)):
+
             prev_target_x = self.target_x
             prev_target_y = self.target_y
 
-            self.target_x = self.lane_marker.x 
+            self.target_x = self.lane_marker.x
             self.target_y = self.lane_marker.y
 
-            target_orientation = np.arctan2(self.target_y-prev_target_y, 
+            target_orientation = np.arctan2(self.target_y-prev_target_y,
                 self.target_x-prev_target_x)
-            
+
             if self.vehicle_state == "turn-right":
                 # self.change_lane = False
                 tmp_x = 6
@@ -154,10 +155,6 @@ class VehicleDecision():
 
 
 class VehicleController():
-
-    def __init__(self, role_name='ego_vehicle'):
-        # Publisher to publish the control input to the vehicle model
-
     def stop(self):
         newAckermannCmd = AckermannDrive()
         newAckermannCmd.acceleration = -20
@@ -167,9 +164,9 @@ class VehicleController():
 
     def execute(self, currentPose, targetPose):
         """
-            This function takes the current state of the vehicle and 
+            This function takes the current state of the vehicle and
             the target state to compute low-level control input to the vehicle
-            Inputs: 
+            Inputs:
                 currentPose: ModelState, the current state of vehicle
                 targetPose: The desired state of the vehicle
         """
@@ -182,7 +179,7 @@ class VehicleController():
         target_x = targetPose[0]
         target_y = targetPose[1]
         target_v = targetPose[2]
-        
+
         k_s = 0.1
         k_ds = 1
         k_n = 0.1
@@ -195,8 +192,8 @@ class VehicleController():
         yError = -(target_x - curr_x) * np.sin(currentEuler[2]) + (target_y - curr_y) * np.cos(currentEuler[2])
         curr_v = np.sqrt(currentPose[2][0]**2 + currentPose[2][1]**2)
         vError = target_v - curr_v
-        
-        delta = k_n*yError 
+
+        delta = k_n*yError
         # Checking if the vehicle need to stop
         if target_v > 0:
             v = xError*k_s + vError*k_ds
@@ -210,13 +207,17 @@ class VehicleController():
 
 class Controller(object):
     """docstring for Controller"""
-    def __init__(self,):
+    def __init__(self):
         super(Controller, self).__init__()
-            self.decisionModule = VehicleDecision(role_name)
-            self.controlModule = VehicleController(role_name=role_name)
-    def execute(self, currentState, obstacleList, lane_marker, waypoint):
+        self.decisionModule = VehicleDecision()
+        self.controlModule = VehicleController()
+
+    def stop(self):
+        return self.controlModule.stop()
+
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
         # Get the target state from decision module
-        refState = decisionModule.get_ref_state(currState, obstacleList, lane_marker, waypoint)
+        refState = self.decisionModule.get_ref_state(currState, obstacleList, lane_marker, waypoint)
         if not refState:
-            return controlModule.stop()
-        return controlModule.execute(currState, refState)
+            return self.controlModule.stop()
+        return self.controlModule.execute(currState, refState)
