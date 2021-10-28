@@ -48,4 +48,21 @@
     <arg name='port' value='$(arg port)' />
   </include>
 
+  <!-- the scorer module -->
+  <include file="$(find graic_scorer)/launch/graic_scorer.launch">
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
+    <arg name='model_free' value='$(arg model_free)' />
+  </include>
+
+  <!-- the waypoints module -->
+  <include file="$(find graic_waypoints)/launch/graic_waypoints.launch">
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
+    <arg name='role_name' value='$(arg role_name)' />
+    <arg name='track' value='$(arg track)' />
+  </include>
+
 </launch>
