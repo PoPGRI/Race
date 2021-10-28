@@ -55,7 +55,7 @@ class VehiclePerception:
                     self.velocity
                     is not None) and (self.obstacleList is not None) and (
                         self.lane_marker is not None
-                    )  #and self.waypoint is not None
+                    )  and (self.waypoint is not None)
 
     def clear(self):
         self.position = None
@@ -74,7 +74,6 @@ def publish_control(pub_control, control):
 
 def run_model(role_name, controller):
     perceptionModule = VehiclePerception(role_name=role_name)
-    rate = rospy.Rate(100)
 
     controlPub = rospy.Publisher("/carla/%s/ackermann_cmd" % role_name,
                                  AckermannDrive,

@@ -61,8 +61,9 @@ def run(wn, role_name):
     rate = rospy.Rate(20)  # 20 Hz
     pubWaypoint = rospy.Publisher('/carla/%s/waypoints' % role_name,
                                   WaypointInfo,
-                                  queue_size=None)
+                                  queue_size=1)
     while not rospy.is_shutdown():
+        wn.world.wait_for_tick()
         waypoint = wn.getWaypoint()
         pub_waypoint = WaypointInfo()
         pub_waypoint.role_name = role_name
@@ -73,7 +74,6 @@ def run(wn, role_name):
             pub_waypoint.location.y = waypoint[1]
             pub_waypoint.location.z = waypoint[2]
         pubWaypoint.publish(pub_waypoint)
-        rate.sleep()
 
 
 if __name__ == "__main__":
