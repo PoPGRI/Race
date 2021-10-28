@@ -70,8 +70,8 @@ try:
     from pygame.locals import K_w
     from pygame.locals import K_b
 except ImportError:
-    raise RuntimeError('cannot import pygame, make sure pygame package is installed')
-
+    raise RuntimeError(
+        'cannot import pygame, make sure pygame package is installed')
 
 # ==============================================================================
 # -- World ---------------------------------------------------------------------
@@ -82,16 +82,16 @@ class World(object):
     """
     Handle the rendering
     """
-
     def __init__(self, role_name, hud):
         self._surface = None
         self.hud = hud
         self.role_name = role_name
         self.image_subscriber = rospy.Subscriber(
-            "/carla/{}/rgb_view/image".format(self.role_name),
-            Image, self.on_view_image)
+            "/carla/{}/rgb_view/image".format(self.role_name), Image,
+            self.on_view_image)
         self.collision_subscriber = rospy.Subscriber(
-            "/carla/{}/collision".format(self.role_name), CarlaCollisionEvent, self.on_collision)
+            "/carla/{}/collision".format(self.role_name), CarlaCollisionEvent,
+            self.on_collision)
         self.lane_invasion_subscriber = rospy.Subscriber(
             "/carla/{}/lane_invasion".format(self.role_name),
             CarlaLaneInvasionEvent, self.on_lane_invasion)
@@ -101,7 +101,8 @@ class World(object):
         Callback on collision event
         """
         intensity = math.sqrt(data.normal_impulse.x**2 +
-                              data.normal_impulse.y**2 + data.normal_impulse.z**2)
+                              data.normal_impulse.y**2 +
+                              data.normal_impulse.z**2)
         self.hud.notification('Collision with {} (impulse {})'.format(
             data.other_actor_id, intensity))
 
@@ -152,11 +153,11 @@ class World(object):
 # -- KeyboardControl -----------------------------------------------------------
 # ==============================================================================
 
+
 class KeyboardControl(object):
     """
     Handle input events
     """
-
     def __init__(self, role_name, hud):
         self.role_name = role_name
         self.hud = hud
@@ -167,13 +168,18 @@ class KeyboardControl(object):
 
         self.vehicle_control_manual_override_publisher = rospy.Publisher(
             "/carla/{}/vehicle_control_manual_override".format(self.role_name),
-            Bool, queue_size=None, latch=True)
+            Bool,
+            queue_size=None,
+            latch=True)
         self.vehicle_control_manual_override = False
         self.auto_pilot_enable_publisher = rospy.Publisher(
-            "/carla/{}/enable_autopilot".format(self.role_name), Bool, queue_size=None)
+            "/carla/{}/enable_autopilot".format(self.role_name),
+            Bool,
+            queue_size=None)
         self.vehicle_control_publisher = rospy.Publisher(
             "/carla/{}/vehicle_control_cmd_manual".format(self.role_name),
-            CarlaEgoVehicleControl, queue_size=None)
+            CarlaEgoVehicleControl,
+            queue_size=None)
         self.carla_status_subscriber = rospy.Subscriber(
             "/carla/status", CarlaStatus, self._on_new_carla_frame)
 
@@ -191,8 +197,10 @@ class KeyboardControl(object):
         """
         Set the manual control override
         """
-        self.hud.notification('Set vehicle control manual override to: {}'.format(enable))
-        self.vehicle_control_manual_override_publisher.publish((Bool(data=enable)))
+        self.hud.notification(
+            'Set vehicle control manual override to: {}'.format(enable))
+        self.vehicle_control_manual_override_publisher.publish(
+            (Bool(data=enable)))
 
     def set_autopilot(self, enable):
         """
@@ -218,13 +226,16 @@ class KeyboardControl(object):
                     self.hud.help.toggle()
                 elif event.key == K_b:
                     self.vehicle_control_manual_override = not self.vehicle_control_manual_override
-                    self.set_vehicle_control_manual_override(self.vehicle_control_manual_override)
+                    self.set_vehicle_control_manual_override(
+                        self.vehicle_control_manual_override)
                 if event.key == K_q:
                     self._control.gear = 1 if self._control.reverse else -1
                 elif event.key == K_m:
                     self._control.manual_gear_shift = not self._control.manual_gear_shift
-                    self.hud.notification('%s Transmission' % (
-                        'Manual' if self._control.manual_gear_shift else 'Automatic'))
+                    self.hud.notification(
+                        '%s Transmission' %
+                        ('Manual'
+                         if self._control.manual_gear_shift else 'Automatic'))
                 elif self._control.manual_gear_shift and event.key == K_COMMA:
                     self._control.gear = max(-1, self._control.gear - 1)
                 elif self._control.manual_gear_shift and event.key == K_PERIOD:
@@ -232,10 +243,12 @@ class KeyboardControl(object):
                 elif event.key == K_p:
                     self._autopilot_enabled = not self._autopilot_enabled
                     self.set_autopilot(self._autopilot_enabled)
-                    self.hud.notification('Autopilot %s' % (
-                        'On' if self._autopilot_enabled else 'Off'))
+                    self.hud.notification(
+                        'Autopilot %s' %
+                        ('On' if self._autopilot_enabled else 'Off'))
         if not self._autopilot_enabled and self.vehicle_control_manual_override:
-            self._parse_vehicle_keys(pygame.key.get_pressed(), clock.get_time())
+            self._parse_vehicle_keys(pygame.key.get_pressed(),
+                                     clock.get_time())
             self._control.reverse = self._control.gear < 0
         return False
 
@@ -250,7 +263,8 @@ class KeyboardControl(object):
             try:
                 self.vehicle_control_publisher.publish(self._control)
             except rospy.ROSException as error:
-                rospy.logwarn("Could not send vehicle control: {}".format(error))
+                rospy.logwarn(
+                    "Could not send vehicle control: {}".format(error))
 
     def _parse_vehicle_keys(self, keys, milliseconds):
         """
@@ -271,7 +285,8 @@ class KeyboardControl(object):
 
     @staticmethod
     def _is_quit_shortcut(key):
-        return (key == K_ESCAPE) or (key == K_q and pygame.key.get_mods() & KMOD_CTRL)
+        return (key == K_ESCAPE) or (key == K_q
+                                     and pygame.key.get_mods() & KMOD_CTRL)
 
 
 # ==============================================================================
@@ -283,7 +298,6 @@ class HUD(object):
     """
     Handle the info display
     """
-
     def __init__(self, role_name, width, height):
         self.role_name = role_name
         self.dim = (width, height)
@@ -312,21 +326,23 @@ class HUD(object):
         self.longitude = 0
         self.manual_control = False
         self.gnss_subscriber = rospy.Subscriber(
-            "/carla/{}/gnss/gnss1/fix".format(self.role_name), NavSatFix, self.gnss_updated)
+            "/carla/{}/gnss/gnss1/fix".format(self.role_name), NavSatFix,
+            self.gnss_updated)
         self.manual_control_subscriber = rospy.Subscriber(
             "/carla/{}/vehicle_control_manual_override".format(self.role_name),
             Bool, self.manual_control_override_updated)
 
         self.carla_status = CarlaStatus()
-        self.status_subscriber = rospy.Subscriber(
-            "/carla/status", CarlaStatus, self.carla_status_updated)
+        self.status_subscriber = rospy.Subscriber("/carla/status", CarlaStatus,
+                                                  self.carla_status_updated)
         self.score = 0
         self.score_subscriber = rospy.Subscriber(
-            "/carla/{}/score".format(self.role_name), Float32, self.score_updated)
+            "/carla/{}/score".format(self.role_name), Float32,
+            self.score_updated)
         self.reached_info = ""
         self.reached_subscriber = rospy.Subscriber(
-            "/carla/{}/reached".format(self.role_name), String, self.reached_updated)
-        
+            "/carla/{}/reached".format(self.role_name), String,
+            self.reached_updated)
 
     def __del__(self):
         self.gnss_subscriber.unregister()
@@ -404,7 +420,8 @@ class HUD(object):
             x = position[0]
             y = position[1]
             z = position[2]
-        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+        except (tf.LookupException, tf.ConnectivityException,
+                tf.ExtrapolationException):
             x = 0
             y = 0
             z = 0
@@ -418,17 +435,18 @@ class HUD(object):
             fps = 1 / self.carla_status.fixed_delta_seconds
         self._info_text = [
             'Frame: % 22s' % self.carla_status.frame,
-            'Simulation time: % 12s' % datetime.timedelta(
-                seconds=int(rospy.get_rostime().to_sec())),
-            'FPS: % 24.1f' % fps,
-            '',
-            'Vehicle: % 20s' % ' '.join(self.vehicle_info.type.title().split('.')[1:]),
+            'Simulation time: % 12s' %
+            datetime.timedelta(seconds=int(rospy.get_rostime().to_sec())),
+            'FPS: % 24.1f' % fps, '',
+            'Vehicle: % 20s' %
+            ' '.join(self.vehicle_info.type.title().split('.')[1:]),
             'Speed:   % 15.0f km/h' % (3.6 * self.vehicle_status.velocity),
             u'Heading:% 16.0f\N{DEGREE SIGN} % 2s' % (yaw, heading),
             'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (x, -y)),
-            'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (self.latitude, self.longitude)),
-            'Height:  % 18.0f m' % z,
-            '']
+            'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' %
+                            (self.latitude, self.longitude)),
+            'Height:  % 18.0f m' % z, ''
+        ]
         self._info_text += [
             ('Throttle:', self.vehicle_status.control.throttle, 0.0, 1.0),
             ('Steer:', self.vehicle_status.control.steer, -1.0, 1.0),
@@ -436,12 +454,16 @@ class HUD(object):
             ('Reverse:', self.vehicle_status.control.reverse),
             ('Hand brake:', self.vehicle_status.control.hand_brake),
             ('Manual:', self.vehicle_status.control.manual_gear_shift),
-            'Gear:        %s' % {-1: 'R', 0: 'N'}.get(self.vehicle_status.control.gear,
-                                                      self.vehicle_status.control.gear),
-            '']
+            'Gear:        %s' % {
+                -1: 'R',
+                0: 'N'
+            }.get(self.vehicle_status.control.gear,
+                  self.vehicle_status.control.gear), ''
+        ]
         self._info_text += [('Manual ctrl:', self.manual_control)]
         if self.carla_status.synchronous_mode:
-            self._info_text += [('Sync mode running:', self.carla_status.synchronous_mode_running)]
+            self._info_text += [('Sync mode running:',
+                                 self.carla_status.synchronous_mode_running)]
         self._info_text += ['', '', 'Press <H> for help']
 
     def toggle_info(self):
@@ -467,8 +489,7 @@ class HUD(object):
         render the display
         """
         if self._show_info:
-            info_surface = pygame.Surface(
-                (220, self.dim[1]))  # pylint: disable=too-many-function-args
+            info_surface = pygame.Surface((220, self.dim[1]))  # pylint: disable=too-many-function-args
             info_surface.set_alpha(100)
             display.blit(info_surface, (0, 0))
             v_offset = 4
@@ -481,41 +502,56 @@ class HUD(object):
                     if len(item) > 1:
                         points = [(x + 8, v_offset + 8 + (1.0 - y) * 30)
                                   for x, y in enumerate(item)]
-                        pygame.draw.lines(display, (255, 136, 0), False, points, 2)
+                        pygame.draw.lines(display, (255, 136, 0), False,
+                                          points, 2)
                     item = None
                     v_offset += 18
                 elif isinstance(item, tuple):
                     if isinstance(item[1], bool):
-                        rect = pygame.Rect((bar_h_offset + 50, v_offset + 8), (6, 6))
-                        pygame.draw.rect(display, (255, 255, 255), rect, 0 if item[1] else 1)
+                        rect = pygame.Rect((bar_h_offset + 50, v_offset + 8),
+                                           (6, 6))
+                        pygame.draw.rect(display, (255, 255, 255), rect,
+                                         0 if item[1] else 1)
                     else:
-                        rect_border = pygame.Rect((bar_h_offset, v_offset + 8), (bar_width, 6))
-                        pygame.draw.rect(display, (255, 255, 255), rect_border, 1)
+                        rect_border = pygame.Rect((bar_h_offset, v_offset + 8),
+                                                  (bar_width, 6))
+                        pygame.draw.rect(display, (255, 255, 255), rect_border,
+                                         1)
                         f = (item[1] - item[2]) / (item[3] - item[2])
                         if item[2] < 0.0:
-                            rect = pygame.Rect(
-                                (bar_h_offset + f * (bar_width - 6), v_offset + 8), (6, 6))
+                            rect = pygame.Rect((bar_h_offset + f *
+                                                (bar_width - 6), v_offset + 8),
+                                               (6, 6))
                         else:
                             f = 0.0
-                            rect = pygame.Rect((bar_h_offset, v_offset + 8), (f * bar_width, 6))
+                            rect = pygame.Rect((bar_h_offset, v_offset + 8),
+                                               (f * bar_width, 6))
                         pygame.draw.rect(display, (255, 255, 255), rect)
                     item = item[0]
                 if item:  # At this point has to be a str.
-                    surface = self._font_mono.render(item, True, (255, 255, 255))
+                    surface = self._font_mono.render(item, True,
+                                                     (255, 255, 255))
                     display.blit(surface, (8, v_offset))
                 v_offset += 18
             # NOTE the 3 renderings below are for the race information
-            surface = self._font_race.render("Score {:.2f}".format(self.score), True, (0, 255, 0))
+            surface = self._font_race.render("Score {:.2f}".format(self.score),
+                                             True, (0, 255, 0))
             display.blit(surface, (8, v_offset))
             v_offset += 18
-            surface = self._font_mono.render("Reached: " + str(self.reached_info[:self.reached_info.find("at")]), True, (0, 255, 0))
+            surface = self._font_mono.render(
+                "Reached: " +
+                str(self.reached_info[:self.reached_info.find("at")]), True,
+                (0, 255, 0))
             display.blit(surface, (8, v_offset))
             v_offset += 18
-            surface = self._font_mono.render(str(self.reached_info[self.reached_info.find("at"):]), True, (0, 255, 0))
+            surface = self._font_mono.render(
+                str(self.reached_info[self.reached_info.find("at"):]), True,
+                (0, 255, 0))
             display.blit(surface, (8, v_offset))
             v_offset += 18
         self._notifications.render(display)
         self.help.render(display)
+
 
 # ==============================================================================
 # -- FadingText ----------------------------------------------------------------
@@ -526,7 +562,6 @@ class FadingText(object):
     """
     Support Class for info display, fade out text
     """
-
     def __init__(self, font, dim, pos):
         self.font = font
         self.dim = dim
@@ -558,6 +593,7 @@ class FadingText(object):
         """
         display.blit(self.surface, self.pos)
 
+
 # ==============================================================================
 # -- HelpText ------------------------------------------------------------------
 # ==============================================================================
@@ -567,12 +603,12 @@ class HelpText(object):
     """
     Show the help text
     """
-
     def __init__(self, font, width, height):
         lines = __doc__.split('\n')
         self.font = font
         self.dim = (680, len(lines) * 22 + 12)
-        self.pos = (0.5 * width - 0.5 * self.dim[0], 0.5 * height - 0.5 * self.dim[1])
+        self.pos = (0.5 * width - 0.5 * self.dim[0],
+                    0.5 * height - 0.5 * self.dim[1])
         self.seconds_left = 0
         self.surface = pygame.Surface(self.dim)  # pylint: disable=too-many-function-args
         self.surface.fill((0, 0, 0, 0))
@@ -594,6 +630,7 @@ class HelpText(object):
         """
         if self._render:
             display.blit(self.surface, self.pos)
+
 
 # ==============================================================================
 # -- main() --------------------------------------------------------------------

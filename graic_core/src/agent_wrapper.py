@@ -12,12 +12,17 @@ from graic_msgs.msg import LaneList
 from graic_msgs.msg import LaneInfo
 from carla_msgs.msg import CarlaEgoVehicleControl
 
+
 class VehiclePerception:
     def __init__(self, role_name='ego_vehicle', test=False):
-        rospy.Subscriber("/carla/%s/location"%role_name, LocationInfo, self.locationCallback)
-        rospy.Subscriber("/carla/%s/obstacles"%role_name, ObstacleList, self.obstacleCallback)
-        rospy.Subscriber("/carla/%s/lane_markers"%role_name, LaneInfo, self.lanemarkerCallback)
-        rospy.Subscriber("/carla/%s/waypoints"%role_name, WaypointInfo, self.waypointCallback)
+        rospy.Subscriber("/carla/%s/location" % role_name, LocationInfo,
+                         self.locationCallback)
+        rospy.Subscriber("/carla/%s/obstacles" % role_name, ObstacleList,
+                         self.obstacleCallback)
+        rospy.Subscriber("/carla/%s/lane_markers" % role_name, LaneInfo,
+                         self.lanemarkerCallback)
+        rospy.Subscriber("/carla/%s/waypoints" % role_name, WaypointInfo,
+                         self.waypointCallback)
 
         self.position = None
         self.rotation = None
@@ -30,7 +35,9 @@ class VehiclePerception:
 
     def locationCallback(self, data):
         self.position = (data.location.x, data.location.y)
-        self.rotation = (np.radians(data.rotation.x), np.radians(data.rotation.y), np.radians(data.rotation.z))
+        self.rotation = (np.radians(data.rotation.x),
+                         np.radians(data.rotation.y),
+                         np.radians(data.rotation.z))
         self.velocity = (data.velocity.x, data.velocity.y)
 
     def obstacleCallback(self, data):
@@ -43,7 +50,12 @@ class VehiclePerception:
         self.waypoint = data
 
     def ready(self):
-        return (self.position is not None) and (self.rotation is not None) and (self.velocity is not None) and (self.obstacleList is not None) and (self.lane_marker is not None) #and self.waypoint is not None
+        return (self.position
+                is not None) and (self.rotation is not None) and (
+                    self.velocity
+                    is not None) and (self.obstacleList is not None) and (
+                        self.lane_marker is not None
+                    )  #and self.waypoint is not None
 
     def clear(self):
         self.position = None
@@ -53,17 +65,23 @@ class VehiclePerception:
         self.lane_marker = None
         self.waypoint = None
 
+
 def publish_control(pub_control, control):
     control.steering_angle = -control.steering_angle
     control.steering_angle_velocity = -control.steering_angle_velocity
     pub_control.publish(control)
 
+
 def run_model(role_name, controller):
     perceptionModule = VehiclePerception(role_name=role_name)
     rate = rospy.Rate(100)
 
-    controlPub = rospy.Publisher("/carla/%s/ackermann_cmd"%role_name, AckermannDrive, queue_size = 1)
-    controlPub3 = rospy.Publisher("/carla/%s/vehicle_control_cmd"%role_name, CarlaEgoVehicleControl, queue_size = 1)
+    controlPub = rospy.Publisher("/carla/%s/ackermann_cmd" % role_name,
+                                 AckermannDrive,
+                                 queue_size=1)
+    controlPub3 = rospy.Publisher("/carla/%s/vehicle_control_cmd" % role_name,
+                                  CarlaEgoVehicleControl,
+                                  queue_size=1)
 
     def shut_down():
         control = controller.stop()
@@ -87,17 +105,22 @@ def run_model(role_name, controller):
     while not rospy.is_shutdown():
         if perceptionModule.ready():
             # Get the current position and orientation of the vehicle
-            currState = (perceptionModule.position, perceptionModule.rotation, perceptionModule.velocity)
-            control = controller.execute(currState, perceptionModule.obstacleList, perceptionModule.lane_marker, perceptionModule.waypoint)
+            currState = (perceptionModule.position, perceptionModule.rotation,
+                         perceptionModule.velocity)
+            control = controller.execute(currState,
+                                         perceptionModule.obstacleList,
+                                         perceptionModule.lane_marker,
+                                         perceptionModule.waypoint)
             perceptionModule.clear()
             publish_control(controlPub, control)
         time.sleep(0.01)
+
 
 if __name__ == "__main__":
     rospy.init_node("graic_agent_wrapper", anonymous=True)
     roskpack = rospkg.RosPack()
     config_path = roskpack.get_path('graic_config')
-    race_config = open(config_path+'/'+'race_config', 'rb')
+    race_config = open(config_path + '/' + 'race_config', 'rb')
     vehicle_typeid = race_config.readline().decode('ascii').strip()
     sensing_radius = race_config.readline().decode('ascii').strip()
     role_name = rospy.get_param("~role_name", "ego_vehicle")

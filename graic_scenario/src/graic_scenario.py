@@ -19,10 +19,11 @@ from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioCo
 from typing import List, Dict
 from itertools import permutations
 
+
 def get_open_port():
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(("",0))
+    s.bind(("", 0))
     s.listen(1)
     port = s.getsockname()[1]
     s.close()
@@ -32,33 +33,28 @@ def get_open_port():
 class ScenarioConfig:
     def __init__(self, track):
         self.track = track
-        self.scenario_config = {
-            track: [
-
-            ]
-        }
+        self.scenario_config = {track: []}
 
     def getScenario(self, scenarios, triggerPoints):
         for config in zip(scenarios, triggerPoints):
             scenario = {
-                "available_event_configurations": [
-
-                ],
+                "available_event_configurations": [],
                 "scenario_type": config[0].value
             }
             trigger_config = {
-                                "transform": {
-                                    "pitch": str(config[1].rotation.pitch),
-                                    "x": str(config[1].location.x),
-                                    "y": str(config[1].location.y),
-                                    "yaw": str(config[1].rotation.yaw),
-                                    "z": str(config[1].location.z+1.22)
-                                }
-                            }
+                "transform": {
+                    "pitch": str(config[1].rotation.pitch),
+                    "x": str(config[1].location.x),
+                    "y": str(config[1].location.y),
+                    "yaw": str(config[1].rotation.yaw),
+                    "z": str(config[1].location.z + 1.22)
+                }
+            }
 
             scenario["available_event_configurations"].append(trigger_config)
             self.scenario_config[self.track].append(scenario)
         return self.scenario_config
+
 
 class UnitScenarioMap(Enum):
     # StationaryObjectCrossing = "ScenarioStationaryObject"
@@ -70,13 +66,30 @@ class UnitScenarioMap(Enum):
 
 
 class ScenarioArguments:
-    def __init__(self, route_config: List[RouteScenarioConfiguration], scenario_config: Dict,
-        host = '127.0.0.1', port = 2000, timeout = '10.0', trafficManagerPort = '8000',
-        trafficManagerSeed = '0', sync = False, agent = None, agentConfig = '', output = True,
-        result_file = False, junit = False, json = False, outputDir = '', configFile = '',
-        additionalScenario = '', debug = False, reloadWorld = False, record = '',
-        randomize = False, repetitions = 1, waitForEgo = False
-    ):
+    def __init__(self,
+                 route_config: List[RouteScenarioConfiguration],
+                 scenario_config: Dict,
+                 host='127.0.0.1',
+                 port=2000,
+                 timeout='10.0',
+                 trafficManagerPort='8000',
+                 trafficManagerSeed='0',
+                 sync=False,
+                 agent=None,
+                 agentConfig='',
+                 output=True,
+                 result_file=False,
+                 junit=False,
+                 json=False,
+                 outputDir='',
+                 configFile='',
+                 additionalScenario='',
+                 debug=False,
+                 reloadWorld=False,
+                 record='',
+                 randomize=False,
+                 repetitions=1,
+                 waitForEgo=False):
         self.host = host
         self.port = port
         self.timeout = timeout
@@ -103,6 +116,7 @@ class ScenarioArguments:
         self.route = route_config
         self.scenario_config = scenario_config
 
+
 class ScenarioList:
     def __init__(self, track_id):
         self.unitScenarios = []
@@ -111,8 +125,9 @@ class ScenarioList:
         for scenario in UnitScenarioMap:
             self.unitScenarios.append(scenario)
             # self.availableScenarios.append(scenario)
-        track_id-=1
-        self.unitScenarios = self.unitScenarios[track_id:] + self.unitScenarios[:track_id]
+        track_id -= 1
+        self.unitScenarios = self.unitScenarios[
+            track_id:] + self.unitScenarios[:track_id]
         self.compositeScenarios = list(permutations(self.unitScenarios, 4))
 
     def getUnitScenario(self):
@@ -143,6 +158,7 @@ class ScenarioList:
         else:
             return None
 
+
 class ScenarioGenerator:
     def __init__(self, track_id):
         self.scenarioList = ScenarioList(track_id)
@@ -157,15 +173,19 @@ class ScenarioGenerator:
             else:
                 return self.scenarioList.getCompositeScenario()
 
-class ScenarioNode:
 
-    def __init__(self, world, role_name='ego_vehicle', track='t1_tripe', port=2000):
+class ScenarioNode:
+    def __init__(self,
+                 world,
+                 role_name='ego_vehicle',
+                 track='t1_tripe',
+                 port=2000):
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
         rospack = rospkg.RosPack()
         fpath = rospack.get_path('graic_config')
-        self.waypoint_list = pickle.load(open(fpath+'/'+track,'rb'))
+        self.waypoint_list = pickle.load(open(fpath + '/' + track, 'rb'))
         track_id = self.waypoint_list.pop(0)
         # self.waypoint_list = pickle.load(open(track,'rb'))
         self.map = world.get_map()
@@ -176,8 +196,12 @@ class ScenarioNode:
         self.laneDepartureTest = True
         self.scenario = None
         self.port = port
-        self.subCollision = rospy.Subscriber('/carla/%s/collision'%role_name, CarlaCollisionEvent, self.collisionCallback)
-        self.subLaneInvasion = rospy.Subscriber('carla/%s/lane_invasion'%role_name, CarlaLaneInvasionEvent, self.laneCallback)
+        self.subCollision = rospy.Subscriber('/carla/%s/collision' % role_name,
+                                             CarlaCollisionEvent,
+                                             self.collisionCallback)
+        self.subLaneInvasion = rospy.Subscriber(
+            'carla/%s/lane_invasion' % role_name, CarlaLaneInvasionEvent,
+            self.laneCallback)
         self.scenarioGenerator = ScenarioGenerator(track_id)
 
         self.findEgoVehicle()
@@ -201,17 +225,26 @@ class ScenarioNode:
 
         if not self.scenario or self.wp_idx + 7 >= len(self.waypoint_list):
             return None
-        location = carla.Location(self.waypoint_list[self.wp_idx+2][0], self.waypoint_list[self.wp_idx+2][1], self.waypoint_list[self.wp_idx+2][2])
+        location = carla.Location(self.waypoint_list[self.wp_idx + 2][0],
+                                  self.waypoint_list[self.wp_idx + 2][1],
+                                  self.waypoint_list[self.wp_idx + 2][2])
         trigger_points = []
         for i in range(len(self.scenario)):
             if i != 0:
-                trigger_point = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).next(10*i)[0].transform
+                trigger_point = self.map.get_waypoint(
+                    location,
+                    project_to_road=True,
+                    lane_type=carla.LaneType.Driving).next(10 * i)[0].transform
             else:
-                trigger_point = self.map.get_waypoint(location, project_to_road=True, lane_type=carla.LaneType.Driving).transform
+                trigger_point = self.map.get_waypoint(
+                    location,
+                    project_to_road=True,
+                    lane_type=carla.LaneType.Driving).transform
             trigger_points.append(trigger_point)
 
         scenarioConfig = ScenarioConfig(self.track)
-        scenario_config = scenarioConfig.getScenario(self.scenario, trigger_points)
+        scenario_config = scenarioConfig.getScenario(self.scenario,
+                                                     trigger_points)
         print("Config: ", scenario_config)
         route_config_list = []
         route_config = RouteScenarioConfiguration()
@@ -220,23 +253,23 @@ class ScenarioNode:
         route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
         route_config.scenario_config = scenario_config
         wp = []
-        wp.append(carla.Location(
-            x=self.waypoint_list[self.wp_idx][0],
-            y=self.waypoint_list[self.wp_idx][1],
-            z=self.waypoint_list[self.wp_idx][2]
-        ))
+        wp.append(
+            carla.Location(x=self.waypoint_list[self.wp_idx][0],
+                           y=self.waypoint_list[self.wp_idx][1],
+                           z=self.waypoint_list[self.wp_idx][2]))
 
-        wp.append(carla.Location(
-            x=self.waypoint_list[self.wp_idx+6][0],
-            y=self.waypoint_list[self.wp_idx+6][1],
-            z=self.waypoint_list[self.wp_idx+6][2]
-        ))
+        wp.append(
+            carla.Location(x=self.waypoint_list[self.wp_idx + 6][0],
+                           y=self.waypoint_list[self.wp_idx + 6][1],
+                           z=self.waypoint_list[self.wp_idx + 6][2]))
 
         route_config.trajectory = wp
 
         route_config_list.append(route_config)
 
-        args = ScenarioArguments(route_config_list, scenario_config, port=self.port)
+        args = ScenarioArguments(route_config_list,
+                                 scenario_config,
+                                 port=self.port)
         self.wp_idx += 7
 
         return args
@@ -255,6 +288,7 @@ class ScenarioNode:
         else:
             return (True, self.scenario)
 
+
 def run(sn, role_name):
     result = None
     while not rospy.is_shutdown():
@@ -263,13 +297,14 @@ def run(sn, role_name):
             sn.launchScenarioRunner(scenarioConfig)
         result = sn.parseResults()
 
+
 if __name__ == "__main__":
     rospy.init_node("Scenario_Node")
     host = rospy.get_param('~host', 'localhost')
     port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
     track = rospy.get_param("~track", "t1_triple")
-    rospy.loginfo("Start generating scenarios for %s!"%role_name)
+    rospy.loginfo("Start generating scenarios for %s!" % role_name)
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
     client = carla.Client(host, port)
