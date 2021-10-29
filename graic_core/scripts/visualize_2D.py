@@ -143,7 +143,7 @@ def main(role_name):
 
 if __name__ == "__main__":
     rospy.init_node("graic_2d_vis", anonymous=True)
-    role_name = rospy.get_param("~role_name", "hero0")
+    role_name = rospy.get_param("~role_name", "ego_vehicle")
     try:
         main(role_name)
     except rospy.exceptions.ROSInterruptException:

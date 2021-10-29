@@ -35,8 +35,8 @@
       <param name="role_name" value="$(arg role_name)"/>
     </node>
   </group>
-  <group if="$(arg 2Dvis)">
-    <node pkg="graic_core" type="2D_vis.py" name="2D_vis_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+  <group>
+    <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" unless="$(arg offscreen)">
       <param name="role_name" value="$(arg role_name)"/>
     </node>
   </group>
@@ -64,5 +64,15 @@
     <arg name='role_name' value='$(arg role_name)' />
     <arg name='track' value='$(arg track)' />
   </include>
+
+  <!-- the scenario module -->
+  <group if="$(arg scenario)">
+    <include file="$(find graic_scenario)/launch/graic_scenario.launch">
+      <arg name='host' value='$(arg host)'/>
+      <arg name='port' value='$(arg port)'/>
+      <arg name='role_name' value='$(arg role_name)' />
+      <arg name='track' value='$(arg track)' />
+    </include>
+  </group>
 
 </launch>
