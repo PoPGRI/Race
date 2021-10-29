@@ -69,33 +69,38 @@ class VehiclePerception:
 
 class Visualization2D():
     def __init__(self):
+        plt.ion()
         self.fig = plt.figure()
         self.ax = plt.axes(xlim=(-60, 60), ylim=(-60, 60))
-        self.ego_pose = [np.zeros(2, 1), 0.]
+        self.ego_pose = [np.zeros([2, 1]), 0.]
 
     def add_obs(self, obstacleList):
         for ob in obstacleList:
-            center = np.array(ob.location)
-            self.ax_plot(center[0], center[1], 'ro')
+            center = np.array([ob.location.x, ob.location.y])
+            center = self.trans(center)
+            self.ax.plot(center[0], center[1], 'ro', linewidth=2.)
             if len(ob.vertices_locations) > 0:
                 assert len(ob.vertices_locations) == 8
                 vertices = [v.vertex_location for v in ob.vertices_locations]
+                vertices = [[p.x, p.y, p.z] for p in vertices]
                 half_level = np.mean([v[2] for v in vertices])
-                vertices = np.array([v for v in vertices if v[2] > half_level]).T
-                vertices = self.trans(vertices).T[:,:2]
+                vertices = np.array([v for v in vertices if v[2] > half_level])[:,:2].T
+                vertices = self.trans(vertices).T
                 hull = ConvexHull(vertices)
-                self.ax.plot(vertices[hull.vertices,0], vertices[hull.vertices,1], 'r-', lw=2)
+                idxs = list(hull.vertices) + list(hull.vertices[0:1])
+                self.ax.plot(vertices[idxs, 0], vertices[idxs, 1], 'r-', lw=2)
 
     def add_lane(self, lane_markers):
         points = []
         for lane in [lane_markers.lane_markers_center, lane_markers.lane_markers_left, lane_markers.lane_markers_right]:
             points += lane.location
-        points = np.array(points).T # 3 x N
+        points = [[p.x, p.y, p.z] for p in points]
+        points = np.array(points).T[:2, :] # 2 x N
         points = self.trans(points)
         self.ax.plot(points[0,:], points[1,:], 'k*', linewidth=1.)
 
     def add_self(self):
-        w = 3; h = 5;
+        w = 1.5; h = 3;
         self.ax.plot([-w/2, -w/2, w/2, w/2, -w/2], [-h/2, h/2, h/2, -h/2, -h/2], 'b-', linewidth=1.)
 
     def trans(self, points):
@@ -107,18 +112,23 @@ class Visualization2D():
             raise ValueError('wrong shape')
         assert p.shape[0] == 2
 
-        rotation = -self.ego_pose[1]
+        rotation = np.pi / 2 - self.ego_pose[1]
         shift = self.ego_pose[0]
-        p = np.array([[np.cos(rotation), -np.sin(rotation)], [np.sin(rotation), np.cos(rotation)]]).matmul(p - shift)
-
+        p = np.matmul(np.array([[np.cos(rotation), -np.sin(rotation)], [np.sin(rotation), np.cos(rotation)]]), p - shift)
+        p[0,:] = -p[0,:]
         return p.reshape(points.shape)
 
     def update(self, pm):
         self.ax.clear()
-        self.ego_pose = [pm.position, pm.rotation[-1]]
+        self.ax.set_title('t = %.3f s'%rospy.get_time())
+        self.ax.set_xlim(-30, 30)
+        self.ax.set_ylim(-30, 30)
+        self.ego_pose = [np.array(pm.position).reshape(-1, 1), pm.rotation[-1]]
         self.add_self()
         self.add_lane(pm.lane_marker)
         self.add_obs(pm.obstacleList)
+        self.fig.canvas.draw()
+        self.fig.canvas.flush_events()
 
 def main(role_name):
     pm = VehiclePerception(role_name=role_name)

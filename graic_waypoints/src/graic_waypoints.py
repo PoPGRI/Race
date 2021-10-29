@@ -63,7 +63,7 @@ def run(wn, role_name):
                                   WaypointInfo,
                                   queue_size=1)
     while not rospy.is_shutdown():
-        wn.world.wait_for_tick()
+        wn.world.wait_for_tick(seconds=1000)
         waypoint = wn.getWaypoint()
         pub_waypoint = WaypointInfo()
         pub_waypoint.role_name = role_name

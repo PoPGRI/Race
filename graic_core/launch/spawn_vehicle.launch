@@ -36,7 +36,7 @@
     </node>
   </group>
   <group if="$(arg 2Dvis)">
-    <node pkg="graic_core" type="2D_visulize.py" name="2D_visualize$(arg role_name)" output="screen" unless="$(arg offscreen)">
+    <node pkg="graic_core" type="2D_vis.py" name="2D_vis_$(arg role_name)" output="screen" unless="$(arg offscreen)">
       <param name="role_name" value="$(arg role_name)"/>
     </node>
   </group>

@@ -20,6 +20,7 @@
   <arg name='num_wheels' default='4' />
 
   <arg name='offscreen' default='false' />
+  <arg name='2Dvis' default='false' />
 
   <arg name='scenario' default='True' />
 
