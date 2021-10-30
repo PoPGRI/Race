@@ -87,7 +87,7 @@ class CommandNode:
 
             v['launch_log'] = self.log + '/hero%d_launch_log.txt' % i
 
-            role_name = car_name_prefix + str(i)
+            role_name = car_name_prefix + str(i) if self.N > 1 else 'ego_vehicle'
             v['role_name'] = role_name
 
             with open('objects.json.template', 'r') as f:

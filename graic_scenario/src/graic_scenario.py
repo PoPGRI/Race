@@ -71,7 +71,7 @@ class ScenarioArguments:
                  scenario_config: Dict,
                  host='127.0.0.1',
                  port=2000,
-                 timeout='10.0',
+                 timeout='1000.0',
                  trafficManagerPort='8000',
                  trafficManagerSeed='0',
                  sync=False,
