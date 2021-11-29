@@ -4,7 +4,6 @@ title: Updates
 main_nav: false
 date:   2022-04-18T14:25:52-05:00
 ---
-
 * **05/03/2021** [Pre-submission](https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link). You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.
 
 * **05/03/2021** [GRAIC Beta Release v0.2.1](https://github.com/PoPGRI/Race/releases/tag/0.2.1). We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.

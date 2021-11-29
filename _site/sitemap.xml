@@ -93,4 +93,8 @@
 <url>
 <loc>http://localhost:4000/category/jekyll/</loc>
 </url>
+<url>
+<loc>http://localhost:4000/assets/CFP2022.pdf</loc>
+<lastmod>2021-11-02T13:47:00-05:00</lastmod>
+</url>
 </urlset>
