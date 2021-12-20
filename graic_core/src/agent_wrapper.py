@@ -122,13 +122,10 @@ if __name__ == "__main__":
     race_config = open(config_path + '/' + 'race_config', 'rb')
     vehicle_typeid = race_config.readline().decode('ascii').strip()
     sensing_radius = race_config.readline().decode('ascii').strip()
-    role_name = rospy.get_param("~role_name", "ego_vehicle")
-    class_file = rospy.get_param("~class_file", "")
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("Controller", class_file)
-    user_file = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(user_file)
-    controller = user_file.Controller()
+    import sys
+    role_name = sys.argv[1]
+    from user_controller_file import Controller
+    controller = Controller()
     try:
         run_model(role_name, controller)
     except rospy.exceptions.ROSInterruptException:

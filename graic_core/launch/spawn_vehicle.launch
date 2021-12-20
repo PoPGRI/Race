@@ -26,19 +26,17 @@
   </include>
 
   <!-- carla manual control -->
-  <group unless="$(arg 2Dvis)">
-    <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
-      <param name="role_name" value="$(arg role_name)"/>
-    </node>
-    <!-- record video -->
-    <node pkg="graic_core" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
-      <param name="role_name" value="$(arg role_name)"/>
-    </node>
-  </group>
-  <group>
-    <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" unless="$(arg offscreen)">
-      <param name="role_name" value="$(arg role_name)"/>
-    </node>
+  <group unless="$(arg offscreen)">
+      <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+        <param name="role_name" value="$(arg role_name)"/>
+      </node>
+      <!-- record video -->
+      <node pkg="graic_core" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
+        <param name="role_name" value="$(arg role_name)"/>
+      </node>
+      <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+        <param name="role_name" value="$(arg role_name)"/>
+      </node>
   </group>
 
   <!-- the perception module -->
