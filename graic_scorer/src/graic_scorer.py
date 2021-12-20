@@ -169,9 +169,8 @@ class EvaluationNode:
             self.reachedTime = int(rospy.get_rostime().to_sec())
 
     def onShutdown(self):
-        fname = 'score_{}_{}'.format(
-            self.role_name,
-            time.asctime().replace(' ', '_').replace(':', '_'))
+        fname = 'score_{}.txt'.format(
+            self.role_name)
         # fname_trajectory = 'trajectory_{}_{}'.format(self.role_name, time.asctime().replace(' ', '_').replace(':', '_'))
         if not self.reachEnd:
             self.score = 'infinity'
