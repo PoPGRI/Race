@@ -110,6 +110,8 @@ def run_model(role_name, controller):
                                          perceptionModule.obstacleList,
                                          perceptionModule.lane_marker,
                                          perceptionModule.waypoint)
+            if control is None:
+                exit(0)
             perceptionModule.clear()
             publish_control(controlPub, control)
         time.sleep(0.01)

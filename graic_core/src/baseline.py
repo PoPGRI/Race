@@ -229,5 +229,5 @@ class Controller(object):
         refState = self.decisionModule.get_ref_state(currState, obstacleList,
                                                      lane_marker, waypoint)
         if not refState:
-            return self.controlModule.stop()
+            return None
         return self.controlModule.execute(currState, refState)
