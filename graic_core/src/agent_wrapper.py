@@ -103,6 +103,7 @@ def run_model(role_name, controller):
 
     while not rospy.is_shutdown():
         if perceptionModule.ready():
+            print(perceptionModule.position)
             # Get the current position and orientation of the vehicle
             currState = (perceptionModule.position, perceptionModule.rotation,
                          perceptionModule.velocity)
