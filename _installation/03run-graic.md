@@ -8,10 +8,14 @@ The whole racing system consists of three independent programs, the CARLA simula
 
 ### Running the CARLA simulator
 If you are using Docker, run the following command in a new terminal
-```~/workspace/carla-simulator/CarlaUE4.sh -opengl```
+```
+~/workspace/carla-simulator/CarlaUE4.sh -opengl
+```
 
 If you are using AWS, run the following command in a new terminal
-```~/workspace/carla-simulator/CarlaUE4.sh```
+```
+~/workspace/carla-simulator/CarlaUE4.sh
+```
 
 If everthing works, you shoule be able to see the CARLA window.
 
