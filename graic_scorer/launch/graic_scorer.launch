@@ -1,0 +1,20 @@
+<!-- -->
+<launch>
+  <arg name='host' default='localhost'/>
+  <arg name='port' default='2000'/>
+  <arg name='timeout' default='10'/>
+  <arg name="role_name" default="ego_vehicle" />
+  <arg name="track" default="t1_triple" />
+  <arg name="model_free" default="1" />
+
+  <param name="/carla/timeout" value="$(arg timeout)" />
+
+  <node pkg="graic_scorer" type="graic_scorer.py" name="graic_scorer_$(arg role_name)" output="screen">
+    <param name='host' value='$(arg host)' />
+    <param name='port' value='$(arg port)' />
+    <param name="role_name" value="$(arg role_name)" />
+    <param name="track" value="$(arg track)" />
+    <param name="model_free" value="$(arg model_free)" />
+  </node>
+
+</launch>
