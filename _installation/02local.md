@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Local Installation
+title: Installing GRAIC's Docker image on a local machine
 date:   2022-04-18T14:25:52-05:00
 ---
 This page will guide you through the steps necessary to setup the software for participating in GRAIC. Before starting, here is the system we recommend you to use.
