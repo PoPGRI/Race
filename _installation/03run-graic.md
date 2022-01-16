@@ -6,7 +6,7 @@ date:   2022-04-18T14:25:52-05:00
 
 The whole racing system consists of three independent programs, the CARLA simulator, the GRAIC infrastructure, and your controller, which should be started in three terminals. If you are using Docker, you can get a new terminal connecting to the running container by running `docker exec -it graic_con /bin/bash`, where `graic_con` is the name of the running container.
 
-### Run the CARLA simulator
+### Running the CARLA simulator
 If you are using Docker, run the following command in a new terminal
 ```~/workspace/carla-simulator/CarlaUE4.sh -opengl```
 
@@ -15,7 +15,7 @@ If you are using AWS, run the following command in a new terminal
 
 If everthing works, you shoule be able to see the CARLA window.
 
-### Run the GRAIC infrastructure
+### Running the GRAIC infrastructure
 First, you need to update the code. To do that, run the following command
 ```
 ~/scripts/update.sh
@@ -32,7 +32,7 @@ A vehicle should appear in the CARLA window.
 <img src="/Race/assets/baseline.png">
 
 
-### Run the controller
+### Running the controller
 The controller runs as a ROS node. The entry of the node is provided by GRAIC, which is a file called `agent_wrapper.py`. This file will import the user's controller from a file called `user_controller_file.py` and also communicate with the GRAIC infrastructure. For testing, you can use the baseline controller provided in the GRAIC repository as follows.
 ```
 mkdir tmp

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Create your own controller
+title: Creating your own controller
 date:   2022-04-18T14:25:52-05:00
 ---
 
