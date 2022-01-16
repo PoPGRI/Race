@@ -46,4 +46,4 @@ cp ~/workspace/graic-workspace/src/graic_core/src/baseline.py user_controller_fi
 . ~/workspace/graic-workspace/devel/setup.bash
 python3 agent_wrapper.py ego_vehicle
 ```
-The vehicle should start moving and a score should appear. To run your own controller, just replace `~/workspace/graic-workspace/src/graic_core/src/baseline.py` in the above command with the path to your controller file.
+The vehicle should start moving and a score should appear when the race terminates. To run your own controller, just replace `~/workspace/graic-workspace/src/graic_core/src/baseline.py` in the above command with the path to your controller file.

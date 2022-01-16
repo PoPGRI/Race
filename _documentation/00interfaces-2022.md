@@ -13,7 +13,15 @@ A diagram of the module interfaces is shown below. The decision and control modu
 
  <img src="/Race/assets/interfaces.png">
 
- The perception module publishes the rostopics `location`, `obstacles`, `lane_markers`, and `environment_obj_bb`. The waypoints that the competitors must reach are also provided in the rostopic `waypoint`. The decision & control module should publish the rostopics  `ackermann_control` **or** `vehicle_control`. Further details of these topics are given below.
- Again, this information shows how the GRAIC framework works, but the competitors only need to build the blue module.
+Specifically, your controller should implement a class called `Controller` as follows. You can find an example in this [file](https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py).
+```Python
+class Controller(object):
+    """docstring for Controller"""
+    def __init__(self):
+        super(Controller, self).__init__()
 
-Note: For all the rostopics in this document, the full rostopic name should be `/carla/<vehicle-name>/<topic-name>`. E.g. `/carla/ego_vehicle/location` will provide location information for the car named "ego_vehicle"
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
+        return ...
+```
+
+As shown above, the ```exectute``` function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, the race will be immediately terminated.
