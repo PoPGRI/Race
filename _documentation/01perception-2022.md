@@ -64,3 +64,6 @@ Here is a table with the rostopics associated with perception and what they retu
 ### 2D Visualization
 
 We provide 2D visualization of the perception oracle as part of the simulator.
+The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change ```vis2D:=True``` to ```vis2D:=False``` in the above command.
+
+<img src="/Race/assets/graic_vis.png">

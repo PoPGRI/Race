@@ -195,6 +195,8 @@
           <p><p>There are two ways to use GRAIC.
 You can either use our AWS image or install our docker image locally.
 The instructions for both installation methods can be found below.</p>
+
+<p><span style="color:red">Instructions for running GRAIC are included after “Installing GRAIC’s Docker image on a local machine”.</span></p>
 </p>
       
   </div>
@@ -333,12 +335,8 @@ The instructions for both installation methods can be found below.</p>
 
 <p>Then, run the following command</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. ~/workspace/graic-workspace/devel/setup.bash
-roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=True model_type:=model_free
+roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=True model_type:=model_free vis2D:=True
 </code></pre></div></div>
-
-<p>A vehicle should appear in the CARLA window.</p>
-
-<p><img src="/Race/assets/baseline.png" /></p>
 
 <h3 id="running-the-controller">Running the controller</h3>
 <p>The controller runs as a ROS node. The entry of the node is provided by GRAIC, which is a file called <code class="language-plaintext highlighter-rouge">agent_wrapper.py</code>. This file will import the user’s controller from a file called <code class="language-plaintext highlighter-rouge">user_controller_file.py</code> and also communicate with the GRAIC infrastructure. For testing, you can use the baseline controller provided in the GRAIC repository as follows.</p>
@@ -349,7 +347,11 @@ cp ~/workspace/graic-workspace/src/graic_core/src/baseline.py user_controller_fi
 . ~/workspace/graic-workspace/devel/setup.bash
 python3 agent_wrapper.py ego_vehicle
 </code></pre></div></div>
-<p>The vehicle should start moving and a score should appear when the race terminates. To run your own controller, just replace <code class="language-plaintext highlighter-rouge">~/workspace/graic-workspace/src/graic_core/src/baseline.py</code> in the above command with the path to your controller file.</p>
+<p>The vehicle should start moving and a score should appear when the race terminates. You should be able to see the following two windows: one is for the chase camera view, and the other one is the top view 2D visualization. In the 2D visualization, the blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+<p><img src="/Race/assets/graic_vis.png" /></p>
+
+<p>To run your own controller, just replace <code class="language-plaintext highlighter-rouge">~/workspace/graic-workspace/src/graic_core/src/baseline.py</code> in the above command with the path to your controller file.</p>
 </p>
       
   </div>

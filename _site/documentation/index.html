@@ -236,7 +236,18 @@
         return ...
 </code></pre>
 
-<p>As shown above, the <code class="language-plaintext highlighter-rouge">exectute</code> function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If <code class="language-plaintext highlighter-rouge">None</code> is returned, the race will be immediately terminated.</p>
+<p>As shown above, the <code class="language-plaintext highlighter-rouge">exectute</code> function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, the race will be immediately terminated.</p>
+
+<p>In detail, <code class="language-plaintext highlighter-rouge">currState</code> is a tuple which has three elements: (position, rotation, velocity), and each element is a tuple consisting of the coordinates of that element. So position is a tuple of the form (x, y), which denotes the x and y coordinates of the vehicle; rotation is a tuple of the form (x, y, z), in radians, which denotes the roll, pitch and yaw of the vehicle; velocity is a tuple of the form (x, y), which denotes the x and y components of the velocity of the vehicle. The function <code class="language-plaintext highlighter-rouge">locationCallback</code> inside the class <code class="language-plaintext highlighter-rouge">VehiclePerception</code> in the file <code class="language-plaintext highlighter-rouge">agent_wrapper.py</code> provides a more starightforward way to understand the structure of <code class="language-plaintext highlighter-rouge">currState</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">obstacleList</code> is a list of msg of the type <code class="language-plaintext highlighter-rouge">ObstacleInfo</code> (all msg structures can be found in graic_msg/msg.) The ith obstacle can be accessed by  <code class="language-plaintext highlighter-rouge">obstacleList[i]</code> and it has four fields: obstacle_name (type: string), obstacle_id (type: unit32), location (type: geometry_msgs/Vector3), vertices_locations (type: BBSingleInfo[]). For example, <code class="language-plaintext highlighter-rouge">obstacleList[i].obstacle_name</code> will return the name of the obstacle.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lane_marker</code> consists of three <code class="language-plaintext highlighter-rouge">LaneList</code>s: lane_markers_center, lane_markers_left, and lane_markers_right. For example, <code class="language-plaintext highlighter-rouge">lane_marker.lane_markers_left</code> returns lane_markers_left. Note that,  <code class="language-plaintext highlighter-rouge">lane_marker</code> only contains markers of the lane on which the vehicle is currently driving. To access the lane markers of the boundaries of the track, please check rostopics named left_lane_markers and right_lane_markers.</p>
+
+<p><code class="language-plaintext highlighter-rouge">waypoint</code> contains the next waypoint that the vehicle is expected to pass. For example, <code class="language-plaintext highlighter-rouge">waypoint.location.x</code> returns the x coordinate of the waypoint, and similarly for the y coordinate.</p>
+
+<p><code class="language-plaintext highlighter-rouge">exectute</code> is expected to return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py).</p>
+
 </p>
       
   </div>
@@ -331,7 +342,10 @@ There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIG
 
 <h3 id="2d-visualization">2D Visualization</h3>
 
-<p>We provide 2D visualization of the perception oracle as part of the simulator.</p>
+<p>We provide 2D visualization of the perception oracle as part of the simulator.
+The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+<p><img src="/Race/assets/graic_vis.png" /></p>
 </p>
       
   </div>
