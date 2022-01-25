@@ -45,6 +45,7 @@ class CommandNode:
                  num_wheels,
                  offscreen,
                  scenario,
+                 vis2D,
                  set_spectator=True):
         self.host = host
         self.port = port
@@ -55,6 +56,7 @@ class CommandNode:
         self.num_wheels = num_wheels
         self.offscreen = offscreen
         self.scenario = scenario
+        self.vis2D = vis2D
         self.set_spectator = set_spectator
         self.vehicles = {}
 
@@ -151,12 +153,14 @@ class CommandNode:
             f.close()
 
             cmd = (
-                'roslaunch graic_core spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s scenario:=%s model_free:=%s &> %s'
+                    'roslaunch graic_core spawn_vehicle.launch host:=%s port:=%s config_file:=%s role_name:=%s track:=%s offscreen:=%s scenario:=%s model_free:=%s vis2D:=%s &> %s'
             ) % tuple([
                 self.host, self.port, v['json_file'], v['role_name'],
                 v['track'], self.offscreen, self.scenario, v['model_free'],
-                v['launch_log']
+                self.vis2D, v['launch_log'] 
             ])
+            print('------------------------------'+cmd+'-------------------------')
+            exit(0)
             # The os.setsid() is passed in the argument preexec_fn so
             # it's run after the fork() and before  exec() to run the shell.
             v['proc_handler'] = subprocess.Popen(cmd,
@@ -209,6 +213,7 @@ if __name__ == '__main__':
     num_wheels = rospy.get_param("~num_wheels", 4)
     offscreen = rospy.get_param("~offscreen", False)
     scenario = rospy.get_param("~scenario", True)
+    vis2D = rospy.get_param("~vis2D", True)
 
     os.chdir(os.path.dirname(__file__))
     cwd = os.getcwd()
@@ -217,7 +222,7 @@ if __name__ == '__main__':
     time.sleep(10)
     try:
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels,
-                         offscreen, scenario)
+                         offscreen, scenario, vis2D)
 
         run(cn)
     except rospy.exceptions.ROSInterruptException:

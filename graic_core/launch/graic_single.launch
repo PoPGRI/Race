@@ -20,7 +20,7 @@
   <arg name='num_wheels' default='4' />
 
   <arg name='offscreen' default='false' />
-  <arg name='2Dvis' default='false' />
+  <arg name='vis2D' default='false' />
 
   <arg name='scenario' default='True' />
 
@@ -44,6 +44,7 @@
     <param name="num_wheels" value="$(arg num_wheels)" />
     <param name="offscreen" value="$(arg offscreen)" />
     <param name="scenario" value="$(arg scenario)" />
+    <param name="vis2D" value="$(arg vis2D)" />
   </node>
 
 </launch>

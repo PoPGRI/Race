@@ -11,7 +11,7 @@
   <arg name="model_free" default="1" />
   <arg name="offscreen" default="false" />
   <arg name="scenario" default="true" />
-  <arg name="2Dvis" default="false" />
+  <arg name="vis2D" default="false" />
 
   <!-- spwan the ego vehicle -->
   <include file="$(find carla_spawn_objects)/launch/carla_spawn_objects.launch">
@@ -27,14 +27,14 @@
 
   <!-- carla manual control -->
   <group unless="$(arg offscreen)">
-      <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+      <node pkg="graic_core" type="carla_manual_control.py" name="carla_manual_control_$(arg role_name)" output="screen">
         <param name="role_name" value="$(arg role_name)"/>
       </node>
       <!-- record video -->
       <node pkg="graic_core" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
         <param name="role_name" value="$(arg role_name)"/>
       </node>
-      <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" unless="$(arg offscreen)">
+      <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" if="$(arg vis2D)">
         <param name="role_name" value="$(arg role_name)"/>
       </node>
   </group>
