@@ -159,8 +159,6 @@ class CommandNode:
                 v['track'], self.offscreen, self.scenario, v['model_free'],
                 self.vis2D, v['launch_log'] 
             ])
-            print('------------------------------'+cmd+'-------------------------')
-            exit(0)
             # The os.setsid() is passed in the argument preexec_fn so
             # it's run after the fork() and before  exec() to run the shell.
             v['proc_handler'] = subprocess.Popen(cmd,
