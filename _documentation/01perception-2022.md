@@ -2,7 +2,7 @@
 layout: page
 title: Perception
 main_nav: true
-date:   2020-04-18T14:25:52-05:00
+date:  2022-04-18T14:25:52-05:00
 ---
 
 The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> may change. These rostopics are updated at a rate of 20 Hz.
@@ -59,3 +59,8 @@ Here is a table with the rostopics associated with perception and what they retu
 |`lane_markers`      |LaneInfo    |Left, center, and right lane markers that define the lane that the ego vehicle is currently on|
 |`left_lane_markers` |LaneList    |Lane markers that define the outermost left edge                                              |
 |`right_lane_markers`|LaneList    |Lane markers that define the outermost right edge                                             |
+
+
+### 2D Visualization
+
+We provide 2D visualization of the perception oracle as part of the simulator.

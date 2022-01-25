@@ -202,7 +202,9 @@
           
           <h1>Description</h1>
           
-          <p><p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
+          <p><h3 id="graic-22-call-for-participation"><a href="https://popgri.github.io/Race/assets/CFP2022.pdf">GRAIC ‘22 Call for Participation</a></h3>
+
+<p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
 
 <p><strong>GRAIC ‘22 vs. GRAIC ‘21</strong>
 This year, we hope to improve GRAIC to encourage wider participation.
@@ -221,7 +223,7 @@ Updates can also be found at the bottom of this page.</p>
 
 <h1 id="details">Details</h1>
 
-<p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. All of these will be published in ROS topics. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle, through ROS interfaces. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/documentation/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
+<p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/documentation/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
 
 <h2 id="highlights">Highlights</h2>
 
@@ -248,12 +250,14 @@ If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-
           <p><p><em>GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.</em></p>
 
 <ul>
-  <li><strong>January 2022</strong>: GRAIC platform and rules released</li>
+  <li><strong>January 25</strong>: GRAIC single agent platform beta released</li>
+  <li><strong>February 2022</strong>: GRAIC multi-agent platform beta released</li>
   <li><strong>January - early March 2022</strong>: GRAIC feedback and platform updates</li>
-  <li><strong>Mid March</strong>: GRAIC final platform release</li>
-  <li><strong>Mid April</strong>: GRAIC submissions open</li>
-  <li><strong>Late April</strong>: GRAIC final races held</li>
-  <li><strong>May 3-6</strong>: CPS-IOT Week 2022, final results announced</li>
+  <li><strong>March 2022</strong>: GRAIC final platform release</li>
+  <li><strong>April 2022: GRAIC submissions open</strong></li>
+  <li><strong>April 8-9 2022</strong>: <a href="https://www.eohillinois.org/">Engineering Open House Presentation</a></li>
+  <li><strong>Late April: GRAIC submissions close, final races held</strong></li>
+  <li><strong>May 3-6</strong>: <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>, final results announced</li>
 </ul>
 </p>
       
@@ -266,17 +270,35 @@ If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-
           <h1>Updates</h1>
           
           <p><ul>
-  <li>
-    <p><strong>05/03/2021</strong> <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link">Pre-submission</a>. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</p>
-  </li>
-  <li>
-    <p><strong>05/03/2021</strong> <a href="https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a>. We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</p>
-  </li>
-  <li><a href="https://cps-iot-week2021.isis.vanderbilt.edu/registration.html">CPS Week registration is now open!</a>. Registration is $10. When you register for CPS Week, please choose the “Generalized RAcing Intelligence Competition (GRAIC)” option to sign up.</li>
-  <li><strong>03/30/2021</strong> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a>. We have updated the CARLA docker image.</li>
-  <li><strong>03/10/2021</strong> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a>. We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments.</li>
-  <li><strong>03/01/2021</strong> - We have released our <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a>! Please go to the <a href="https://popgri.github.io/Race/installation/">Getting started</a> page to download. We invite all feedback.</li>
+<li><b>01/25/2022</b> - Our AWS and docker betas are now available! Please go to our <a href="https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
 </ul>
+
+<ul style="color:gray">
+  <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
+
+  <li><i>05/03/2021</i> <a href="https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a> We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</li>
+
+  <li>CPS Week registration is now open! Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up.</li>
+
+  <li><i>03/30/2021</i> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a> We have updated the CARLA docker image.</li>
+
+  <li><i>03/10/2021</i> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments.</li>
+
+  <li><i>03/01/2021</i> - We have released our <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a>! Please go to the <a href="https://popgri.github.io/Race/installation/">Getting started</a> page to download. We invite all feedback.</li>
+
+</ul>
+
+<!-- * **05/03/2021** [Pre-submission](https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link). You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided. -->
+
+<!-- * **05/03/2021** [GRAIC Beta Release v0.2.1](https://github.com/PoPGRI/Race/releases/tag/0.2.1). We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback. -->
+
+<!-- * [CPS Week registration is now open!](https://cps-iot-week2021.isis.vanderbilt.edu/registration.html). Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up. -->
+
+<!-- * **03/30/2021** - [GRAIC Beta Release v0.1.2](https://github.com/PoPGRI/Race/releases/tag/0.1.2). We have updated the CARLA docker image. -->
+
+<!-- * **03/10/2021** - [GRAIC Beta Release v0.1.1](https://github.com/PoPGRI/Race/releases/tag/0.1.1). We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments. -->
+
+<!-- * **03/01/2021** - We have released our [beta](https://github.com/PoPGRI/Race/releases/tag/0.1.0)! Please go to the [Getting started](https://popgri.github.io/Race/installation/) page to download. We invite all feedback. -->
 </p>
       
   </div>

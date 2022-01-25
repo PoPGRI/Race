@@ -28,7 +28,7 @@ First, you need to update the code. To do that, run the following command
 Then, run the following command
 ```
 . ~/workspace/graic-workspace/devel/setup.bash
-roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=False model_type:=model_free vis2D:=True
+roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=True model_type:=model_free vis2D:=True
 ```
 
 ### Running the controller
