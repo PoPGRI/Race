@@ -24,4 +24,4 @@ class Controller(object):
         return ...
 ```
 
-As shown above, the ```exectute``` function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, the race will be immediately terminated.
+As shown above, the ```exectute``` function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either ```None``` or an ```AckermannDrive``` object. If ```None``` is returned, the race will be immediately terminated.
