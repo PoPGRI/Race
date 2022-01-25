@@ -231,10 +231,17 @@
 
 <p><img src="/Race/assets/interfaces.png" /></p>
 
-<p>The perception module publishes the rostopics <code class="language-plaintext highlighter-rouge">location</code>, <code class="language-plaintext highlighter-rouge">obstacles</code>, <code class="language-plaintext highlighter-rouge">lane_markers</code>, and <code class="language-plaintext highlighter-rouge">environment_obj_bb</code>. The waypoints that the competitors must reach are also provided in the rostopic <code class="language-plaintext highlighter-rouge">waypoint</code>. The decision &amp; control module should publish the rostopics  <code class="language-plaintext highlighter-rouge">ackermann_control</code> <strong>or</strong> <code class="language-plaintext highlighter-rouge">vehicle_control</code>. Further details of these topics are given below.
- Again, this information shows how the GRAIC framework works, but the competitors only need to build the blue module.</p>
+<p>Specifically, your controller should implement a class called <code class="language-plaintext highlighter-rouge">Controller</code> as follows. You can find an example in this <a href="https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py">file</a>.</p>
+<pre><code class="language-Python">class Controller(object):
+    """docstring for Controller"""
+    def __init__(self):
+        super(Controller, self).__init__()
 
-<p>Note: For all the rostopics in this document, the full rostopic name should be <code class="language-plaintext highlighter-rouge">/carla/&lt;vehicle-name&gt;/&lt;topic-name&gt;</code>. E.g. <code class="language-plaintext highlighter-rouge">/carla/ego_vehicle/location</code> will provide location information for the car named “ego_vehicle”</p>
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
+        return ...
+</code></pre>
+
+<p>As shown above, the <code class="language-plaintext highlighter-rouge">exectute</code> function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, the race will be immediately terminated.</p>
 </p>
       
   </div>
