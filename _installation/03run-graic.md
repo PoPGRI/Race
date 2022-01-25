@@ -28,13 +28,8 @@ First, you need to update the code. To do that, run the following command
 Then, run the following command
 ```
 . ~/workspace/graic-workspace/devel/setup.bash
-roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=False model_type:=model_free
+roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=False model_type:=model_free vis2D:=True
 ```
-
-A vehicle should appear in the CARLA window.
-
-<img src="/Race/assets/baseline.png">
-
 
 ### Running the controller
 The controller runs as a ROS node. The entry of the node is provided by GRAIC, which is a file called `agent_wrapper.py`. This file will import the user's controller from a file called `user_controller_file.py` and also communicate with the GRAIC infrastructure. For testing, you can use the baseline controller provided in the GRAIC repository as follows.
@@ -46,4 +41,8 @@ cp ~/workspace/graic-workspace/src/graic_core/src/baseline.py user_controller_fi
 . ~/workspace/graic-workspace/devel/setup.bash
 python3 agent_wrapper.py ego_vehicle
 ```
-The vehicle should start moving and a score should appear when the race terminates. To run your own controller, just replace `~/workspace/graic-workspace/src/graic_core/src/baseline.py` in the above command with the path to your controller file.
+The vehicle should start moving and a score should appear when the race terminates. You should be able to see the following two windows: one is for the chase camera view, and the other one is the top view 2D visualization. In the 2D visualization, the blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change ```vis2D:=True``` to ```vis2D:=False``` in the above command.
+
+<img src="/Race/assets/graic_vis.png">
+
+To run your own controller, just replace `~/workspace/graic-workspace/src/graic_core/src/baseline.py` in the above command with the path to your controller file.
