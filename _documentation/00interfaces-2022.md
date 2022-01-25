@@ -37,4 +37,3 @@ In detail, ```currState``` is a tuple which has three elements: (position, rotat
 ```exectute``` is expected to return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py).
 
 
-
