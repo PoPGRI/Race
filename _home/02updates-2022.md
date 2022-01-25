@@ -5,7 +5,7 @@ main_nav: false
 date:   2022-04-18T14:25:52-05:00
 ---
 <ul>
-<li><b>01/25/2022</b> - Our AWS and docker betas are now available! Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
+<li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
 </ul>
 
 
