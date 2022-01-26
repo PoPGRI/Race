@@ -17,6 +17,7 @@ After the installation, pull the GRAIC Docker image: `docker pull sundw2014/grai
 Now that everything has been installed, you can now run the GRAIC docker image. To run the GRAIC Docker container, use the following instructions.
 
 ```
+sudo xhost +
 docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
 ```
 
