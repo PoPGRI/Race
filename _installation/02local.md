@@ -7,7 +7,7 @@ This section provide another option such that you can run GRAIC on your local ma
 
 GRAIC 2022 uses the [CARLA simulator](https://carla.org/), and CARLA is built on the [Unreal Engine](https://www.unrealengine.com/en-US/). That is why you will want to run the simulator on a machine with a powerful GPU. As for the software, you need the [nvidia-docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker).
 
-### Step 0. Installing nvidia-docker and getting the GRAIC docker image
+### Step 1. Installing nvidia-docker and getting the GRAIC docker image
 Please follow the official tutorial to install the [nvidia-docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker).
 
 After the installation, pull the GRAIC Docker image: `docker pull sundw2014/graic:latest`.

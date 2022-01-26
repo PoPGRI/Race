@@ -215,11 +215,6 @@
   <div>
       
       
-  </div>
-  
-  <div>
-      
-      
           
           <h1>Docs</h1>
           
@@ -231,10 +226,126 @@
 
 <p><img src="/Race/assets/interfaces.png" /></p>
 
-<p>The perception module publishes the rostopics <code class="language-plaintext highlighter-rouge">location</code>, <code class="language-plaintext highlighter-rouge">obstacles</code>, <code class="language-plaintext highlighter-rouge">lane_markers</code>, and <code class="language-plaintext highlighter-rouge">environment_obj_bb</code>. The waypoints that the competitors must reach are also provided in the rostopic <code class="language-plaintext highlighter-rouge">waypoint</code>. The decision &amp; control module should publish the rostopics  <code class="language-plaintext highlighter-rouge">ackermann_control</code> <strong>or</strong> <code class="language-plaintext highlighter-rouge">vehicle_control</code>. Further details of these topics are given below.
- Again, this information shows how the GRAIC framework works, but the competitors only need to build the blue module.</p>
+<p>Specifically, your controller should implement a class called <code class="language-plaintext highlighter-rouge">Controller</code> as follows. You can find an example in this <a href="https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py">file</a>.</p>
+<pre><code class="language-Python">class Controller(object):
+    """docstring for Controller"""
+    def __init__(self):
+        super(Controller, self).__init__()
 
-<p>Note: For all the rostopics in this document, the full rostopic name should be <code class="language-plaintext highlighter-rouge">/carla/&lt;vehicle-name&gt;/&lt;topic-name&gt;</code>. E.g. <code class="language-plaintext highlighter-rouge">/carla/ego_vehicle/location</code> will provide location information for the car named “ego_vehicle”</p>
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
+        return ...
+</code></pre>
+
+<p>As shown above, the <code class="language-plaintext highlighter-rouge">exectute</code> function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, the race will be immediately terminated.</p>
+
+<p>In detail, <code class="language-plaintext highlighter-rouge">currState</code> is a tuple which has three elements: (position, rotation, velocity), and each element is a tuple consisting of the coordinates of that element. So position is a tuple of the form (x, y), which denotes the x and y coordinates of the vehicle; rotation is a tuple of the form (x, y, z), in radians, which denotes the roll, pitch and yaw of the vehicle; velocity is a tuple of the form (x, y), which denotes the x and y components of the velocity of the vehicle. The function <code class="language-plaintext highlighter-rouge">locationCallback</code> inside the class <code class="language-plaintext highlighter-rouge">VehiclePerception</code> in the file <code class="language-plaintext highlighter-rouge">agent_wrapper.py</code> provides a more starightforward way to understand the structure of <code class="language-plaintext highlighter-rouge">currState</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">obstacleList</code> is a list of msg of the type <code class="language-plaintext highlighter-rouge">ObstacleInfo</code> (all msg structures can be found in graic_msg/msg.) The ith obstacle can be accessed by  <code class="language-plaintext highlighter-rouge">obstacleList[i]</code> and it has four fields: obstacle_name (type: string), obstacle_id (type: unit32), location (type: geometry_msgs/Vector3), vertices_locations (type: BBSingleInfo[]). For example, <code class="language-plaintext highlighter-rouge">obstacleList[i].obstacle_name</code> will return the name of the obstacle.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lane_marker</code> consists of three <code class="language-plaintext highlighter-rouge">LaneList</code>s: lane_markers_center, lane_markers_left, and lane_markers_right. For example, <code class="language-plaintext highlighter-rouge">lane_marker.lane_markers_left</code> returns lane_markers_left. Note that,  <code class="language-plaintext highlighter-rouge">lane_marker</code> only contains markers of the lane on which the vehicle is currently driving. To access the lane markers of the boundaries of the track, please check rostopics named left_lane_markers and right_lane_markers.</p>
+
+<p><code class="language-plaintext highlighter-rouge">waypoint</code> contains the next waypoint that the vehicle is expected to pass. For example, <code class="language-plaintext highlighter-rouge">waypoint.location.x</code> returns the x coordinate of the waypoint, and similarly for the y coordinate.</p>
+
+<p><code class="language-plaintext highlighter-rouge">exectute</code> is expected to return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py).</p>
+
+</p>
+      
+  </div>
+  
+  <div>
+      
+      
+          
+          <h1>Perception</h1>
+          
+          <p><p>The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> may change. These rostopics are updated at a rate of 20 Hz.</p>
+
+<p>The perception distance will remained fixed across all the races. This distance is 60m.</p>
+
+<h3 id="dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</h3>
+<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
+<ul>
+  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
+  <li>Object center: The location of the object center in \([x, y, z]\) global coordinates</li>
+  <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “motorcycle”, etc.)</li>
+  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This identifier remains the same across all time steps.</li>
+</ul>
+
+<p>These obstacles are published to the rostopic <code class="language-plaintext highlighter-rouge">obstacles</code>.</p>
+
+<!-- ### Static obstacles objects (<span style="color:red">Static</span>)
+The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
+- Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
+- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
+- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
+
+These objects are also published to the rostopic `obstacles`. -->
+
+<h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
+<p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
+The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\( \theta_x,  \theta_y, \theta_z\)] in radians. The velocity of the vehicle is given as [\(v_x, v_y\)].</p>
+
+<p>The location is published to the rostopic <code class="language-plaintext highlighter-rouge">location</code></p>
+
+<h3 id="lane-markers-static">Lane markers (<span style="color:red">Static</span>)</h3>
+<p>The lane markers (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
+
+<p>The lane markers are published to the rostopic <code class="language-plaintext highlighter-rouge">lane_markers</code>.</p>
+
+<p>The edges of the road are also included. The left edge is provided in <code class="language-plaintext highlighter-rouge">left_lane_markers</code> and the right edge is provided in <code class="language-plaintext highlighter-rouge">right_lane_markers</code>.</p>
+
+<h3 id="milestones">Milestones</h3>
+<p>These are the waypoints along the track that the vehicle must pass. These milestones are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.</p>
+
+<p>The milestones are published to the rostopic <code class="language-plaintext highlighter-rouge">waypoints</code>.</p>
+
+<p><img src="/Race/assets/perception_screenshot.png" /></p>
+
+<p>From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
+There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)</p>
+
+<h3 id="perception-rostopics">Perception rostopics</h3>
+
+<p>Here is a table with the rostopics associated with perception and what they return.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Name</th>
+      <th style="text-align: center">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">obstacles</code></td>
+      <td style="text-align: center">ObstacleList</td>
+      <td style="text-align: left">Dynamic obstacle information</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">lane_markers</code></td>
+      <td style="text-align: center">LaneInfo</td>
+      <td style="text-align: left">Left, center, and right lane markers that define the lane that the ego vehicle is currently on</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">left_lane_markers</code></td>
+      <td style="text-align: center">LaneList</td>
+      <td style="text-align: left">Lane markers that define the outermost left edge</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">right_lane_markers</code></td>
+      <td style="text-align: center">LaneList</td>
+      <td style="text-align: left">Lane markers that define the outermost right edge</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2d-visualization">2D Visualization</h3>
+
+<p>We provide 2D visualization of the perception oracle as part of the simulator.
+The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+<p><img src="/Race/assets/graic_vis.png" /></p>
 </p>
       
   </div>
