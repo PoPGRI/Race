@@ -126,8 +126,8 @@ if __name__ == "__main__":
     vehicle_typeid = race_config.readline().decode('ascii').strip()
     sensing_radius = race_config.readline().decode('ascii').strip()
     import sys
-    role_name = sys.argv[1]
-    from user_controller_file import Controller
+    role_name = sys.argv[1].split("_")[-1]
+    from baseline import Controller
     controller = Controller()
     try:
         run_model(role_name, controller)

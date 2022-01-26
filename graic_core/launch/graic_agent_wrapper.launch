@@ -3,7 +3,7 @@
   <arg name='role_name' default='hero0' />
   <arg name='class_file' />
 
-  <node pkg="graic_core" type="agent_wrapper.py" name="graic_agent_wrapper_$(arg role_name)" output="screen">
+  <node pkg="graic_core" type="agent_wrapper_original.py" name="graic_agent_wrapper_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
     <param name="class_file" value="$(arg class_file)" />
   </node>
