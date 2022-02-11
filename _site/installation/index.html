@@ -301,7 +301,8 @@ The instructions for both installation methods can be found below.</p>
 
 <p>Now that everything has been installed, you can now run the GRAIC docker image. To run the GRAIC Docker container, use the following instructions.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo xhost +
+docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
 </code></pre></div></div>
 
 <p>Now the container is running, you can follow the instructions below to run GRAIC inside the container.</p>
