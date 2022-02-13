@@ -122,6 +122,10 @@ class CommandNode:
             elif self.track == "track5":
                 init_pose = [215.90, 202.04 + i * 10, 4, 0, 0, 82]
                 vehicle = "vehicle.mercedes-benz.coupe"
+            elif self.track == "shanghai_intl_circuit":
+                # TODO: currently only one car
+                init_pose = [90, -93, 4, 0, 0, 0]
+                vehicle = "vehicle.tesla.model3"
             else:
                 init_pose = [0, 0, 4, 0, 0, 0]
             v['init_pose'] = init_pose
