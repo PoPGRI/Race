@@ -1,0 +1,38 @@
+I"_<p>Add a flowchart here that talks about the structure of the GRAIC simulator.</p>
+
+<p>Add buttons pointing to the appropriate pages.</p>
+
+<p>Add a little blurb here about how races will be run.</p>
+
+<p>Add buttons pointing to the appropriate pages.</p>
+
+<p>This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.</p>
+
+<p>The GRAIC framework has several modules, however competitors only need to be concerned with three: (i) perception, (ii) decision &amp; control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle API and you will build your own decision &amp; control module.</p>
+
+<p>A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision &amp; control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.</p>
+
+<p><img src="/Race/assets/interfaces.png" /></p>
+
+<p>Specifically, your controller should implement a class called <code class="language-plaintext highlighter-rouge">Controller</code> as follows. You can find an example in this <a href="https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py">file</a>.</p>
+<pre><code class="language-Python">class Controller(object):
+    """docstring for Controller"""
+    def __init__(self):
+        super(Controller, self).__init__()
+
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
+        return ...
+</code></pre>
+
+<p>As shown above, the <code class="language-plaintext highlighter-rouge">exectute</code> function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, the race will be immediately terminated.</p>
+
+<p>In detail, <code class="language-plaintext highlighter-rouge">currState</code> is a tuple which has three elements: (position, rotation, velocity), and each element is a tuple consisting of the coordinates of that element. So position is a tuple of the form (x, y), which denotes the x and y coordinates of the vehicle; rotation is a tuple of the form (x, y, z), in radians, which denotes the roll, pitch and yaw of the vehicle; velocity is a tuple of the form (x, y), which denotes the x and y components of the velocity of the vehicle. The function <code class="language-plaintext highlighter-rouge">locationCallback</code> inside the class <code class="language-plaintext highlighter-rouge">VehiclePerception</code> in the file <code class="language-plaintext highlighter-rouge">agent_wrapper.py</code> provides a more starightforward way to understand the structure of <code class="language-plaintext highlighter-rouge">currState</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">obstacleList</code> is a list of msg of the type <code class="language-plaintext highlighter-rouge">ObstacleInfo</code> (all msg structures can be found in graic_msg/msg.) The ith obstacle can be accessed by  <code class="language-plaintext highlighter-rouge">obstacleList[i]</code> and it has four fields: obstacle_name (type: string), obstacle_id (type: unit32), location (type: geometry_msgs/Vector3), vertices_locations (type: BBSingleInfo[]). For example, <code class="language-plaintext highlighter-rouge">obstacleList[i].obstacle_name</code> will return the name of the obstacle.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lane_marker</code> consists of three <code class="language-plaintext highlighter-rouge">LaneList</code>s: lane_markers_center, lane_markers_left, and lane_markers_right. For example, <code class="language-plaintext highlighter-rouge">lane_marker.lane_markers_left</code> returns lane_markers_left. Note that,  <code class="language-plaintext highlighter-rouge">lane_marker</code> only contains markers of the lane on which the vehicle is currently driving. To access the lane markers of the boundaries of the track, please check rostopics named left_lane_markers and right_lane_markers.</p>
+
+<p><code class="language-plaintext highlighter-rouge">waypoint</code> contains the next waypoint that the vehicle is expected to pass. For example, <code class="language-plaintext highlighter-rouge">waypoint.location.x</code> returns the x coordinate of the waypoint, and similarly for the y coordinate.</p>
+
+<p><code class="language-plaintext highlighter-rouge">exectute</code> is expected to return either <code class="language-plaintext highlighter-rouge">None</code> or an <code class="language-plaintext highlighter-rouge">AckermannDrive</code> object. If it returns <code class="language-plaintext highlighter-rouge">None</code>, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py).</p>
+:ET

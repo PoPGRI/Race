@@ -6,7 +6,7 @@
 #
 layout: page-fullwidth
 header:
-  image_fullwidth: gallery-example-2.jpg
+  image_fullwidth: "baseline3.gif"
 
 permalink: /index.html
 homepage: true

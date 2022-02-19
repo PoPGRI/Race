@@ -3,7 +3,7 @@ layout              : page
 title               : "Installing GRAIC"
 teaser              : "This step-by-step guide helps you to customize Feeling Responsive to your needs."
 header:
-   image_fullwidth  : "header_homepage_13.jpg"
+   image_fullwidth  : "baseline3.gif"
 permalink           : "/installation/"
 ---
 

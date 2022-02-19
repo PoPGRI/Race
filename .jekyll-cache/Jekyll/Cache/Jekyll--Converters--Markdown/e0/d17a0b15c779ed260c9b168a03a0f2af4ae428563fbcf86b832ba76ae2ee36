@@ -1,0 +1,73 @@
+I"è<p>We have defined several ROS message type for the perception module to publish.</p>
+
+<p><strong>BBInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box Information
+string type # Type of object within bounding box
+string name # Name of the object
+uint32 id # Id of the object
+BBSingleInfo[] vertices_locations # List of locations of the vertices
+</code></pre></div></div>
+
+<p><strong>BBList</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box list
+BBInfo[] bounding_box_vertices # List of BBInfo
+</code></pre></div></div>
+
+<p><strong>BBSingleInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information of a single bounding box vertex
+geometry_msgs/Vector3 vertex_location
+</code></pre></div></div>
+
+<p><strong>EvaluationInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the evaluation of the current vehicle
+int32 score # Instant score that the car has got
+uint32 numObjectsHit # Number of objects the car has hit
+</code></pre></div></div>
+
+<p><strong>LaneInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
+
+uint32 LEFT_LANE=3
+unit32 CENTER_LANE=4
+uint32 RIGHT_LANE=5
+
+# Information about each lane
+LaneList lane_markers_center
+LaneList lane_markers_left
+LaneList lane_markers_right
+</code></pre></div></div>
+
+<p><strong>LaneList</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location and rotation of the lane markers
+geometry_msgs/Vector3[] location
+geometry_msgs/Vector3[] rotation
+</code></pre></div></div>
+
+<p><strong>LocationInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location information message type
+string actor_name # Name of the actor(current car)
+uint32 actor_id # ID of the actor(current car)
+geometry_msgs/Vector3 location
+geometry_msgs/Vector3 rotation
+geometry_msgs/Vector3 velocity
+</code></pre></div></div>
+
+<p><strong>ObstacleInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the obstacle
+string obstacle_name # Name of the obstacle
+uint32 obstacle_id # ID of the obstacle
+geometry_msgs/Vector3 location
+BBSingleInfo[] vertices_locations # Bounding box of the obstacle
+</code></pre></div></div>
+
+<p><strong>ObstacleList</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># List of the obstacles
+ObstacleInfo[] obstacles
+</code></pre></div></div>
+
+<p><strong>WaypointInfo</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool reachedFinal # Flag indicating if publishes final milestone waypoint
+string role_name
+geometry_msgs/Vector3 location # Location of the milestone waypoint
+</code></pre></div></div>
+:ET

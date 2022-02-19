@@ -2,7 +2,7 @@
 layout: page
 title: "Submission"
 header:
-   image_fullwidth: "header_unsplash_5.jpg"
+   image_fullwidth: "baseline3.gif"
 permalink: "/submissions/"
 ---
 

@@ -1,0 +1,59 @@
+I"Ê<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#running-the-carla-simulator" id="markdown-toc-running-the-carla-simulator">Running the CARLA simulator</a></li>
+  <li><a href="#running-the-graic-infrastructure" id="markdown-toc-running-the-graic-infrastructure">Running the GRAIC infrastructure</a></li>
+  <li><a href="#running-the-controller" id="markdown-toc-running-the-controller">Running the controller</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <p>The whole racing system consists of three independent programs, the CARLA simulator, the GRAIC infrastructure, and your controller, which should be started in three terminals. If you are using Docker, you can get a new terminal connecting to the running container by running <code class="language-plaintext highlighter-rouge">docker exec -it graic_con /bin/bash</code>, where <code class="language-plaintext highlighter-rouge">graic_con</code> is the name of the running container.</p>
+
+    <h3 id="running-the-carla-simulator">Running the CARLA simulator</h3>
+    <p>If you are using Docker, run the following command in a new terminal</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/workspace/carla-simulator/CarlaUE4.sh -opengl
+</code></pre></div>    </div>
+
+    <p>If you are using AWS, run the following command in a new terminal</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/workspace/carla-simulator/CarlaUE4.sh
+</code></pre></div>    </div>
+
+    <p>If everthing works, you shoule be able to see the CARLA window.</p>
+
+    <h3 id="running-the-graic-infrastructure">Running the GRAIC infrastructure</h3>
+    <p>First, you need to update the code. To do that, run the following command</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/scripts/update.sh
+</code></pre></div>    </div>
+
+    <p>Then, run the following command</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>. ~/workspace/graic-workspace/devel/setup.bash
+roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=True model_type:=model_free vis2D:=True
+</code></pre></div>    </div>
+
+    <h3 id="running-the-controller">Running the controller</h3>
+    <p>The controller runs as a ROS node. The entry of the node is provided by GRAIC, which is a file called <code class="language-plaintext highlighter-rouge">agent_wrapper.py</code>. This file will import the userâ€™s controller from a file called <code class="language-plaintext highlighter-rouge">user_controller_file.py</code> and also communicate with the GRAIC infrastructure. For testing, you can use the baseline controller provided in the GRAIC repository as follows.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir tmp
+cd tmp
+cp ~/workspace/graic-workspace/src/graic_core/src/agent_wrapper.py .
+cp ~/workspace/graic-workspace/src/graic_core/src/baseline.py user_controller_file.py
+. ~/workspace/graic-workspace/devel/setup.bash
+python3 agent_wrapper.py ego_vehicle
+</code></pre></div>    </div>
+    <p>The vehicle should start moving and a score should appear when the race terminates. You should be able to see the following two windows: one is for the chase camera view, and the other one is the top view 2D visualization. In the 2D visualization, the blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+    <p><img src="/Race/assets/graic_vis.png" /></p>
+
+    <p>To run your own controller, just replace <code class="language-plaintext highlighter-rouge">~/workspace/graic-workspace/src/graic_core/src/baseline.py</code> in the above command with the path to your controller file.</p>
+
+    <p>You can use the <a href="https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py">baseline controller</a> as a template. In this file, only the <code class="language-plaintext highlighter-rouge">class Controller</code> is necessary. You can modify this class to implement your own controller. To further understand how to create controllers, take a look at the interfaces described on our <a href="https://popgri.github.io/Race/documentation/">docs</a> page.</p>
+  </div>
+</div>
+:ET

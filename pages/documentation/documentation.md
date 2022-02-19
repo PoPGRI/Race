@@ -4,7 +4,7 @@ show_meta: false
 title: "documentation"
 subheadline: "Layouts of Feeling Responsive"
 header:
-   image_fullwidth: "header_unsplash_5.jpg"
+   image_fullwidth: "baseline3.gif"
 permalink: "/documentation/"
 ---
 
