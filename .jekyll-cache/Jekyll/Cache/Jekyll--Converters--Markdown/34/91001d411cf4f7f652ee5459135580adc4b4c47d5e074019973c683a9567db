@@ -1,12 +1,17 @@
-I"~<p>Add a flowchart here that talks about the structure of the GRAIC simulator.</p>
+I"H<p>In order to make benchmarking feasible, GRAIC has defined three main interfaces of an autonomous system:</p>
+<ul>
+  <li>Perception</li>
+  <li>Decision and control</li>
+  <li>Vehicle system
+These interfaces can be seen in the image below.
+In GRAIC, the ground-truth perception information is provided to the competitors.
+The competitors will then build a decision and control method which will compute a control input the the vehicle system.
+This control input is then given to the vehicle system, and the state of the vehicle is then updated.
+<img src="https://popgri.github.io/Race/assets/images/interface.png" /></li>
+</ul>
 
-<p>Add buttons pointing to the appropriate pages.</p>
-
-<p>Add a little blurb here about how races will be run.</p>
-
-<p>Add buttons pointing to the appropriate pages.</p>
-
-<p>This page provides a tutorial on how to use GRAIC for developing your intelligent autonomous racing agent.</p>
+<p>This page provides a general explanation on how to use GRAIC for developing your intelligent autonomous racing agent.
+Please see our other documentation pages for more detailed information.</p>
 
 <p>The GRAIC framework has several modules, however competitors only need to be concerned with three: (i) perception, (ii) decision &amp; control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle API and you will build your own decision &amp; control module.</p>
 
