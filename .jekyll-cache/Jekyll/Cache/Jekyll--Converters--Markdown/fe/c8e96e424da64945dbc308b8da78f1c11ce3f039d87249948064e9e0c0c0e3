@@ -1,0 +1,99 @@
+I"ù<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#bbinfo" id="markdown-toc-bbinfo">BBInfo</a></li>
+  <li><a href="#bblist" id="markdown-toc-bblist">BBList</a></li>
+  <li><a href="#bbsingleinfo" id="markdown-toc-bbsingleinfo">BBSingleInfo</a></li>
+  <li><a href="#evaluationinfo" id="markdown-toc-evaluationinfo">EvaluationInfo</a></li>
+  <li><a href="#laneinfo" id="markdown-toc-laneinfo">LaneInfo</a></li>
+  <li><a href="#lanelist" id="markdown-toc-lanelist">LaneList</a></li>
+  <li><a href="#locationinfo" id="markdown-toc-locationinfo">LocationInfo</a></li>
+  <li><a href="#obstacleinfo" id="markdown-toc-obstacleinfo">ObstacleInfo</a></li>
+  <li><a href="#obstaclelist" id="markdown-toc-obstaclelist">ObstacleList</a></li>
+  <li><a href="#waypointinfo" id="markdown-toc-waypointinfo">WaypointInfo</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <p>We have defined several ROS message type for the perception module to publish.</p>
+
+    <h4 id="bbinfo">BBInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box Information
+string type # Type of object within bounding box
+string name # Name of the object
+uint32 id # Id of the object
+BBSingleInfo[] vertices_locations # List of locations of the vertices
+</code></pre></div>    </div>
+
+    <h4 id="bblist">BBList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box list
+BBInfo[] bounding_box_vertices # List of BBInfo
+</code></pre></div>    </div>
+
+    <h4 id="bbsingleinfo">BBSingleInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information of a single bounding box vertex
+geometry_msgs/Vector3 vertex_location
+</code></pre></div>    </div>
+
+    <h4 id="evaluationinfo">EvaluationInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the evaluation of the current vehicle
+int32 score # Instant score that the car has got
+uint32 numObjectsHit # Number of objects the car has hit
+</code></pre></div>    </div>
+
+    <h4 id="laneinfo">LaneInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
+
+uint32 LEFT_LANE=3
+unit32 CENTER_LANE=4
+uint32 RIGHT_LANE=5
+
+# Information about each lane
+LaneList lane_markers_center
+LaneList lane_markers_left
+LaneList lane_markers_right
+</code></pre></div>    </div>
+
+    <h4 id="lanelist">LaneList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location and rotation of the lane markers
+geometry_msgs/Vector3[] location
+geometry_msgs/Vector3[] rotation
+</code></pre></div>    </div>
+
+    <h4 id="locationinfo">LocationInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location information message type
+string actor_name # Name of the actor(current car)
+uint32 actor_id # ID of the actor(current car)
+geometry_msgs/Vector3 location
+geometry_msgs/Vector3 rotation
+geometry_msgs/Vector3 velocity
+</code></pre></div>    </div>
+
+    <h4 id="obstacleinfo">ObstacleInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the obstacle
+string obstacle_name # Name of the obstacle
+uint32 obstacle_id # ID of the obstacle
+geometry_msgs/Vector3 location
+BBSingleInfo[] vertices_locations # Bounding box of the obstacle
+</code></pre></div>    </div>
+
+    <h4 id="obstaclelist">ObstacleList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># List of the obstacles
+ObstacleInfo[] obstacles
+</code></pre></div>    </div>
+
+    <h4 id="waypointinfo">WaypointInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool reachedFinal # Flag indicating if publishes final milestone waypoint
+string role_name
+geometry_msgs/Vector3 location # Location of the milestone waypoint
+</code></pre></div>    </div>
+  </div>
+</div>
+:ET

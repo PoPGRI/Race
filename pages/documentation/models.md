@@ -1,9 +1,24 @@
 ---
-layout: page
+layout: page-fullwidth
 title: Vehicles
 main_nav: true
 date:   2022-04-18T14:25:52-05:00
+permalink: documentation/models/
 ---
+
+<div class="row">
+<div class="medium-4 medium-push-8 columns" markdown="1">
+<div class="panel radius" markdown="1">
+**Table of Contents**
+{: #toc }
+*  TOC
+{:toc}
+</div>
+</div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns" markdown="1">
 
 The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the "model-agnostic" or the "model-based" options, or both.
 The information about the vehicles will be provided in a configuration file.
@@ -61,3 +76,5 @@ Table for model-based information:
 |\\(m\\)|\\(f_1\\)|\\(f_2\\)|\\(f_3\\)|\\(a\\)|\\(b\\)|\\(C_{\alpha f}\\)|\\(C_{\alpha r}\\)|\\(I_z\\)|Vehicle ID           |
 |:-----:|:-------:|:-------:|:-------:|:-----:|:-----:|:----------------:|:----------------:|:-------:|:-------------------:|
 |1800   |40.59    |0.01     |74.63    |1.2    |1.65   |1.4e5             |1.2e5             |3270     |vehicle.model_based.1|
+
+</div>

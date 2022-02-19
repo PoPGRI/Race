@@ -1,7 +1,7 @@
 ---
 layout: page
 show_meta: false
-title: "documentation"
+title: "Documentation"
 subheadline: "Layouts of Feeling Responsive"
 header:
    image_fullwidth: "baseline3.gif"
@@ -23,7 +23,7 @@ The GRAIC framework has several modules, however competitors only need to be con
 
 A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision & control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.
 
- <img src="/Race/assets/interfaces.png">
+ <img src="{{site.urlimg}}interfaces.png">
 
 Specifically, your controller should implement a class called `Controller` as follows. You can find an example in this [file](https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py).
 ```Python

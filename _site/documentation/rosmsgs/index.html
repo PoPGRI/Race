@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Vehicles</title>
+	<title>ROS messages</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:4000/Race/assets/css/styles_feeling_responsive.css">
 
@@ -32,13 +32,13 @@
 	
 	
 	
-	<link rel="canonical" href="http://localhost:4000/Race/pages/documentation/models/">
+	<link rel="canonical" href="http://localhost:4000/Race/documentation/rosmsgs/">
 
 
 	<!-- Facebook Open Graph -->
-	<meta property="og:title" content="Vehicles">
+	<meta property="og:title" content="ROS messages">
 	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
-	<meta property="og:url" content="http://localhost:4000/Race/pages/documentation/models/">
+	<meta property="og:url" content="http://localhost:4000/Race/documentation/rosmsgs/">
 	<meta property="og:locale" content="en_EN">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="GRAIC">
@@ -51,7 +51,7 @@
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="phlow">
 	<meta name="twitter:creator" content="phlow">
-	<meta name="twitter:title" content="Vehicles">
+	<meta name="twitter:title" content="ROS messages">
 	<meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
 	
 	
@@ -92,8 +92,15 @@
 
 	
 
+	<!-- Tooltips -->
+<script type="text/javascript">
+	window.tooltips = []
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 </head>
-<body id="top-of-page" class="post">
+<body id="top-of-page" class="page-fullwidth">
 	
 	
 <div id="navigation" class="sticky">
@@ -240,22 +247,22 @@
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
-                    
-
-                      
-
                       <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/models/">Vehicle Models</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/rosmsgs/">ROS Messages</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/tracks/">Tracks</a></li>
                     
                   </ul>
 
@@ -325,140 +332,122 @@
 
 
 
-	<div class="row t30">
-	<div class="medium-8 columns medium-offset-2 end">
-		<article itemscope itemtype="http://schema.org/Article">
-			<header>
-				<p style="color:red">
-					WEBSITE CURRENTLY UNDER MAINTENANCE.
-				</p>
-				
+	
 
-				<div itemprop="name">
-					
-					<h1>Vehicles</h1>
-				</div>
+
+<div class="row t30">
+	<div class="medium-12 columns">
+		<article>
+			<header>
+				
+				<h1>ROS messages</h1>
 			</header>
 
-
 			
+			<p style="color:red">
+				WEBSITE CURRENTLY UNDER MAINTENANCE.
+			</p>
+			<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#bbinfo" id="markdown-toc-bbinfo">BBInfo</a></li>
+  <li><a href="#bblist" id="markdown-toc-bblist">BBList</a></li>
+  <li><a href="#bbsingleinfo" id="markdown-toc-bbsingleinfo">BBSingleInfo</a></li>
+  <li><a href="#evaluationinfo" id="markdown-toc-evaluationinfo">EvaluationInfo</a></li>
+  <li><a href="#laneinfo" id="markdown-toc-laneinfo">LaneInfo</a></li>
+  <li><a href="#lanelist" id="markdown-toc-lanelist">LaneList</a></li>
+  <li><a href="#locationinfo" id="markdown-toc-locationinfo">LocationInfo</a></li>
+  <li><a href="#obstacleinfo" id="markdown-toc-obstacleinfo">ObstacleInfo</a></li>
+  <li><a href="#obstaclelist" id="markdown-toc-obstaclelist">ObstacleList</a></li>
+  <li><a href="#waypointinfo" id="markdown-toc-waypointinfo">WaypointInfo</a></li>
+</ul>
 
-			<div itemprop="articleSection">
-			<p>The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the “model-agnostic” or the “model-based” options, or both.
-The information about the vehicles will be provided in a configuration file.</p>
+    </div>
+  </div><!-- /.medium-4.columns -->
 
-<h3 id="model-agnostic-option">Model-agnostic option</h3>
-<p>In the model-agnostic category, vehicle physics is given by CARLA’s vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="language-plaintext highlighter-rouge">ackermann_control</code> or <code class="language-plaintext highlighter-rouge">vehicle_control</code>.</p>
 
-<p>The vehicles that will be used in the competition are shown in the ‘configuration file’ section.</p>
 
-<h3 id="model-based-option">Model-based option</h3>
-<p>In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same <code class="language-plaintext highlighter-rouge">ackermann_control</code> or <code class="language-plaintext highlighter-rouge">vehicle_control</code> rostopics above.</p>
+<div class="medium-8 medium-pull-4 columns">
 
-<h4 id="longitudinal-dynamics">Longitudinal dynamics</h4>
+    <p>We have defined several ROS message type for the perception module to publish.</p>
 
-\[\dot{u} = a - f_1 u - f_2 u^{2} - f_3,\]
+    <h4 id="bbinfo">BBInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box Information
+string type # Type of object within bounding box
+string name # Name of the object
+uint32 id # Id of the object
+BBSingleInfo[] vertices_locations # List of locations of the vertices
+</code></pre></div>    </div>
 
-<p>where $u$ is the forward velocity of the vehicle and \(a\) is the acceleration generated by the throttle input.</p>
+    <h4 id="bblist">BBList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Bounding box list
+BBInfo[] bounding_box_vertices # List of BBInfo
+</code></pre></div>    </div>
 
-<h4 id="lateral-dynamics">Lateral dynamics</h4>
+    <h4 id="bbsingleinfo">BBSingleInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information of a single bounding box vertex
+geometry_msgs/Vector3 vertex_location
+</code></pre></div>    </div>
 
-\[\begin{bmatrix} \dot{v}\\ \dot{r}
-\end{bmatrix}=\begin{bmatrix}
--(C_{\alpha f}+ C_{\alpha r})/(mu) &amp; (bC_{\alpha r}-aC_{\alpha f})/(mu) - u\\
-(bC_{\alpha r} - aC_{\alpha f})/(I_z u) &amp; -(a^2 C_{\alpha f} + b^2 C_{\alpha r}/(I_z u))
-\end{bmatrix}\begin{bmatrix}
-v\\r
-\end{bmatrix}+\begin{bmatrix}
-C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
-\end{bmatrix}\delta_f\]
+    <h4 id="evaluationinfo">EvaluationInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the evaluation of the current vehicle
+int32 score # Instant score that the car has got
+uint32 numObjectsHit # Number of objects the car has hit
+</code></pre></div>    </div>
 
-<p>where \(v\) and \(r\) are the lateral velocity and the second order derivative of the vehicle’s yaw angle, and \(\delta_{f}\) is the steering command.</p>
+    <h4 id="laneinfo">LaneInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uint32 lane_state # Identifier of the lane that this lane marker is on; this value should be one of the numbers below
 
-<p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha f}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
+uint32 LEFT_LANE=3
+unit32 CENTER_LANE=4
+uint32 RIGHT_LANE=5
 
-<p>The potential parameters for the race are shown in the ‘configuration file’ section.</p>
+# Information about each lane
+LaneList lane_markers_center
+LaneList lane_markers_left
+LaneList lane_markers_right
+</code></pre></div>    </div>
 
-<h3 id="configuration-file">Configuration file</h3>
+    <h4 id="lanelist">LaneList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location and rotation of the lane markers
+geometry_msgs/Vector3[] location
+geometry_msgs/Vector3[] rotation
+</code></pre></div>    </div>
 
-<p><em>This information will soon be updated</em></p>
+    <h4 id="locationinfo">LocationInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Location information message type
+string actor_name # Name of the actor(current car)
+uint32 actor_id # ID of the actor(current car)
+geometry_msgs/Vector3 location
+geometry_msgs/Vector3 rotation
+geometry_msgs/Vector3 velocity
+</code></pre></div>    </div>
 
-<p>There will be a configuration file that includes vehicle information.
-Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.</p>
+    <h4 id="obstacleinfo">ObstacleInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Information about the obstacle
+string obstacle_name # Name of the obstacle
+uint32 obstacle_id # ID of the obstacle
+geometry_msgs/Vector3 location
+BBSingleInfo[] vertices_locations # Bounding box of the obstacle
+</code></pre></div>    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Vehicle name</th>
-      <th style="text-align: center">Vehicle ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">BMW Isetta</td>
-      <td style="text-align: center">vehicle.bmw.isetta</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Tesla cybertruck</td>
-      <td style="text-align: center">vehicle.tesla.cybertruck</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Mercedes Benz</td>
-      <td style="text-align: center">vehicle.mercedes-benz.coupe</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Kawasaki Ninja</td>
-      <td style="text-align: center">vehicle.kawasaki.ninja</td>
-    </tr>
-  </tbody>
-</table>
+    <h4 id="obstaclelist">ObstacleList</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># List of the obstacles
+ObstacleInfo[] obstacles
+</code></pre></div>    </div>
 
-<p>Table for model-based information:</p>
+    <h4 id="waypointinfo">WaypointInfo</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool reachedFinal # Flag indicating if publishes final milestone waypoint
+string role_name
+geometry_msgs/Vector3 location # Location of the milestone waypoint
+</code></pre></div>    </div>
+  </div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">\(m\)</th>
-      <th style="text-align: center">\(f_1\)</th>
-      <th style="text-align: center">\(f_2\)</th>
-      <th style="text-align: center">\(f_3\)</th>
-      <th style="text-align: center">\(a\)</th>
-      <th style="text-align: center">\(b\)</th>
-      <th style="text-align: center">\(C_{\alpha f}\)</th>
-      <th style="text-align: center">\(C_{\alpha r}\)</th>
-      <th style="text-align: center">\(I_z\)</th>
-      <th style="text-align: center">Vehicle ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">1800</td>
-      <td style="text-align: center">40.59</td>
-      <td style="text-align: center">0.01</td>
-      <td style="text-align: center">74.63</td>
-      <td style="text-align: center">1.2</td>
-      <td style="text-align: center">1.65</td>
-      <td style="text-align: center">1.4e5</td>
-      <td style="text-align: center">1.2e5</td>
-      <td style="text-align: center">3270</td>
-      <td style="text-align: center">vehicle.model_based.1</td>
-    </tr>
-  </tbody>
-</table>
-
-			</div>
-
-			
-
-			
 		</article>
-	</div><!-- /.medium-8.columns -->
-
-
-	
-
-
-	
+	</div><!-- /.medium-12.columns -->
 </div><!-- /.row -->
 
 

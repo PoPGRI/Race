@@ -97,6 +97,13 @@
 
 	
 
+	<!-- Tooltips -->
+<script type="text/javascript">
+	window.tooltips = []
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 		]]></xsl:text>
 	</head>
 	<body id="top-of-page">
@@ -246,22 +253,22 @@
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
-                    
-
-                      
-
                       <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/models/">Vehicle Models</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/rosmsgs/">ROS Messages</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/tracks/">Tracks</a></li>
                     
                   </ul>
 

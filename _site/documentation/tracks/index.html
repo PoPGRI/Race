@@ -32,13 +32,13 @@
 	
 	
 	
-	<link rel="canonical" href="http://localhost:4000/Race/pages/documentation/tracks/">
+	<link rel="canonical" href="http://localhost:4000/Race/documentation/tracks/">
 
 
 	<!-- Facebook Open Graph -->
 	<meta property="og:title" content="Racing environments and scoring">
 	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
-	<meta property="og:url" content="http://localhost:4000/Race/pages/documentation/tracks/">
+	<meta property="og:url" content="http://localhost:4000/Race/documentation/tracks/">
 	<meta property="og:locale" content="en_EN">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="GRAIC">
@@ -92,8 +92,15 @@
 
 	
 
+	<!-- Tooltips -->
+<script type="text/javascript">
+	window.tooltips = []
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 </head>
-<body id="top-of-page" class="post">
+<body id="top-of-page" class="page-fullwidth">
 	
 	
 <div id="navigation" class="sticky">
@@ -240,22 +247,22 @@
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
-                    
-
-                      
-
                       <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/models/">Vehicle Models</a></li>
                     
 
                       
 
-                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                      <li><a  href="http://localhost:4000/Race/documentation/rosmsgs/">ROS Messages</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/tracks/">Tracks</a></li>
                     
                   </ul>
 
@@ -325,61 +332,66 @@
 
 
 
-	<div class="row t30">
-	<div class="medium-8 columns medium-offset-2 end">
-		<article itemscope itemtype="http://schema.org/Article">
-			<header>
-				<p style="color:red">
-					WEBSITE CURRENTLY UNDER MAINTENANCE.
-				</p>
-				
+	
 
-				<div itemprop="name">
-					
-					<h1>Racing environments and scoring</h1>
-				</div>
+
+<div class="row t30">
+	<div class="medium-12 columns">
+		<article>
+			<header>
+				
+				<h1>Racing environments and scoring</h1>
 			</header>
 
-
 			
+			<p style="color:red">
+				WEBSITE CURRENTLY UNDER MAINTENANCE.
+			</p>
+			<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#maps" id="markdown-toc-maps">Maps</a></li>
+  <li><a href="#scenarios" id="markdown-toc-scenarios">Scenarios</a></li>
+  <li><a href="#evaluation" id="markdown-toc-evaluation">Evaluation</a></li>
+</ul>
 
-			<div itemprop="articleSection">
-			<p>We are providing several test environments with maps, other vehicles, pedestrians, and static obstacles that the ego vehicle must avoid. We are also providing a scoring function.</p>
+    </div>
+  </div><!-- /.medium-4.columns -->
 
-<h1 id="maps">Maps</h1>
 
-<p>These test environments will be different than the ones used during the final race.
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <p>We are providing several test environments with maps, other vehicles, pedestrians, and static obstacles that the ego vehicle must avoid. We are also providing a scoring function.</p>
+
+    <h1 id="maps">Maps</h1>
+
+    <p>These test environments will be different than the ones used during the final race.
 Below are two of the maps that are included with our beta release.</p>
 
-<p><img src="/Race/assets/track1.png" />
-<img src="/Race/assets/track2.png" /></p>
+    <p><img src="https://popgri.github.io/Race/assets/images/track1.png" />
+<img src="https://popgri.github.io/Race/assets/images/track2.png" /></p>
 
-<h1 id="scenarios">Scenarios</h1>
+    <h1 id="scenarios">Scenarios</h1>
 
-<p>Scenarios will be constructed from vehicles and pedestrians.
+    <p>Scenarios will be constructed from vehicles and pedestrians.
 These vehicles and pedestrians can be either static or dynamic.
 Some example scenarios that the ego vehicle can encounter are a pedestrian crossing the street or congested traffic.</p>
 
-<h1 id="evaluation">Evaluation</h1>
+    <h1 id="evaluation">Evaluation</h1>
 
-<p>The evaluation functions is roughly the following:</p>
+    <p>The evaluation functions is roughly the following:</p>
 
-<p>The time that it takes to pass each milestone waypoint is added to the total score. There will be some penalty added for every collision or when the vehicle runs out of bounds.
+    <p>The time that it takes to pass each milestone waypoint is added to the total score. There will be some penalty added for every collision or when the vehicle runs out of bounds.
 The winner of the competition will be the average lowest score over multiple scenarios.</p>
 
-			</div>
+  </div>
+</div>
 
-			
-
-			
 		</article>
-	</div><!-- /.medium-8.columns -->
-
-
-	
-
-
-	
+	</div><!-- /.medium-12.columns -->
 </div><!-- /.row -->
 
 

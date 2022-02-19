@@ -1,0 +1,112 @@
+I"�<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#dynamic-obstacles-dynamic" id="markdown-toc-dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</a></li>
+  <li><a href="#location-dynamic" id="markdown-toc-location-dynamic">Location (<span style="color:blue">Dynamic</span>)</a></li>
+  <li><a href="#lane-markers-static" id="markdown-toc-lane-markers-static">Lane markers (<span style="color:red">Static</span>)</a></li>
+  <li><a href="#milestones" id="markdown-toc-milestones">Milestones</a></li>
+  <li><a href="#perception-rostopics" id="markdown-toc-perception-rostopics">Perception rostopics</a></li>
+  <li><a href="#d-visualization" id="markdown-toc-d-visualization">2D Visualization</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <p>The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> may change. These rostopics are updated at a rate of 20 Hz.</p>
+
+    <p>The perception distance will remained fixed across all the races. This distance is 60m.</p>
+
+    <h3 id="dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</h3>
+    <p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
+    <ul>
+      <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
+      <li>Object center: The location of the object center in \([x, y, z]\) global coordinates</li>
+      <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “motorcycle”, etc.)</li>
+      <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This identifier remains the same across all time steps.</li>
+    </ul>
+
+    <p>These obstacles are published to the rostopic <code class="language-plaintext highlighter-rouge">obstacles</code>.</p>
+
+    <!-- ### Static obstacles objects (<span style="color:red">Static</span>)
+The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
+- Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
+- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
+- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
+
+These objects are also published to the rostopic `obstacles`. -->
+
+    <h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
+    <p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
+The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\( \theta_x,  \theta_y, \theta_z\)] in radians. The velocity of the vehicle is given as [\(v_x, v_y\)].</p>
+
+    <p>The location is published to the rostopic <code class="language-plaintext highlighter-rouge">location</code></p>
+
+    <h3 id="lane-markers-static">Lane markers (<span style="color:red">Static</span>)</h3>
+    <p>The lane markers (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
+
+    <p>The lane markers are published to the rostopic <code class="language-plaintext highlighter-rouge">lane_markers</code>.</p>
+
+    <p>The edges of the road are also included. The left edge is provided in <code class="language-plaintext highlighter-rouge">left_lane_markers</code> and the right edge is provided in <code class="language-plaintext highlighter-rouge">right_lane_markers</code>.</p>
+
+    <h3 id="milestones">Milestones</h3>
+    <p>These are the waypoints along the track that the vehicle must pass. These milestones are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.</p>
+
+    <p>The milestones are published to the rostopic <code class="language-plaintext highlighter-rouge">waypoints</code>.</p>
+
+    <p><img src="https://popgri.github.io/Race/assets/images/perception_screenshot.png" /></p>
+
+    <p>From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
+There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)</p>
+
+    <h3 id="perception-rostopics">Perception rostopics</h3>
+
+    <p>Here is a table with the rostopics associated with perception and what they return.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">Name</th>
+          <th style="text-align: center">Type</th>
+          <th style="text-align: left">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">obstacles</code></td>
+          <td style="text-align: center">ObstacleList</td>
+          <td style="text-align: left">Dynamic obstacle information</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">lane_markers</code></td>
+          <td style="text-align: center">LaneInfo</td>
+          <td style="text-align: left">Left, center, and right lane markers that define the lane that the ego vehicle is currently on</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">left_lane_markers</code></td>
+          <td style="text-align: center">LaneList</td>
+          <td style="text-align: left">Lane markers that define the outermost left edge</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">right_lane_markers</code></td>
+          <td style="text-align: center">LaneList</td>
+          <td style="text-align: left">Lane markers that define the outermost right edge</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="d-visualization">2D Visualization</h3>
+
+    <p>We provide 2D visualization of the perception oracle as part of the simulator.
+The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+    <p><img src="https://popgri.github.io/Race/assets/images/graic_vis.png" /></p>
+
+  </div>
+</div>
+:ET

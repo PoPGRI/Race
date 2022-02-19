@@ -1,9 +1,24 @@
 ---
-layout: page
+layout: page-fullwidth
 title: Perception
 main_nav: true
 date:  2022-04-18T14:25:52-05:00
+permalink: documentation/perception/
 ---
+
+<div class="row">
+<div class="medium-4 medium-push-8 columns" markdown="1">
+<div class="panel radius" markdown="1">
+**Table of Contents**
+{: #toc }
+*  TOC
+{:toc}
+</div>
+</div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns" markdown="1">
 
 The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red">*static  information*</span> will not change over time while <span style="color:blue">*dynamic  information*</span> may change. These rostopics are updated at a rate of 20 Hz.
 
@@ -44,7 +59,7 @@ These are the waypoints along the track that the vehicle must pass. These milest
 
 The milestones are published to the rostopic `waypoints`.
 
-<img src="/Race/assets/perception_screenshot.png">
+<img src="{{site.urlimg}}perception_screenshot.png">
 
 From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
 There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)
@@ -66,4 +81,6 @@ Here is a table with the rostopics associated with perception and what they retu
 We provide 2D visualization of the perception oracle as part of the simulator.
 The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change ```vis2D:=True``` to ```vis2D:=False``` in the above command.
 
-<img src="/Race/assets/graic_vis.png">
+<img src="{{site.urlimg}}graic_vis.png">
+
+</div>

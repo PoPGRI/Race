@@ -1,4 +1,4 @@
-I"_<p>Add a flowchart here that talks about the structure of the GRAIC simulator.</p>
+I"~<p>Add a flowchart here that talks about the structure of the GRAIC simulator.</p>
 
 <p>Add buttons pointing to the appropriate pages.</p>
 
@@ -12,7 +12,7 @@
 
 <p>A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision &amp; control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.</p>
 
-<p><img src="/Race/assets/interfaces.png" /></p>
+<p><img src="https://popgri.github.io/Race/assets/images/interfaces.png" /></p>
 
 <p>Specifically, your controller should implement a class called <code class="language-plaintext highlighter-rouge">Controller</code> as follows. You can find an example in this <a href="https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py">file</a>.</p>
 <pre><code class="language-Python">class Controller(object):

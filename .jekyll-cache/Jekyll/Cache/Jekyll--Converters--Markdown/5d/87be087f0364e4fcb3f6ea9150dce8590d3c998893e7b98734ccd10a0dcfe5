@@ -1,0 +1,43 @@
+I"®<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#maps" id="markdown-toc-maps">Maps</a></li>
+  <li><a href="#scenarios" id="markdown-toc-scenarios">Scenarios</a></li>
+  <li><a href="#evaluation" id="markdown-toc-evaluation">Evaluation</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <p>We are providing several test environments with maps, other vehicles, pedestrians, and static obstacles that the ego vehicle must avoid. We are also providing a scoring function.</p>
+
+    <h1 id="maps">Maps</h1>
+
+    <p>These test environments will be different than the ones used during the final race.
+Below are two of the maps that are included with our beta release.</p>
+
+    <p><img src="https://popgri.github.io/Race/assets/images/track1.png" />
+<img src="https://popgri.github.io/Race/assets/images/track2.png" /></p>
+
+    <h1 id="scenarios">Scenarios</h1>
+
+    <p>Scenarios will be constructed from vehicles and pedestrians.
+These vehicles and pedestrians can be either static or dynamic.
+Some example scenarios that the ego vehicle can encounter are a pedestrian crossing the street or congested traffic.</p>
+
+    <h1 id="evaluation">Evaluation</h1>
+
+    <p>The evaluation functions is roughly the following:</p>
+
+    <p>The time that it takes to pass each milestone waypoint is added to the total score. There will be some penalty added for every collision or when the vehicle runs out of bounds.
+The winner of the competition will be the average lowest score over multiple scenarios.</p>
+
+  </div>
+</div>
+:ET
