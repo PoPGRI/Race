@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/Race/assets/xslt/atom.xslt" ?>
+<?xml-stylesheet type="text/css" href="/Race/assets/css/atom.css" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<id>http://localhost:4000/Race/</id>
+	<title>GRAIC</title>
+	<updated>2022-02-19T15:51:05-06:00</updated>
+
+	<subtitle>Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. </subtitle>
+
+	
+		
+		<author>
+			
+				<name>Phlow</name>
+			
+			
+			
+				<uri>http://phlow.de/</uri>
+			
+		</author>
+	
+
+	<link href="http://localhost:4000/Race/atom.xml" rel="self" type="application/rss+xml" />
+	<link href="http://localhost:4000/Race/" rel="alternate" type="text/html" />
+
+	<generator uri="http://jekyllrb.com" version="4.2.1">Jekyll</generator>
+
+	
+</feed>

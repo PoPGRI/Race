@@ -1,0 +1,49 @@
+- title: Home
+  url: "/"
+  side: left
+
+- title: Getting Started
+  url: "/installation/"
+  side: left
+  dropdown:
+  - title: "AWS Installation"
+    url: "/installation/aws/"
+  - title: "Docker Installation"
+    url: "/installation/docker/"
+  - title: "Running GRAIC"
+    url: "/installation/running/"
+
+- title: "Docs"
+  url: "/documentation/"
+  side: left
+  dropdown:
+  - title: "Perception"
+    url: "/documentation/perception/"
+  - title: "Visualization"
+    url: "/documentation/visualization/"
+  - title: "Decision and Control"
+    url: "/documentation/decision-control/"
+  - title: "Maps and Scenarios"
+    url: "/documentation/scenarios/"
+  - title: "Evaluation"
+    url: "/documentation/evaluation/"
+
+- title: "Submission"
+  url: "/submissions/"
+  side: left
+
+- title: About
+  url: "/about/"
+  side: left
+
+- title: Past events
+  url: "/outreach/"
+  side: left
+
+# - title: "Contact"
+#   url: "/contact/"
+#   side: right
+#
+# - title: "Archive"
+#   url: "/search/"
+#   side: right

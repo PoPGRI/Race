@@ -1,0 +1,23 @@
+- menu_name: "Contact"
+
+- name: "Forum"
+  url: "https://groups.google.com/g/graic21"
+  title: "GRAIC forum"
+
+- name: "graic2021@gmail.com"
+  url: "mailto:graic2021@gmail.com"
+  title: "Email us!"
+
+- name: "GRAIC code"
+  url: "https://github.com/PoPGRI/Race"
+  title: "GRAIC source code"
+
+# - name: "Images by Unsplash"
+#   url: "http://unsplash.com/"
+#   class: "rss-link"
+#   title: "Images by Unsplash"
+#
+# - name: "Using Backstretch by Scott Robbin"
+#   url: "http://srobbin.com/jquery-plugins/backstretch/"
+#   class: "sitemap-link"
+#   title: "Using Backstretch by Scott Robbin"

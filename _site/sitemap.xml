@@ -1,100 +1,369 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy2.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy3.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy4.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy5.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/18/dummy6.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/jekyll/2015/04/18/welcome-to-jekyll.html</loc>
-<lastmod>2015-04-18T14:25:52-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/dummy/2015/04/19/dummy6.html</loc>
-<lastmod>2015-04-19T03:43:59-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/jekyll/2015/04/20/welcome-to-jekyll.html</loc>
-<lastmod>2015-04-20T03:43:59-05:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/archive/about-2021.html</loc>
-</url>
-<url>
-<loc>http://localhost:4000/archive/docs-2021.html</loc>
-</url>
-<url>
-<loc>http://localhost:4000/archive/home-2021.html</loc>
-</url>
-<url>
-<loc>http://localhost:4000/submissions/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/archive/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/outreach/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/documentation/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/about/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/installation/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/archive/install-2021.html</loc>
-</url>
-<url>
-<loc>http://localhost:4000/posts/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/archive/submissions-2021.html</loc>
-</url>
-<url>
-<loc>http://localhost:4000/typography/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/tag/ipsum/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/tag/lorem/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/tag/jekyll/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/tag/welcome/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/category/dummy/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/category/jekyll/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/assets/CFP2022.pdf</loc>
-<lastmod>2022-02-07T16:54:36-06:00</lastmod>
-</url>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Pages: 30 links with priority=0.3, changefreq=monthly -->
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/404.html</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/about/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/blog/archive/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/atom.xml</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/installation/aws/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/documentation/decision-control/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/installation/docker/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/documentation/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/feed.xml</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/installation/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/humans.txt</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/blog/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/pages/documentation/models/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/outreach/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/pages/documentation/perception/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/posts/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/robots.txt</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/pages/documentation/rosmsg/</loc>
+	
+		<lastmod>2020-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/installation/running/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/sitemap.xml</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/submissions/</loc>
+	
+		<lastmod>2022-02-19T15:51:05-06:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+	<url>
+	<loc>http://localhost:4000/Race/pages/documentation/tracks/</loc>
+	
+		<lastmod>2022-04-18T14:25:52-05:00</lastmod>
+	
+	
+		<changefreq>monthly</changefreq>
+	
+	
+		<priority>0.3</priority>
+	
+	</url>
+	
+
+	
+
+	
+
+
+<!-- Posts: 0 links with priority=0.5, changefreq=monthly -->
+
+
 </urlset>

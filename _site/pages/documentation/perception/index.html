@@ -1,0 +1,607 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Perception</title>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:4000/Race/assets/css/styles_feeling_responsive.css">
+
+  
+
+	<script src="http://localhost:4000/Race/assets/js/modernizr.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+	<script>
+		WebFont.load({
+			google: {
+				families: [ 'Lato:400,700,400italic:latin', 'Volkhov::latin' ]
+			}
+		});
+	</script>
+
+	<noscript>
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
+	</noscript>
+
+
+	<!-- Search Engine Optimization -->
+	<meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta name="google-site-verification" content="Vk0IOJ2jwG_qEoG7fuEXYqv0m2rLa8P778Fi_GrsgEQ">
+	<meta name="msvalidate.01" content="0FB4C028ABCF07C908C54386ABD2D97F" >
+	
+	
+	
+	<link rel="canonical" href="http://localhost:4000/Race/pages/documentation/perception/">
+
+
+	<!-- Facebook Open Graph -->
+	<meta property="og:title" content="Perception">
+	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta property="og:url" content="http://localhost:4000/Race/pages/documentation/perception/">
+	<meta property="og:locale" content="en_EN">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="GRAIC">
+	
+	<meta property="article:author" content="https://www.facebook.com/phlow.media">
+
+
+	
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="phlow">
+	<meta name="twitter:creator" content="phlow">
+	<meta name="twitter:title" content="Perception">
+	<meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	
+	
+
+	<link type="text/plain" rel="author" href="http://localhost:4000/Race/humans.txt">
+
+	
+
+	
+
+	<link rel="icon" sizes="32x32" href="http://localhost:4000/Race/assets/img/favicon-32x32.png">
+
+	<link rel="icon" sizes="192x192" href="http://localhost:4000/Race/assets/img/touch-icon-192x192.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="180x180" href="http://localhost:4000/Race/assets/img/apple-touch-icon-180x180-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://localhost:4000/Race/assets/img/apple-touch-icon-152x152-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/Race/assets/img/apple-touch-icon-144x144-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://localhost:4000/Race/assets/img/apple-touch-icon-120x120-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/Race/assets/img/apple-touch-icon-114x114-precomposed.png">
+
+	
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="http://localhost:4000/Race/assets/img/apple-touch-icon-76x76-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/Race/assets/img/apple-touch-icon-72x72-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/Race/assets/img/apple-touch-icon-precomposed.png">	
+
+	<meta name="msapplication-TileImage" content="http://localhost:4000/Race/assets/img/msapplication_tileimage.png">
+
+	<meta name="msapplication-TileColor" content="#fabb00">
+
+
+	
+
+	
+
+</head>
+<body id="top-of-page" class="post">
+	
+	
+<div id="navigation" class="sticky">
+  <nav class="top-bar" role="navigation" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+      <h1 class="show-for-small-only"><a href="http://localhost:4000/Race" class="icon-tree"> GRAIC</a></h1>
+    </li>
+       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Nav</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+
+      <ul class="right">
+        <li class="divider"></li>
+        <li><a href="https://github.com/PoPGRI/Race" target="_blank">Code</a></li>
+        <li><a href="mailto:graic2021@gmail.com" target="_blank">Contact</a></li>
+        <li><a href="https://groups.google.com/g/graic21" target="_blank">Forum</a></li>
+
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+        
+      </ul>
+
+      <ul class="left">
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/">Home</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/installation/">Getting Started</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/aws/">AWS Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/docker/">Docker Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/running/">Running GRAIC</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/documentation/">Docs</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/perception/">Perception</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/submissions/">Submission</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/about/">About</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/outreach/">Past events</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+        
+      </ul>
+    </section>
+  </nav>
+</div><!-- /#navigation -->
+
+	
+
+	
+
+
+
+
+
+
+
+	<div class="row t30">
+	<div class="medium-8 columns medium-offset-2 end">
+		<article itemscope itemtype="http://schema.org/Article">
+			<header>
+				<p style="color:red">
+					WEBSITE CURRENTLY UNDER MAINTENANCE.
+				</p>
+				
+
+				<div itemprop="name">
+					
+					<h1>Perception</h1>
+				</div>
+			</header>
+
+
+			
+
+			<div itemprop="articleSection">
+			<p>The perception module consists of several rostopics. The information is either static or dynamic. That is, <span style="color:red"><em>static  information</em></span> will not change over time while <span style="color:blue"><em>dynamic  information</em></span> may change. These rostopics are updated at a rate of 20 Hz.</p>
+
+<p>The perception distance will remained fixed across all the races. This distance is 60m.</p>
+
+<h3 id="dynamic-obstacles-dynamic">Dynamic obstacles (<span style="color:blue">Dynamic</span>)</h3>
+<p>The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle has a type, id, and vertices.</p>
+<ul>
+  <li>Vertices: The location of the vertices of the bounding box of each obstacle given in \([x, y, z]\) global coordinates</li>
+  <li>Object center: The location of the object center in \([x, y, z]\) global coordinates</li>
+  <li>Type: The type of obstacle detected (ie. “pedestrian”, “car”, “motorcycle”, etc.)</li>
+  <li>ID: An identifier for each obstacle (ie.  “1”, etc.). This identifier remains the same across all time steps.</li>
+</ul>
+
+<p>These obstacles are published to the rostopic <code class="language-plaintext highlighter-rouge">obstacles</code>.</p>
+
+<!-- ### Static obstacles objects (<span style="color:red">Static</span>)
+The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
+- Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
+- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
+- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
+
+These objects are also published to the rostopic `obstacles`. -->
+
+<h3 id="location-dynamic">Location (<span style="color:blue">Dynamic</span>)</h3>
+<p>The location rostopic returns the state of the vehicle as the position, rotation, and velocity of the vehicle.
+The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\( \theta_x,  \theta_y, \theta_z\)] in radians. The velocity of the vehicle is given as [\(v_x, v_y\)].</p>
+
+<p>The location is published to the rostopic <code class="language-plaintext highlighter-rouge">location</code></p>
+
+<h3 id="lane-markers-static">Lane markers (<span style="color:red">Static</span>)</h3>
+<p>The lane markers (or <em>lane markers</em>) describe the current lane that the vehicle is in.</p>
+
+<p>The lane markers are published to the rostopic <code class="language-plaintext highlighter-rouge">lane_markers</code>.</p>
+
+<p>The edges of the road are also included. The left edge is provided in <code class="language-plaintext highlighter-rouge">left_lane_markers</code> and the right edge is provided in <code class="language-plaintext highlighter-rouge">right_lane_markers</code>.</p>
+
+<h3 id="milestones">Milestones</h3>
+<p>These are the waypoints along the track that the vehicle must pass. These milestones are given in \([x,y,z]\) global coordinates and appear as a green gate on the map. The competitors must reach these milestones to score.</p>
+
+<p>The milestones are published to the rostopic <code class="language-plaintext highlighter-rouge">waypoints</code>.</p>
+
+<p><img src="/Race/assets/perception_screenshot.png" /></p>
+
+<p>From the above image, the red bounding boxes are the obstacles; the green arcs are the milestones; the black line segments on the road are the lane markers.
+There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5)</p>
+
+<h3 id="perception-rostopics">Perception rostopics</h3>
+
+<p>Here is a table with the rostopics associated with perception and what they return.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Name</th>
+      <th style="text-align: center">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">obstacles</code></td>
+      <td style="text-align: center">ObstacleList</td>
+      <td style="text-align: left">Dynamic obstacle information</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">lane_markers</code></td>
+      <td style="text-align: center">LaneInfo</td>
+      <td style="text-align: left">Left, center, and right lane markers that define the lane that the ego vehicle is currently on</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">left_lane_markers</code></td>
+      <td style="text-align: center">LaneList</td>
+      <td style="text-align: left">Lane markers that define the outermost left edge</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">right_lane_markers</code></td>
+      <td style="text-align: center">LaneList</td>
+      <td style="text-align: left">Lane markers that define the outermost right edge</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2d-visualization">2D Visualization</h3>
+
+<p>We provide 2D visualization of the perception oracle as part of the simulator.
+The blue box is the ego vehicle, black dots are the lane markers, and red boxes are the obstacles. If you want to disable the 2D visualization, just change <code class="language-plaintext highlighter-rouge">vis2D:=True</code> to <code class="language-plaintext highlighter-rouge">vis2D:=False</code> in the above command.</p>
+
+<p><img src="/Race/assets/graic_vis.png" /></p>
+
+			</div>
+
+			
+
+			
+		</article>
+	</div><!-- /.medium-8.columns -->
+
+
+	
+
+
+	
+</div><!-- /.row -->
+
+
+	
+	    <div id="up-to-top" class="row">
+      <div class="small-12 columns" style="text-align: right;">
+        <a class="iconfont" href="#top-of-page">&#xf108;</a>
+      </div><!-- /.small-12.columns -->
+    </div><!-- /.row -->
+
+
+    <footer id="footer-content" class="bg-grau">
+      <div id="footer">
+        <div class="row">
+          <div class="medium-6 large-5 columns">
+            <h5 class="shadow-black">About This Site</h5>
+
+            <p class="shadow-black">
+              Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. 
+              <!-- <a href="http://localhost:4000/Race/info/">More ›</a> -->
+            </p>
+          </div><!-- /.large-6.columns -->
+
+
+          <div class="small-6 medium-3 large-3 large-offset-1 columns">
+            
+              
+                <h5 class="shadow-black">Site map</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+
+              <ul class="no-bullet shadow-black">
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race"  title=""></a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/contact/"  title="Contact">Home</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/feed.xml"  title="Subscribe to RSS Feed">Getting Started</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/atom.xml"  title="Subscribe to Atom Feed">Docs</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">About</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">Past Events</a>
+                  </li>
+              
+              </ul>
+          </div><!-- /.large-4.columns -->
+
+
+          <div class="small-6 medium-3 large-3 columns">
+            
+              
+                <h5 class="shadow-black">Contact</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+
+            <ul class="no-bullet shadow-black">
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Race"  title=""></a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://groups.google.com/g/graic21" target="_blank"  title="GRAIC forum">Forum</a>
+                </li>
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Racemailto:graic2021@gmail.com"  title="Email us!">graic2021@gmail.com</a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://github.com/PoPGRI/Race" target="_blank"  title="GRAIC source code">GRAIC code</a>
+                </li>
+            
+            </ul>
+          </div><!-- /.large-3.columns -->
+        </div><!-- /.row -->
+
+      </div><!-- /#footer -->
+
+
+      <div id="subfooter">
+        <nav class="row">
+          <section id="subfooter-left" class="small-12 medium-6 columns credits">
+            <p>Created by <a href="https://publish.illinois.edu/kristinamiller/">Kristina Miller</a> with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> based on <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> by <a href="http://phlow.de/">Phlow</a>.</p>
+          </section>
+
+          <section id="subfooter-right" class="small-12 medium-6 columns">
+            <ul class="inline-list social-icons">
+            
+              <li><a href="https://github.com/PoPGRI/Race" target="_blank" class="icon-github" title="GRAIC source code"></a></li>
+            
+              <li><a href="https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA" target="_blank" class="icon-youtube" title="Videos"></a></li>
+            
+            </ul>
+          </section>
+        </nav>
+      </div><!-- /#subfooter -->
+    </footer>
+
+	
+
+	
+
+
+<script src="http://localhost:4000/Race/assets/js/javascript.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

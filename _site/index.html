@@ -1,281 +1,442 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GRAIC</title>
 
-  <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>GRAIC '22</title>
-  <meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
-">
-  
-
-  <!-- External libraries -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
-
-  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
-  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="manifest" href="/assets/icons/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-
-  
-  <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
-" />
-  <meta property="og:url" content="http://localhost:4000/index.html">
-  <meta property="og:site_name" content="GRAIC '22" />
-  <meta property="og:title" content="GRAIC '22" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="http://localhost:4000/assets/logo.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="612" />
-  <meta property="og:image:height" content="605" />
-  
-
-  
-  <!-- Twitter: card tags -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="GRAIC '22">
-  <meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
-">
-  <meta name="twitter:image" content="http://localhost:4000/assets/logo.png">
-  <meta name="twitter:url" content="http://localhost:4000/index.html">
-  
+    <link rel="stylesheet" type="text/css" href="http://localhost:4000/Race/assets/css/styles_feeling_responsive.css">
 
   
 
-  <!-- Site styles -->
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/">
-	<link rel="alternate" type="application/rss+xml" title="GRAIC '22" href="http://localhost:4000/feed.xml" />
+	<script src="http://localhost:4000/Race/assets/js/modernizr.min.js"></script>
 
-	<!-- Tooltips -->
-	<script type="text/javascript">
-		window.tooltips = []
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+	<script>
+		WebFont.load({
+			google: {
+				families: [ 'Lato:400,700,400italic:latin', 'Volkhov::latin' ]
+			}
+		});
 	</script>
 
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	<noscript>
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
+	</noscript>
+
+
+	<!-- Search Engine Optimization -->
+	<meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta name="google-site-verification" content="Vk0IOJ2jwG_qEoG7fuEXYqv0m2rLa8P778Fi_GrsgEQ">
+	<meta name="msvalidate.01" content="0FB4C028ABCF07C908C54386ABD2D97F" >
+	
+	
+	
+	<link rel="canonical" href="http://localhost:4000/Race/index.html">
+
+
+	<!-- Facebook Open Graph -->
+	<meta property="og:title" content="GRAIC">
+	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta property="og:url" content="http://localhost:4000/Race/index.html">
+	<meta property="og:locale" content="en_EN">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="GRAIC">
+	
+	<meta property="article:author" content="https://www.facebook.com/phlow.media">
+
+
+	
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="phlow">
+	<meta name="twitter:creator" content="phlow">
+	<meta name="twitter:title" content="GRAIC">
+	<meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	
+	
+
+	<link type="text/plain" rel="author" href="http://localhost:4000/Race/humans.txt">
+
+	
+
+	
+
+	<link rel="icon" sizes="32x32" href="http://localhost:4000/Race/assets/img/favicon-32x32.png">
+
+	<link rel="icon" sizes="192x192" href="http://localhost:4000/Race/assets/img/touch-icon-192x192.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="180x180" href="http://localhost:4000/Race/assets/img/apple-touch-icon-180x180-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://localhost:4000/Race/assets/img/apple-touch-icon-152x152-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/Race/assets/img/apple-touch-icon-144x144-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://localhost:4000/Race/assets/img/apple-touch-icon-120x120-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/Race/assets/img/apple-touch-icon-114x114-precomposed.png">
+
+	
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="http://localhost:4000/Race/assets/img/apple-touch-icon-76x76-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/Race/assets/img/apple-touch-icon-72x72-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/Race/assets/img/apple-touch-icon-precomposed.png">	
+
+	<meta name="msapplication-TileImage" content="http://localhost:4000/Race/assets/img/msapplication_tileimage.png">
+
+	<meta name="msapplication-TileColor" content="#fabb00">
+
+
+	
+
+	
+
 </head>
+<body id="top-of-page" class="page-fullwidth">
+	
+	
+<div id="navigation" class="sticky">
+  <nav class="top-bar" role="navigation" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+      <h1 class="show-for-small-only"><a href="http://localhost:4000/Race" class="icon-tree"> GRAIC</a></h1>
+    </li>
+       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Nav</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+
+      <ul class="right">
+        <li class="divider"></li>
+        <li><a href="https://github.com/PoPGRI/Race" target="_blank">Code</a></li>
+        <li><a href="mailto:graic2021@gmail.com" target="_blank">Contact</a></li>
+        <li><a href="https://groups.google.com/g/graic21" target="_blank">Forum</a></li>
+
+        
+
+              
 
 
-  <body>
 
-    <header class="navigation" role="banner">
-  <div class="navigation-wrapper">
-    <a href="/" class="logo">
-      
-      <img src="/assets/logo.png" alt="GRAIC '22">
-      
-    </a>
-    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
-      <i class="fa fa-bars"></i>
-    </a>
-    <nav role="navigation">
-      <ul id="js-navigation-menu" class="navigation-menu show">
-				
-	
+          
+          
+        
 
-	
-
-	
-
-	
-
-	
-	<li class="nav-link"><a href="/submissions/">Submissions</a>
-	
-
-	
-	<li class="nav-link"><a href="/archive/">Archive</a>
-	
-
-	
-	<li class="nav-link"><a href="/outreach/">Past Events</a>
-	
-
-	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
-	
-
-	
-	<li class="nav-link"><a href="/about/">About</a>
-	
-
-	
-	<li class="nav-link"><a href="/installation/">Getting Started</a>
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
+              
 
 
-        <a href="https://github.com/PoPGRI/Race">Code</a>
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+        
       </ul>
-    </nav>
-  </div>
-</header>
 
+      <ul class="left">
+        
 
-    <div class="page-content">
-        <div class="home">
+              
 
-<div class="site-header-container has-cover" style="background-image: url(/assets/baseline3.gif);">
-  <div class="scrim has-cover">
-    <header class="site-header">
-      <h1 class="title">GRAIC '22</h1>
-      <p class="subtitle">A competition for intelligent racing</p>
-    </header>
-  </div>
-</div>
-
-<div class="wrapper">
-  
-  <div>
-      
-      
-  </div>
-  
-  <div>
-      
-      
-  </div>
-  
-  <div>
-      
-      
-  </div>
-  
-  <div>
-      
-      
-  </div>
-  
-  <div>
-      
-      
           
-          <h1>Description</h1>
           
-          <p><h3 id="graic-22-call-for-participation"><a href="https://popgri.github.io/Race/assets/CFP2022.pdf">GRAIC ‘22 Call for Participation</a></h3>
-<h3 id="graic-forum"><a href="https://groups.google.com/u/1/g/graic21">GRAIC Forum</a></h3>
 
-<p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
+            
+            
+              <li class="active"><a  href="http://localhost:4000/Race/">Home</a></li>
+              <li class="divider"></li>
 
-<p><strong>GRAIC ‘22 vs. GRAIC ‘21</strong>
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/installation/">Getting Started</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/aws/">AWS Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/docker/">Docker Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/running/">Running GRAIC</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/documentation/">Docs</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/perception/">Perception</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/submissions/">Submission</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/about/">About</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/outreach/">Past events</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+        
+      </ul>
+    </section>
+  </nav>
+</div><!-- /#navigation -->
+
+	
+
+	
+
+<div id="masthead-with-text" style=" ">
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="masthead-title">GRAIC</div>
+		</div><!-- /.small-12.columns -->
+			<div style="font-size: 30px;">An intelligent racing competition</div>
+	</div><!-- /.row -->
+</div><!-- /#masthead -->
+
+
+
+
+
+
+
+	
+
+
+<div class="row t30">
+	<div class="medium-12 columns">
+		<article>
+			<header>
+				
+				<h1></h1>
+			</header>
+
+			
+			<p style="color:red">
+				WEBSITE CURRENTLY UNDER MAINTENANCE.
+			</p>
+			<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#graic-forum" id="markdown-toc-graic-forum">GRAIC Forum</a></li>
+  <li><a href="#graic-22-call-for-participation" id="markdown-toc-graic-22-call-for-participation">GRAIC ‘22 Call for Participation</a></li>
+  <li><a href="#description" id="markdown-toc-description">Description</a>    <ul>
+      <li><a href="#tldr" id="markdown-toc-tldr">Tl;dr</a></li>
+      <li><a href="#details" id="markdown-toc-details">Details</a></li>
+      <li><a href="#highlights" id="markdown-toc-highlights">Highlights</a></li>
+    </ul>
+  </li>
+  <li><a href="#contact-information" id="markdown-toc-contact-information">Contact Information</a></li>
+  <li><a href="#important-dates" id="markdown-toc-important-dates">Important Dates</a></li>
+  <li><a href="#updates" id="markdown-toc-updates">Updates</a></li>
+  <li><a href="#citing-graic" id="markdown-toc-citing-graic">Citing GRAIC</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+    <h3 id="graic-forum"><a href="https://groups.google.com/u/1/g/graic21">GRAIC Forum</a></h3>
+
+    <h3 id="graic-22-call-for-participation"><a href="https://popgri.github.io/Race/assets/CFP2022.pdf">GRAIC ‘22 Call for Participation</a></h3>
+
+    <h2 id="description">Description</h2>
+
+    <p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
+
+    <p><strong>GRAIC ‘22 vs. GRAIC ‘21</strong>
 This year, we hope to improve GRAIC to encourage wider participation.
 We now have an AWS image that lowers the hardware entry requirements.
 Instructions for using the AWS image can be found on our <a href="https://popgri.github.io/Race/installation/">installation page</a>.
 We also aim to have multi-agent racing and an improved testing pipeline.
 Please continue to check our webpage for updates!</p>
 
-<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link"><strong>Join our mailing list!</strong></a>
+    <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link"><strong>Join our mailing list!</strong></a>
 If you are interested in participating in GRAIC or just want to stay up to date, please fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a> and we will add you to our mailing list.
 Updates can also be found at the bottom of this page.</p>
 
-<h1 id="tldr">Tl;dr</h1>
+    <h3 id="tldr">Tl;dr</h3>
 
-<p>We are providing a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.</p>
+    <p>We are providing a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.</p>
 
-<h1 id="details">Details</h1>
+    <h3 id="details">Details</h3>
 
-<p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/documentation/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
+    <p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/documentation/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
 
-<h2 id="highlights">Highlights</h2>
+    <h3 id="highlights">Highlights</h3>
 
-<ul>
-  <li><strong>New this year!</strong> Multi-agent races to compete against other submitted constrollers</li>
-  <li>GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API</li>
-  <li>Your controller will run races across multiple vehicles and tracks</li>
-  <li>Different race categories for model-free and model-based vehicles</li>
-</ul>
+    <ul>
+      <li><strong>New this year!</strong> Multi-agent races to compete against other submitted constrollers</li>
+      <li>GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API</li>
+      <li>Your controller will run races across multiple vehicles and tracks</li>
+      <li>Different race categories for model-free and model-based vehicles</li>
+    </ul>
 
-<h2 id="contact-information">Contact Information</h2>
+    <h2 id="contact-information">Contact Information</h2>
 
-<p>If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
+    <p>If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
 If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a>, we will add you to our mailing list.</p>
-</p>
-      
-  </div>
-  
-  <div>
-      
-      
-          
-          <h1>Important Dates</h1>
-          
-          <p><p><em>GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.</em></p>
 
-<ul>
-  <li><strong>January 26</strong>: Single agent platform beta released</li>
-  <li><strong>February 21</strong>: Multi-agent platform beta released</li>
-  <li><strong>January - early March</strong>: Feedback to participants and platform updates</li>
-  <li><strong>March 31</strong>: Final GRAIC-22 platform release</li>
-  <li><strong>April 1: Submissions open</strong></li>
-  <li><strong>April 8-9</strong>: <a href="https://www.eohillinois.org/">Engineering Open House Presentation</a></li>
-  <li><strong>April 25: Submissions close, final races held</strong></li>
-  <li><strong>May 3-6</strong>: <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>, final results and live GRAIC event</li>
-</ul>
-</p>
-      
-  </div>
-  
-  <div>
-      
-      
-          
-          <h1>Updates</h1>
-          
-          <p><ul>
+    <h2 id="important-dates">Important Dates</h2>
+
+    <p><em>GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.</em></p>
+
+    <ul>
+      <li><strong>January 26</strong>: Single agent platform beta released</li>
+      <li><strong>February 21</strong>: Multi-agent platform beta released</li>
+      <li><strong>January - early March</strong>: Feedback to participants and platform updates</li>
+      <li><strong>March 31</strong>: Final GRAIC-22 platform release</li>
+      <li><strong>April 1: Submissions open</strong></li>
+      <li><strong>April 8-9</strong>: <a href="https://www.eohillinois.org/">Engineering Open House Presentation</a></li>
+      <li><strong>April 25: Submissions close, final races held</strong></li>
+      <li><strong>May 3-6</strong>: <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>, final results and live GRAIC event</li>
+    </ul>
+
+    <h2 id="updates">Updates</h2>
+
+    <ul>
 <li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href="https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
 </ul>
 
-<ul style="color:gray">
+    <ul style="color:gray">
   <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
 
   <li><i>05/03/2021</i> <a href="https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a> We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</li>
@@ -290,222 +451,173 @@ If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-
 
 </ul>
 
-<!-- * **05/03/2021** [Pre-submission](https://docs.google.com/forms/d/e/1FAIpQLSdPkkOefbGj-LsNzllB8FHReey_vfbmwo1NdYoYHSU65HmDsw/viewform?usp=sf_link). You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided. -->
+    <h2 id="citing-graic">Citing GRAIC</h2>
 
-<!-- * **05/03/2021** [GRAIC Beta Release v0.2.1](https://github.com/PoPGRI/Race/releases/tag/0.2.1). We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback. -->
+    <p>If you would like to cite us, please use the following Bibtex entry.</p>
 
-<!-- * [CPS Week registration is now open!](https://cps-iot-week2021.isis.vanderbilt.edu/registration.html). Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up. -->
+    <figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@misc</span><span class="p">{</span><span class="nl">GRAICrace</span><span class="p">,</span>
+      <span class="na">title</span>        <span class="p">=</span> <span class="s">"GRAIC: A simulator framework for autonomous racing"</span><span class="p">,</span>
+      <span class="na">author</span>       <span class="p">=</span> <span class="s">"{Minghao Jiang and Zexiang Liu and Kristina Miller and Dawei Sun and Arnab Datta and Yixuan Jia and Sayan Mitra and Necmiye Ozay}"</span><span class="p">,</span>
+      <span class="na">howpublished</span> <span class="p">=</span> <span class="s">"\url{https://popgri.github.io/Race/}"</span><span class="p">,</span>
+      <span class="na">year</span>         <span class="p">=</span> <span class="m">2021</span>
+    <span class="p">}</span></code></pre></figure>
 
-<!-- * **03/30/2021** - [GRAIC Beta Release v0.1.2](https://github.com/PoPGRI/Race/releases/tag/0.1.2). We have updated the CARLA docker image. -->
-
-<!-- * **03/10/2021** - [GRAIC Beta Release v0.1.1](https://github.com/PoPGRI/Race/releases/tag/0.1.1). We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments. -->
-
-<!-- * **03/01/2021** - We have released our [beta](https://github.com/PoPGRI/Race/releases/tag/0.1.0)! Please go to the [Getting started](https://popgri.github.io/Race/installation/) page to download. We invite all feedback. -->
-</p>
-      
-  </div>
-  
-  <div>
-      
-      
-          
-          <h1>Citing GRAIC</h1>
-          
-          <p><p>If you would like to cite us, please use the following Bibtex entry.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@misc{GRAICrace,
-      title        = "GRAIC: A simulator framework for autonomous racing",
-      author       = "{Minghao Jiang and Zexiang Liu and Kristina Miller and Dawei Sun and Arnab Datta and Yixuan Jia and Sayan Mitra and Necmiye Ozay}",
-      howpublished = "\url{https://popgri.github.io/Race/}",
-      year         = 2021
-    }
-</code></pre></div></div>
-</p>
-      
-  </div>
-  
+  </div><!-- /.medium-8.columns -->
 </div>
-</div>
+<!-- /.row -->
 
-    </div>
+		</article>
+	</div><!-- /.medium-12.columns -->
+</div><!-- /.row -->
 
-    <footer class="site-footer">
 
-  <div class="wrapper">
+	
+	    <div id="up-to-top" class="row">
+      <div class="small-12 columns" style="text-align: right;">
+        <a class="iconfont" href="#top-of-page">&#xf108;</a>
+      </div><!-- /.small-12.columns -->
+    </div><!-- /.row -->
 
-    <h3 class="footer-heading">GRAIC '22</h3>
 
-    <div class="site-navigation">
+    <footer id="footer-content" class="bg-grau">
+      <div id="footer">
+        <div class="row">
+          <div class="medium-6 large-5 columns">
+            <h5 class="shadow-black">About This Site</h5>
 
-      <p><strong>Site Map</strong></p>
-      <ul class="pages">
-        <a href="/">Home</a>
-				
+            <p class="shadow-black">
+              Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. 
+              <!-- <a href="http://localhost:4000/Race/info/">More ›</a> -->
+            </p>
+          </div><!-- /.large-6.columns -->
+
+
+          <div class="small-6 medium-3 large-3 large-offset-1 columns">
+            
+              
+                <h5 class="shadow-black">Site map</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+
+              <ul class="no-bullet shadow-black">
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race"  title=""></a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/contact/"  title="Contact">Home</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/feed.xml"  title="Subscribe to RSS Feed">Getting Started</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/atom.xml"  title="Subscribe to Atom Feed">Docs</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">About</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">Past Events</a>
+                  </li>
+              
+              </ul>
+          </div><!-- /.large-4.columns -->
+
+
+          <div class="small-6 medium-3 large-3 columns">
+            
+              
+                <h5 class="shadow-black">Contact</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+
+            <ul class="no-bullet shadow-black">
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Race"  title=""></a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://groups.google.com/g/graic21" target="_blank"  title="GRAIC forum">Forum</a>
+                </li>
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Racemailto:graic2021@gmail.com"  title="Email us!">graic2021@gmail.com</a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://github.com/PoPGRI/Race" target="_blank"  title="GRAIC source code">GRAIC code</a>
+                </li>
+            
+            </ul>
+          </div><!-- /.large-3.columns -->
+        </div><!-- /.row -->
+
+      </div><!-- /#footer -->
+
+
+      <div id="subfooter">
+        <nav class="row">
+          <section id="subfooter-left" class="small-12 medium-6 columns credits">
+            <p>Created by <a href="https://publish.illinois.edu/kristinamiller/">Kristina Miller</a> with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> based on <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> by <a href="http://phlow.de/">Phlow</a>.</p>
+          </section>
+
+          <section id="subfooter-right" class="small-12 medium-6 columns">
+            <ul class="inline-list social-icons">
+            
+              <li><a href="https://github.com/PoPGRI/Race" target="_blank" class="icon-github" title="GRAIC source code"></a></li>
+            
+              <li><a href="https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA" target="_blank" class="icon-youtube" title="Videos"></a></li>
+            
+            </ul>
+          </section>
+        </nav>
+      </div><!-- /#subfooter -->
+    </footer>
+
 	
 
 	
 
-	
 
-	
-
-	
-	<li class="nav-link"><a href="/submissions/">Submissions</a>
-	
-
-	
-	<li class="nav-link"><a href="/archive/">Archive</a>
-	
-
-	
-	<li class="nav-link"><a href="/outreach/">Past Events</a>
-	
-
-	
-	<li class="nav-link"><a href="/documentation/">Docs</a>
-	
-
-	
-	<li class="nav-link"><a href="/about/">About</a>
-	
-
-	
-	<li class="nav-link"><a href="/installation/">Getting Started</a>
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
+<script src="http://localhost:4000/Race/assets/js/javascript.min.js"></script>
 
 
-      </ul>
-    </div>
 
-    <div class="site-contact">
-
-      <p><strong>Contact</strong></p>
-      <ul class="social-media-list">
-        <li>
-          <a href="mailto:graic2021@gmail.com">
-            <i class="fa fa-envelope-o"></i>
-            <span class="username">graic2021@gmail.com</span>
-          </a>
-        </li>
-
-        
-          
-        
-          
-        
-          
-          <li>
-            <a href="https://github.com/PoPGRI" title="Fork me on GitHub">
-              <i class="fa fa-github"></i>
-              <span class="username">PoPGRI</span>
-            </a>
-          </li>
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-
-      </ul>
-    </div>
-
-    <div class="site-signature">
-      <!-- <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p> -->
-      <p class="text">Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.
-</p>
-    </div>
-
-  </div>
-
-</footer>
-
-<!-- Scripts -->
-<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
-<script src="//unpkg.com/popper.js@1"></script>
-<script src="//unpkg.com/tippy.js@5"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-  // Default syntax highlighting
-  hljs.initHighlightingOnLoad();
-
-  // Header
-  var menuToggle = $('#js-mobile-menu').unbind();
-  $('#js-navigation-menu').removeClass("show");
-  menuToggle.on('click', function(e) {
-    e.preventDefault();
-    $('#js-navigation-menu').slideToggle(function(){
-      if($('#js-navigation-menu').is(':hidden')) {
-        $('#js-navigation-menu').removeAttr('style');
-      }
-    });
-  });
-
-	// Enable tooltips via Tippy.js
-	if (Array.isArray(window.tooltips)) {
-		window.tooltips.forEach(function(tooltip) {
-			var selector = tooltip[0];
-			var config = tooltip[1];
-			tippy(selector, config);
-		})
-	}
-});
-
+<script>
+    $("#masthead").backstretch("https://phlow.github.io/feeling-responsive/images/gallery-example-2.jpg", {fade: 700});
+    $("#masthead-with-text").backstretch("https://phlow.github.io/feeling-responsive/images/gallery-example-2.jpg", {fade: 700});
 </script>
 
 
@@ -513,6 +625,10 @@ $(document).ready(function() {
 
 
 
-  </body>
 
+
+
+
+</body>
 </html>
+

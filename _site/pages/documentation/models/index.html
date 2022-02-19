@@ -1,0 +1,620 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vehicles</title>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:4000/Race/assets/css/styles_feeling_responsive.css">
+
+  
+
+	<script src="http://localhost:4000/Race/assets/js/modernizr.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+	<script>
+		WebFont.load({
+			google: {
+				families: [ 'Lato:400,700,400italic:latin', 'Volkhov::latin' ]
+			}
+		});
+	</script>
+
+	<noscript>
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
+	</noscript>
+
+
+	<!-- Search Engine Optimization -->
+	<meta name="description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta name="google-site-verification" content="Vk0IOJ2jwG_qEoG7fuEXYqv0m2rLa8P778Fi_GrsgEQ">
+	<meta name="msvalidate.01" content="0FB4C028ABCF07C908C54386ABD2D97F" >
+	
+	
+	
+	<link rel="canonical" href="http://localhost:4000/Race/pages/documentation/models/">
+
+
+	<!-- Facebook Open Graph -->
+	<meta property="og:title" content="Vehicles">
+	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	<meta property="og:url" content="http://localhost:4000/Race/pages/documentation/models/">
+	<meta property="og:locale" content="en_EN">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="GRAIC">
+	
+	<meta property="article:author" content="https://www.facebook.com/phlow.media">
+
+
+	
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="phlow">
+	<meta name="twitter:creator" content="phlow">
+	<meta name="twitter:title" content="Vehicles">
+	<meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
+	
+	
+
+	<link type="text/plain" rel="author" href="http://localhost:4000/Race/humans.txt">
+
+	
+
+	
+
+	<link rel="icon" sizes="32x32" href="http://localhost:4000/Race/assets/img/favicon-32x32.png">
+
+	<link rel="icon" sizes="192x192" href="http://localhost:4000/Race/assets/img/touch-icon-192x192.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="180x180" href="http://localhost:4000/Race/assets/img/apple-touch-icon-180x180-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://localhost:4000/Race/assets/img/apple-touch-icon-152x152-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/Race/assets/img/apple-touch-icon-144x144-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://localhost:4000/Race/assets/img/apple-touch-icon-120x120-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/Race/assets/img/apple-touch-icon-114x114-precomposed.png">
+
+	
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="http://localhost:4000/Race/assets/img/apple-touch-icon-76x76-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/Race/assets/img/apple-touch-icon-72x72-precomposed.png">
+
+	<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/Race/assets/img/apple-touch-icon-precomposed.png">	
+
+	<meta name="msapplication-TileImage" content="http://localhost:4000/Race/assets/img/msapplication_tileimage.png">
+
+	<meta name="msapplication-TileColor" content="#fabb00">
+
+
+	
+
+	
+
+</head>
+<body id="top-of-page" class="post">
+	
+	
+<div id="navigation" class="sticky">
+  <nav class="top-bar" role="navigation" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+      <h1 class="show-for-small-only"><a href="http://localhost:4000/Race" class="icon-tree"> GRAIC</a></h1>
+    </li>
+       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Nav</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+
+      <ul class="right">
+        <li class="divider"></li>
+        <li><a href="https://github.com/PoPGRI/Race" target="_blank">Code</a></li>
+        <li><a href="mailto:graic2021@gmail.com" target="_blank">Contact</a></li>
+        <li><a href="https://groups.google.com/g/graic21" target="_blank">Forum</a></li>
+
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+
+              
+
+
+
+          
+          
+        
+        
+      </ul>
+
+      <ul class="left">
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/">Home</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/installation/">Getting Started</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/aws/">AWS Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/docker/">Docker Installation</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/running/">Running GRAIC</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+
+              <li class="has-dropdown">
+                <a  href="http://localhost:4000/Race/documentation/">Docs</a>
+
+                  <ul class="dropdown">
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/perception/">Perception</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/visualization/">Visualization</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/decision-control/">Decision and Control</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/scenarios/">Maps and Scenarios</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/documentation/evaluation/">Evaluation</a></li>
+                    
+                  </ul>
+
+              </li>
+              <li class="divider"></li>
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/submissions/">Submission</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/about/">About</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/outreach/">Past events</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+        
+      </ul>
+    </section>
+  </nav>
+</div><!-- /#navigation -->
+
+	
+
+	
+
+
+
+
+
+
+
+	<div class="row t30">
+	<div class="medium-8 columns medium-offset-2 end">
+		<article itemscope itemtype="http://schema.org/Article">
+			<header>
+				<p style="color:red">
+					WEBSITE CURRENTLY UNDER MAINTENANCE.
+				</p>
+				
+
+				<div itemprop="name">
+					
+					<h1>Vehicles</h1>
+				</div>
+			</header>
+
+
+			
+
+			<div itemprop="articleSection">
+			<p>The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the “model-agnostic” or the “model-based” options, or both.
+The information about the vehicles will be provided in a configuration file.</p>
+
+<h3 id="model-agnostic-option">Model-agnostic option</h3>
+<p>In the model-agnostic category, vehicle physics is given by CARLA’s vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics <code class="language-plaintext highlighter-rouge">ackermann_control</code> or <code class="language-plaintext highlighter-rouge">vehicle_control</code>.</p>
+
+<p>The vehicles that will be used in the competition are shown in the ‘configuration file’ section.</p>
+
+<h3 id="model-based-option">Model-based option</h3>
+<p>In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same <code class="language-plaintext highlighter-rouge">ackermann_control</code> or <code class="language-plaintext highlighter-rouge">vehicle_control</code> rostopics above.</p>
+
+<h4 id="longitudinal-dynamics">Longitudinal dynamics</h4>
+
+\[\dot{u} = a - f_1 u - f_2 u^{2} - f_3,\]
+
+<p>where $u$ is the forward velocity of the vehicle and \(a\) is the acceleration generated by the throttle input.</p>
+
+<h4 id="lateral-dynamics">Lateral dynamics</h4>
+
+\[\begin{bmatrix} \dot{v}\\ \dot{r}
+\end{bmatrix}=\begin{bmatrix}
+-(C_{\alpha f}+ C_{\alpha r})/(mu) &amp; (bC_{\alpha r}-aC_{\alpha f})/(mu) - u\\
+(bC_{\alpha r} - aC_{\alpha f})/(I_z u) &amp; -(a^2 C_{\alpha f} + b^2 C_{\alpha r}/(I_z u))
+\end{bmatrix}\begin{bmatrix}
+v\\r
+\end{bmatrix}+\begin{bmatrix}
+C_{\alpha f}/m \\ a C_{\alpha f}/I_{z}
+\end{bmatrix}\delta_f\]
+
+<p>where \(v\) and \(r\) are the lateral velocity and the second order derivative of the vehicle’s yaw angle, and \(\delta_{f}\) is the steering command.</p>
+
+<p>\(f_1\), \(f_2\), \(f_3\), \(a\), \(b\), \(C_{ \alpha r}\), \(C_{ \alpha f}\), \(I_{z}\) and \(m\) are parameters corresponding to the vehicle. Please refer to the book “Automotive Control Systems” by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.</p>
+
+<p>The potential parameters for the race are shown in the ‘configuration file’ section.</p>
+
+<h3 id="configuration-file">Configuration file</h3>
+
+<p><em>This information will soon be updated</em></p>
+
+<p>There will be a configuration file that includes vehicle information.
+Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Vehicle name</th>
+      <th style="text-align: center">Vehicle ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">BMW Isetta</td>
+      <td style="text-align: center">vehicle.bmw.isetta</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tesla cybertruck</td>
+      <td style="text-align: center">vehicle.tesla.cybertruck</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mercedes Benz</td>
+      <td style="text-align: center">vehicle.mercedes-benz.coupe</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Kawasaki Ninja</td>
+      <td style="text-align: center">vehicle.kawasaki.ninja</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Table for model-based information:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">\(m\)</th>
+      <th style="text-align: center">\(f_1\)</th>
+      <th style="text-align: center">\(f_2\)</th>
+      <th style="text-align: center">\(f_3\)</th>
+      <th style="text-align: center">\(a\)</th>
+      <th style="text-align: center">\(b\)</th>
+      <th style="text-align: center">\(C_{\alpha f}\)</th>
+      <th style="text-align: center">\(C_{\alpha r}\)</th>
+      <th style="text-align: center">\(I_z\)</th>
+      <th style="text-align: center">Vehicle ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1800</td>
+      <td style="text-align: center">40.59</td>
+      <td style="text-align: center">0.01</td>
+      <td style="text-align: center">74.63</td>
+      <td style="text-align: center">1.2</td>
+      <td style="text-align: center">1.65</td>
+      <td style="text-align: center">1.4e5</td>
+      <td style="text-align: center">1.2e5</td>
+      <td style="text-align: center">3270</td>
+      <td style="text-align: center">vehicle.model_based.1</td>
+    </tr>
+  </tbody>
+</table>
+
+			</div>
+
+			
+
+			
+		</article>
+	</div><!-- /.medium-8.columns -->
+
+
+	
+
+
+	
+</div><!-- /.row -->
+
+
+	
+	    <div id="up-to-top" class="row">
+      <div class="small-12 columns" style="text-align: right;">
+        <a class="iconfont" href="#top-of-page">&#xf108;</a>
+      </div><!-- /.small-12.columns -->
+    </div><!-- /.row -->
+
+
+    <footer id="footer-content" class="bg-grau">
+      <div id="footer">
+        <div class="row">
+          <div class="medium-6 large-5 columns">
+            <h5 class="shadow-black">About This Site</h5>
+
+            <p class="shadow-black">
+              Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. 
+              <!-- <a href="http://localhost:4000/Race/info/">More ›</a> -->
+            </p>
+          </div><!-- /.large-6.columns -->
+
+
+          <div class="small-6 medium-3 large-3 large-offset-1 columns">
+            
+              
+                <h5 class="shadow-black">Site map</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+
+              <ul class="no-bullet shadow-black">
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race"  title=""></a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/contact/"  title="Contact">Home</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/feed.xml"  title="Subscribe to RSS Feed">Getting Started</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/atom.xml"  title="Subscribe to Atom Feed">Docs</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">About</a>
+                  </li>
+              
+                
+                  <li >
+                    <a href="http://localhost:4000/Race/sitemap.xml"  title="Sitemap for Google Webmaster Tools">Past Events</a>
+                  </li>
+              
+              </ul>
+          </div><!-- /.large-4.columns -->
+
+
+          <div class="small-6 medium-3 large-3 columns">
+            
+              
+                <h5 class="shadow-black">Contact</h5>
+              
+            
+              
+            
+              
+            
+              
+            
+
+            <ul class="no-bullet shadow-black">
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Race"  title=""></a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://groups.google.com/g/graic21" target="_blank"  title="GRAIC forum">Forum</a>
+                </li>
+            
+              
+                <li >
+                  <a href="http://localhost:4000/Racemailto:graic2021@gmail.com"  title="Email us!">graic2021@gmail.com</a>
+                </li>
+            
+              
+                <li >
+                  <a href="https://github.com/PoPGRI/Race" target="_blank"  title="GRAIC source code">GRAIC code</a>
+                </li>
+            
+            </ul>
+          </div><!-- /.large-3.columns -->
+        </div><!-- /.row -->
+
+      </div><!-- /#footer -->
+
+
+      <div id="subfooter">
+        <nav class="row">
+          <section id="subfooter-left" class="small-12 medium-6 columns credits">
+            <p>Created by <a href="https://publish.illinois.edu/kristinamiller/">Kristina Miller</a> with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> based on <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> by <a href="http://phlow.de/">Phlow</a>.</p>
+          </section>
+
+          <section id="subfooter-right" class="small-12 medium-6 columns">
+            <ul class="inline-list social-icons">
+            
+              <li><a href="https://github.com/PoPGRI/Race" target="_blank" class="icon-github" title="GRAIC source code"></a></li>
+            
+              <li><a href="https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA" target="_blank" class="icon-youtube" title="Videos"></a></li>
+            
+            </ul>
+          </section>
+        </nav>
+      </div><!-- /#subfooter -->
+    </footer>
+
+	
+
+	
+
+
+<script src="http://localhost:4000/Race/assets/js/javascript.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

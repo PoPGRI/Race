@@ -1,0 +1,21 @@
+- menu_name: "Site map"
+
+- name: "Home"
+  url: "/contact/"
+  title: "Contact"
+
+- name: "Getting Started"
+  url: "/feed.xml"
+  title: "Subscribe to RSS Feed"
+
+- name: "Docs"
+  url: "/atom.xml"
+  title: "Subscribe to Atom Feed"
+
+- name: "About"
+  url: "/sitemap.xml"
+  title: "Sitemap for Google Webmaster Tools"
+
+- name: "Past Events"
+  url: "/sitemap.xml"
+  title: "Sitemap for Google Webmaster Tools"
