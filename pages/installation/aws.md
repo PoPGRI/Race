@@ -38,7 +38,7 @@ permalink: installation/aws/
 
 ### Step 1.1 Choose AMI.
 Search for "GRAIC-2022" and you should be able to find some AMIs in "Community AMIs", select version 1.3
-<img src="/Race/assets/ami_v1.3.png">
+<img src="{{site.urlimg}}ami_v1.3.png">
 
 ### Step 1.2 Choose an Instance Type
 Choose "g4dn.4xlarge". You can also choose "g4dn.8xlarge" if you need more CPUs.
@@ -54,37 +54,43 @@ Leave this section unchanged.
 
 ### Step 1.6 Configure Security Group
 Click on "Add Rule" and add port 4000 as shown in the figure. Please note that we set the sources for both ports to "Anywhere" for simplicity, but it would be safer to restrict the sources to a smaller set, for example, the subnet owned by your university.
-<img src="/Race/assets/portconfig.png">
+<img src="{{site.urlimg}}portconfig.png">
 
 ### Step 1.7 Review and launch
 Finally, click on the "Launch" button which should appear at the lower right corner.
-<img src="/Race/assets/launch.png">
+<img src="{{site.urlimg}}launch.png">
 
 A pop-up window should appear and ask you to select an existing key pair. If you don't have an existing key pair, select "Create a new key pair", give it a name, and "Download Key Pair". Then "Launch Instances".
-<img src="/Race/assets/aws_key.png">
+<img src="{{site.urlimg}}aws_key.png">
 
 It might take several minutes to set up. Locate the new instance in your EC2 dashboard, and you can find its Public IPv4 address there.
 
 ### Step 1.8 Setting a password for the user "ubuntu"
 You may want to set a strong password for the main user "ubuntu". To do that, select the new instance in your EC2 dashboard and click on "Connect" which should appear at the upper right corner.
-<img src="/Race/assets/instancerunning.png">
+<img src="{{site.urlimg}}instancerunning.png">
 
 Then you should be redirected to the page as shown in the figure. Change the username to "ubuntu" and click on "Connect".
-<img src="/Race/assets/connect.png">
+<img src="{{site.urlimg}}connect.png">
 
-You should be able to see a new window which looks like the following picture. Change your password by running command ```sudo passwd ubuntu``` and following the prompts.
-<img src="/Race/assets/webterminal.png">
+You should be able to see a new window which looks like the following picture. Change your password by running command
+{% include alert terminal='sudo passwd ubuntu' %}
+ and following the prompts.
+<img src="{{site.urlimg}}webterminal.png">
 
 ## Step 2. GUI via NoMachine
 Open NoMachine, click on "Add" which appears at the upper left corner.
-<img src="/Race/assets/nomachine_login.png">
+<img src="{{site.urlimg}}nomachine_login.png">
 
 Choose whatever name you like, and fill "Host" with your instance's Public IPv4 address. Set "Port" to 4000 and use the NX protocol.
-<img src="/Race/assets/nomachine_address.png">
+<img src="{{site.urlimg}}nomachine_address.png">
 
  Click on "Configuration" on the left. Select "Use key-based authentication with a key you provide" and click on the "Modify" button. Then, select the key file downloaded in Step 1.7. Go back and click on "Connect". If it says "key is missing", click on the "Modify" button, select the key you downloaded, and try again. This might be a bug of NoMachine.
-<img src="/Race/assets/nomachine_config.png">
+<img src="{{site.urlimg}}nomachine_config.png">
 
-If asked, the username is "ubuntu". After logging into the machine, open a terminal, run ```~/scripts/fixCarla.sh```. After it finishes, you should be able to use carla by running ```~/workspace/carla-simulator/CarlaUE4.sh```. All files are installed in the "~/workspace" directory. Enjoy!
+If asked, the username is "ubuntu". After logging into the machine, open a terminal, run
+{% include alert terminal='~/scripts/fixCarla.sh' %}
+After it finishes, you should be able to use carla by running
+{% include alert terminal='~/workspace/carla-simulator/CarlaUE4.sh' %}
+All files are installed in the "~/workspace" directory. Enjoy!
 
 </div>
