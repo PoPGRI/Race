@@ -2,7 +2,6 @@
 layout: page
 show_meta: false
 title: "Documentation"
-subheadline: "Layouts of Feeling Responsive"
 header:
    image_fullwidth: "baseline3.gif"
 permalink: "/documentation/"
