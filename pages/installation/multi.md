@@ -19,7 +19,7 @@ permalink: installation/multi/
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
 ---   
-### NOTE: Multi-Agent Mode is still under developement, we release this as a beta version. Please help us improve by reporting bugs/optimization at our github issues, thanks!
+**NOTE: Multi-Agent Mode is still under developement, we release this as a beta version. Please help us improve by reporting bugs/optimization at our github issues, thanks!**
 ---   
 
 The whole racing system consists of three independent programs, the CARLA simulator, the GRAIC infrastructure, and your controller, which should be started in three terminals. If you are using Docker, you can get a new terminal connecting to the running container by running
