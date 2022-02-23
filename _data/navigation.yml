@@ -12,6 +12,8 @@
     url: "/installation/docker/"
   - title: "Running GRAIC"
     url: "/installation/running/"
+  - title: "Running GRAIC -- Multi-Agent(BETA)"
+    url: "/installation/multi/"
 
 - title: "Docs"
   url: "/documentation/"
