@@ -39,10 +39,12 @@ Now that everything has been installed, you can now run the GRAIC docker image. 
 
 Now the container is running, you can follow the [instructions](running.md) to run GRAIC inside the container.
 
-### Step 3. Root access to the container (optional)
+### Step 3. Installing new packages to the container and committing it (optional)
 
-In case you need the root access (e.g., when installing new libaries), you can use the following command to get a root terminal when the container is running
+In case you need the root access (e.g., when installing new ```apt``` packages), you can use the following command to get a root terminal as the container is running
 
 {% include alert terminal='docker exec -u 0 -it graic_con /bin/bash' %}
+
+After installing new packages, you can use the [docker commit](https://docs.docker.com/engine/reference/commandline/commit/) command to commit the state of the container such that the installed packages will remain afer you stop the container.
 
 </div>
