@@ -46,5 +46,6 @@ In case you need the root access (e.g., when installing new ```apt``` packages),
 {% include alert terminal='docker exec -u 0 -it graic_con /bin/bash' %}
 
 After installing new packages, you can use the [docker commit](https://docs.docker.com/engine/reference/commandline/commit/) command to commit the state of the container such that the installed packages will remain afer you stop the container.
+{% include alert terminal='docker commit graic_con sundw2014/graic' %}
 
 </div>
