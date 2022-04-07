@@ -37,7 +37,12 @@ Now that everything has been installed, you can now run the GRAIC docker image. 
 {% include alert terminal='docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
 ' %}
 
+### Step 3. Root access to the container (optional)
 
-Now the container is running, you can follow the instructions below to run GRAIC inside the container.
+In case you need the root access (e.g., when installing new libaries), you can use the following command to get a root terminal when the container is running
+
+{% include alert terminal='docker exec -u 0 -it graic_con /bin/bash' %}
+
+Now the container is running, you can follow the [instructions](running.md) to run GRAIC inside the container.
 
 </div>
