@@ -1,4 +1,4 @@
-I"<div class="row">
+I"v<div class="row">
 <div class="medium-4 medium-push-8 columns">
     <div class="panel radius">
       <p id="toc"><strong>Table of Contents</strong></p>
@@ -31,6 +31,17 @@
       <li>An AWS account</li>
       <li>A NoMachine client, which can be downloaded from <a href="https://www.nomachine.com/">https://www.nomachine.com/</a></li>
     </ul>
+
+    <p><span style="color:red">
+Note that the AWS has some costs associated with it.
+We recommend to use a local environment to develop the code and only use the EC2  instance to test your code.
+Don’t forget to turn off your instance when you are not working; otherwise timer will keep counting and charge you.
+You can check out more info on pricing at these links:
+</span></p>
+    <ul>
+<li><a href="https://aws.amazon.com/ec2/instance-types/g4/">https://aws.amazon.com/ec2/instance-types/g4/</a></li>
+<li><a href="https://aws.amazon.com/ec2/pricing/on-demand/">https://aws.amazon.com/ec2/pricing/on-demand/</a></li>
+</ul>
 
     <h2 id="video-tutorial">Video Tutorial</h2>
     <p>(A written tutorial is included after this video tutorial)</p>

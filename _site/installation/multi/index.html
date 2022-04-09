@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Installing GRAIC&#39;s Docker image on a local machine</title>
+	<title>Running GRAIC -- Multi-Agent(BETA)</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:4000/Race/assets/css/styles_feeling_responsive.css">
 
@@ -32,13 +32,13 @@
 	
 	
 	
-	<link rel="canonical" href="http://localhost:4000/Race/installation/docker/">
+	<link rel="canonical" href="http://localhost:4000/Race/installation/multi/">
 
 
 	<!-- Facebook Open Graph -->
-	<meta property="og:title" content="Installing GRAIC&#39;s Docker image on a local machine">
+	<meta property="og:title" content="Running GRAIC -- Multi-Agent(BETA)">
 	<meta property="og:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
-	<meta property="og:url" content="http://localhost:4000/Race/installation/docker/">
+	<meta property="og:url" content="http://localhost:4000/Race/installation/multi/">
 	<meta property="og:locale" content="en_EN">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="GRAIC">
@@ -51,7 +51,7 @@
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="phlow">
 	<meta name="twitter:creator" content="phlow">
-	<meta name="twitter:title" content="Installing GRAIC&#39;s Docker image on a local machine">
+	<meta name="twitter:title" content="Running GRAIC -- Multi-Agent(BETA)">
 	<meta name="twitter:description" content="Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing.">
 	
 	
@@ -345,7 +345,7 @@
 		<article>
 			<header>
 				
-				<h1>Installing GRAIC's Docker image on a local machine</h1>
+				<h1>Running GRAIC -- Multi-Agent(BETA)</h1>
 			</header>
 
 			
@@ -355,8 +355,10 @@
     <div class="panel radius">
       <p id="toc"><strong>Table of Contents</strong></p>
 <ul id="markdown-toc">
-  <li><a href="#step-1-installing-nvidia-docker-and-getting-the-graic-docker-image" id="markdown-toc-step-1-installing-nvidia-docker-and-getting-the-graic-docker-image">Step 1. Installing nvidia-docker and getting the GRAIC docker image</a></li>
-  <li><a href="#step-2-starting-a-docker-container" id="markdown-toc-step-2-starting-a-docker-container">Step 2. Starting a Docker container</a></li>
+  <li><a href="#running-the-carla-simulator" id="markdown-toc-running-the-carla-simulator">Running the CARLA simulator</a></li>
+  <li><a href="#running-the-graic-infrastructure-with-multi-agent-scenario" id="markdown-toc-running-the-graic-infrastructure-with-multi-agent-scenario">Running the GRAIC infrastructure with multi-agent scenario</a></li>
+  <li><a href="#running-the-baseline-controller" id="markdown-toc-running-the-baseline-controller">Running the baseline Controller</a></li>
+  <li><a href="#running-your-own-controller" id="markdown-toc-running-your-own-controller">Running your own Controller</a></li>
 </ul>
 
     </div>
@@ -366,27 +368,55 @@
 
 <div class="medium-8 medium-pull-4 columns">
 
-    <p>This section provide another option such that you can run GRAIC on your local machine with Docker.</p>
+    <hr />
+    <p><strong>NOTE: Multi-Agent Mode is still under developement, we release this as a beta version. Please help us improve by reporting bugs/optimization at our github issues, thanks!</strong>
+—</p>
 
-    <p>GRAIC 2022 uses the <a href="https://carla.org/">CARLA simulator</a>, and CARLA is built on the <a href="https://www.unrealengine.com/en-US/">Unreal Engine</a>. That is why you will want to run the simulator on a machine with a powerful GPU. As for the software, you need the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">nvidia-docker</a>.</p>
+    <p>The whole racing system consists of three independent programs, the CARLA simulator, the GRAIC infrastructure, and your controller, which should be started in three terminals. If you are using Docker, you can get a new terminal connecting to the running container by running</p>
 
-    <h3 id="step-1-installing-nvidia-docker-and-getting-the-graic-docker-image">Step 1. Installing nvidia-docker and getting the GRAIC docker image</h3>
-    <p>Please follow the official tutorial to install the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker">nvidia-docker</a>.</p>
+    <div class="alert-box terminal ">docker exec -it graic_con /bin/bash</div>
 
-    <p>After the installation, pull the GRAIC Docker image:</p>
+    <p>where <code class="language-plaintext highlighter-rouge">graic_con</code> is the name of the running container.</p>
 
-    <div class="alert-box terminal ">docker pull sundw2014/graic:latest</div>
+    <h3 id="running-the-carla-simulator">Running the CARLA simulator</h3>
+    <p>If you are using Docker, run the following command in a new terminal</p>
 
-    <h3 id="step-2-starting-a-docker-container">Step 2. Starting a Docker container</h3>
+    <div class="alert-box terminal ">~/workspace/carla-simulator/CarlaUE4.sh -opengl</div>
 
-    <p>Now that everything has been installed, you can now run the GRAIC docker image. To run the GRAIC Docker container, use the following instructions.</p>
+    <p>If you are using AWS, run the following command in a new terminal</p>
 
-    <div class="alert-box terminal ">sudo xhost +</div>
+    <div class="alert-box terminal ">~/workspace/carla-simulator/CarlaUE4.sh</div>
 
-    <div class="alert-box terminal ">docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
-</div>
+    <p>If everthing works, you shoule be able to see the CARLA window.</p>
 
-    <p>Now the container is running, you can follow the instructions below to run GRAIC inside the container.</p>
+    <h3 id="running-the-graic-infrastructure-with-multi-agent-scenario">Running the GRAIC infrastructure with multi-agent scenario</h3>
+    <p>First, you need to switch to the multi-agent branch.</p>
+
+    <div class="alert-box terminal ">cd /home/carla/workspace/graic-workspace/src &amp;&amp; git checkout feat/multi_agent</div>
+
+    <p>Then, run the following command</p>
+
+    <div class="alert-box terminal ">. ~/workspace/graic-workspace/devel/setup.bash</div>
+
+    <div class="alert-box terminal ">roslaunch graic_core carla_multiple.launch model_type:=model_free N:=2</div>
+
+    <h3 id="running-the-baseline-controller">Running the baseline Controller</h3>
+    <p>First Open a new terminal, and then do the following command.</p>
+
+    <div class="alert-box terminal ">docker exec -it graic_con /bin/bash</div>
+
+    <div class="alert-box terminal ">. ~/workspace/graic-workspace/devel/setup.bash</div>
+
+    <div class="alert-box terminal ">roslaunch graic_core graic_agent_wrapper.launch class_file:="/home/carla/workspace/graic-workspace/src/graic_core/src/baseline.py" role_name:="hero0"</div>
+
+    <h3 id="running-your-own-controller">Running your own Controller</h3>
+    <p>Then Open a new terminal, and do the following command.</p>
+
+    <div class="alert-box terminal ">docker exec -it graic_con /bin/bash</div>
+
+    <div class="alert-box terminal ">. ~/workspace/graic-workspace/devel/setup.bash</div>
+
+    <div class="alert-box terminal ">roslaunch graic_core graic_agent_wrapper.launch class_file:="/home/carla/workspace/graic-workspace/src/graic_core/src/your_own_controller.py" role_name:="hero1"</div>
 
   </div>
 </div>

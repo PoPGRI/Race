@@ -23,6 +23,18 @@ permalink: installation/aws/
 - An AWS account
 - A NoMachine client, which can be downloaded from [https://www.nomachine.com/](https://www.nomachine.com/)
 
+<span style="color:red">
+Note that the AWS has some costs associated with it.
+We recommend to use a local environment to develop the code and only use the EC2  instance to test your code.
+Don’t forget to turn off your instance when you are not working; otherwise timer will keep counting and charge you.
+You can check out more info on pricing at these links:
+</span>
+<ul>
+<li><a href="https://aws.amazon.com/ec2/instance-types/g4/">https://aws.amazon.com/ec2/instance-types/g4/</a></li>
+<li><a href="https://aws.amazon.com/ec2/pricing/on-demand/">https://aws.amazon.com/ec2/pricing/on-demand/</a></li>
+</ul>
+
+
 ## Video Tutorial
 (A written tutorial is included after this video tutorial)
 
