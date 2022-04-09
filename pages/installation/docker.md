@@ -37,7 +37,16 @@ Now that everything has been installed, you can now run the GRAIC docker image. 
 {% include alert terminal='docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
 ' %}
 
+Now the container is running, you can follow the [instructions](running.md) to run GRAIC inside the container.
 
-Now the container is running, you can follow the instructions below to run GRAIC inside the container.
+### Step 3. Installing new packages to the container and committing it (optional)
+
+In case you need the root access (e.g., when installing new ```apt``` packages), you can use the following command to get a root terminal as the container is running
+
+{% include alert terminal='docker exec -u 0 -it graic_con /bin/bash' %}
+
+After installing new packages, you can use the [docker commit](https://docs.docker.com/engine/reference/commandline/commit/) command to commit the state of the container such that the installed packages will remain afer you stop the container.
+
+{% include alert terminal='docker commit graic_con sundw2014/graic' %}
 
 </div>
