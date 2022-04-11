@@ -19,6 +19,30 @@ header:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
+## EOH 2022 {#eoh22}
+In April 2022, we ran the first in person [Engineering Open House at UIUC](https://eohillinois.org/) version of GRAIC!
+This event is aimed at junior-high and high-school students.
+The exhibit consisted of three main parts:
+  - **Controller creation and submission** - Students adjust various parameters of the baseline controller and submit to our testing pipeline. We then generate race logs and a video to show them how their controller behaved.
+  -  **Manual racing against baseline autonomous agent** - Students could use our steering wheel setup to race against one of our autonomous agents. This gives them an idea of the differences between autonomous agent driving and human driving.
+  - **GRAIC and autonomous vehicles presentation** - Any questions students had about autonomous driving or GRAIC could be answered at our presentation.
+
+Videos and race logs from the submitted controllers can be found on our [leaderboard](https://graic-eoh-2022.herokuapp.com/).
+
+This event was very successful, and our exhibit won three awards! We were awarded first place for *The Spirit of Innovation* and *Most Engaging* awards, and we were awarded second place of *Outstanding Tech*.
+Here are some pictures from our very exciting event!
+
+<img style="width: 300px; object-fit: cover;" src="{{site.urlimg}}EOH22-submission.png">
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}images/EOH22-1.jpg">
+
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-2.jpg">
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-3.jpg">
+
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-4.jpg">
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-5.jpg">
+
+
+
 <div>
     <h1>GRAIC '21</h1>
     <p>GRAIC '21 was the first iteration of GRAIC hosted at CPS-IOT Week 2021.

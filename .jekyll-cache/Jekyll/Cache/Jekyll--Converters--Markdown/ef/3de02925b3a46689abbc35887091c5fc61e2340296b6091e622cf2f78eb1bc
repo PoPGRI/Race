@@ -1,8 +1,9 @@
-I"·<div class="row">
+I"¬(<div class="row">
 <div class="medium-4 medium-push-8 columns">
     <div class="panel radius">
       <p id="toc"><strong>Table of Contents</strong></p>
 <ul id="markdown-toc">
+  <li><a href="#eoh22" id="markdown-toc-eoh22">EOH 2022</a></li>
   <li><a href="#ocar-icra21" id="markdown-toc-ocar-icra21">OCAR-ICRA 2021</a></li>
   <li><a href="#cps-week21" id="markdown-toc-cps-week21">CPS Week 2021</a>    <ul>
       <li><a href="#program" id="markdown-toc-program">Program</a></li>
@@ -21,6 +22,30 @@
 
 
 <div class="medium-8 medium-pull-4 columns">
+
+    <h2 id="eoh22">EOH 2022</h2>
+    <p>In April 2022, we ran the first in person <a href="https://eohillinois.org/">Engineering Open House at UIUC</a> version of GRAIC!
+This event is aimed at junior-high and high-school students.
+The exhibit consisted of three main parts:</p>
+    <ul>
+      <li><strong>Controller creation and submission</strong> - Students adjust various parameters of the baseline controller and submit to our testing pipeline. We then generate race logs and a video to show them how their controller behaved.</li>
+      <li><strong>Manual racing against baseline autonomous agent</strong> - Students could use our steering wheel setup to race against one of our autonomous agents. This gives them an idea of the differences between autonomous agent driving and human driving.</li>
+      <li><strong>GRAIC and autonomous vehicles presentation</strong> - Any questions students had about autonomous driving or GRAIC could be answered at our presentation.</li>
+    </ul>
+
+    <p>Videos and race logs from the submitted controllers can be found on our <a href="https://graic-eoh-2022.herokuapp.com/">leaderboard</a>.</p>
+
+    <p>This event was very successful, and our exhibit won three awards! We were awarded first place for <em>The Spirit of Innovation</em> and <em>Most Engaging</em> awards, and we were awarded second place of <em>Outstanding Tech</em>.
+Here are some pictures from our very exciting event!</p>
+
+    <p><img style="width: 300px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/EOH22-submission.png" />
+<img style="width: 300px; height: 200px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/images/EOH22-1.jpg" /></p>
+
+    <p><img style="width: 300px; height: 200px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/EOH22-2.jpg" />
+<img style="width: 300px; height: 200px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/EOH22-3.jpg" /></p>
+
+    <p><img style="width: 300px; height: 200px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/EOH22-4.jpg" />
+<img style="width: 300px; height: 200px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/EOH22-5.jpg" /></p>
 
     <div>
     <h1>GRAIC '21</h1>

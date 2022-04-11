@@ -357,6 +357,7 @@
 <ul id="markdown-toc">
   <li><a href="#step-1-installing-nvidia-docker-and-getting-the-graic-docker-image" id="markdown-toc-step-1-installing-nvidia-docker-and-getting-the-graic-docker-image">Step 1. Installing nvidia-docker and getting the GRAIC docker image</a></li>
   <li><a href="#step-2-starting-a-docker-container" id="markdown-toc-step-2-starting-a-docker-container">Step 2. Starting a Docker container</a></li>
+  <li><a href="#step-3-installing-new-packages-to-the-container-and-committing-it-optional" id="markdown-toc-step-3-installing-new-packages-to-the-container-and-committing-it-optional">Step 3. Installing new packages to the container and committing it (optional)</a></li>
 </ul>
 
     </div>
@@ -386,7 +387,17 @@
     <div class="alert-box terminal ">docker run --name graic_con --privileged --rm --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:rw sundw2014/graic /bin/bash
 </div>
 
-    <p>Now the container is running, you can follow the instructions below to run GRAIC inside the container.</p>
+    <p>Now the container is running, you can follow the <a href="running.md">instructions</a> to run GRAIC inside the container.</p>
+
+    <h3 id="step-3-installing-new-packages-to-the-container-and-committing-it-optional">Step 3. Installing new packages to the container and committing it (optional)</h3>
+
+    <p>In case you need the root access (e.g., when installing new <code class="language-plaintext highlighter-rouge">apt</code> packages), you can use the following command to get a root terminal as the container is running</p>
+
+    <div class="alert-box terminal ">docker exec -u 0 -it graic_con /bin/bash</div>
+
+    <p>After installing new packages, you can use the <a href="https://docs.docker.com/engine/reference/commandline/commit/">docker commit</a> command to commit the state of the container such that the installed packages will remain afer you stop the container.</p>
+
+    <div class="alert-box terminal ">docker commit graic_con sundw2014/graic</div>
 
   </div>
 </div>
