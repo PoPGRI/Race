@@ -74,9 +74,9 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 - **February 21**: Multi-agent platform beta released
 - **January - early March**: Feedback to participants and platform updates
 - **March 31**: Final GRAIC-22 platform release
-- **April 1: Submissions open**
 - **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
-- **April 25: Submissions close, final races held**
+- **April 18: Submissions open**
+- **May 1: Submissions close, final races held**
 - **May 3-6**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event
 
 

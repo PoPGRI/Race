@@ -33,7 +33,7 @@ This event was very successful, and our exhibit won three awards! We were awarde
 Here are some pictures from our very exciting event!
 
 <img style="width: 300px; object-fit: cover;" src="{{site.urlimg}}EOH22-submission.png">
-<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}images/EOH22-1.jpg">
+<img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-1.jpg">
 
 <img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-2.jpg">
 <img style="width: 300px; height: 200px; object-fit: cover;" src="{{site.urlimg}}EOH22-3.jpg">
