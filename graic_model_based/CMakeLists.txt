@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(model_based_node)
+project(graic_model_based)
 
 find_package(catkin REQUIRED COMPONENTS rospy roslaunch)
 
@@ -12,7 +12,7 @@ endif()
 catkin_package(CATKIN_DEPENDS rospy)
 
 catkin_install_python(
-  PROGRAMS src/model_based_node.py DESTINATION
+  PROGRAMS src/graic_model_based.py DESTINATION
   ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY launch/
