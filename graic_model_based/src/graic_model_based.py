@@ -148,8 +148,9 @@ class ModelBasedVehicle:
         # self.vehicle.set_target_angular_velocity(av)
 
         vehicle_transform = self.vehicle.get_transform()
-        vehicle_transform.location.x = self.state[0] + v.x * dt
-        vehicle_transform.location.y = self.state[1] + v.y * dt
+        vehicle_transform.location.x = self.state[0]# + v.x * dt
+        vehicle_transform.location.y = self.state[1]# + v.y * dt
+        vehicle_transform.location.z = 0 # + v.y * dt
         vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
