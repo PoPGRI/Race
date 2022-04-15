@@ -20,9 +20,10 @@
     <arg name="spawn_sensors_only" value="false" />
   </include>
 
-  <!-- carla_ackermann_control nodes -->
-  <include file="$(find carla_ackermann_control)/launch/carla_ackermann_control.launch">
+  <include file="$(find graic_model_based)/launch/graic_model_based.launch">
     <arg name='role_name' value='$(arg role_name)' />
+    <arg name='host' value='$(arg host)' />
+    <arg name='port' value='$(arg port)' />
   </include>
 
   <!-- carla manual control -->
