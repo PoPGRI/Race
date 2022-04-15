@@ -65,6 +65,7 @@ class ModelBasedVehicle:
         self.world = client.get_world()
         self.vehicle_dyn = VehicleDynamics()
         self.state = None
+        self.ready = False
         self.input = [0, 0]
         self.vehicle = None
         self.speed_control = PID(Kp=1.5,
@@ -97,6 +98,7 @@ class ModelBasedVehicle:
         self.vehicle.set_simulate_physics(False)
 
     def controlCallback(self, data):
+        self.ready = True
         self.vehicle_control_cmd = data
         self.computeInput()
 
@@ -119,6 +121,7 @@ class ModelBasedVehicle:
         self.input[1] = steer # FIXME
 
     def ackermannCallback(self, data):
+        self.ready = True
         self.speed_control.setpoint = data.speed
         force = self.speed_control(self.state[2])
         force_range = [-self.vehicle_dyn.brake_curve(1.), self.vehicle_dyn.throttle_curve(1.)]
@@ -154,15 +157,15 @@ class ModelBasedVehicle:
 def run(role_name, host, port):
     vehicle = ModelBasedVehicle(role_name, host, port)
 
-    freq = 100
-    rate = rospy.Rate(freq)
+    fixed_delta_seconds = 0.05
 
     while not rospy.is_shutdown():
-        vehicle.tick(1./freq)
-        rate.sleep()
+        if vehicle.ready:
+            vehicle.tick(fixed_delta_seconds)
+            vehicle.ready = False
 
 if __name__ == "__main__":
-    rospy.init_node("Model_based_node")
+    rospy.init_node("graic_model_based")
     host = rospy.get_param('~host', 'localhost')
     port = rospy.get_param('~port', 2000)
     role_name = rospy.get_param("~role_name", "ego_vehicle")
