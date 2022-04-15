@@ -20,27 +20,42 @@ class VehicleDynamics(object):
     def __init__(self):
         super(VehicleDynamics, self).__init__()
         self.m = 1500.0
-        self.f1 = 0.1
-        self.f2 = 0.01
+        self.f0 = 100.0
 
     def throttle_curve(self, thr):
-        return 0.7 * 9.81 * self.m * thr
+        return 0.7 * 9.81 * self.m * thr + self.f0
 
     def brake_curve(self, brake):
         return 1.0 * 9.81 * self.m * brake
 
     def vehicle_dyn(self, state, input):
-        # INPUTS: state = [x,y,theta.v]
-        #         input = [omega,f]
+        # INPUTS: state = [x,y,u,v,Psi,r] --- logitude velocity, lateral velocity, yaw angle and yaw angular velocity
+        #         input = [f_tra, delta] --- traction force and steering input
         # constants
-        x,y,theta,v = state
-        omega,f = input
+        a = 1.14 # distance to front axie
+        L = 2.54
+        m = self.m # mass
+        Iz = 2420.0
+        C_af = 44000.0*2
+        C_ar = 47000.0*2
+        b = L-a
+        f1 = 0.1
+        f2 = 0.01
+        f0 = self.f0
+        x,y,u,v,Psi,r = state[0],state[1],state[2],state[3],state[4],state[5]
+        f_tra, delta = input[0],input[1]
         # derivatives
-        dx = v * np.cos(theta)
-        dy = v * np.sin(theta)
-        dtheta = omega
-        dv = (f - self.f1 * v - self.f2 * v**2 * np.sign(v)) / self.m
-        dot = np.array([dx, dy, dtheta, dv])
+        dx = u*np.cos(Psi) - v*np.sin(Psi)
+        dy = u*np.sin(Psi) + v*np.cos(Psi)
+        du = (f_tra - f1*u - f2*u**2 - f0)/m
+        sign = np.sign(u)
+        if sign == 0:
+            sign = 1
+        safe_u = sign * (np.abs(u)+10.)
+        dv = -(C_af + C_ar)*v/m/safe_u + (b*C_ar - a*C_af)*r/m/safe_u - u*r + C_af*delta/m
+        dPsi = r
+        dr = (b*C_ar - a*C_af)*v/Iz/safe_u -(a**2*C_af + b**2*C_ar)*r/Iz/safe_u + a*C_af*delta/Iz
+        dot = np.array([dx,dy,du,dv,dPsi,dr])
         return dot
 
 class ModelBasedVehicle:
@@ -70,8 +85,8 @@ class ModelBasedVehicle:
         vehicle_transform = self.vehicle.get_transform()
         x = vehicle_transform.location.x
         y = vehicle_transform.location.y
-        theta = np.deg2rad(vehicle_transform.rotation.yaw)
-        self.state = [x, y, theta, 0]
+        Psi = np.deg2rad(vehicle_transform.rotation.yaw)
+        self.state = [x, y, 0, 0, Psi, 0]
 
     def find_ego_vehicle(self):
         self.vehicle = None
@@ -95,16 +110,15 @@ class ModelBasedVehicle:
         steer = self.vehicle_control_cmd.steer
         reverse = self.vehicle_control_cmd.reverse
         if brake > 0:
-            v = self.state[3]
-            if np.abs(v) > 0.01:
-                self.input[1] = -np.sign(v) * self.vehicle_dyn.brake_curve(brake) # brake
+            if np.abs(self.state[2]) > 0.01:
+                self.input[0] = -np.sign(self.state[2]) * self.vehicle_dyn.brake_curve(brake) # brake
             else:
-                self.input[1] = 0 # stop
+                self.input[0] = self.vehicle_dyn.f0 # stop
         else:
-            self.input[1] = self.vehicle_dyn.throttle_curve(throttle)
+            self.input[0] = self.vehicle_dyn.throttle_curve(throttle)
             if reverse:
-                self.input[1] = -self.input[1]
-        self.input[0] = steer # FIXME
+                self.input[0] = -self.input[0]
+        self.input[1] = steer # FIXME
 
     def ackermannCallback(self, data):
         self.ready = True
@@ -121,12 +135,12 @@ class ModelBasedVehicle:
         # vehicle_transform = self.vehicle.get_transform()
         # self.state[4] = np.deg2rad(vehicle_transform.rotation.yaw)
         self.state = rk4(self.vehicle_dyn.vehicle_dyn, self.state, self.input, dt)
-        self.state[2] = np.mod(self.state[2]+np.pi, 2*np.pi) - np.pi
+        self.state[4] = np.mod(self.state[4]+np.pi, 2*np.pi) - np.pi
 
-        _,_,theta,v = self.state
+        _,_,u,v,Psi,r = self.state
         # derivatives
-        dx = v * np.cos(theta)
-        dy = v * np.sin(theta)
+        dx = u*np.cos(Psi) - v*np.sin(Psi)
+        dy = u*np.sin(Psi) + v*np.cos(Psi)
 
         # v = carla.Vector3D(x = dx, y = dy)
         # self.vehicle.set_target_velocity(v)
@@ -134,10 +148,9 @@ class ModelBasedVehicle:
         # self.vehicle.set_target_angular_velocity(av)
 
         vehicle_transform = self.vehicle.get_transform()
-        vehicle_transform.location.x = self.state[0]# + v.x * dt
-        vehicle_transform.location.y = self.state[1]# + v.y * dt
-        vehicle_transform.location.z = 0 # + v.y * dt
-        vehicle_transform.rotation.yaw = np.rad2deg(self.state[2])
+        vehicle_transform.location.x = self.state[0] + v.x * dt
+        vehicle_transform.location.y = self.state[1] + v.y * dt
+        vehicle_transform.rotation.yaw = np.rad2deg(self.state[4])
         self.vehicle.set_transform(vehicle_transform)
         self.speed_control.sample_time = dt
 
