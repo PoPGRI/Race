@@ -11,15 +11,20 @@ In this document, we will describe each part of the configuration, the rules for
 
 ### Single-agent track
 
+In the single agent track of our competition, we will run multiple races. The scores from these races are then weighted based off of the difficulty of the race, and then overall winner is chosen using the weighted scores.
+
 ### Multi-agent track
+
+In the multi-agent track of our competition, each submitted controller will have the opportunity to compete against every other controller.
+Then, based off these results, the submitted controllers will compete in a bracket style tournament to determine the overall winner of the multi-agent competition.
 
 ## Vehicle types
 
-There are two tracks that teams can participate in: model-agnostic and model-based. In the model-agnostic category, complicated vehicle physics is given by CARLA’s vehicle simulator. In the model-based option, the vehicle will follow the dynamics detailed on our **VEHICLE MODELS PAGE**.
+There are two tracks that teams can participate in: model-agnostic and model-based. In the model-agnostic category, complicated vehicle physics is given by CARLA’s vehicle simulator. In the model-based option, the vehicle will follow the dynamics detailed on our [vehicle models page](https://popgri.github.io/Race/documentation/models/).
 
 ### Model-agnostic vehicles
 
-Below is a table that provides a superset of vehicles that may be used in the model-agnostic track for **INSERT WORDS**
+Below is a table that provides a superset of vehicles that may be used in the model-agnostic track of the competition.
 
 **Vehicle Name**|**Vehicle ID**
 :-----:|:-----:
@@ -54,7 +59,7 @@ In multi-agent mode, we will not use any scenario, the only other actor you will
 
 The submission site opens on April 18, and can be found at [https://graic2022submit.web.illinois.edu/graic2022](https://graic2022submit.web.illinois.edu/graic2022).
 
-Each team must create an account with us to be able to submit. Please fill out our [form](https://forms.gle/SF6ffppeuYJp5w5z8) so that we can create your account. Teams may resubmit controllers up to the deadline. In the days leading up to the race, we will run your controllers on our test track and provide videos and race logs as feedback. We will also maintain a leaderboard of the test track so teams know how they compare against each other. **PLEASE NOTE THAT THE TEST TRACK IS NOT A PART OF THE FINAL RACING CONFIGURATIONS, AND TEAMS SHOULD BE AWARE AS TO NOT OVERFIT TO OUR TESTING SCENARIO.** After the submission site closes on **May 1**, we will run the last controllers submitted by the teams on our final race configurations, and we will reveal the results of the race at our CPS-IOT Week presentation.
+Each team must create an account with us to be able to submit. Please fill out our [form](https://forms.gle/SF6ffppeuYJp5w5z8) so that we can create your account. Teams may resubmit controllers up to the deadline. In the days leading up to the race, we will run your controllers on our test tracks and provide videos and race logs as feedback. We will also maintain a leaderboard of the test tracks so teams know how they compare against each other. **PLEASE NOTE THAT THE TEST TRACKS ARE ONLY A SUBSET OF THE FINAL RACING CONFIGURATIONS, AND TEAMS SHOULD BE AWARE AS TO NOT OVERFIT TO OUR TESTING SCENARIOS.** After the submission site closes on **May 1**, we will run the last controllers submitted by the teams on our final race configurations, and we will reveal the results of the race at our CPS-IOT Week presentation.
 
 ## File Structure
 
@@ -69,8 +74,8 @@ The file structure should be:
   - apt.txt
   - subfolder (if any)
     - other_file.py (if any)
-      
+
       …
       …
 
-If you have any questions, please email us at graic2021@gmail.com or post to our **FORUM LINK**. Good luck and happy racing!
+If you have any questions, please email us at graic2021@gmail.com or post to our [forum](https://groups.google.com/g/graic21). Good luck and happy racing!
