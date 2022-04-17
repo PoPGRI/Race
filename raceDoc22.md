@@ -63,7 +63,7 @@ Each team must create an account with us to be able to submit. Please fill out o
 
 ## File Structure
 
-What you will submit is a single zip file named **controller.zip** that contains all your code. The entry must be in the top level named **main.py**, and must be able to be executed with one single command (E.g. `python3 main.py`) without additional arguments. If you install any python package(E.g. `python3 -m pip install XXX`) in our docker image, you must list that in **requirement.txt**; if you install any apt packages in our docker image(E.g. `sudo apt install XXX`), you must list that in **apt.txt**.
+What you will submit is a single zip file named **controller.zip** that contains all your code. The entry must be in the top level named **user_controller_file.py**, and it must be able to be executed with one single command (`python3 agent_wrapper.py ego_vehicle`) without additional arguments as is listed in the instructions. If you install any python package(E.g. `python3 -m pip install XXX`) in our docker image, you must list that in **requirement.txt**; if you install any apt packages in our docker image(E.g. `sudo apt install XXX`), you must list that in **apt.txt**.
 
 
 The file structure should be:
