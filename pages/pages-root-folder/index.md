@@ -83,6 +83,8 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 ## Updates
 
 <ul>
+<li><b>04/18/2022</b> - The submission page is now open! Please fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
+</ul>
 <li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
 </ul>
 
