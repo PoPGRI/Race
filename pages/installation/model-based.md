@@ -1,6 +1,6 @@
 ---
 layout: page-fullwidth
-title: Running GRAIC -- Model-based(BETA)
+title: Running GRAIC -- Model-based
 date:   2022-04-18T14:25:52-05:00
 permalink: installation/model-based/
 ---

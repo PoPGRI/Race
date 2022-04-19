@@ -14,7 +14,7 @@
     url: "/installation/running/"
   - title: "Running GRAIC -- Multi-Agent(BETA)"
     url: "/installation/multi/"
-  - title: "Running GRAIC -- Model-Based(BETA)"
+  - title: "Running GRAIC -- Model-Based"
     url: "/installation/model-based/"
 
 - title: "Docs"
