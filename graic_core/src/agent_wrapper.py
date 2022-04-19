@@ -78,9 +78,6 @@ def run_model(role_name, controller):
     controlPub = rospy.Publisher("/carla/%s/ackermann_cmd" % role_name,
                                  AckermannDrive,
                                  queue_size=1)
-    controlPub3 = rospy.Publisher("/carla/%s/vehicle_control_cmd" % role_name,
-                                  CarlaEgoVehicleControl,
-                                  queue_size=1)
 
     def shut_down():
         control = controller.stop()
@@ -99,7 +96,6 @@ def run_model(role_name, controller):
     # start it
     import time
     time.sleep(1)
-    controlPub3.publish(CarlaEgoVehicleControl())
 
     while not rospy.is_shutdown():
         if perceptionModule.ready():
