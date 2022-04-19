@@ -6,6 +6,12 @@ from ackermann_msgs.msg import AckermannDrive
 from carla_msgs.msg import CarlaEgoVehicleControl
 from simple_pid import PID
 
+from carla_msgs.msg import CarlaCollisionEvent
+from carla_msgs.msg import CarlaLaneInvasionEvent
+from graic_msgs.msg import LocationInfo, EvaluationInfo, WaypointInfo
+from geometry_msgs.msg import Vector3
+from std_msgs.msg import Int16, Float32, String
+
 def rk4(dyn, state, input, dt):
     state = np.array(state)
     input = np.array(input)
@@ -63,6 +69,7 @@ class ModelBasedVehicle:
         self.role_name = role_name
         client = carla.Client(host, port)
         self.world = client.get_world()
+        self.map = self.world.get_map()
         self.vehicle_dyn = VehicleDynamics()
         self.state = None
         self.ready = False
@@ -80,6 +87,31 @@ class ModelBasedVehicle:
         subControl = rospy.Subscriber('/carla/%s/vehicle_control_cmd_manual'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         # subControl = rospy.Subscriber('/carla/%s/vehicle_control'%role_name, CarlaEgoVehicleControl, self.controlCallback)
         subAckermann = rospy.Subscriber('/carla/%s/ackermann_cmd'%role_name, AckermannDrive, self.ackermannCallback)
+        self.subLaneInvasion = rospy.Subscriber(
+            '/carla/%s/lane_invasion' % role_name, CarlaLaneInvasionEvent,
+            self.laneCallback)
+
+    def laneCallback(self, data):
+        #if self.reachEnd:
+        #    return
+
+        for marking in data.crossed_lane_markings:
+            if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
+                # Reset 
+                print("Resetting when reaching boundary")
+                transform = self.map.get_waypoint(
+                    self.vehicle.get_location() -
+                    15 * self.vehicle.get_transform().get_forward_vector(),
+                    project_to_road=True,
+                    lane_type=carla.LaneType.Driving).transform
+                transform.location.z = 6
+                transform.rotation.roll = 0
+                transform.rotation.pitch = 0
+                self.vehicle.set_transform(transform)
+                self.vehicle.set_target_angular_velocity(carla.Vector3D(x=0, y=0))
+                self.state[0] = transform.location.x
+                self.state[1] = transform.location.y
+                self.state[4] = np.deg2rad(transform.rotation.yaw)
 
     def init_state(self):
         vehicle_transform = self.vehicle.get_transform()
@@ -95,7 +127,7 @@ class ModelBasedVehicle:
                 if actor.attributes.get('role_name') == self.role_name:
                     self.vehicle = actor
                     break
-        self.vehicle.set_simulate_physics(False)
+        #self.vehicle.set_simulate_physics(True)
 
     def controlCallback(self, data):
         self.ready = True
@@ -142,12 +174,21 @@ class ModelBasedVehicle:
         dx = u*np.cos(Psi) - v*np.sin(Psi)
         dy = u*np.sin(Psi) + v*np.cos(Psi)
 
-        # v = carla.Vector3D(x = dx, y = dy)
-        # self.vehicle.set_target_velocity(v)
-        # av = carla.Vector3D(z = np.rad2deg(r))
-        # self.vehicle.set_target_angular_velocity(av)
+        v = carla.Vector3D(x = dx, y = dy)
+        #self.vehicle.set_target_velocity(v)
+        av = carla.Vector3D(z = np.rad2deg(r))
+        #self.vehicle.set_target_angular_velocity(av)
 
         vehicle_transform = self.vehicle.get_transform()
+        
+        #print(np.sqrt((vehicle_transform.location.x - self.state[0])**2 + (vehicle_transform.location.y-self.state[1])**2))
+        #if np.sqrt((vehicle_transform.location.x - self.state[0])**2 + (vehicle_transform.location.y-self.state[1])**2) > 5:
+        #if vehicle_transform.location.z > 5:
+        #    print("REACH RESETTING")
+        #    self.state[0] = vehicle_transform.location.x
+        #    self.state[1] = vehicle_transform.location.y
+        #    self.state[4] = np.deg2rad(vehicle_transform.rotation.yaw)
+        #else:
         vehicle_transform.location.x = self.state[0]# + v.x * dt
         vehicle_transform.location.y = self.state[1]# + v.y * dt
         vehicle_transform.location.z = 0 # + v.y * dt

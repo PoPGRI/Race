@@ -7,7 +7,7 @@
 
   <param name="/carla/timeout" value="$(arg timeout)" />
 
-  <node pkg="graic_model_based" type="graic_model_based_complex.py" name="graic_model_based_$(arg role_name)" output="screen">
+  <node pkg="graic_model_based" type="graic_model_based.py" name="graic_model_based_$(arg role_name)" output="screen">
     <param name="role_name" value="$(arg role_name)" />
     <param name='host' value='$(arg host)' />
     <param name='port' value='$(arg port)' />

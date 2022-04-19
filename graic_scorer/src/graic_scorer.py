@@ -101,6 +101,7 @@ class EvaluationNode:
             datetime.timedelta(seconds=int(rospy.get_rostime().to_sec())))
 
         if str(data.other_actor_id) != '0' and self.reset:
+            print("REACH COLLISION")
             transform = self.map.get_waypoint(
                 self.vehicle.get_location() -
                 15 * self.vehicle.get_transform().get_forward_vector(),
@@ -135,6 +136,21 @@ class EvaluationNode:
             if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID and not self.deviated:
                 # self.deviated = True
                 self.score += deviationPenalty
+                return
+
+                # Reset 
+                print("Lane Marking")
+                transform = self.map.get_waypoint(
+                    self.vehicle.get_location() -
+                    15 * self.vehicle.get_transform().get_forward_vector(),
+                    project_to_road=True,
+                    lane_type=carla.LaneType.Driving).transform
+                transform.location.z = 6
+                transform.rotation.roll = 0
+                transform.rotation.pitch = 0
+                self.vehicle.set_transform(transform)
+                self.vehicle.set_target_angular_velocity(carla.Vector3D(x=0, y=0))
+
 
     def calculateScore(self):
         location = self.location
