@@ -1,8 +1,8 @@
 ---
 layout: page-fullwidth
-title: Running GRAIC -- Multi-Agent(BETA)
+title: Running GRAIC -- Model-based(BETA)
 date:   2022-04-18T14:25:52-05:00
-permalink: installation/multi/
+permalink: installation/model-based/
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
