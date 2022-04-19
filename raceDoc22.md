@@ -42,9 +42,9 @@ Mini Cooper| vehicle.mini.cooperst
 
 Below is the table with the parameters that will be used for the model-based track.
 
-**m**|**f<sub>1</sub>**|**f<sub>2</sub>**|**f<sub>3</sub>**|**a**|**b**|**C<sub>af</sub>**|**C<sub>ar</sub>**|**I<sub>z</sub>**|**Vehicle ID**
+**m**|**f<sub>0</sub>**|**f<sub>1</sub>**|**f<sub>2</sub>**|**a**|**b**|**C<sub>af</sub>**|**C<sub>ar</sub>**|**I<sub>z</sub>**|**Vehicle ID**
 :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
-1800| 40.59| 0.01| 74.63| 1.2| 1.65| 1.4e5| 1.2e5| 3270| vehicle.model\_based.1
+1500| 100| 0.1| 0.01| 1.14| 1.4| 8.8e4| 9.4e4| 2420| vehicle.model\_based.1
 
 ## Track Configuration
 
