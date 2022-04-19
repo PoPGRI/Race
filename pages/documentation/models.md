@@ -63,23 +63,23 @@ The potential parameters for the race are shown in the 'configuration file' sect
 There will be a configuration file that includes vehicle information.
 Below is a table with information on the different vehicles for the model-agnostic race. Following that table is one for the model-based race.
 
-**Vehicle Name**|**Vehicle ID**
-:-----:|:-----:
-BMW Isetta| vehicle.bmw.isetta
-Tesla Cybertruck| vehicle.bmw.cybertruck
-Mercedes Benz Coupe| vehicle.mercedes-benz.coupe
-Kawasaki Ninja| vehicle.kawasaki.ninja
-Dodge Charger Police Car| vehicle.dodge\_charger.police
-Tesla Model 3| vehicle.tesla.model3
-Volkswagen T2| vehicle.volkswagen.t2
-BH Crossbike| vehicle.bh.crossbike
-Mini Cooper| vehicle.mini.cooperst
+|     **Vehicle Name**     |        **Vehicle ID**         |
+| :----------------------: | :---------------------------: |
+|        BMW Isetta        |      vehicle.bmw.isetta       |
+|     Tesla Cybertruck     |    vehicle.bmw.cybertruck     |
+|   Mercedes Benz Coupe    |  vehicle.mercedes-benz.coupe  |
+|      Kawasaki Ninja      |    vehicle.kawasaki.ninja     |
+| Dodge Charger Police Car | vehicle.dodge\_charger.police |
+|      Tesla Model 3       |     vehicle.tesla.model3      |
+|      Volkswagen T2       |     vehicle.volkswagen.t2     |
+|       BH Crossbike       |     vehicle.bh.crossbike      |
+|       Mini Cooper        |     vehicle.mini.cooperst     |
 
 
 Table for model-based information:
 
-|\\(m\\)|\\(f_1\\)|\\(f_2\\)|\\(f_3\\)|\\(a\\)|\\(b\\)|\\(C_{\alpha f}\\)|\\(C_{\alpha r}\\)|\\(I_z\\)|Vehicle ID           |
-|:-----:|:-------:|:-------:|:-------:|:-----:|:-----:|:----------------:|:----------------:|:-------:|:-------------------:|
-|1800   |40.59    |0.01     |74.63    |1.2    |1.65   |1.4e5             |1.2e5             |3270     |vehicle.model_based.1|
+| \\(m\\) | \\(f_0\\) | \\(f_1\\) | \\(f_2\\) | \\(a\\) | \\(b\\) | \\(C_{\alpha f}\\) | \\(C_{\alpha r}\\) | \\(I_z\\) |      Vehicle ID       |
+| :-----: | :-------: | :-------: | :-------: | :-----: | :-----: | :----------------: | :----------------: | :-------: | :-------------------: |
+|  1500   |    100    |    0.1    |   0.01    |  1.14   |   1.4   |       8.8e4        |       9.4e4        |   2420    | vehicle.model_based.1 |
 
 </div>
