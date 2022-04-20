@@ -69,7 +69,7 @@ What you will submit is a single zip file named **controller.zip** that contains
 The file structure should be:
 
 - controller.zip
-  - main.py
+  - user_controller_file.py
   - requirement.txt
   - apt.txt
   - subfolder (if any)
