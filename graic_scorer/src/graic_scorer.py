@@ -18,6 +18,7 @@ deviationPenalty = 10
 class EvaluationNode:
     def __init__(self,
                  world,
+                 client,
                  role_name='ego_vehicle',
                  track='t1_triple',
                  reset=True):
@@ -46,6 +47,7 @@ class EvaluationNode:
         self.reachedPoints = []
         self.reachedPointsStamped = []
         # self.speedList = []
+        self.client = client
         self.reachedTime = 0
         self.hitObjects = set()
         self.score = 0.0
@@ -61,8 +63,14 @@ class EvaluationNode:
         self.reset = reset
         self.addActor()
         self.vehicle = None
+        self.spectator = world.get_spectator()
         while not self.vehicle:
             self.find_ego_vehicle()
+        
+        # Enable the logging
+        if role_name == "hero0" or role_name == "ego_vehicle":
+            recorder_filename = os.getcwd() + "/record_test.log"
+            self.client.start_recorder(recorder_filename, True)
 
     def find_ego_vehicle(self):
         for actor in self.world.get_actors():
@@ -186,6 +194,11 @@ class EvaluationNode:
         f.write('\n'.join(self.reachedPointsStamped).encode('ascii'))
 
         f.close()
+        
+        if role_name == "hero0" or role_name == "ego_vehicle":
+            doc = open(os.getcwd() + "/record.txt", "w+")
+            doc.write(self.client.show_recorder_file_info(os.getcwd() + "/record_test.log", show_all=True))
+            doc.close()
 
         # pickle.dump(self.trajectory_list, open(fname_trajectory, 'wb+'))
         # f = open(fname_trajectory, 'w+')
@@ -214,6 +227,7 @@ def run(en, role_name):
         # Get all actors
         actor_list = en.world.get_actors()
         actors_state = []
+        x_arr, y_arr = [], []
         for actor in actor_list:
             if 'vehicle' in actor.type_id:
                 actor_transform = actor.get_transform()
@@ -226,6 +240,18 @@ def run(en, role_name):
                     actor_transform.rotation.yaw,
                 ]
                 actors_state += tmp
+                if role_name == "hero0" or role_name == "ego_vehicle":
+                    x_arr.append(actor_transform.location.x)
+                    y_arr.append(actor_transform.location.y)
+       
+        # Calculate the spectator location to be the middle point of two cars
+        if role_name == "hero0" or role_name == "ego_vehicle":
+            #try:
+            spectator_x = sum(x_arr) / len(x_arr)
+            spectator_y = sum(y_arr) / len(y_arr)
+            en.spectator.set_transform(carla.Transform(carla.Location(spectator_x, spectator_y, 50), carla.Rotation(-90, 0, 180)))
+            #except:
+            #    print("not setting spectator")
 
         en.trajectory_list.append(actors_state)
 
@@ -246,7 +272,7 @@ if __name__ == "__main__":
         reset = True
     else:
         reset = False
-    en = EvaluationNode(world, role_name, track, reset)
+    en = EvaluationNode(world, client, role_name, track, reset)
     try:
         run(en, role_name)
     except rospy.exceptions.ROSInterruptException:

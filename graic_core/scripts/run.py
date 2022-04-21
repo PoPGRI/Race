@@ -12,6 +12,8 @@ import numpy as np
 import rospy
 from graic_msgs.msg import WaypointInfo
 
+import time
+
 four_wheel_vehicle = [
     'vehicle.audi.a2', 'vehicle.tesla.model3', 'vehicle.bmw.grandtourer',
     'vehicle.audi.etron', 'vehicle.seat.leon', 'vehicle.mustang.mustang',
@@ -59,6 +61,8 @@ class CommandNode:
         self.vis2D = vis2D
         self.set_spectator = set_spectator
         self.vehicles = {}
+
+        self.start_time = time.time()
 
         if self.set_spectator:
             self.setSpectator()
@@ -108,19 +112,20 @@ class CommandNode:
                 v['model_free'] = 0
 
             if self.track == "t1_triple":
-                init_pose = [164, 11 + i * 10, 4, 0, 0, -180]
-                vehicle = "vehicle.bmw.isetta"
+                init_pose = [164, 11 + i * 5, 4, 0, 0, -180]
+                #vehicle = "vehicle.bmw.isetta"
+                vehicle = "vehicle.tesla.model3"
             elif self.track == "t2_triple":
-                init_pose = [95.5, 107 + i * 10, 4, 0, 0, -136]
+                init_pose = [95.5, 107 + i * 5, 4, 0, 0, -136]
                 vehicle = "vehicle.tesla.cybertruck"
             elif self.track == "t3":
-                init_pose = [77.0, 114 + i * 10, 4, 0, 0, -18]
+                init_pose = [77.0, 114 + i * 5, 4, 0, 0, -18]
                 vehicle = "vehicle.tesla.model3"
             elif self.track == "t4":
                 vehicle = "vehicle.kawasaki.ninja"
-                init_pose = [162.2, 88.4 + i * 10, 4, 0, 0, -55]
+                init_pose = [162.2, 88.4 + i * 5, 4, 0, 0, -55]
             elif self.track == "track5":
-                init_pose = [215.90, 202.04 + i * 10, 4, 0, 0, 82]
+                init_pose = [215.90, 202.04 + i * 5, 4, 0, 0, 82]
                 vehicle = "vehicle.mercedes-benz.coupe"
             else:
                 init_pose = [0, 0, 4, 0, 0, 0]
@@ -187,7 +192,7 @@ class CommandNode:
         for role_name in self.vehicles:
             if self.vehicles[role_name]['finished']:
                 count += 1
-        if count == self.N:
+        if count == self.N or time.time() - self.start_time > 900:
             self.shut_down()
 
 
@@ -221,7 +226,10 @@ if __name__ == '__main__':
     try:
         cn = CommandNode(host, port, N, log, track, model_type, num_wheels,
                          offscreen, scenario, vis2D)
-
+        
+        with open("/home/carla/track.txt", 'w') as f:
+            f.write(track)
+        
         run(cn)
     except rospy.exceptions.ROSInterruptException:
         rospy.loginfo("CommandNode shut down")

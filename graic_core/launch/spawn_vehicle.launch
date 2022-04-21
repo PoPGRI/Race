@@ -34,9 +34,6 @@
       <node pkg="graic_core" type="video_output.py" name="video_output_$(arg role_name)" output="screen">
         <param name="role_name" value="$(arg role_name)"/>
       </node>
-      <node pkg="graic_core" type="visualize_2D.py" name="visualize_2D_$(arg role_name)" output="screen" if="$(arg vis2D)">
-        <param name="role_name" value="$(arg role_name)"/>
-      </node>
   </group>
 
   <!-- the perception module -->
@@ -64,13 +61,5 @@
   </include>
 
   <!-- the scenario module -->
-  <group if="$(arg scenario)">
-    <include file="$(find graic_scenario)/launch/graic_scenario.launch">
-      <arg name='host' value='$(arg host)'/>
-      <arg name='port' value='$(arg port)'/>
-      <arg name='role_name' value='$(arg role_name)' />
-      <arg name='track' value='$(arg track)' />
-    </include>
-  </group>
 
 </launch>
