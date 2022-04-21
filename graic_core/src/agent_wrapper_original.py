@@ -127,7 +127,7 @@ if __name__ == "__main__":
     sensing_radius = race_config.readline().decode('ascii').strip()
     import sys
     role_name = sys.argv[1].split("_")[-1]
-    from baseline import Controller
+    from user_controller_file import Controller
     controller = Controller()
     try:
         run_model(role_name, controller)
