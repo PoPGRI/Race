@@ -175,6 +175,14 @@
           
           
         
+
+              
+
+
+
+          
+          
+        
         
       </ul>
 
@@ -228,6 +236,11 @@
                       
 
                       <li><a  href="http://localhost:4000/Race/installation/multi/">Running GRAIC -- Multi-Agent(BETA)</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/model-based/">Running GRAIC -- Model-Based</a></li>
                     
                   </ul>
 
@@ -327,6 +340,21 @@
             
           
         
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/summercamp/">Summer camp</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
         
       </ul>
     </section>
@@ -406,6 +434,10 @@
 
             <p class="shadow-black">
               Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. 
+            </p>
+            <p style="text-align: center;">
+              <img style="height: 100px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/sos.png">
+              <!-- https://popgri.github.io/Race/assets/images/ -->
               <!-- <a href="http://localhost:4000/Race/info/">More ›</a> -->
             </p>
           </div><!-- /.large-6.columns -->

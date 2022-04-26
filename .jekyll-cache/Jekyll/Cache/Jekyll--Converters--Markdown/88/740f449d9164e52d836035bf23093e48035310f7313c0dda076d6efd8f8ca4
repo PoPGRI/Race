@@ -1,0 +1,56 @@
+I"Õ<div class="row">
+<div class="medium-4 medium-push-8 columns">
+    <div class="panel radius">
+      <p id="toc"><strong>Table of Contents</strong></p>
+<ul id="markdown-toc">
+  <li><a href="#running-the-carla-simulator" id="markdown-toc-running-the-carla-simulator">Running the CARLA simulator</a></li>
+  <li><a href="#running-the-graic-infrastructure-with-model-based-vehicles" id="markdown-toc-running-the-graic-infrastructure-with-model-based-vehicles">Running the GRAIC infrastructure with model based vehicles</a></li>
+  <li><a href="#running-the-baseline-controller" id="markdown-toc-running-the-baseline-controller">Running the baseline Controller</a></li>
+  <li><a href="#driving-with-manual-control-for-fun" id="markdown-toc-driving-with-manual-control-for-fun">Driving with manual control for fun</a></li>
+</ul>
+
+    </div>
+  </div><!-- /.medium-4.columns -->
+
+
+
+<div class="medium-8 medium-pull-4 columns">
+
+    <hr />
+    <p>The whole racing system consists of three independent programs, the CARLA simulator, the GRAIC infrastructure, and your controller, which should be started in three terminals. If you are using Docker, you can get a new terminal connecting to the running container by running</p>
+
+    <div class="alert-box terminal ">docker exec -it graic_con /bin/bash</div>
+
+    <p>where <code class="language-plaintext highlighter-rouge">graic_con</code> is the name of the running container.</p>
+
+    <h3 id="running-the-carla-simulator">Running the CARLA simulator</h3>
+    <p>If you are using Docker, run the following command in a new terminal</p>
+
+    <div class="alert-box terminal ">~/workspace/carla-simulator/CarlaUE4.sh -opengl</div>
+
+    <p>If you are using AWS, run the following command in a new terminal</p>
+
+    <div class="alert-box terminal ">~/workspace/carla-simulator/CarlaUE4.sh</div>
+
+    <p>If everthing works, you shoule be able to see the CARLA window.</p>
+
+    <h3 id="running-the-graic-infrastructure-with-model-based-vehicles">Running the GRAIC infrastructure with model based vehicles</h3>
+    <p>First, you need to switch to the model-based branch.</p>
+
+    <div class="alert-box terminal ">cd /home/carla/workspace/graic-workspace/src &amp;&amp; git checkout feat_model_based</div>
+
+    <p>Then, run the following command</p>
+
+    <div class="alert-box terminal ">. ~/workspace/graic-workspace/devel/setup.bash</div>
+
+    <div class="alert-box terminal ">roslaunch graic_core graic_single.launch synchronous_mode_wait_for_vehicle_control_command:=False</div>
+
+    <h3 id="running-the-baseline-controller">Running the baseline Controller</h3>
+    <p>This procedure is the same as running model free baseline. However, please note that the baseline controller we offered is only tuned for model-free vehicles, so it might now work so well with model-based vehicles.</p>
+
+    <h3 id="driving-with-manual-control-for-fun">Driving with manual control for fun</h3>
+    <p>When the pygame window pops up, press b and then you should be able to drive using wasd.</p>
+
+  </div>
+</div>
+:ET

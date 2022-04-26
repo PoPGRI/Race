@@ -169,6 +169,14 @@
           
           
         
+
+              
+
+
+
+          
+          
+        
         
       </ul>
 
@@ -222,6 +230,11 @@
                       
 
                       <li><a  href="http://localhost:4000/Race/installation/multi/">Running GRAIC -- Multi-Agent(BETA)</a></li>
+                    
+
+                      
+
+                      <li><a  href="http://localhost:4000/Race/installation/model-based/">Running GRAIC -- Model-Based</a></li>
                     
                   </ul>
 
@@ -321,6 +334,21 @@
             
           
         
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/summercamp/">Summer camp</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
         
       </ul>
     </section>
@@ -354,7 +382,7 @@
 			
 
 			<div itemprop="articleSection">
-			<p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="language-plaintext highlighter-rouge">ackermann_control</code> using message type <code class="language-plaintext highlighter-rouge">AckermannDrive</code> or <code class="language-plaintext highlighter-rouge">vehicle_control</code> using message type <code class="language-plaintext highlighter-rouge">CarleEgoVehicleControl</code>).</p>
+			<p>The decision and control module is built by the competitors. Any pre-computations required must be provided by the competitors, and must run without additional effort from the competition hosts. The decision and control module must output the vehicle inputs required by the vehicle system (rostopics <code class="language-plaintext highlighter-rouge">ackermann_control</code> using message type <code class="language-plaintext highlighter-rouge">AckermannDrive</code>).</p>
 
 <p>Our baseline decision and controller can be found in the file <code class="language-plaintext highlighter-rouge">Race/src/race/src/baseline.py</code>.
 The decision module determines what waypoint the vehicle should move to. If there is an obstacle in front of the vehicle, then the waypoint is chosen such that the vehicle can avoid it.
@@ -392,6 +420,10 @@ The controller module is a simple waypoint following controller. The competitors
 
             <p class="shadow-black">
               Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. 
+            </p>
+            <p style="text-align: center;">
+              <img style="height: 100px; object-fit: cover;" src="https://popgri.github.io/Race/assets/images/sos.png">
+              <!-- https://popgri.github.io/Race/assets/images/ -->
               <!-- <a href="http://localhost:4000/Race/info/">More ›</a> -->
             </p>
           </div><!-- /.large-6.columns -->

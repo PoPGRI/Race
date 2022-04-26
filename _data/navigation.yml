@@ -44,6 +44,10 @@
   url: "/outreach/"
   side: left
 
+- title: Summer camp
+  url: "/summercamp/"
+  side: left
+
 # - title: "Contact"
 #   url: "/contact/"
 #   side: right
