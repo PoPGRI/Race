@@ -24,6 +24,8 @@ homepage: true
 
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
+### [GRAIC '22 Leaderboard](https://graic-2022.herokuapp.com)
+
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
 
 
