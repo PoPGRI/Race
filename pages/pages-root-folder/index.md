@@ -79,7 +79,7 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 - **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
 - **April 18: Submissions open**
 - **May 1: Submissions close, final races held**
-- **May 3-6**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event
+- **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
 
 
 ## Updates
