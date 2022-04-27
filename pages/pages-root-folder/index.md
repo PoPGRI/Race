@@ -113,6 +113,15 @@ If you would like to cite us, please use the following Bibtex entry.
       howpublished = "\url{https://popgri.github.io/Race/}",
       year         = 2021
     }
+  
+@article{CI-GRAIC-OAR-21,
+     title = {Continuous integration and testing for autonomous racing software: An experience report from GRAIC}, 
+     author = {Minghao Jiang and Kristina Miller and Dawei Sun and Zexiang Liu and Yixuan Jia and Arnab Datta and  Necmiye Ozay and Sayan Mitra}, 
+     url = {https://par.nsf.gov/biblio/10296575}, 
+     DOI = {10.13140/RG.2.2.28270.33605}, 
+     journal = {IEEE ICRA 2021, International Conference on Robotics and Automation, Workshop on OPPORTUNITIES AND CHALLENGES WITH AUTONOMOUS RACING}, 
+     year = 2021,
+  }  
 {% endhighlight %}
 
 
