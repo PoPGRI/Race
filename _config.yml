@@ -14,7 +14,7 @@ title: GRAIC
 slogan: 'An intelligent racing competition'
 
 # The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
-description: 'Generalized RAcing Intelligence Competition (GRAIC), is a synthesis competition for intelligent racing. '
+description: 'GRAIC sponsors:'
 
 # The credits show up in the includes/_footer.html – It would be nice of you to leave a link to Phlow or Feeling Responsive as a thank you :)
 credits: '<p>Created by <a href="https://publish.illinois.edu/kristinamiller/">Kristina Miller</a> with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> based on <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> by <a href="http://phlow.de/">Phlow</a>.</p>'
