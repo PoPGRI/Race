@@ -70,8 +70,6 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 ## Important Dates
 
-*GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.*
-
 - **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
 - **May 1: Race day, submissions close, final races held**
 - **April 18: Submissions open**
@@ -89,7 +87,6 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 </ul>
 <li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
 </ul>
-
 
 <ul style="color:gray">
   <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
