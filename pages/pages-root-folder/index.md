@@ -72,14 +72,14 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 *GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.*
 
-- **January 26**: Single agent platform beta released
+- **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
+- **May 1: Race day, submissions close, final races held**
+- **April 18: Submissions open**
+- **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
+- **March 31**: Final GRAIC-22 platform release 
 - **February 21**: Multi-agent platform beta released
 - **January - early March**: Feedback to participants and platform updates
-- **March 31**: Final GRAIC-22 platform release
-- **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
-- **April 18: Submissions open**
-- **May 1: Submissions close, final races held**
-- **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
+- **January 26**: Single agent platform beta released
 
 
 ## Updates
