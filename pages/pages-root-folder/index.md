@@ -82,13 +82,11 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 ## Updates
 
-<ul>
-<li><b>04/18/2022</b> - The submission page is now open! Please fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
-</ul>
-<li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
-</ul>
-
 <ul style="color:gray">
+  <li><i>04/26/2022</i> - Trials begin. <a href="https://graic-2022.herokuapp.com/">Leaderboard</a> is up.</li>
+<li><i>04/18/2022</i> - The submission page is now open! Please fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
+<li><i>01/25/2022</i> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
+
   <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
 
   <li><i>05/03/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a> We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</li>
