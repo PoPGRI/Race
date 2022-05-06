@@ -18,6 +18,15 @@ header:
 
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
+## CPS Week 2022 {#graic22}
+GRAIC was hosted at [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/).
+Congratulations to our solo race winners SBU and our head-to-head race winners MERCI!
+
+The video from our live event can be found on our [YouTube channel](https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA). The video can be found here: [https://youtu.be/mANCmMeI6_0](https://www.youtube.com/watch?v=jJLkORUG11U).
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jJLkORUG11U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 
 ## EOH 2022 {#eoh22}
 In April 2022, we ran the first in person [Engineering Open House at UIUC](https://eohillinois.org/) version of GRAIC!

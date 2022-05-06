@@ -70,25 +70,28 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 ## Important Dates
 
-- **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
-- **May 1: Race day, submissions close, final races held**
-- **April 18: Submissions open**
-- **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
-- **March 31**: Final GRAIC-22 platform release 
+*GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.*
+
+- **January 26**: Single agent platform beta released
 - **February 21**: Multi-agent platform beta released
 - **January - early March**: Feedback to participants and platform updates
-- **January 26**: Single agent platform beta released
+- **March 31**: Final GRAIC-22 platform release
+- **April 8-9**: [Engineering Open House Presentation](https://www.eohillinois.org/)
+- **April 18: Submissions open**
+- **May 1: Submissions close, final races held**
+- **May 5, 1-3pm (CT)**: [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/), final results and live GRAIC event. Zoom link to be published
 
 
 ## Updates
+l
+<ul>
+<li><b>04/18/2022</b> - The submission page is now open! Please fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
+</ul>
+<li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
+</ul>
+
 
 <ul style="color:gray">
-  <li><i>04/26/2022</i> - Trials begin. <a href="https://graic-2022.herokuapp.com/">Leaderboard</a> is up.</li>
-  
-<li><i>04/18/2022</i> - Submissions open! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
-  
-<li><i>01/25/2022</i> - Our AWS and docker betas are available! This lowers the hardware requirements. Please go to our <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
-
   <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
 
   <li><i>05/03/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a> We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</li>
@@ -100,6 +103,7 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
   <li><i>03/10/2021</i> - <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments.</li>
 
   <li><i>03/01/2021</i> - We have released our <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a>! Please go to the <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page to download. We invite all feedback.</li>
+
 </ul>
 
 ## Citing GRAIC
@@ -113,15 +117,6 @@ If you would like to cite us, please use the following Bibtex entry.
       howpublished = "\url{https://popgri.github.io/Race/}",
       year         = 2021
     }
-  
-@article{CI-GRAIC-OAR-21,
-     title = {Continuous integration and testing for autonomous racing software: An experience report from GRAIC}, 
-     author = {Minghao Jiang and Kristina Miller and Dawei Sun and Zexiang Liu and Yixuan Jia and Arnab Datta and  Necmiye Ozay and Sayan Mitra}, 
-     url = {https://par.nsf.gov/biblio/10296575}, 
-     DOI = {10.13140/RG.2.2.28270.33605}, 
-     journal = {IEEE ICRA 2021, International Conference on Robotics and Automation, Workshop on OPPORTUNITIES AND CHALLENGES WITH AUTONOMOUS RACING}, 
-     year = 2021,
-  }  
 {% endhighlight %}
 
 
