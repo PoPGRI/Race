@@ -57,7 +57,7 @@ At runtime, the input to the controller will come from a _perception oracle_ tha
 ## Contact 
 
 Email us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
-Fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link) to join the mailing list.
+Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
 
 ## Important Dates
 
@@ -97,7 +97,7 @@ Fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe2
 
 ## Citing GRAIC
 
-If you would like to cite us, please use the following Bibtex entry.
+Please cite GRAIC as:
 
 {% highlight bibtex %}
 @misc{GRAICrace,
