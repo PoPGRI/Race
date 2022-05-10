@@ -83,7 +83,7 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 
 ## Updates
-l
+
 <ul>
 <li><b>04/18/2022</b> - The submission page is now open! Please fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
 </ul>
@@ -117,6 +117,14 @@ If you would like to cite us, please use the following Bibtex entry.
       howpublished = "\url{https://popgri.github.io/Race/}",
       year         = 2021
     }
+  
+@misc{GRAIC-CI-OCAR21,
+      title        = "Continuous Integration and Testing for Autonomous Racing Software: An Experience Report from GRAIC",
+      author       = "{Minghao Jiang and Kristina Miller and Dawei Sun and Zexiang Liu and Yixuan Jia and Arnab Datta and  Necmiye Ozay and Sayan Mitra}",
+      howpublished = "Presented at the Workshop on Opportunities and Challenges in Autonomous Racing (2021) at IEEE ICRA",
+      url = "https://par.nsf.gov/servlets/purl/10296575",
+      year         = 2021
+    }  
 {% endhighlight %}
 
 
