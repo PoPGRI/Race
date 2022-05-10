@@ -75,7 +75,6 @@ Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3m
 
 ## Updates
 
-<ul style="color:gray"> 
   - <i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.
   - <i>04/18/2022</i> 2022 submission page opens! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.
   - <i>01/25/2022</i> GRAIC AWS and docker available! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for details.
@@ -85,7 +84,6 @@ Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3m
   - <i>03/30/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a>.
   - <i>03/10/2021</i>  <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> LaneInfo message type now has more info
   - <i>03/01/2021</i> GRAIC <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a> released! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page to download.
-</ul>
 
 ## Citing GRAIC
 
