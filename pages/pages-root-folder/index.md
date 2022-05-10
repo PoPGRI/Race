@@ -70,7 +70,7 @@ If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0
 
 ## Important Dates
 
-*GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.*
+*Please check back for the next GRAIC competition updates. Following were the dates for 2022 competition.*
 
 - **January 26**: Single agent platform beta released
 - **February 21**: Multi-agent platform beta released
