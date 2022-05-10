@@ -1,3 +1,7 @@
+## Site structure
+
+The pages directory has the content for the GRAIC webpage.
+
 ## You like and use this theme? Then support me. Just [paypal.me/PhlowMedia](https://www.paypal.me/PhlowMedia) :)
 
 # Newsletter: Stay in Touch for Future Updates
