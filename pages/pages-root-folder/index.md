@@ -76,23 +76,15 @@ Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3m
 ## Updates
 
 <ul style="color:gray"> 
-  <li><i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.
-  <li><i>04/18/2022</i> 2022 submission page opens! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.</li>
-
-  <li><i>01/25/2022</i> GRAIC AWS and docker available! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for details.</li>
-
-  <li><i>05/03/2021</i> 2021 pre-submission open. Upload your controllers to the google form provided.</li>
-
-  <li><i>05/03/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a>.</li>
-
-  <li>CPS Week registration open! When you register,  choose  "Generalized RAcing Intelligence Competition (GRAIC)" option.</li>
-
-  <li><i>03/30/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a>.</li>
-
-  <li><i>03/10/2021</i>  <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> LaneInfo message type now has more info.</li>
-
-  <li><i>03/01/2021</i> GRAIC <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a> released! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page to download.</li>
-
+  - <i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.
+  - <i>04/18/2022</i> 2022 submission page opens! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.
+  - <i>01/25/2022</i> GRAIC AWS and docker available! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for details.
+  - <i>05/03/2021</i> 2021 pre-submission open. Upload your controllers to the google form provided.
+  - <i>05/03/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a>.
+  - CPS Week registration open! When you register,  choose  "Generalized RAcing Intelligence Competition (GRAIC)" option.
+  - <i>03/30/2021</i> <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a>.
+  - <i>03/10/2021</i>  <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> LaneInfo message type now has more info
+  - <i>03/01/2021</i> GRAIC <a href = "https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a> released! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page to download.
 </ul>
 
 ## Citing GRAIC
