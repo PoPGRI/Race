@@ -30,6 +30,8 @@ homepage: true
 
 
 ### [GRAIC '22 Call for Participation](https://popgri.github.io/Race/assets/CFP2022.pdf)
+  
+### Introduction
 
 _Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race. The most recent version of the competition was co-located with [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/). GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.
 
@@ -41,30 +43,26 @@ We also aim to have multi-agent racing and an improved testing pipeline.
 Please continue to check our webpage for updates!
 
 [**Join our mailing list!**](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link)
-If you are interested in participating in GRAIC or just want to stay up to date, please fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link) and we will add you to our mailing list.
-Updates can also be found at the bottom of this page.
-
+If you are interested in participating in GRAIC or just want to stay up to date, fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link) and we will add you to our mailing list.
 
 ### Tl;dr
 
-We are providing a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.
+GRAIC a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.
 
 
 ### Details
 
 At runtime, the input to the controller will come from a _perception oracle_ that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the [Docs](https://popgri.github.io/Race/documentation/) page for more details about tracks, obstacles, vehicles, and APIs.
 
-### Highlights
-
-* **New this year!** Multi-agent races to compete against other submitted constrollers
+* **New in 2022!** Head-to-head races; compete against other submitted constrollers
 * GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API
 * Your controller will run races across multiple vehicles and tracks
 * Different race categories for model-free and model-based vehicles
 
-## Contact Information
+## Contact 
 
-If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
-If you fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link), we will add you to our mailing list.
+Email us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
+Fill out this [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link) to join the mailing list.
 
 ## Important Dates
 
