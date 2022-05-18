@@ -20,13 +20,48 @@ header:
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 ## CPS Week 2022 {#graic22}
 GRAIC was hosted at [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/).
-Congratulations to our solo race winners SBU and our head-to-head race winners MERCI!
 
 The video from our live event can be found on our [YouTube channel](https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA). The video can be found here: [https://youtu.be/mANCmMeI6_0](https://www.youtube.com/watch?v=jJLkORUG11U).
 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jJLkORUG11U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
+
+### Results
+Congratulations to our solo race winners SBU and our head-to-head race winners MERCI!
+
+Our top 3 finishers for solo races were:
+1. SBU
+2. GoHeelsRacing
+3. EMI
+
+Our top 3 finishers for head-to-head races were:
+1. MERCI
+2. E.D.I.T.H/SBU
+3. EMI
+
+*Solo race results table:*
+
+|         SINGLE       |     Track   1    |     Track   2    |     Track   3    |     Track   4    |     Track   5    |     Total   Score    |
+|:--------------------:|:----------------:|:----------------:|:----------------:|:----------------:|:----------------:|:--------------------:|
+|          SBU         |         74       |        246       |        246       |        125       |        234       |           26         |
+|     GoHeelsRacing    |         70       |        214       |        DNF       |        116       |        258       |           21         |
+|          EMI         |        226       |        215       |        DNF       |        182       |        360       |           12         |
+|       E.D.I.T.H      |        101       |        311       |        DNF       |        243       |        252       |           10         |
+|         MERCI        |        122       |        DNF       |        311       |        281       |        DNF       |           9          |
+|        Baseline      |         87       |        249       |        437       |        213       |        247       |           19         |
+
+*Head to head results table:*
+
+|                      |        Baseline      |     E.D.I.T.H    |     MERCI    |        EMI       |     GoHeelsRacing    |        SBU       |
+|:--------------------:|:--------------------:|:----------------:|:------------:|:----------------:|:--------------------:|:----------------:|
+|          **SBU**         |          SBU         |        SBU       |      DNF     |        SBU       |          SBU         |                  |
+|     **GoHeelsRacing**    |     GoHeelsRacing    |        DNF       |     MERCI    |        DNF       |                      |        DNF       |
+|          **EMI**         |          EMI         |     E.D.I.T.H    |     MERCI    |                  |          DNF         |        EMI       |
+|         **MERCI**        |         MERCI        |       MERCI      |              |        EMI       |         MERCI        |        SBU       |
+|       **E.D.I.T.H**      |       E.D.I.T.H      |                  |     MERCI    |     E.D.I.T.H    |       E.D.I.T.H      |     E.D.I.T.H    |
+|        **Baseline**      |                      |        DNF       |     MERCI    |        EMI       |          DNF         |      Baseline    |
+
 
 ## EOH 2022 {#eoh22}
 In April 2022, we ran the first in person [Engineering Open House at UIUC](https://eohillinois.org/) version of GRAIC!

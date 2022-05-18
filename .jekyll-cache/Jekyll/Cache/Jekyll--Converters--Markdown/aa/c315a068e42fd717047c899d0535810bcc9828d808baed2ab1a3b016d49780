@@ -1,18 +1,21 @@
-I"�+<div class="row">
+I"@D<div class="row">
 <div class="medium-4 medium-push-8 columns">
     <div class="panel radius">
       <p id="toc"><strong>Table of Contents</strong></p>
 <ul id="markdown-toc">
-  <li><a href="#graic22" id="markdown-toc-graic22">CPS Week 2022</a></li>
+  <li><a href="#graic22" id="markdown-toc-graic22">CPS Week 2022</a>    <ul>
+      <li><a href="#results" id="markdown-toc-results">Results</a></li>
+    </ul>
+  </li>
   <li><a href="#eoh22" id="markdown-toc-eoh22">EOH 2022</a></li>
   <li><a href="#ocar-icra21" id="markdown-toc-ocar-icra21">OCAR-ICRA 2021</a></li>
   <li><a href="#cps-week21" id="markdown-toc-cps-week21">CPS Week 2021</a>    <ul>
       <li><a href="#program" id="markdown-toc-program">Program</a></li>
-      <li><a href="#results" id="markdown-toc-results">Results</a></li>
+      <li><a href="#results-1" id="markdown-toc-results-1">Results</a></li>
     </ul>
   </li>
   <li><a href="#eoh21" id="markdown-toc-eoh21">EOH 2021</a>    <ul>
-      <li><a href="#results-1" id="markdown-toc-results-1">Results</a></li>
+      <li><a href="#results-2" id="markdown-toc-results-2">Results</a></li>
     </ul>
   </li>
 </ul>
@@ -24,14 +27,174 @@
 
 <div class="medium-8 medium-pull-4 columns">
     <h2 id="graic22">CPS Week 2022</h2>
-    <p>GRAIC was hosted at <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>.
-Congratulations to our solo race winners SBU and our head-to-head race winners MERCI!</p>
+    <p>GRAIC was hosted at <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>.</p>
 
     <p>The video from our live event can be found on our <a href="https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA">YouTube channel</a>. The video can be found here: <a href="https://www.youtube.com/watch?v=jJLkORUG11U">https://youtu.be/mANCmMeI6_0</a>.</p>
 
     <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jJLkORUG11U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 </center>
+
+    <h3 id="results">Results</h3>
+    <p>Congratulations to our solo race winners SBU and our head-to-head race winners MERCI!</p>
+
+    <p>Our top 3 finishers for solo races were:</p>
+    <ol>
+      <li>SBU</li>
+      <li>GoHeelsRacing</li>
+      <li>EMI</li>
+    </ol>
+
+    <p>Our top 3 finishers for head-to-head races were:</p>
+    <ol>
+      <li>MERCI</li>
+      <li>E.D.I.T.H/SBU</li>
+      <li>EMI</li>
+    </ol>
+
+    <p><em>Solo race results table:</em></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">SINGLE</th>
+          <th style="text-align: center">Track   1</th>
+          <th style="text-align: center">Track   2</th>
+          <th style="text-align: center">Track   3</th>
+          <th style="text-align: center">Track   4</th>
+          <th style="text-align: center">Track   5</th>
+          <th style="text-align: center">Total   Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">SBU</td>
+          <td style="text-align: center">74</td>
+          <td style="text-align: center">246</td>
+          <td style="text-align: center">246</td>
+          <td style="text-align: center">125</td>
+          <td style="text-align: center">234</td>
+          <td style="text-align: center">26</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">GoHeelsRacing</td>
+          <td style="text-align: center">70</td>
+          <td style="text-align: center">214</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">116</td>
+          <td style="text-align: center">258</td>
+          <td style="text-align: center">21</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">EMI</td>
+          <td style="text-align: center">226</td>
+          <td style="text-align: center">215</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">182</td>
+          <td style="text-align: center">360</td>
+          <td style="text-align: center">12</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">E.D.I.T.H</td>
+          <td style="text-align: center">101</td>
+          <td style="text-align: center">311</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">243</td>
+          <td style="text-align: center">252</td>
+          <td style="text-align: center">10</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">122</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">311</td>
+          <td style="text-align: center">281</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">9</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">Baseline</td>
+          <td style="text-align: center">87</td>
+          <td style="text-align: center">249</td>
+          <td style="text-align: center">437</td>
+          <td style="text-align: center">213</td>
+          <td style="text-align: center">247</td>
+          <td style="text-align: center">19</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><em>Head to head results table:</em></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"> </th>
+          <th style="text-align: center">Baseline</th>
+          <th style="text-align: center">E.D.I.T.H</th>
+          <th style="text-align: center">MERCI</th>
+          <th style="text-align: center">EMI</th>
+          <th style="text-align: center">GoHeelsRacing</th>
+          <th style="text-align: center">SBU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center"><strong>SBU</strong></td>
+          <td style="text-align: center">SBU</td>
+          <td style="text-align: center">SBU</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">SBU</td>
+          <td style="text-align: center">SBU</td>
+          <td style="text-align: center"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><strong>GoHeelsRacing</strong></td>
+          <td style="text-align: center">GoHeelsRacing</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center"> </td>
+          <td style="text-align: center">DNF</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><strong>EMI</strong></td>
+          <td style="text-align: center">EMI</td>
+          <td style="text-align: center">E.D.I.T.H</td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center"> </td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">EMI</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><strong>MERCI</strong></td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center"> </td>
+          <td style="text-align: center">EMI</td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">SBU</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><strong>E.D.I.T.H</strong></td>
+          <td style="text-align: center">E.D.I.T.H</td>
+          <td style="text-align: center"> </td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">E.D.I.T.H</td>
+          <td style="text-align: center">E.D.I.T.H</td>
+          <td style="text-align: center">E.D.I.T.H</td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><strong>Baseline</strong></td>
+          <td style="text-align: center"> </td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">MERCI</td>
+          <td style="text-align: center">EMI</td>
+          <td style="text-align: center">DNF</td>
+          <td style="text-align: center">Baseline</td>
+        </tr>
+      </tbody>
+    </table>
 
     <h2 id="eoh22">EOH 2022</h2>
     <p>In April 2022, we ran the first in person <a href="https://eohillinois.org/">Engineering Open House at UIUC</a> version of GRAIC!
@@ -102,7 +265,7 @@ The passcode is 994234. -->
       <li>10:30-11: Community discussion and planning</li>
     </ul>
 
-    <h3 id="results">Results</h3>
+    <h3 id="results-1">Results</h3>
     <p>Congratulations to our winners <a href="https://www.linkedin.com/in/abolfazl-karimi-175a153a/">Abolfazl Karimi</a> and <a href="https://www.cs.unc.edu/~psd/">Parasara Sridar Duggirala</a> (UNC)!</p>
 
     <p>Results table:</p>
@@ -166,7 +329,7 @@ The videos of the cars running are posted to our <a href="https://www.youtube.co
 </iframe>
 </center>
 
-    <h3 id="results-1">Results</h3>
+    <h3 id="results-2">Results</h3>
 
     <table>
       <thead>
