@@ -395,13 +395,9 @@
   <li><a href="#graic-22-leaderboard" id="markdown-toc-graic-22-leaderboard">GRAIC ‘22 Leaderboard</a></li>
   <li><a href="#graic-forum" id="markdown-toc-graic-forum">GRAIC Forum</a></li>
   <li><a href="#graic-22-call-for-participation" id="markdown-toc-graic-22-call-for-participation">GRAIC ‘22 Call for Participation</a></li>
-  <li><a href="#description" id="markdown-toc-description">Description</a>    <ul>
-      <li><a href="#tldr" id="markdown-toc-tldr">Tl;dr</a></li>
-      <li><a href="#details" id="markdown-toc-details">Details</a></li>
-      <li><a href="#highlights" id="markdown-toc-highlights">Highlights</a></li>
-    </ul>
-  </li>
-  <li><a href="#contact-information" id="markdown-toc-contact-information">Contact Information</a></li>
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#details" id="markdown-toc-details">Details</a></li>
+  <li><a href="#contact" id="markdown-toc-contact">Contact</a></li>
   <li><a href="#important-dates" id="markdown-toc-important-dates">Important Dates</a></li>
   <li><a href="#updates" id="markdown-toc-updates">Updates</a></li>
   <li><a href="#citing-graic" id="markdown-toc-citing-graic">Citing GRAIC</a></li>
@@ -419,9 +415,9 @@
 
     <h3 id="graic-22-call-for-participation"><a href="https://popgri.github.io/Race/assets/CFP2022.pdf">GRAIC ‘22 Call for Participation</a></h3>
 
-    <h2 id="description">Description</h2>
+    <h3 id="introduction">Introduction</h3>
 
-    <p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race affiliated with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
+    <p><em>Generalized RAcing Intelligence Competition (GRAIC)</em> is a simulated vehicle race. The most recent version of the competition was co-located with <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>. GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.</p>
 
     <p><strong>GRAIC ‘22 vs. GRAIC ‘21</strong>
 This year, we hope to improve GRAIC to encourage wider participation.
@@ -430,35 +426,27 @@ Instructions for using the AWS image can be found on our <a href="https://popgri
 We also aim to have multi-agent racing and an improved testing pipeline.
 Please continue to check our webpage for updates!</p>
 
-    <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link"><strong>Join our mailing list!</strong></a>
-If you are interested in participating in GRAIC or just want to stay up to date, please fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a> and we will add you to our mailing list.
-Updates can also be found at the bottom of this page.</p>
-
-    <h3 id="tldr">Tl;dr</h3>
-
-    <p>We are providing a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.</p>
+    <p>GRAIC provides a simulation environment, test vehicles, tracks, scoring function, and documentation. As a competitor, you will use the given API and develop your racing controller. In early May, you will submit your racing controller code. The competition tracks will be different from the testing tracks. Multiple vehicles will be involved. We will run the races with your controllers and provide results, data, video feedback, and announce winners during CPSWeek. There will be different race categories and prizes.</p>
 
     <h3 id="details">Details</h3>
 
     <p>At runtime, the input to the controller will come from a <em>perception oracle</em> that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the <a href="https://popgri.github.io/Race/documentation/">Docs</a> page for more details about tracks, obstacles, vehicles, and APIs.</p>
 
-    <h3 id="highlights">Highlights</h3>
-
     <ul>
-      <li><strong>New this year!</strong> Multi-agent races to compete against other submitted constrollers</li>
+      <li><strong>New in 2022!</strong> Head-to-head races; compete against other submitted constrollers</li>
       <li>GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API</li>
       <li>Your controller will run races across multiple vehicles and tracks</li>
       <li>Different race categories for model-free and model-based vehicles</li>
     </ul>
 
-    <h2 id="contact-information">Contact Information</h2>
+    <h2 id="contact">Contact</h2>
 
-    <p>If you have any questions regarding the competition or simulator framework, please contact us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
-If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a>, we will add you to our mailing list.</p>
+    <p>Email us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
+Join mailing list <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link">form</a>.</p>
 
     <h2 id="important-dates">Important Dates</h2>
 
-    <p><em>GRAIC 2022 is still under construction, all dates are tentative. Please check back often for updated dates.</em></p>
+    <p><em>Please check back for the next GRAIC competition updates. Following were the dates for 2022 competition.</em></p>
 
     <ul>
       <li><strong>January 26</strong>: Single agent platform beta released</li>
@@ -472,38 +460,37 @@ If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-
     </ul>
 
     <h2 id="updates">Updates</h2>
-    <p>l</p>
+
     <ul>
-<li><b>04/18/2022</b> - The submission page is now open! Please fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to register and submit.</li>
-</ul>
-    <li><b>01/25/2022</b> - Our AWS and docker betas are now available! This lowers the hardware requirements. Please go to our <a href="https://popgri.github.io/Race/installation/">Getting started</a> page for more information!</li>
-    <p>&lt;/ul&gt;</p>
-
-    <ul style="color:gray">
-  <li><i>05/03/2021</i> - Pre-submission. You can pre-submit your controllers to ensure that it works in our finalized framework. Please upload your controllers to the google form provided.</li>
-
-  <li><i>05/03/2021</i> <a href="https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a> We have updated several things in this release. This is the release we plan to use in the competition, so please give us feedback.</li>
-
-  <li>CPS Week registration is now open! Registration is $10. When you register for CPS Week, please choose the "Generalized RAcing Intelligence Competition (GRAIC)" option to sign up.</li>
-
-  <li><i>03/30/2021</i> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a> We have updated the CARLA docker image.</li>
-
-  <li><i>03/10/2021</i> - <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> We have modified LaneInfo message type to include more information about left and right lanes, and fixed disjoint lane markers at junctions of road segments.</li>
-
-  <li><i>03/01/2021</i> - We have released our <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a>! Please go to the <a href="https://popgri.github.io/Race/installation/">Getting started</a> page to download. We invite all feedback.</li>
-
-</ul>
+      <li><i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.</li>
+      <li><i>04/18/2022</i> 2022 submission page opens! Fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.</li>
+      <li><i>01/25/2022</i> GRAIC AWS and docker available! Visit <a href="https://popgri.github.io/Race/installation/">Getting started</a> page for details.</li>
+      <li><i>05/03/2021</i> 2021 pre-submission open. Upload your controllers to the google form provided.</li>
+      <li><i>05/03/2021</i> <a href="https://github.com/PoPGRI/Race/releases/tag/0.2.1">GRAIC Beta Release v0.2.1</a>.</li>
+      <li>CPS Week registration open! When you register,  choose  “Generalized RAcing Intelligence Competition (GRAIC)” option.</li>
+      <li><i>03/30/2021</i> <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.2">GRAIC Beta Release v0.1.2</a>.</li>
+      <li><i>03/10/2021</i>  <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.1">GRAIC Beta Release v0.1.1</a> LaneInfo message type now has more info</li>
+      <li><i>03/01/2021</i> GRAIC <a href="https://github.com/PoPGRI/Race/releases/tag/0.1.0">beta</a> released! Visit <a href="https://popgri.github.io/Race/installation/">Getting started</a> page to download.</li>
+    </ul>
 
     <h2 id="citing-graic">Citing GRAIC</h2>
 
-    <p>If you would like to cite us, please use the following Bibtex entry.</p>
+    <p>Please cite GRAIC as:</p>
 
     <figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@misc</span><span class="p">{</span><span class="nl">GRAICrace</span><span class="p">,</span>
       <span class="na">title</span>        <span class="p">=</span> <span class="s">"GRAIC: A simulator framework for autonomous racing"</span><span class="p">,</span>
       <span class="na">author</span>       <span class="p">=</span> <span class="s">"{Minghao Jiang and Zexiang Liu and Kristina Miller and Dawei Sun and Arnab Datta and Yixuan Jia and Sayan Mitra and Necmiye Ozay}"</span><span class="p">,</span>
       <span class="na">howpublished</span> <span class="p">=</span> <span class="s">"\url{https://popgri.github.io/Race/}"</span><span class="p">,</span>
       <span class="na">year</span>         <span class="p">=</span> <span class="m">2021</span>
-    <span class="p">}</span></code></pre></figure>
+    <span class="p">}</span>
+  
+<span class="nc">@misc</span><span class="p">{</span><span class="nl">GRAIC-CI-OCAR21</span><span class="p">,</span>
+      <span class="na">title</span>        <span class="p">=</span> <span class="s">"Continuous Integration and Testing for Autonomous Racing Software: An Experience Report from GRAIC"</span><span class="p">,</span>
+      <span class="na">author</span>       <span class="p">=</span> <span class="s">"{Minghao Jiang and Kristina Miller and Dawei Sun and Zexiang Liu and Yixuan Jia and Arnab Datta and  Necmiye Ozay and Sayan Mitra}"</span><span class="p">,</span>
+      <span class="na">howpublished</span> <span class="p">=</span> <span class="s">"Presented at the Workshop on Opportunities and Challenges in Autonomous Racing (2021) at IEEE ICRA"</span><span class="p">,</span>
+      <span class="na">url</span> <span class="p">=</span> <span class="s">"https://par.nsf.gov/servlets/purl/10296575"</span><span class="p">,</span>
+      <span class="na">year</span>         <span class="p">=</span> <span class="m">2021</span>
+    <span class="p">}</span>  </code></pre></figure>
 
   </div><!-- /.medium-8.columns -->
 </div>
@@ -663,8 +650,8 @@ If you fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-
 
 
 <script>
-    $("#masthead").backstretch("https://popgri.github.io/Race/assets/images/baseline3.gif", {fade: 700});
-    $("#masthead-with-text").backstretch("https://popgri.github.io/Race/assets/images/baseline3.gif", {fade: 700});
+    $("#masthead").backstretch("https://popgri.github.io/Race/assets/images/new-header.gif", {fade: 700});
+    $("#masthead-with-text").backstretch("https://popgri.github.io/Race/assets/images/new-header.gif", {fade: 700});
 </script>
 
 

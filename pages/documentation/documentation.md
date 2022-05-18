@@ -3,7 +3,7 @@ layout: page
 show_meta: false
 title: "Documentation"
 header:
-   image_fullwidth: "baseline3.gif"
+   image_fullwidth: "new-header.gif"
 permalink: "/documentation/"
 ---
 

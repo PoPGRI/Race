@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<id>http://localhost:4000/Race/</id>
 	<title>GRAIC</title>
-	<updated>2022-05-06T16:23:11-05:00</updated>
+	<updated>2022-05-18T18:12:17-04:00</updated>
 
 	<subtitle>GRAIC sponsors:</subtitle>
 
@@ -24,7 +24,7 @@
 	<link href="http://localhost:4000/Race/atom.xml" rel="self" type="application/rss+xml" />
 	<link href="http://localhost:4000/Race/" rel="alternate" type="text/html" />
 
-	<generator uri="http://jekyllrb.com" version="4.2.1">Jekyll</generator>
+	<generator uri="http://jekyllrb.com" version="4.2.2">Jekyll</generator>
 
 	
 </feed>
