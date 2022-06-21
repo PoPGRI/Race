@@ -24,13 +24,14 @@ homepage: true
 
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
-### [GRAIC '22 Leaderboard](https://graic-2022.herokuapp.com)
+
 
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
+Ask general questions about GRAIC and interact with fellow participants on our forum!
 
+### [GRAIC Benchmarks](https://github.com/PoPGRI/GRAIC22-Benchmarks)
+Here, you will find controllers submitted to GRAIC in previous years. These controllers can be used for controller research and verification. We have included instructions on how to reproduce the results from GRAIC [here](https://github.com/PoPGRI/GRAIC22-Benchmarks/blob/master/run_experiments.md).
 
-### [GRAIC '22 Call for Participation](https://popgri.github.io/Race/assets/CFP2022.pdf)
-  
 ### Introduction
 
 _Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race. The most recent version of the competition was co-located with [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/). GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.
@@ -54,7 +55,7 @@ At runtime, the input to the controller will come from a _perception oracle_ tha
 * Your controller will run races across multiple vehicles and tracks
 * Different race categories for model-free and model-based vehicles
 
-## Contact 
+## Contact
 
 Email us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
 Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
@@ -74,7 +75,7 @@ Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3m
 
 
 ## Updates
-
+  - <i>06/16/2022</i> <a href="https://github.com/PoPGRI/GRAIC22-Benchmarks">GRAIC22 benchmarks</a> released.
   - <i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.
   - <i>04/18/2022</i> 2022 submission page opens! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.
   - <i>01/25/2022</i> GRAIC AWS and docker available! Visit <a href = "https://popgri.github.io/Race/installation/">Getting started</a> page for details.
@@ -96,7 +97,7 @@ Please cite GRAIC as:
       howpublished = "\url{https://popgri.github.io/Race/}",
       year         = 2021
     }
-  
+
 @misc{GRAIC-CI-OCAR21,
       title        = "Continuous Integration and Testing for Autonomous Racing Software: An Experience Report from GRAIC",
       author       = "{Minghao Jiang and Kristina Miller and Dawei Sun and Zexiang Liu and Yixuan Jia and Arnab Datta and  Necmiye Ozay and Sayan Mitra}",

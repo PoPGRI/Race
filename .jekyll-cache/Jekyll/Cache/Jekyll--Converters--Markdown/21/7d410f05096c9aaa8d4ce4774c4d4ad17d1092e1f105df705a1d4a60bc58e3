@@ -1,9 +1,11 @@
-I"@D<div class="row">
+I"HF<div class="row">
 <div class="medium-4 medium-push-8 columns">
     <div class="panel radius">
       <p id="toc"><strong>Table of Contents</strong></p>
 <ul id="markdown-toc">
   <li><a href="#graic22" id="markdown-toc-graic22">CPS Week 2022</a>    <ul>
+      <li><a href="#graic-22-leaderboard" id="markdown-toc-graic-22-leaderboard">GRAIC ‘22 Leaderboard</a></li>
+      <li><a href="#graic-22-call-for-participation" id="markdown-toc-graic-22-call-for-participation">GRAIC ‘22 Call for Participation</a></li>
       <li><a href="#results" id="markdown-toc-results">Results</a></li>
     </ul>
   </li>
@@ -27,6 +29,9 @@
 
 <div class="medium-8 medium-pull-4 columns">
     <h2 id="graic22">CPS Week 2022</h2>
+    <h3 id="graic-22-leaderboard"><a href="https://graic-2022.herokuapp.com">GRAIC ‘22 Leaderboard</a></h3>
+    <h3 id="graic-22-call-for-participation"><a href="https://popgri.github.io/Race/assets/CFP2022.pdf">GRAIC ‘22 Call for Participation</a></h3>
+
     <p>GRAIC was hosted at <a href="https://cpsiotweek.neslab.it/">CPS-IOT Week 2022</a>.</p>
 
     <p>The video from our live event can be found on our <a href="https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA">YouTube channel</a>. The video can be found here: <a href="https://www.youtube.com/watch?v=jJLkORUG11U">https://youtu.be/mANCmMeI6_0</a>.</p>

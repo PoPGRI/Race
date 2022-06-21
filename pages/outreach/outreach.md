@@ -19,6 +19,10 @@ header:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 ## CPS Week 2022 {#graic22}
+### [GRAIC '22 Leaderboard](https://graic-2022.herokuapp.com)
+### [GRAIC '22 Call for Participation](https://popgri.github.io/Race/assets/CFP2022.pdf)
+
+
 GRAIC was hosted at [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/).
 
 The video from our live event can be found on our [YouTube channel](https://www.youtube.com/channel/UC1wObn3tWYZDkWld-Kg8LRA). The video can be found here: [https://youtu.be/mANCmMeI6_0](https://www.youtube.com/watch?v=jJLkORUG11U).
