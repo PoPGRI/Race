@@ -17,7 +17,9 @@ Campers will:
 
 Dates: The GRAIC team will be hosting a summer camp for highschool students at UIUC over August 1-5, 2022.
 
-<img src="{{site.urlimg}}.lane_detection.png">
+| <img src="{{site.urlimg}}lane_detection.png" width="400" heigh="200"> |<img src="{{site.urlimg}}gem.png" width="400" heigh="200"> |
+|:---:|:---:|:---:|
+| Simulating Lane Detection | GEM vehicle |
 
 ## Schedule
 
