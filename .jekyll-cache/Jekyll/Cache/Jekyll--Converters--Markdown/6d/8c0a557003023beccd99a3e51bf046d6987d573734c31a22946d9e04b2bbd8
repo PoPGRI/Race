@@ -1,4 +1,4 @@
-I"n<p>“Coding a Driverless Car” is a day camp that will take place at the <a href="https://ece.illinois.edu/about/buildings/ecebuilding">Electrical and Computer Engineering Building</a>, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, students will have the opportunity to deploy their code their code on a real autonomous vehicle.</p>
+I"�<p>“Code a Car” is a day camp that will take place at the <a href="https://ece.illinois.edu/about/buildings/ecebuilding">Electrical and Computer Engineering Building</a>, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!</p>
 
 <p>Campers will:</p>
 
@@ -10,6 +10,8 @@
 </ul>
 
 <p>Dates: The GRAIC team will be hosting a summer camp for highschool students at UIUC over August 1-5, 2022.</p>
+
+<p><img src="https://popgri.github.io/Race/assets/images/.lane_detection.png" /></p>
 
 <h2 id="schedule">Schedule</h2>
 
@@ -68,17 +70,21 @@
   </tbody>
 </table>
 
-<h2 id="camp-coordinators">Camp Coordinator(s)</h2>
+<h2 id="organizers">Organizer(s)</h2>
 
-<p><strong>Yan Miao</strong> is a 2nd-year grad student under the advisement of Prof. Sayan Mitra. His primary research focuses on improving the safety of autonomous systems, mainly autonomous vehicles and drones. His recent work includes involves learning-based robotics and reinforcement learning in the area of self-driving cars.</p>
+<p><strong>Yan Miao</strong> will be your camp coordinator. Yan is a 2nd-year grad student at Illinois under the advisement of Prof. Sayan Mitra. His primary research focuses on improving the safety of autonomous systems, mainly autonomous vehicles and drones. His recent work includes involves learning-based robotics and reinforcement learning in the area of self-driving cars.</p>
 
-<p><strong>Raj Joshi</strong> is a undergraduate student majoring in Statistics and Computer Science. His was part of the <a href="https://popgri.github.io/Race/">Generalized Racing Intelligence Competition</a>, working on developing autonomous testing pipelines to evaluate autonomous vehicle controllers.</p>
+<p><strong>Raj Joshi</strong> will be the assistant coordinator. Raj is a undergraduate student majoring in Statistics and Computer Science at Illinois. His was part of the <a href="https://popgri.github.io/Race/">Generalized Racing Intelligence Competition</a>, working on developing autonomous testing pipelines to evaluate autonomous vehicle controllers.</p>
+
+<p><strong><a href="https://mitras.ece.illinois.edu/">Sayan Mitra</a></strong> had the brainwave of creating this camp. He is a Professor at Illinois and does  research on autonomous systems.</p>
 
 <h1 id="sponsors">Sponsors</h1>
 
-<p>Thanks to NSA Science of Security for sponsoring our <a href="https://popgri.github.io/Race/summercamp">summer camp</a>.</p>
+<p>We are grateful to the following sponsors and supporters for making <strong>Code a Car</strong> camp happen.</p>
 
 <p><img style="height: 100px; object-fit: cover; background-color: LightGray;" src="https://popgri.github.io/Race/assets/images/sos.png" /></p>
 
-<p>Thank you to <a href="https://wyse.engineering.illinois.edu/">Worldwide Youth in Science and Engineering Program</a> for supporting our summer camp.</p>
+<p>Illinois <a href="https://wyse.engineering.illinois.edu/">Worldwide Youth in Science and Engineering Program</a></p>
+
+<p>Illinois <a href="https://autonomy.illinois.edu/">Center for Autonomy</a></p>
 :ET
