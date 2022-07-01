@@ -40,5 +40,7 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 We are grateful to the following sponsors and supporters for making **Code for Car** camp happen. 
 
 <img style="height: 100px; object-fit: cover; background-color: LightGray;" src="{{site.urlimg}}sos.png">
+
 Illinois [Worldwide Youth in Science and Engineering Program](https://wyse.engineering.illinois.edu/)
+
 Illinois [Center for Autonomy](https://autonomy.illinois.edu/)
