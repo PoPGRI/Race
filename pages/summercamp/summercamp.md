@@ -1,12 +1,12 @@
 ---
 layout: page
-title: "Coding Driverless Car"
+title: "Code for Driverless Car"
 header:
    image_fullwidth: "new-header.gif"
 permalink: "/summercamp/"
 ---
 
-"Coding Driverless Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding), and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
+"Code for Driverless Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding), and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
 
 Campers will:
 
@@ -37,8 +37,8 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 
 # Sponsors
 
-Thanks to NSA Science of Security for sponsoring our [summer camp](https://popgri.github.io/Race/summercamp).
+We are grateful to the following sponsors and supporters for making **Code for Car** camp happen. 
 
 <img style="height: 100px; object-fit: cover; background-color: LightGray;" src="{{site.urlimg}}sos.png">
-
-Thank you to [Worldwide Youth in Science and Engineering Program](https://wyse.engineering.illinois.edu/) for supporting our summer camp.
+Illinois [Worldwide Youth in Science and Engineering Program](https://wyse.engineering.illinois.edu/)
+Illinois [Center for Autonomy](https://autonomy.illinois.edu/)
