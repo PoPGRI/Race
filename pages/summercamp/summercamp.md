@@ -31,6 +31,16 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 | 1 - 3 PM |  Linux Command, ROS, Gazebo vehicle simulation, CARLA,  Steering Wheel Sim | Waypoint following controller desing and testing | Develop and test lane departure system | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
 |  3 - 5 PM | Lab Visit | Lab Visit | Lab Visit | Lab Visit | Final presentation and camp conclusion ceremony |
 
+## Lab Visits
+
+### Tuesday
+
+*Human-Robot Fist Bump Human & Intention Tracking for Collaborative Assembly*
+
+Demo by Ye-Ji Mun from Prof. Katie Driggs-Campbell’s Group
+
+Illinois Robotics Lab
+
 ## Organizer(s)
 
 **Yan Miao** will be your camp coordinator. Yan is a 2nd-year grad student at Illinois under the advisement of Prof. Sayan Mitra. His primary research focuses on improving the safety of autonomous systems, mainly autonomous vehicles and drones. His recent work includes involves learning-based robotics and reinforcement learning in the area of self-driving cars.
