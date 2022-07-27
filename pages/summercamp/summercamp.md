@@ -41,6 +41,14 @@ Demo by Ye-Ji Mun from Prof. Katie Driggs-Campbell’s Group
 
 Illinois Robotics Lab
 
+### Wednesday
+
+*RTAB-Map & Image Goal Navigation*
+
+Demo by Justin Wasserman from Prof. Girish Chowdhary’s Group
+
+ECEB 5072
+
 ## Organizer(s)
 
 **Yan Miao** will be your camp coordinator. Yan is a 2nd-year grad student at Illinois under the advisement of Prof. Sayan Mitra. His primary research focuses on improving the safety of autonomous systems, mainly autonomous vehicles and drones. His recent work includes involves learning-based robotics and reinforcement learning in the area of self-driving cars.
