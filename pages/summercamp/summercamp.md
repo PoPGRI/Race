@@ -40,7 +40,7 @@ Please use the Wright street entrance to the ECEB.
 ## Highbay
 
 Highbay is located near iHotel.
-<img src="{{site.urlimg}}highbay_front.png" width="400" heigh="200">
+<img src="{{site.urlimg}}highbay_front.jpeg" width="400" heigh="200">
 <img src="{{site.urlimg}}highbay_location.png" width="400" heigh="200">
 <img src="{{site.urlimg}}highbay_google.png" width="400" heigh="200">
 
@@ -54,6 +54,9 @@ Demo by Ye-Ji Mun from Prof. Katie Driggs-Campbell’s Group
 
 Illinois Robotics Lab
 
+1. Human-Robot Fist Bump: The Kinova retrieves a human’s fist pose from its mounted camera and follows the human’s fist movement using visual servoing technique.
+2. Human Intention Tracking for Collaborative Assembly: A human worker and a UR5e robot work together to assemble industrial connectors. After the human aligns the connector parts, the UR5e pushes the aligned connectors for their insertion.
+
 ### Wednesday
 
 *RTAB-Map & Image Goal Navigation*
@@ -61,6 +64,9 @@ Illinois Robotics Lab
 Demo by Justin Wasserman from Prof. Girish Chowdhary’s Group
 
 ECEB 5072
+
+Preview of Justin's demo:
+<img src="{{site.urlimg}}imageGoal.gif" width="400" heigh="200">
 
 ## Organizer(s)
 
