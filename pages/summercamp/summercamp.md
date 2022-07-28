@@ -40,6 +40,7 @@ Please use the Wright street entrance to the ECEB.
 ## Highbay
 
 Highbay is located near iHotel.
+
 <img src="{{site.urlimg}}highbay_front.jpeg" width="400" heigh="200">
 <img src="{{site.urlimg}}highbay_location.png" width="400" heigh="200">
 <img src="{{site.urlimg}}highbay_google.png" width="400" heigh="200">
