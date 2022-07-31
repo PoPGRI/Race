@@ -26,9 +26,9 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 |  | Monday | Tuesday | Wednesday | Thursday | Friday |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | 8:45 AM | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (Highbay) |
-| 9 AM - 12 PM | Introduction to autonomy and Python Tutorial | Control concepts: stability and performance | Computer vision and lane detection: Convolution, edge detection | Planning Algorithms | **High Bay Field Trip**  |
+| 9 AM - 12 PM | Introduction to autonomy and Python Tutorial | Computer vision and lane detection: Convolution, edge detection | Control concepts: stability and performance | Planning Algorithms | **High Bay Field Trip**  |
 | Noon - 1PM | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Sack Lunch) |
-| 1 - 3 PM |  Linux Command, ROS, Gazebo vehicle simulation, CARLA,  Steering Wheel Sim | Waypoint following controller desing and testing | Develop and test lane departure system | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
+| 1 - 3 PM |  Linux Command, ROS, Gazebo vehicle simulation, CARLA,  Steering Wheel Sim | Develop and test lane departure system | Waypoint following controller desing and testing | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
 |  3 - 5 PM | Lab Visit | Lab Visit | Lab Visit | Visit to Highbay | Final presentation and camp conclusion ceremony |
 
 ## Location
@@ -43,7 +43,8 @@ Highbay is located near iHotel.
 
 <img src="{{site.urlimg}}highbay_front.jpeg" width="400" heigh="200">
 <img src="{{site.urlimg}}highbay_location.png" width="400" heigh="200">
-<img src="{{site.urlimg}}highbay_google.png" width="400" heigh="200">
+<img src="{{site.urlimg}}birdseye1.jpeg" width="400" heigh="200">
+<img src="{{site.urlimg}}birdseye2.jpeg" width="400" heigh="200">
 
 ## Lab Visits
 
