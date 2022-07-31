@@ -6,6 +6,9 @@ header:
 permalink: "/summercamp/"
 ---
 
+## Camp Leaderboard
+<https://summer-camp-2022.herokuapp.com/>
+
 "Code a Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding) 5072, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
 
 Campers will:
