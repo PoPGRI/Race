@@ -6,7 +6,7 @@ header:
 permalink: "/summercamp/"
 ---
 
-"Code a Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding), and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
+"Code a Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding) 5072, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
 
 Campers will:
 
@@ -33,7 +33,7 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 
 ## Location
 
-## ECEB
+## ECEB Lab 5072
 
 Please use the Wright street entrance to the ECEB.
 
@@ -81,7 +81,7 @@ Preview of Justin's demo:
 
 We are grateful to the following sponsors and supporters for making **Code a Car** camp happen.
 
-<img style="height: 100px; object-fit: cover; background-color: LightGray;" src="{{site.urlimg}}sos.png">
+<img style="height: 100px; object-fit: cover; background-color: LightGray;" src="{{site.urlimg}}sos.jpg">
 
 Illinois [Worldwide Youth in Science and Engineering Program](https://wyse.engineering.illinois.edu/)
 

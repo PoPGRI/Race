@@ -1,4 +1,4 @@
-I"b<p>“Code a Car” is a day camp that will take place at the <a href="https://ece.illinois.edu/about/buildings/ecebuilding">Electrical and Computer Engineering Building</a>, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!</p>
+I"�<p>“Code a Car” is a day camp that will take place at the <a href="https://ece.illinois.edu/about/buildings/ecebuilding">Electrical and Computer Engineering Building</a> 5072, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!</p>
 
 <p>Campers will:</p>
 
@@ -58,7 +58,7 @@
     </tr>
     <tr>
       <td style="text-align: center">Noon - 1PM</td>
-      <td style="text-align: center">Lunch Break (ISR)</td>
+      <td style="text-align: center">Lunch Break (Hendrick House)</td>
       <td style="text-align: center">Lunch Break (Hendrick House)</td>
       <td style="text-align: center">Lunch Break (Hendrick House)</td>
       <td style="text-align: center">Lunch Break (Hendrick House)</td>
@@ -85,14 +85,15 @@
 
 <h2 id="location">Location</h2>
 
-<h2 id="eceb">ECEB</h2>
+<h2 id="eceb-lab-5072">ECEB Lab 5072</h2>
 
 <p>Please use the Wright street entrance to the ECEB.</p>
 
 <h2 id="highbay">Highbay</h2>
 
-<p>Highbay is located near iHotel.
-<img src="https://popgri.github.io/Race/assets/images/highbay_front.png" width="400" heigh="200" />
+<p>Highbay is located near iHotel.</p>
+
+<p><img src="https://popgri.github.io/Race/assets/images/highbay_front.jpeg" width="400" heigh="200" />
 <img src="https://popgri.github.io/Race/assets/images/highbay_location.png" width="400" heigh="200" />
 <img src="https://popgri.github.io/Race/assets/images/highbay_google.png" width="400" heigh="200" /></p>
 
@@ -106,6 +107,11 @@
 
 <p>Illinois Robotics Lab</p>
 
+<ol>
+  <li>Human-Robot Fist Bump: The Kinova retrieves a human’s fist pose from its mounted camera and follows the human’s fist movement using visual servoing technique.</li>
+  <li>Human Intention Tracking for Collaborative Assembly: A human worker and a UR5e robot work together to assemble industrial connectors. After the human aligns the connector parts, the UR5e pushes the aligned connectors for their insertion.</li>
+</ol>
+
 <h3 id="wednesday">Wednesday</h3>
 
 <p><em>RTAB-Map &amp; Image Goal Navigation</em></p>
@@ -113,6 +119,9 @@
 <p>Demo by Justin Wasserman from Prof. Girish Chowdhary’s Group</p>
 
 <p>ECEB 5072</p>
+
+<p>Preview of Justin’s demo:
+<img src="https://popgri.github.io/Race/assets/images/imageGoal.gif" width="400" heigh="200" /></p>
 
 <h2 id="organizers">Organizer(s)</h2>
 
@@ -126,7 +135,7 @@
 
 <p>We are grateful to the following sponsors and supporters for making <strong>Code a Car</strong> camp happen.</p>
 
-<p><img style="height: 100px; object-fit: cover; background-color: LightGray;" src="https://popgri.github.io/Race/assets/images/sos.png" /></p>
+<p><img style="height: 100px; object-fit: cover; background-color: LightGray;" src="https://popgri.github.io/Race/assets/images/sos.jpg" /></p>
 
 <p>Illinois <a href="https://wyse.engineering.illinois.edu/">Worldwide Youth in Science and Engineering Program</a></p>
 
