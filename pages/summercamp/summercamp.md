@@ -7,6 +7,7 @@ permalink: "/summercamp/"
 ---
 
 ## Camp Leaderboard
+
 <https://summer-camp-2022.herokuapp.com/>
 
 "Code a Car" is a day camp that will take place at the [Electrical and Computer Engineering Building](https://ece.illinois.edu/about/buildings/ecebuilding) 5072, and will give participants an exciting hands-on experience in creating the brains of an autonomous car. During the camp, learners will write code for lane detection, autopilot, planning, and run this code on simulated vehicles. On the last day, if all goes according to plan, students will have the opportunity to deploy their code on a real car!
@@ -29,9 +30,9 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 |  | Monday | Tuesday | Wednesday | Thursday | Friday |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | 8:45 AM | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (Highbay) |
-| 9 AM - 12 PM | Introduction to autonomy and Python Tutorial | Computer vision and lane detection: Convolution, edge detection | Control concepts: stability and performance | Planning Algorithms | **High Bay Field Trip**  |
+| 9 AM - 12 PM | [Introduction to autonomy and Python Tutorial]({{site.urlimg}}Introduction _v2.pdf) | Computer vision and lane detection: Convolution, edge detection | Control concepts: stability and performance | Planning Algorithms | **High Bay Field Trip**  |
 | Noon - 1PM | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Sack Lunch) |
-| 1 - 3 PM |  Linux Command, ROS, Gazebo vehicle simulation, CARLA,  Steering Wheel Sim | Develop and test lane departure system | Waypoint following controller desing and testing | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
+| 1 - 3 PM |  [Linux Command, ROS, Gazebo vehicle simulation, CARLA]({{site.urlimg}}Summer_Camp_MP0_2022.pdf),  Steering Wheel Sim | Develop and test lane departure system | Waypoint following controller desing and testing | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
 |  3 - 5 PM | Lab Visit | Lab Visit | Lab Visit | Visit to Highbay | Final presentation and camp conclusion ceremony |
 
 ## Location
