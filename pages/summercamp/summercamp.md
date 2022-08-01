@@ -35,6 +35,8 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 | 1 - 3 PM |  [Linux Command, ROS, Gazebo vehicle simulation, CARLA]({{site.urlimg}}Summer_Camp_MP0_2022.pdf),  Steering Wheel Sim | Develop and test lane departure system | Waypoint following controller desing and testing | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
 |  3 - 5 PM | Lab Visit | Lab Visit | Lab Visit | Visit to Highbay | Final presentation and camp conclusion ceremony |
 
+[Final Presentation Template](https://docs.google.com/presentation/d/1tZAorm3g1bAJM_XkH4Y8cwoYxmg8MGm8DsT0JG30MD4/edit?usp=sharing)
+
 ## Location
 
 ## ECEB Lab 5072
