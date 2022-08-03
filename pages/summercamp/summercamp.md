@@ -32,7 +32,7 @@ Dates: The GRAIC team will be hosting a summer camp for highschool students at U
 | 8:45 AM | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (ECEB) | Check-In (Highbay) |
 | 9 AM - 12 PM | [Introduction to autonomy and Python Tutorial]({{site.urlimg}}Introduction _v2.pdf) | [Computer vision and lane detection: Convolution, edge detection]({{site.urlimg}}Lane Detection_v3.pdf) | Control concepts: stability and performance | Planning Algorithms | **High Bay Field Trip**  |
 | Noon - 1PM | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Hendrick House) | Lunch Break (Sack Lunch) |
-| 1 - 3 PM |  [Linux Command, ROS, Gazebo vehicle simulation, CARLA]({{site.urlimg}}Summer_Camp_MP0_2022.pdf),  Steering Wheel Sim | [Develop and test lane departure system]({{site.urlimg}}Summer_Camp_MP1_2022.pdf) | Waypoint following controller desing and testing | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
+| 1 - 3 PM |  [Linux Command, ROS, Gazebo vehicle simulation, CARLA]({{site.urlimg}}Summer_Camp_MP0_2022.pdf),  Steering Wheel Sim | [Develop and test lane departure system]({{site.urlimg}}Summer_Camp_MP1_2022.pdf) | [Waypoint following controller designing and testing]({{site.urlimg}}Summer_Camp_MP2_2022.pdf) | Testing end to end driverless car code  | Deploy Code (E.g. Lane Detection) on autonomous vehicle |
 |  3 - 5 PM | Lab Visit | Lab Visit | Lab Visit | Visit to Highbay | Final presentation and camp conclusion ceremony |
 
 [Final Presentation Template](https://docs.google.com/presentation/d/1tZAorm3g1bAJM_XkH4Y8cwoYxmg8MGm8DsT0JG30MD4/edit?usp=sharing)
