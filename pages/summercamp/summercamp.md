@@ -88,7 +88,7 @@ Preview of Justin's demo:
 
 We had a very successful camp and we had a lot of fun! Here are some pictures from the camp.
 
-| <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab_visit.png" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
+| <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab_visit.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
 |:---:|:---:|:---:|
 | GEM Vehicle | Lab Visit | Group Photo |
 
