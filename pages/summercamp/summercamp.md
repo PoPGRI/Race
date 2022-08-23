@@ -84,6 +84,14 @@ Preview of Justin's demo:
 
 **[Sayan Mitra](https://mitras.ece.illinois.edu/)** had the brainwave of creating this camp. He is a Professor at Illinois and does  research on autonomous systems.
 
+## Pictures
+
+We had a very successful camp and we had a lot of fun! Here are some pictures from the camp.
+
+| <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab.png" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
+|:---:|:---:|:---:|
+| GEM Vehicle | Lab Visit | Group Photo |
+
 # Sponsors
 
 We are grateful to the following sponsors and supporters for making **Code a Car** camp happen.
