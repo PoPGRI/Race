@@ -6,6 +6,29 @@ header:
 permalink: "/summercamp/"
 ---
 
+
+## Final Presentation
+
+<iframe width="420" height="315"
+src="https://www.youtube.com/watch?v=sPbvmedhQpk">
+</iframe> 
+
+## Pictures
+
+We had a very successful camp and we had a lot of fun! Here are some pictures from the camp.
+
+| <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab_visit.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
+|:---:|:---:|:---:|
+<!-- | GEM Vehicle | Lab Visit | Group Photo | -->
+| <img src="{{site.urlimg}}lecture.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}working.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}presentation.jpg" width="400" heigh="200"> |
+|:---:|:---:|:---:|
+
+| <img src="{{site.urlimg}}demo.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}highbay.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}robots.jpg" width="400" heigh="200"> |
+|:---:|:---:|:---:|
+
+
+
+
 ## Camp Leaderboard
 
 <https://summer-camp-2022.herokuapp.com/>
@@ -84,13 +107,6 @@ Preview of Justin's demo:
 
 **[Sayan Mitra](https://mitras.ece.illinois.edu/)** had the brainwave of creating this camp. He is a Professor at Illinois and does  research on autonomous systems.
 
-## Pictures
-
-We had a very successful camp and we had a lot of fun! Here are some pictures from the camp.
-
-| <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab_visit.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
-|:---:|:---:|:---:|
-| GEM Vehicle | Lab Visit | Group Photo |
 
 # Sponsors
 
