@@ -10,7 +10,7 @@ permalink: "/summercamp/"
 ## Final Presentation
 
 <iframe width="420" height="315"
-src="https://www.youtube.com/watch?v=sPbvmedhQpk">
+src="https://www.youtube.com/watch?v=sPbvmedhQpk" allow="autoplay" allowfullscreen=>
 </iframe> 
 
 ## Pictures
@@ -19,7 +19,7 @@ We had a very successful camp and we had a lot of fun! Here are some pictures fr
 
 | <img src="{{site.urlimg}}car.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}lab_visit.jpeg" width="400" heigh="200"> | <img src="{{site.urlimg}}group.jpg" width="400" heigh="200"> |
 |:---:|:---:|:---:|
-<!-- | GEM Vehicle | Lab Visit | Group Photo | -->
+
 | <img src="{{site.urlimg}}lecture.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}working.jpg" width="400" heigh="200"> | <img src="{{site.urlimg}}presentation.jpg" width="400" heigh="200"> |
 |:---:|:---:|:---:|
 
