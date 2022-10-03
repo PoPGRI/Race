@@ -48,6 +48,10 @@
   url: "/summercamp/"
   side: left
 
+- title: Media
+  url: "/media/"
+  side: left
+
 # - title: "Contact"
 #   url: "/contact/"
 #   side: right
