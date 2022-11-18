@@ -826,7 +826,7 @@ def game_loop(args):
             while cur_right.get_right_lane():
                 cur_right = cur_right.get_right_lane()
             for i in range(20):
-                right_boundary.extend(cur_left.next(i+0.5))
+                right_boundary.extend(cur_right.next(i+0.5))
 
             boundary = []
             boundary.append(left_boundary)
