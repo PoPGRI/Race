@@ -27,7 +27,8 @@ homepage: true
 
 
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
-Ask general questions about GRAIC and interact with fellow participants on our forum!
+Ask general questions about GRAIC and interact with fellow participants on our forum! Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
+
 
 ### [GRAIC Benchmarks](https://github.com/PoPGRI/GRAIC22-Benchmarks)
 Here, you will find controllers submitted to GRAIC in previous years. These controllers can be used for controller research and verification. We have included instructions on how to reproduce the results from GRAIC [here](https://github.com/PoPGRI/GRAIC22-Benchmarks/blob/master/run_experiments.md).
@@ -60,7 +61,7 @@ At runtime, the input to the controller will come from a _perception oracle_ tha
 ## Contact
 
 Email us at <a href="mailto:graic2021@gmail.com">graic2021@gmail.com</a>.
-Join mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
+Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
 
 ## Important Dates
 
