@@ -6,7 +6,7 @@
 #
 layout: page-fullwidth
 header:
-  image_fullwidth: "header23.gif"
+  image_fullwidth: "yan_demo.gif"
 
 permalink: /index.html
 homepage: true
