@@ -183,6 +183,14 @@
           
           
         
+
+              
+
+
+
+          
+          
+        
         
       </ul>
 
@@ -349,6 +357,21 @@
             
             
               <li><a  href="http://localhost:4000/Race/summercamp/">Summer camp</a></li>
+              <li class="divider"></li>
+
+            
+            
+          
+        
+
+              
+
+          
+          
+
+            
+            
+              <li><a  href="http://localhost:4000/Race/media/">Media</a></li>
               <li class="divider"></li>
 
             

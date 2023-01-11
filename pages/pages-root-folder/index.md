@@ -6,7 +6,7 @@
 #
 layout: page-fullwidth
 header:
-  image_fullwidth: "new-header.gif"
+  image_fullwidth: "header23.gif"
 
 permalink: /index.html
 homepage: true
@@ -72,7 +72,9 @@ Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i
 - **March 17**: Final platform release, pre-submission opens
 - **March 31**: Final submission page opens
 - **May 2**: Submission closes, final races held
-- **May 9**: [CPS-IOT Week 2022](https://cps-iot-week2023.cs.utsa.edu/), final results and live evnt
+- **May 9**: [CPS-IOT Week 2022](https://cps-iot-week2023.cs.utsa.edu/), final results and live event
+
+<iframe src="https://calendar.google.com/calendar/embed?src=graic2021%40gmail.com&ctz=America%2FChicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
 <!-- - **January 26**: Single agent platform beta released
 - **February 21**: Multi-agent platform beta released
