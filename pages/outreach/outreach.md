@@ -3,7 +3,7 @@ layout: page-fullwidth
 title: "Past Events"
 permalink: "/outreach/"
 header:
-   image_fullwidth: "new-header.gif"
+  image_fullwidth: "EOH-1.jpg"
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">

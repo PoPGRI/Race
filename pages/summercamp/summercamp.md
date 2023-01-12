@@ -2,7 +2,7 @@
 layout: page
 title: "Code a Car"
 header:
-   image_fullwidth: "new-header.gif"
+  image_fullwidth: "working.jpg"
 permalink: "/summercamp/"
 ---
 

@@ -41,13 +41,13 @@ $callout-panel-link-color-hover: scale-color($callout-panel-link-color, $lightne
   @if $bg {
     $bg-lightness: lightness($bg);
 
-    border-style: $panel-border-style;
-    border-width: $panel-border-size;
-    border-color: scale-color($bg, $lightness: $panel-function-factor);
+    // border-style: $panel-border-style;
+    // border-width: $panel-border-size;
+    // border-color: scale-color($bg, $lightness: $panel-function-factor);
     margin-bottom: $panel-margin-bottom;
     padding: $padding;
 
-    background: $bg;
+    background: #b8f8eb;
     @if $bg-lightness >= 50% { color: $panel-font-color; }
     @else { color: $panel-font-color-alt; }
 

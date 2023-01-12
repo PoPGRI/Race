@@ -2,7 +2,7 @@
 layout              : page
 title               : "Installing GRAIC"
 header:
-   image_fullwidth: "new-header.gif"
+  image_fullwidth: "yan_demo.gif"
 permalink           : "/installation/"
 ---
 
