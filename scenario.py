@@ -1,18 +1,10 @@
-import rospy
-import rospkg
 import numpy as np
-from geometry_msgs.msg import Vector3
-from std_msgs.msg import String
-from graic_msgs.msg import WaypointInfo
 import time
 import pickle
 import carla
 import os
 from enum import Enum
 import random
-
-from carla_msgs.msg import CarlaCollisionEvent
-from carla_msgs.msg import CarlaLaneInvasionEvent
 
 from scenario_runner import ScenarioRunner
 from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
@@ -128,7 +120,7 @@ class ScenarioList:
         track_id -= 1
         self.unitScenarios = self.unitScenarios[
             track_id:] + self.unitScenarios[:track_id]
-        self.compositeScenarios = list(permutations(self.unitScenarios, 4))
+        self.compositeScenarios = list(permutations(self.unitScenarios, 2))
 
     def getUnitScenario(self):
         scenario = self.unitScenarios.pop(0)
@@ -183,9 +175,8 @@ class ScenarioNode:
         self.role_name = role_name
         self.world = world
         self.map = world.get_map()
-        rospack = rospkg.RosPack()
-        fpath = rospack.get_path('graic_config')
-        self.waypoint_list = pickle.load(open(fpath + '/' + track, 'rb'))
+
+        self.waypoint_list = pickle.load(open('shanghai_intl_circuit', 'rb'))
         track_id = self.waypoint_list.pop(0)
         # self.waypoint_list = pickle.load(open(track,'rb'))
         self.map = world.get_map()
@@ -196,23 +187,10 @@ class ScenarioNode:
         self.laneDepartureTest = True
         self.scenario = None
         self.port = port
-        self.subCollision = rospy.Subscriber('/carla/%s/collision' % role_name,
-                                             CarlaCollisionEvent,
-                                             self.collisionCallback)
-        self.subLaneInvasion = rospy.Subscriber(
-            'carla/%s/lane_invasion' % role_name, CarlaLaneInvasionEvent,
-            self.laneCallback)
         self.scenarioGenerator = ScenarioGenerator(track_id)
 
         self.findEgoVehicle()
-
-    def collisionCallback(self, data):
-        self.collisionTest = False
-
-    def laneCallback(self, data):
-        for marking in data.crossed_lane_markings:
-            if marking is CarlaLaneInvasionEvent.LANE_MARKING_SOLID:
-                self.laneDepartureTest = False
+        print(self.ego_vehicle)
 
     def findEgoVehicle(self):
         for actor in self.world.get_actors():
@@ -251,6 +229,7 @@ class ScenarioNode:
         route_config.town = self.track
         route_config.name = 'RouteScenario_0'
         route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
+        # route_config.weather = carla.WeatherParameters(sun_altitude_angle=70)
         route_config.scenario_config = scenario_config
         wp = []
         wp.append(
@@ -276,6 +255,7 @@ class ScenarioNode:
 
     def launchScenarioRunner(self, scenarioConfig):
         scenarios = ScenarioRunner(scenarioConfig)
+        print(scenarioConfig)
         scenarios.run()
 
         return True
@@ -291,26 +271,24 @@ class ScenarioNode:
 
 def run(sn, role_name):
     result = None
-    while not rospy.is_shutdown():
+    while True:
         scenarioConfig = sn.createScenarioConfig(result)
         if scenarioConfig:
             sn.launchScenarioRunner(scenarioConfig)
-        result = sn.parseResults()
+            result = sn.parseResults()
+        else:
+            break
 
 
 if __name__ == "__main__":
-    rospy.init_node("Scenario_Node")
-    host = rospy.get_param('~host', 'localhost')
-    port = rospy.get_param('~port', 2000)
-    role_name = rospy.get_param("~role_name", "ego_vehicle")
-    track = rospy.get_param("~track", "t1_triple")
-    rospy.loginfo("Start generating scenarios for %s!" % role_name)
-    os.chdir(os.path.dirname(__file__))
-    cwd = os.getcwd()
+    host = '127.0.0.1'
+    port = 2000
+    role_name = "ego_vehicle"
+    track = "shanghai_intl_circuit"
     client = carla.Client(host, port)
     world = client.get_world()
     sn = ScenarioNode(world, role_name, track, port)
-    try:
-        run(sn, role_name)
-    except rospy.exceptions.ROSInterruptException:
-        rospy.loginfo("Shutting down waypoint node")
+    # try:
+    run(sn, role_name)
+    # except Exception as e:
+    #     print(e)
