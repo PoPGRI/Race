@@ -13,6 +13,5 @@ Please click on one of the options to take you to the appropriate installation p
 <center>
 <a class="radius button small" href="{{ site.url }}{{ site.baseurl }}/installation/aws/">AWS Installation</a>
 <a class="radius button small" href="{{ site.url }}{{ site.baseurl }}/installation/docker/">Docker Installation</a>
-<a class="radius button small" href="{{ site.url }}{{ site.baseurl }}/installation/running/">Running GRAIC</a>
 <a class="radius button small" href="{{ site.url }}{{ site.baseurl }}/installation/multi/">Running GRAIC -- Multi-Agent(BETA)</a>
 </center>
