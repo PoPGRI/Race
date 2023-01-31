@@ -35,7 +35,7 @@ Here, you will find controllers submitted to GRAIC in previous years. These cont
 
 ### Introduction
 
-_Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race co-located with [CPS-IOT Week 2023](https://cps-iot-week2023.cs.utsa.edu/). 
+_Generalized RAcing Intelligence Competition (GRAIC)_ is a simulated vehicle race co-located with [CPS-IOT Week 2023](https://cps-iot-week2023.cs.utsa.edu/).
 <!-- The most recent version of the competition was co-located with [CPS-IOT Week 2022](https://cpsiotweek.neslab.it/). -->
  GRAIC aims to bring together researchers in AI, planning, synthesis, and control to create a platform for comparing different algorithms for controlling vehicles in dynamic and uncertain environments. We hope that it will also be fun.
 
@@ -51,9 +51,9 @@ GRAIC provides a simulation environment, test vehicles, tracks, scoring function
 
 ### Details
 
-At runtime, the input to the controller will come from a _perception oracle_ that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the [Docs](https://popgri.github.io/Race/documentation/) page for more details about tracks, obstacles, vehicles, and APIs.
+At runtime, the input to the controller will come from a _perception oracle_ that will provide as input a local view of obstacles, lanes, and gates on the track near the vehicle. The tracks will have à priori unknown static and moving obstacles. The outputs from the controller (brake, throttle, and steering) will drive the vehicle. In some race categories, you will be provided a mathematical vehicle model, and in other categories you will be provided a black-box vehicle simulator. The perception and control interfaces will not change. Read the [Docs](https://popgri.github.io/Race/documentation/) page for more details about tracks, obstacles, vehicles, and APIs. Features of GRAIC include:
 
-* Head-to-head races; compete against other submitted constrollers
+* Head-to-head races; compete against other submitted controllers.
 * GRAIC focuses on decision, control, planning, and safety, and therefore, we will provide a perception oracle and related API
 * Your controller will run races across multiple vehicles and tracks
 * Different race categories for model-free and model-based vehicles
@@ -67,12 +67,12 @@ Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i
 
 *Please check back frequently for the next GRAIC competition updates.*
 
-- **January 30**: Beta platform release
-- **February 17**: Info session and beta feedback
+- **January 31**: Beta platform release
+- **February 16**: Info session and beta feedback
 - **March 17**: Final platform release, pre-submission opens
 - **March 31**: Final submission page opens
 - **May 2**: Submission closes, final races held
-- **May 9**: [CPS-IOT Week 2022](https://cps-iot-week2023.cs.utsa.edu/), final results and live event
+- **May 9**: [CPS-IOT Week 2023](https://cps-iot-week2023.cs.utsa.edu/), final results and live event
 
 <iframe src="https://calendar.google.com/calendar/embed?src=graic2021%40gmail.com&ctz=America%2FChicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
