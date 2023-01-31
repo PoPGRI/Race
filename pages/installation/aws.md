@@ -38,7 +38,7 @@ You can check out more info on pricing at these links:
 ## Video Tutorial
 (A written tutorial is included after this video tutorial)
 
-<span style="color:red">Note that Step 1.8 (Setting a password for Ubuntu) is not included in this video tutorial. After Step 1.7 (Review and Launch), please perform Step 1.8, and return to the video for Step 2 (GUI via NoMachine).</span>
+<span style="color:red">Note that Step 1.1 (Choose AMI) is outdated. Please review Step 1.1 and return to the video for Step 1.2. Additionally, Step 1.8 (Setting a password for Ubuntu) is not included in this video tutorial. After Step 1.7 (Review and Launch), please perform Step 1.8, and return to the video for Step 2 (GUI via NoMachine).</span>
 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nqaC1ZXb4H0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -50,7 +50,7 @@ You can check out more info on pricing at these links:
 
 ### Step 1.1 Choose AMI.
 Search for "GRAIC2023" and you should be able to find some AMIs in "Community AMIs".
-<img src="{{site.urlimg}}ami_v1.3.png">
+<img src="{{site.urlimg}}ami_Carla23.png">
 
 ### Step 1.2 Choose an Instance Type
 Choose "g4dn.4xlarge". You can also choose "g4dn.8xlarge" if you need more CPUs.

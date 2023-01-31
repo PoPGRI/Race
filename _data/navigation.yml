@@ -5,7 +5,11 @@
 - title: Getting Started
   url: "/installation/"
   side: left
-
+  dropdown:
+    - title: "AWS Installation"
+      url: "/installation/aws"
+    - title: "Local Installation"
+      url: "/installation/local/"
 - title: "Docs"
   url: "/documentation/"
   side: left
