@@ -5,17 +5,6 @@
 - title: Getting Started
   url: "/installation/"
   side: left
-  dropdown:
-  - title: "AWS Installation"
-    url: "/installation/aws/"
-  - title: "Docker Installation"
-    url: "/installation/docker/"
-  - title: "Running GRAIC"
-    url: "/installation/running/"
-  - title: "Running GRAIC -- Multi-Agent(BETA)"
-    url: "/installation/multi/"
-  - title: "Running GRAIC -- Model-Based"
-    url: "/installation/model-based/"
 
 - title: "Docs"
   url: "/documentation/"
