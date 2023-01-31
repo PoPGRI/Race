@@ -2,7 +2,7 @@
 layout: page-fullwidth
 title: Installing GRAIC on AWS
 date:   2022-04-18T14:25:52-05:00
-permalink: installation/aws/
+permalink: installation/
 ---
 
 <div class="row">
