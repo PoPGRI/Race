@@ -39,11 +39,6 @@ These are the waypoints along the track that the vehicle must pass. We provide y
 <!-- There are 3 lanes in total; they are LEFT_LANE(id=3), CENTER_LANE(id=4), and RIGHT_LANE(id=5) -->
 
 
-<!-- ### Static obstacles objects (<span style="color:red">Static</span>)
-The environment objects include static obstacles that define the racing environment. This includes fences, sidewalks, buildings, and any other large objects. These objects are provided to the competitor as a list where each entry consists of the following:
-- Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
-- Type: The type of obstacle detected (ie. "sidewalk", “fence”, “building”, etc.)
-- ID: An identifier for each obstacle (ie.  "1”, etc.). This remains the same across all time steps.
 
 These objects are also published to the rostopic `obstacles`. -->
 ### Velovity  
@@ -54,8 +49,7 @@ Velovity is directly provided at a 3D vector(Vx, Vy, Vz), you could check
 ### Location 
 <!-- (<span style="color:blue">Dynamic</span>) -->
 The location contains the state of the vehicle with the position and rotation. It is a class of carla.Transform. You can read more [here](https://carla.readthedocs.io/en/0.9.13/python_api/#carla.Transform)
-<!-- The location contains the state of the vehicle as the position, rotation, and velocity of the vehicle.
-The position is given as [x, y, z] in ENU coordinates. The rotation is given as [\\( \theta_x,  \theta_y, \theta_z\\)] in radians. The velocity of the vehicle is given as [\\(v_x, v_y\\)]. -->
+
 
 ### Lane Boundary Waypoints
 <!-- (<span style="color:red">Static</span>) -->
