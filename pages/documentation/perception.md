@@ -27,10 +27,7 @@ The perception distance for obstacles will remained fixed across all the races. 
 ### Obstacles 
 <!-- (<span style="color:blue">Dynamic</span>) -->
 The perception module returns all the obstacles within the sensing radius of the vehicle. Each obstacle is a class of carla.Actor, which has a type, id, and other properties. You could find more details [here](https://carla.readthedocs.io/en/0.9.13/python_api/#carlaactor) 
-<!-- - Vertices: The location of the vertices of the bounding box of each obstacle given in \\([x, y, z]\\) global coordinates
-- Object center: The location of the object center in \\([x, y, z]\\) global coordinates
-- Type: The type of obstacle detected (ie. “pedestrian”, “car”, "motorcycle", etc.)
-- ID: An identifier for each obstacle (ie.  "1”, etc.). This identifier remains the same across all time steps. -->
+
 
 
 ### Milestones Waypoints
