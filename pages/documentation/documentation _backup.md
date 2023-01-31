@@ -15,52 +15,28 @@ These interfaces can be seen in the image below.
 In GRAIC, the ground-truth perception information is provided to the competitors.
 The competitors will then build a decision and control method which will compute a control input the the vehicle system.
 This control input is then given to the vehicle system, and the state of the vehicle is then updated.
-<!-- <img src="{{site.urlimg}}interface.png"> -->
+<img src="{{site.urlimg}}interface.png">
 
 This page provides a general explanation on how to use GRAIC for developing your intelligent autonomous racing agent.
 Please see our other documentation pages for more detailed information.
 
 The GRAIC framework has several modules, however competitors only need to be concerned with three: (i) perception, (ii) decision & control, and (iii) vehicle inputs types. As competitors, you will be provided with the perception and vehicle API and you will build your own decision & control module.
 
-<!-- A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision & control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.
+A diagram of the module interfaces is shown below. The decision and control module built by the competitors will be just plugged into the rest of the system. Therefore, the decision & control module must take in only the perception inputs provided by the perception module and output only the inputs required by the vehicle system.
 
- <img src="{{site.urlimg}}interfaces.png"> -->
+ <img src="{{site.urlimg}}interfaces.png">
 
-Specifically, your controller should implement a class called `Agent` as agent. You can find the code [here](https://github.com/PoPGRI/Race/blob/main/agent.py).
+Specifically, your controller should implement a class called `Controller` as follows. You can find an example in this [file](https://github.com/PoPGRI/Race/blob/main/graic_core/src/baseline.py).
 ```Python
-class Agent():
-    def __init__(self, vehicle=None):
-        self.vehicle = vehicle
+class Controller(object):
+    """docstring for Controller"""
+    def __init__(self):
+        super(Controller, self).__init__()
 
-    def run_step(self, filtered_obstacles, waypoints, vel, transform, boundary):
-        """
-        Execute one step of navigation.
-        Args:
-        filtered_obstacles
-            - Type:        List[carla.Actor(), ...]
-            - Description: All actors except for EGO within sensoring distance
-        waypoints 
-            - Type:         List[[x,y,z], ...] 
-            - Description:  List All future waypoints to reach in (x,y,z) format
-        vel
-            - Type:         carla.Vector3D 
-            - Description:  Ego's current velocity in (x, y, z) in m/s
-        transform
-            - Type:         carla.Transform 
-            - Description:  Ego's current transform
-        boundary 
-            - Type:         List[List[left_boundry], List[right_boundry]]
-            - Description:  left/right boundary each consists of 20 waypoints,
-                            they defines the track boundary of the next 20 meters.
-        Return: carla.VehicleControl()
-        """
-        control = carla.VehicleControl()
-        control.throttle = 0.5 # Dummy value as an example
-        control.steer = 0
-        control.brake = 0
-        return control
+    def execute(self, currState, obstacleList, lane_marker, waypoint):
+        return ...
 ```
-<!-- 
+
 As shown above, the ```exectute``` function will be called at every time step. It takes in the current state of the vehicle, a list of obstacles, a list of lane markers, and a waypoint. It should return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, the race will be immediately terminated.
 
 In detail, ```currState``` is a tuple which has three elements: (position, rotation, velocity), and each element is a tuple consisting of the coordinates of that element. So position is a tuple of the form (x, y), which denotes the x and y coordinates of the vehicle; rotation is a tuple of the form (x, y, z), in radians, which denotes the roll, pitch and yaw of the vehicle; velocity is a tuple of the form (x, y), which denotes the x and y components of the velocity of the vehicle. The function ```locationCallback``` inside the class ```VehiclePerception``` in the file ```agent_wrapper.py``` provides a more starightforward way to understand the structure of ```currState```.
@@ -71,4 +47,4 @@ In detail, ```currState``` is a tuple which has three elements: (position, rotat
 
 ```waypoint``` contains the next waypoint that the vehicle is expected to pass. For example, ```waypoint.location.x``` returns the x coordinate of the waypoint, and similarly for the y coordinate.
 
-```exectute``` is expected to return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py). -->
+```exectute``` is expected to return either ```None``` or an ```AckermannDrive``` object. If it returns ```None```, exit(0) will be called and the race will terminate, otherwise the returned object will be published to control the vehicle (see publish_control function in agent_wrapper.py).

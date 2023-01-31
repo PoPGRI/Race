@@ -49,7 +49,7 @@ You can check out more info on pricing at these links:
 - Locate the "Launch instances" button. Click on it and then follow the instructions below.
 
 ### Step 1.1 Choose AMI.
-Search for "GRAIC2023" and you should be able to find some AMIs in "Community AMIs".
+Search for "GRAIC-2023" and you should be able to find some AMIs in "Community AMIs".
 <img src="{{site.urlimg}}ami_Carla23.png">
 
 ### Step 1.2 Choose an Instance Type
@@ -99,10 +99,5 @@ Choose whatever name you like, and fill "Host" with your instance's Public IPv4 
  Click on "Configuration" on the left. Select "Use key-based authentication with a key you provide" and click on the "Modify" button. Then, select the key file downloaded in Step 1.7. Go back and click on "Connect". If it says "key is missing", click on the "Modify" button, select the key you downloaded, and try again. This might be a bug of NoMachine.
 <img src="{{site.urlimg}}nomachine_config.png">
 
-If asked, the username is "ubuntu". After logging into the machine, open a terminal, run
-{% include alert terminal='~/scripts/fixCarla.sh' %}
-After it finishes, you should be able to use carla by running
-{% include alert terminal='~/workspace/carla-simulator/CarlaUE4.sh' %}
-All files are installed in the "~/workspace" directory. Enjoy!
-
+If asked, the username is "ubuntu". After you logged in, the simulator, scenario runner, and the customized GRAIC script have already been installed at {% include alert terminal='/home/ubuntu/GRAIC2023' %}. Please refer to the instruction in the Final Section "Installing GRAIC Customized Scripts" of <a class="radius button small" href="{{ site.url }}{{ site.baseurl }}/installation/local/">Local Installation</a> section to run any experiments. 
 </div>

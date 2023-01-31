@@ -20,14 +20,14 @@
     url: "/documentation/decision-control/"
   - title: "Vehicle Models"
     url: "/documentation/models/"
-  - title: "ROS Messages"
-    url: "/documentation/rosmsgs/"
+  # - title: "ROS Messages"
+  #   url: "/documentation/rosmsgs/"
   - title: "Tracks"
     url: "/documentation/tracks/"
 
-- title: "Submission"
-  url: "/submissions/"
-  side: left
+# - title: "Submission"
+#   url: "/submissions/"
+#   side: left
 
 - title: About
   url: "/about/"

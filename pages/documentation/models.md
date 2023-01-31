@@ -20,19 +20,19 @@ permalink: documentation/models/
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. Competitors can participate in either the "model-agnostic" or the "model-based" options, or both.
-The information about the vehicles will be provided in a configuration file.
+The final GRAIC race will be on several different vehicle models. We have provides several vehicle models with our initial release, but these vehicle models may changein the coming months. 
+<!-- Competitors can participate in either the "model-agnostic" or the "model-based" options, or both. -->
+<!-- The information about the vehicles will be provided in a configuration file. -->
 
-### Model-agnostic option
-In the model-agnostic category, vehicle physics is given by CARLA's vehicle simulator. These are either 4-wheeled or 2-wheeled vehicles. Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`.
+### Vehicle Physics
+We will use the vehicle physics given by CARLA's vehicle simulator. These are either 4-wheeled vehicles. The vehicles that will be used in the competition are shown in the 'configuration file' section.
+<!-- Some basic information about these vehicles will be provided (such as the wheelbase). All the vehicles use the rostopics `ackermann_control` or `vehicle_control`. -->
 
-The vehicles that will be used in the competition are shown in the 'configuration file' section.
 
+<!-- ### Model-based option
+In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same `ackermann_control` or `vehicle_control` rostopics above. -->
 
-### Model-based option
-In the model-based option, the vehicle will follow the dynamics detailed below. The exact parameter values for the model will be provided in the following weeks. The controller modules that competitors create will use the same `ackermann_control` or `vehicle_control` rostopics above.
-
-#### Longitudinal dynamics
+<!-- #### Longitudinal dynamics
 
 $$\dot{u} = a - f_1 u - f_2 u^{2} - f_3,$$
 
@@ -54,7 +54,7 @@ where \\(v\\) and \\(r\\) are the lateral velocity and the second order derivati
 
 \\(f_1\\), \\(f_2\\), \\(f_3\\), \\(a\\), \\(b\\), \\(C_{ \alpha r}\\), \\(C_{ \alpha f}\\), \\(I_{z}\\) and \\(m\\) are parameters corresponding to the vehicle. Please refer to the book "Automotive Control Systems" by A. Galip Ulsoy et al. for the physical interpretation of those parameters and the modeling details of the longitudinal and lateral dynamics.
 
-The potential parameters for the race are shown in the 'configuration file' section.
+The potential parameters for the race are shown in the 'configuration file' section. -->
 
 ### Configuration file
 
@@ -76,10 +76,10 @@ Below is a table with information on the different vehicles for the model-agnost
 |       Mini Cooper        |     vehicle.mini.cooperst     |
 
 
-Table for model-based information:
+<!-- Table for model-based information:
 
 | \\(m\\) | \\(f_0\\) | \\(f_1\\) | \\(f_2\\) | \\(a\\) | \\(b\\) | \\(C_{\alpha f}\\) | \\(C_{\alpha r}\\) | \\(I_z\\) |      Vehicle ID       |
 | :-----: | :-------: | :-------: | :-------: | :-----: | :-----: | :----------------: | :----------------: | :-------: | :-------------------: |
-|  1500   |    100    |    0.1    |   0.01    |  1.14   |   1.4   |       8.8e4        |       9.4e4        |   2420    | vehicle.model_based.1 |
+|  1500   |    100    |    0.1    |   0.01    |  1.14   |   1.4   |       8.8e4        |       9.4e4        |   2420    | vehicle.model_based.1 | -->
 
 </div>
