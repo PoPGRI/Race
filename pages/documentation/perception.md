@@ -40,7 +40,6 @@ These are the waypoints along the track that the vehicle must pass. We provide y
 
 
 
-These objects are also published to the rostopic `obstacles`. -->
 ### Velovity  
 <!-- (<span style="color:blue">Dynamic</span>) -->
 Velovity is directly provided at a 3D vector(Vx, Vy, Vz), you could check 
