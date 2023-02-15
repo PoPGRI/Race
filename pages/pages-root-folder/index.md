@@ -25,6 +25,7 @@ homepage: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
+###[GRAIC 3.0 Call for Participation](https://popgri.github.io/Race/cfp23/)
 
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
 Ask general questions about GRAIC and interact with fellow participants on our forum! Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
