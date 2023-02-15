@@ -19,7 +19,7 @@ header:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 ## CPS Week 2022 {#graic22}
-### [GRAIC '22 Leaderboard](https://graic-2022.herokuapp.com)
+<!-- ### [GRAIC '22 Leaderboard](https://graic-2022.herokuapp.com) -->
 ### [GRAIC '22 Call for Participation](https://popgri.github.io/Race/assets/CFP2022.pdf)
 
 

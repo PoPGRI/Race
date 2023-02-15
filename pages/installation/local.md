@@ -25,7 +25,7 @@ permalink: installation/local/
 - Python3.7+
 
 # Installing the Carla 0.9.13 simulator
-The official installation guide can be found at [https://carla.readthedocs.io/en/latest/start_quickstart/#carla-installation](https://carla.readthedocs.io/en/latest/start_quickstart/#carla-installation).
+The official installation guide can be found at [https://carla.readthedocs.io/en/0.9.13/start_quickstart/#carla-installation](https://carla.readthedocs.io/en/0.9.13/start_quickstart/#carla-installation).
 A simplified walkthrough is provided below.
 
 **Step 1**
@@ -171,13 +171,13 @@ This should be in the `/Race/` folder.
 Check the code in `wrapper.py` to enable/disable scenarios to help with debugging
 
 **Additional comments**
-* Carla Python API: [https://carla.readthedocs.io/en/0.9.13/python_api/](https://carla.readthedocs.io/en/0.9.13/python_api/)
+* Carla Documentation: [Python API](https://carla.readthedocs.io/en/0.9.13/python_api/)
 * Model + Track:
 The code released only runs the Tesla Model 3 on the Shanghai Track, but during testing we will use different models + different race tracks.
 
 # Simple Controller Demo
 
-A simple controller demo can be found at [https://drive.google.com/file/d/1u4rj-sxMd6fuTnt_hS9PL_gUbfWdRjyO/view?usp=sharing](https://drive.google.com/file/d/1u4rj-sxMd6fuTnt_hS9PL_gUbfWdRjyO/view?usp=sharing).
+A simple controller demo can be found at [here](https://drive.google.com/file/d/1u4rj-sxMd6fuTnt_hS9PL_gUbfWdRjyO/view?usp=sharing).
 
 
 </div>
