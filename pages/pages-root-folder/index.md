@@ -25,7 +25,7 @@ homepage: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-###[GRAIC 3.0 Call for Participation](https://popgri.github.io/Race/cfp23/)
+### [GRAIC 3.0 Call for Participation](https://popgri.github.io/Race/cfp23/)
 
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
 Ask general questions about GRAIC and interact with fellow participants on our forum! Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i0r3mhxe21l4YEDFNLiItINRJz9qEoYrI8jQ04Mg/viewform?usp=sf_link).
@@ -88,6 +88,8 @@ Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i
 
 
 ## Updates
+  - <i>02/16/2023</i> <a href="https://www.youtube.com/watch?v=ZIhPbKnzkdo">GRAIC 3.0 Live Info Session</a>
+  - <i>01/31/2023</i> GRAIC 3.0 Beta released
   - <i>06/16/2022</i> <a href="https://github.com/PoPGRI/GRAIC22-Benchmarks">GRAIC22 benchmarks</a> released.
   - <i>05/3/2022</i> 2022 <a href="https://popgri.github.io/Race/outreach/">Live event</a> at CPSWeek.
   - <i>04/18/2022</i> 2022 submission page opens! Fill out <a href = "https://docs.google.com/forms/d/e/1FAIpQLSecJQCAh5MSgGkYo__-aVQgSEl8dEkxR8_VvZt7PmkIkQCnaA/viewform?usp=sf_link">this form</a> to submit.
