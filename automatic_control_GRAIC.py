@@ -6,7 +6,7 @@
 # This work is licensed under the terms of the MIT license.
 # For a copy, see <https://opensource.org/licenses/MIT>.
 
-"""Yan's Note: GRAIC 2022(BETA) -- NO ROS VERSION"""
+"""Yan's Note: GRAIC 2023 -- NO ROS VERSION"""
 
 from __future__ import print_function
 
@@ -141,7 +141,10 @@ class World(object):
             self.modify_vehicle_physics(self.player)
         while self.player is None:
             # TODO: Hardcoded starting point, to be changed to 1st wp in waypoint pickle file
-            spawn_point = carla.Transform(carla.Location(90.0, 93.0, 1.0), carla.Rotation(0, 0, 0))
+            if args.map == 'shanghai_intl_circuit':
+                spawn_point = carla.Transform(carla.Location(90.0, 93.0, 1.0), carla.Rotation(0, 0, 0))
+            elif args.map == 't1_triple':
+                spawn_point = carla.Transform(carla.Location(153.0, -12.0, 1.0), carla.Rotation(0, 180, 0))
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
             self.modify_vehicle_physics(self.player)
 
@@ -686,7 +689,8 @@ def game_loop(args):
         client.set_timeout(4.0)
 
         traffic_manager = client.get_trafficmanager()
-        sim_world = client.get_world()
+        # sim_world = client.get_world()
+        sim_world = client.load_world(args.map)
 
         if args.sync:
             settings = sim_world.get_settings()
@@ -708,7 +712,7 @@ def game_loop(args):
         agent = Agent()
 
         # TODO: Change track name to a parameter
-        original_wps = pickle.load(open('shanghai_intl_circuit', 'rb'))
+        original_wps = pickle.load(open("./waypoints/{}".format(args.map), 'rb'))
         waypoints = original_wps[1:]
         x, y, z = waypoints[0]
         idx = 0
@@ -740,6 +744,7 @@ def game_loop(args):
             cur_x, cur_y, cur_z = cur_pos.x, cur_pos.y, cur_pos.z
             target_x, target_y, target_z = waypoints[idx]
             distance = math.sqrt((cur_x - target_x)**2 + (cur_y-target_y)**2)
+            # print(distance, idx)
 
             # Both Scoring Function + Waypoint Update
             if distance < 5:
@@ -749,8 +754,10 @@ def game_loop(args):
                     total_score += (cur_time - start_time)
                     start_time =  cur_time
                     hud.notification("Score: " + str(round(total_score, 1)), 3)
-                    print("lap done")
-                    print(total_score)
+                    print("Lap Done")
+                    print("Final Score is ", total_score)
+                    with open("{}_score.txt".format(args.map), 'w') as f:
+                        f.write(str(total_score))
                     idx = 0
                     break
                 
@@ -899,6 +906,10 @@ def main():
         help='Set seed for repeating executions (default: None)',
         default=1234,
         type=int)
+    argparser.add_argument(
+        '-m', '--map',
+        help='Set Different Map for testing: shanghai_intl_circuit, t1_triple, t2_triple, t3, t4',
+        default="shanghai_intl_circuit")
 
     args = argparser.parse_args()
 

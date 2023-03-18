@@ -11,6 +11,8 @@ from srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioCo
 from typing import List, Dict
 from itertools import permutations
 
+import argparse
+
 
 def get_open_port():
     import socket
@@ -176,7 +178,7 @@ class ScenarioNode:
         self.world = world
         self.map = world.get_map()
 
-        self.waypoint_list = pickle.load(open('shanghai_intl_circuit', 'rb'))
+        self.waypoint_list = pickle.load(open("./waypoints/{}".format(track), 'rb'))
         track_id = self.waypoint_list.pop(0)
         # self.waypoint_list = pickle.load(open(track,'rb'))
         self.map = world.get_map()
@@ -281,10 +283,18 @@ def run(sn, role_name):
 
 
 if __name__ == "__main__":
+    argparser = argparse.ArgumentParser(
+        description='CARLA Automatic Control Client')
+    argparser.add_argument(
+        '-m', '--map',
+        help='Set Different Map for testing: shanghai_intl_circuit, t1_triple, t2_triple, t3, t4',
+        default="shanghai_intl_circuit")
+    args = argparser.parse_args()
+
     host = '127.0.0.1'
     port = 2000
     role_name = "ego_vehicle"
-    track = "shanghai_intl_circuit"
+    track = args.map
     client = carla.Client(host, port)
     world = client.get_world()
     sn = ScenarioNode(world, role_name, track, port)

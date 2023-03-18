@@ -3,8 +3,10 @@ import subprocess
 import time
 import pickle 
 
+map = "t1_triple" # t2_triple, t3, t4, shanghai_intl_circuit
 # Scenario Process will hold until an ego vehicle is available
-scenario_process = subprocess.Popen("python3 scenario.py", shell=True, stdout=None)
+
+controller_process = subprocess.Popen("python3 automatic_control_GRAIC.py --sync -m {}".format(map), shell=True)
 time.sleep(5)
-controller_process = subprocess.Popen("python3 automatic_control_GRAIC_DEMO.py --sync", shell=True)
-# controller_process = subprocess.Popen("python3 automatic_control_GRAIC.py", shell=True)
+
+scenario_process = subprocess.Popen("python3 scenario.py -m {}".format(map), shell=True, stdout=None)
