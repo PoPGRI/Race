@@ -145,6 +145,12 @@ class World(object):
                 spawn_point = carla.Transform(carla.Location(90.0, 93.0, 1.0), carla.Rotation(0, 0, 0))
             elif args.map == 't1_triple':
                 spawn_point = carla.Transform(carla.Location(153.0, -12.0, 1.0), carla.Rotation(0, 180, 0))
+            elif args.map == 't2_triple':
+                spawn_point = carla.Transform(carla.Location(85.0, -105.0, 1.0), carla.Rotation(0, 135, 0))
+            elif args.map == 't3':
+                spawn_point = carla.Transform(carla.Location(70.0, -115.0, 1.0), carla.Rotation(0, 16.75, 0))
+            elif args.map == 't4':
+                spawn_point = carla.Transform(carla.Location(155.0, -96.0, 1.0), carla.Rotation(0, 50, 0))
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
             self.modify_vehicle_physics(self.player)
 
@@ -154,7 +160,7 @@ class World(object):
             self.world.wait_for_tick()
 
         # Set up the sensors.
-        self.collision_sensor = CollisionSensor(self.player, self.hud)
+        self.collision_sensor = CollisionSensor(self.player, self.hud, args)
         self.lane_invasion_sensor = LaneInvasionSensor(self.player, self.hud)
         self.gnss_sensor = GnssSensor(self.player)
         self.camera_manager = CameraManager(self.player, self.hud)
@@ -448,7 +454,7 @@ class HelpText(object):
 class CollisionSensor(object):
     """ Class for collision sensors"""
 
-    def __init__(self, parent_actor, hud):
+    def __init__(self, parent_actor, hud, args):
         """Constructor method"""
         self.sensor = None
         self.history = []
@@ -462,12 +468,16 @@ class CollisionSensor(object):
         weak_self = weakref.ref(self)
         self.sensor.listen(lambda event: CollisionSensor._on_collision(weak_self, event))
 
+        self.prev_collision_actor_id = []
+        self.args = args
+
     def get_collision_history(self):
         """Gets the history of collisions"""
         history = collections.defaultdict(int)
         for frame, intensity in self.history:
             history[frame] += intensity
         return history
+    
 
     @staticmethod
     def _on_collision(weak_self, event):
@@ -482,6 +492,11 @@ class CollisionSensor(object):
         self.history.append((event.frame, intensity))
         if len(self.history) > 4000:
             self.history.pop(0)
+        
+        if event.other_actor.id not in self.prev_collision_actor_id:
+            self.prev_collision_actor_id.append(event.other_actor.id)
+            with open("{}_collision.txt".format(self.args.map), 'a') as f:
+                f.write("Time: {}, Collision Actor ID: {}, Collision Actor Type: {}\n".format(round(event.timestamp, 2), event.other_actor.id, event.other_actor.type_id))
 
 # ==============================================================================
 # -- LaneInvasionSensor --------------------------------------------------------
@@ -757,7 +772,7 @@ def game_loop(args):
                     print("Lap Done")
                     print("Final Score is ", total_score)
                     with open("{}_score.txt".format(args.map), 'w') as f:
-                        f.write(str(total_score))
+                        f.write(str(round(total_score, 2)))
                     idx = 0
                     break
                 
