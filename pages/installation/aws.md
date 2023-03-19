@@ -49,7 +49,7 @@ You can check out more info on pricing at these links:
 - Locate the "Launch instances" button. Click on it and then follow the instructions below.
 
 ### Step 1.1 Choose AMI.
-Search for "GRAIC-2023" and you should be able to find some AMIs in "Community AMIs".
+Search for "GRAIC_2023" and you should be able to find some AMIs in "Community AMIs".
 <img src="{{site.urlimg}}ami_Carla23.png">
 
 ### Step 1.2 Choose an Instance Type
