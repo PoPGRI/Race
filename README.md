@@ -9,8 +9,8 @@ Benchmark score using our very naive controllers on below tracks with **no scena
 
 | Track | Score|
 |-----|--------|
-| triple_t1 | 3 |
-| triple_t2 | 12 |
-| t3 | 3 |
-| t4 | 58 |
-| shanghai_intl_circuit | 3 |
+| triple_t1 | 45 |
+| triple_t2 | 74 |
+| t3 | 82 |
+| t4 | 57 |
+| shanghai_intl_circuit | 122 |
