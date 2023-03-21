@@ -70,8 +70,8 @@ Join our mailing list [form](https://docs.google.com/forms/d/e/1FAIpQLSesyCan0-i
 
 - **January 31**: Beta platform release
 - **February 16**: Info session and beta feedback
-- **March 17**: Final platform release, pre-submission opens
-- **March 31**: Final submission page opens
+- **March 27**: Final platform release, pre-submission opens
+- **April 10**: Final submission page opens
 - **May 2**: Submission closes, final races held
 - **May 9**: [CPS-IOT Week 2023](https://cps-iot-week2023.cs.utsa.edu/), final results and live event
 
