@@ -841,13 +841,13 @@ def game_loop(args):
             # Get Left Boundary
             while cur_left.get_left_lane():
                 cur_left = cur_left.get_left_lane()
-            for i in range(20):
+            for i in range(50):
                 left_boundary.extend(cur_left.next(i+0.5))
 
             # Get Right Boundary
             while cur_right.get_right_lane():
                 cur_right = cur_right.get_right_lane()
-            for i in range(20):
+            for i in range(50):
                 right_boundary.extend(cur_right.next(i+0.5))
 
             boundary = []
@@ -861,7 +861,7 @@ def game_loop(args):
             transform = vehicle.get_transform()
             ############################################
 
-            end_waypoints = min(len(waypoints), idx + 30)
+            end_waypoints = min(len(waypoints), idx + 50)
             control = agent.run_step(filtered_obstacles, waypoints[idx:end_waypoints], vel, transform, boundary)
             control.manual_gear_shift = False
             world.player.apply_control(control)
