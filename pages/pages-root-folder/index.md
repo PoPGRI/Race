@@ -25,6 +25,13 @@ homepage: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
+### [GRAIC 3.0 Submission Portal is online](https://graic2022submit.web.illinois.edu/graic2022)
+We will start auto evaluating on Apr. 18th. But earlier submission will also be stored on our server, and will be evaluated on that date.
+
+### [GRAIC 3.0 Leaderboard is online](https://graic-2023.herokuapp.com/)
+Once we finish evaluating your controller, the results will both be emailed and displayed on this leaderboard. For now(Apr. 13rd), it has some baseline controllers' results.
+
+
 ### [GRAIC 3.0 Call for Participation](https://popgri.github.io/Race/cfp23/)
 
 ### [GRAIC Forum](https://groups.google.com/u/1/g/graic21)
